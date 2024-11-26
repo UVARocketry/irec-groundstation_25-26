@@ -1,0 +1,128 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+}
+/* to remove the top and left whitespace */
+/*disable scroll bars */
+* {
+    overflow: hidden;
+}
+html, body {
+    width: 100%;
+    height: 100%;
+}
+#canvasHolder{
+    width: inherit;
+    height: inherit;
+}
+
+canvas {
+    display: block;
+    width: 55%;
+    height: 55%;
+    z-index: 1;
+}
+label.Num {
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    bottom: 1%;
+    left: 12%;
+}
+label.Bool {
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    bottom: 1%;
+    left: 25%;
+}
+button.Point {
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    bottom: 20%;
+    left: 1%;
+}
+@media (min-width: 1400px) {
+
+
+    input.Num {
+        bottom: 1%;
+        left: 20%;
+    }
+
+    input.Bool {
+        bottom: 0.5%;
+        left: 36%;
+        width: 20px;
+        height: 20px;
+    }
+    input.Point {
+        bottom: 16%;
+        left: 5%;
+        width: 70px;
+        height: 20px;
+    }
+
+    label {
+        font-size: 20px;
+        color: white;
+        font-family: 'Comic Sans MS';
+    }
+
+    .ProgInput {
+        display: none;
+        position: absolute;
+        z-index: 0;
+    }
+
+    input {
+        width: 50px;
+    }
+}
+@media (max-width: 1400px) {
+
+    input.Num {
+        bottom: 1%;
+        left: 22%;
+    }
+
+    input.Bool {
+        bottom: 1.5%;
+        left: 42%;
+        width: 20px;
+        height: 20px;
+    }
+    input.Point {
+        bottom: 16%;
+        left: 5%;
+        width: 70px;
+        height: 20px;
+    }
+
+    label {
+        font-size: 20px;
+        color: white;
+        font-family: 'Comic Sans MS';
+    }
+
+    .ProgInput {
+        display: none;
+        position: absolute;
+        z-index: 0;
+    }
+
+    input {
+        width: 50px;
+    }
+}
+/* To remove the scrollbars */
+
+ul {
+    position: absolute;
+    background-color: rgb(100, 100, 100);
+    width: 10%;
+    height: 45%;
+    margin: 0px;
+    padding: 0px;
+    left: 0.667%;
+    top: 16%;
+    list-style-type: none;
+}
