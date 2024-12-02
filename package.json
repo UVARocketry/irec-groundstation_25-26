@@ -1,0 +1,15 @@
+{
+  "name": "irec-24-25-groundstation",
+  "version": "1.0.0",
+  "description": "This program consists of the ground station nodejs server and ui (and hopefully the connected board program eventually).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jquery": "^3.5.32",
+    "@types/p5": "^1.7.6"
+  }
+}

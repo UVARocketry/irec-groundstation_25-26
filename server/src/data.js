@@ -1,6 +1,7 @@
 import { Message, MessageType } from "./message.js";
 
 import { Strings } from "./ansi.js";
+import { setEvent, setState } from "./state.js";
 /** @type {string[]} */
 var schema = [];
 var fieldSize = 0;
@@ -32,7 +33,6 @@ function floatToInt32(float) {
 }
 /**
  * @param payload {Uint8Array}
- * @return {string}
  */
 function parseData(payload) {
     /** @type{Float32Array|Float64Array} */
@@ -57,11 +57,12 @@ function parseData(payload) {
             obj[schema[i]] = floatToInt32(array[i]);
         }
     }
-    return JSON.stringify(obj);
+    setState(obj);
+    JSON.stringify(obj);
 }
 /**
  * @param msg {Message}
- * @return {string}
+ * @return {"state"|"event"|""}
  */
 export function parseMessage(msg) {
     if (msg.version !== 0) {
@@ -79,8 +80,14 @@ export function parseMessage(msg) {
     var str = new TextDecoder().decode(msg.data);
     if (msg.type === MessageType.Schema) {
         parseSchema(str);
+        setEvent("waiting");
+        return "event";
     } else if (msg.type === MessageType.DataUpdate) {
-        return parseData(msg.data);
+        parseData(msg.data);
+        return "state";
+    } else if (msg.type === MessageType.Event) {
+        console.error(`${Strings.Error}: Currently cant handle event updates`);
+        return "event";
     }
     return "";
 }

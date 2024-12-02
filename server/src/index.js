@@ -3,12 +3,31 @@ import fs from "node:fs";
 import { Message } from "./message.js";
 import { parseMessage } from "./data.js";
 
+import { getState, getEvent } from "./state.js";
+
 import { WebSocketServer } from "ws";
 import { Strings } from "./ansi.js";
+import { ServerMessage } from "../../common/ServerMessage.js";
+const wss = new WebSocketServer({ port: 42069, host: "localhost" });
+
+/** @param msg {ServerMessage} */
+function broadcast(msg) {
+    wss.clients.forEach(function each(client) {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify(msg));
+        }
+    });
+}
 
 /** @param n {number} */
 async function readMessage(n) {
-    const file = await fs.openAsBlob("../../sac_24-25/lib/pid_py/out/msg-" + n);
+    let path = "../../sac_24-25/lib/pid_py/out/msg-" + n;
+    if (!fs.existsSync(path)) {
+        var close = new ServerMessage("event", "done");
+        broadcast(close);
+        return;
+    }
+    const file = await fs.openAsBlob(path);
 
     const buf = new Uint8Array(await file.arrayBuffer());
 
@@ -30,21 +49,35 @@ async function readMessage(n) {
     const msg = new Message(new Uint8Array(newBuf));
 
     var ret = parseMessage(msg);
-    // if (ret !== "") {
-    //     console.log(ret);
+    var send = null;
+    if (ret === "event") {
+        send = new ServerMessage("state", getEvent());
+    } else if (ret === "state") {
+        send = new ServerMessage("state", getState());
+    }
+    if (send !== null) {
+        broadcast(send);
+    }
+    // if (n !== 0) {
+    setTimeout(function () {
+        readMessage(n + 1);
+    }, 10);
     // }
 }
 
-await readMessage(0);
-await readMessage(1);
-await readMessage(2);
-await readMessage(3);
+// await readMessage(0);
 console.log(`${Strings.Ok}: Starting websocket server`);
 
-const wss = new WebSocketServer({ port: 42069, host: "localhost" });
+var read1 = false;
 
 wss.on("connection", function (ws) {
-    ws.on("message", function (msg) {
+    if (!read1) {
+        setTimeout(function () {
+            readMessage(0);
+            read1 = true;
+        }, 1000);
+    }
+    ws.on("message", function (_) {
         console.log(
             `${Strings.Warn}: Messages from the browser ui are currently not supported`,
         );
@@ -52,6 +85,9 @@ wss.on("connection", function (ws) {
     ws.on("close", function () {
         console.log(`${Strings.Warn}: Websocket connection closing`);
     });
-    ws.send("sup");
+    var msg = new ServerMessage("event", getEvent());
+    ws.send(JSON.stringify(msg));
+    msg = new ServerMessage("state", getState());
+    ws.send(JSON.stringify(msg));
     console.log(`${Strings.Ok}: Websocket connection successful`);
 });
