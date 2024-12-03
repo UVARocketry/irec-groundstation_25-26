@@ -2,6 +2,7 @@
 /** @import p5 from p5 */
 
 var width, height;
+var startState = null;
 var light = true;
 const port = 42069;
 /** @type {WebSocket?} */
@@ -19,6 +20,9 @@ function onWsMessage(event) {
         currentEvent = msg.data;
     } else if (msg.type == "state") {
         currentState = msg.data;
+        if (startState == null) {
+            startState = currentState;
+        }
     }
 }
 
@@ -168,7 +172,7 @@ const s = (pi) => {
                 points.push(point);
             }
         }
-        for (var o = 0; o < Math.PI; o += 0.5) {
+        for (var o = 1; o < Math.PI; o += 0.5) {
             for (var t = 0; t < 2 * Math.PI; t += 1) {
                 /** @type {Quaternion} */
                 var point = {
@@ -204,6 +208,18 @@ const s = (pi) => {
             };
             points.push(point);
         }
+        // for (var i = 0; i < 100; i++) {
+        //     for (var t = 0; t < 2 * Math.PI; t += 0.4) {
+        //         /** @type {Quaternion} */
+        //         var point = {
+        //             w: 0,
+        //             x: Math.sin(t) * i,
+        //             y: Math.cos(t) * i,
+        //             z: -currentState?.kalmanPosZ || 0,
+        //         };
+        //         points.push(point);
+        //     }
+        // }
         if (
             currentState.orientationW !== null &&
             currentState.orientationW !== undefined
@@ -222,8 +238,20 @@ const s = (pi) => {
                 z: currentState?.orientationZ,
             };
             normalize(quat);
-            p.strokeWeight(3);
+            var i = 0;
+            var z = currentState.kalmanPosZ - 1050;
+            console.log(z);
+            var m = (3500 - z) / 3000;
+            p.strokeWeight(3 * m);
+            p.stroke(0);
+            for (var i = 0; i < 100; i++) {
+                for (var t = 0; t < 2 * Math.PI; t += 0.4) {
+                    var rad = i * m;
+                    p.point(Math.sin(t) * rad + 200, Math.cos(t) * rad + 400);
+                }
+            }
             p.stroke(255, 0, 0);
+            p.strokeWeight(3);
             for (const point of points) {
                 var p2 = mult(mult(quat, point), inverse(quat));
                 p.point(p2.x + 200, p2.z + 200);
