@@ -189,21 +189,21 @@ const s = (pi) => {
             var point = {
                 w: 0,
                 x: (i + 10) * Math.sin(Math.PI),
-                y: 0,
+                y: (i + 10) * Math.cos(Math.PI),
                 z: 40 + i,
             };
             points.push(point);
             point = {
                 w: 0,
-                x: (i + 10) * Math.sin(-Math.PI / 6),
-                y: (i + 10) * Math.sin(-Math.PI / 6),
+                x: (i + 10) * Math.sin(-Math.PI / 3),
+                y: (i + 10) * Math.cos(-Math.PI / 3),
                 z: 40 + i,
             };
             points.push(point);
             point = {
                 w: 0,
-                x: (i + 10) * Math.sin(Math.PI / 6),
-                y: (i + 10) * Math.sin(Math.PI / 6),
+                x: (i + 10) * Math.sin(Math.PI / 3),
+                y: (i + 10) * Math.cos(Math.PI / 3),
                 z: 40 + i,
             };
             points.push(point);
@@ -230,6 +230,7 @@ const s = (pi) => {
                 currentState.kalmanVelZ,
             );
             p.text("Velocity: " + Math.round(vel.mag()) + " m/s", 300, 40);
+            p.text("wh: " + p.windowWidth + ", " + p.windowHeight, 300, 80);
             /** @type {Quaternion} */
             var quat = {
                 w: currentState?.orientationW,
@@ -240,7 +241,7 @@ const s = (pi) => {
             normalize(quat);
             var i = 0;
             var z = currentState.kalmanPosZ - 1050;
-            console.log(z);
+            // console.log(z);
             var m = (3500 - z) / 3000;
             p.strokeWeight(3 * m);
             p.stroke(0);
