@@ -39,6 +39,10 @@ Connect to the server, then just render the data it sends
 Currently, a clone of simulation generated data can be found in the out/ folder in this repo. To run a test using that, open up the ui/index.html file in a browser (you should be able to do that by double clicking it in the file explorer), then open a terminal and run the commands: `cd server` and `node .` (assuming nodejs is installed on your laptop)
 Note that opening the index.html file and running `node .` can be done in any order you want
 
+## Protocols
+
+Each communication layer has a different protocol (mostly because of different bandwidth allowances in each layer). The following sections outline each protocol
+
 ## Rocket-Receiver Communication protocol
 
 Following is outlined the message layout for the packets sent from the rocket.
