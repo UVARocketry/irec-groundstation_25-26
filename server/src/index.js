@@ -8,7 +8,8 @@ import { getState, getEvent } from "./state.js";
 import { WebSocketServer } from "ws";
 import { Strings } from "./ansi.js";
 import { ServerMessage } from "../../common/ServerMessage.js";
-const wss = new WebSocketServer({ port: 42069, host: "localhost" });
+const port = 42069;
+const wss = new WebSocketServer({ port: port, host: "localhost" });
 
 /** @param msg {ServerMessage} */
 function broadcast(msg) {
@@ -21,7 +22,7 @@ function broadcast(msg) {
 
 /** @param n {number} */
 async function readMessage(n) {
-    let path = "../../sac_24-25/lib/pid_py/out/msg-" + n;
+    let path = "../out/msg-" + n;
     if (!fs.existsSync(path)) {
         var close = new ServerMessage("event", "done");
         broadcast(close);
@@ -66,7 +67,7 @@ async function readMessage(n) {
 }
 
 // await readMessage(0);
-console.log(`${Strings.Ok}: Starting websocket server`);
+console.log(`${Strings.Ok}: Starting websocket server at port ${port}`);
 
 var read1 = false;
 

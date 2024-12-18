@@ -10,14 +10,8 @@ export const MessageType = {
     Metadata: 1,
     /// a struct with the update bits
     DataUpdate: 2,
-    /// a message to test the connection
-    /// Expects a response from the receiver
-    ConnectionTest: 3,
-    /// sent by the listener that they received a message
-    /// (with the message type received as the payload)
-    Acknowledgement: 4,
     /// for sending an event (eg statemachine state change)
-    Event: 5,
+    Event: 3,
     Undefined: -1,
 };
 export class Message {

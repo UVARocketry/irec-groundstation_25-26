@@ -108,23 +108,28 @@ function inverse(q) {
 }
 
 function wsTryConnect() {
-    if (ws === null || ws.readyState === ws.CLOSED) {
-        var url = "ws://localhost:" + port;
-        console.log("Attempting connection to " + url);
-        ws = new WebSocket(url);
-        ws.onmessage = onWsMessage;
-        ws.binaryType = "blob";
-        ws.onopen = function () {
-            console.log("Connected");
+    try {
+        if (ws === null || ws.readyState === ws.CLOSED) {
+            var url = "ws://localhost:" + port;
+            console.log("Attempting connection to " + url);
+            ws = new WebSocket(url);
+            ws.onmessage = onWsMessage;
+            ws.binaryType = "blob";
+            ws.onopen = function () {
+                console.log("Connected");
 
-            if (ws !== null) {
-                ws.onclose = function () {
-                    console.log("Connection gone");
-                    currentEvent = "disconnected";
-                };
-            }
-            currentEvent = "connected";
-        };
+                if (ws !== null) {
+                    ws.onclose = function () {
+                        console.log("Connection gone");
+                        currentEvent = "disconnected";
+                    };
+                }
+                currentEvent = "connected";
+            };
+        }
+    } catch (_) {
+        console.log("Error in ws connection attempt");
+        ws = null;
     }
 }
 /** @type {p5}*/
@@ -261,9 +266,7 @@ const s = (pi) => {
             p.noStroke();
         }
         // console.log(currentEvent);
-        try {
-            wsTryConnect();
-        } catch (_) {}
+        wsTryConnect();
     };
     pi.mouseDragged = function () {};
     pi.mouseClicked = function () {};

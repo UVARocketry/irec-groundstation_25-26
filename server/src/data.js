@@ -9,15 +9,37 @@ var fieldSize = 0;
  * @param payload {string}
  */
 function parseSchema(payload) {
-    fieldSize = payload.charCodeAt(0);
+    // fieldSize = payload.charCodeAt(0);
 
-    schema = payload.slice(1, -1).split(",");
+    schema = payload.split(",").filter((v) => v.length !== 0);
 
     console.log(Strings.Ok + ": RECEIVED SCHEMA: " + schema.join(", "));
-    if (fieldSize !== 4 && fieldSize !== 8) {
-        console.log(Strings.Error + ": INVALID sizeof(FLOAT): " + fieldSize);
+}
+
+/**
+ * @param payload {string}
+ */
+function parseMetadata(payload) {
+    var mtype = payload.charCodeAt(0);
+    if (mtype === 0) {
+        fieldSize = payload.charCodeAt(1);
+        // console.log(payload.charCodeAt(1));
+        // console.log(payload.charCodeAt(2));
+        // console.log(payload.charCodeAt(3));
+        // console.log(payload.charCodeAt(4));
+        if (fieldSize !== 4 && fieldSize !== 8) {
+            console.log(
+                Strings.Error +
+                    ": INVALID sizeof(FLOAT): " +
+                    fieldSize +
+                    ". Defaulting to 4",
+            );
+            fieldSize = 4;
+        } else {
+            console.log(Strings.Ok + ": sizeof(FLOAT): " + fieldSize);
+        }
     } else {
-        console.log(Strings.Ok + ": sizeof(FLOAT): " + fieldSize);
+        console.log(Strings.Warn + ": UNKNOWN METADATA TYPE " + mtype);
     }
 }
 
@@ -82,6 +104,9 @@ export function parseMessage(msg) {
         parseSchema(str);
         setEvent("waiting");
         return "event";
+    } else if (msg.type === MessageType.Metadata) {
+        parseMetadata(str);
+        return "";
     } else if (msg.type === MessageType.DataUpdate) {
         parseData(msg.data);
         return "state";

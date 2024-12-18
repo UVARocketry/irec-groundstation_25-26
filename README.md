@@ -34,6 +34,11 @@ The server also needs to manage websocket connections
 
 Connect to the server, then just render the data it sends
 
+## How to run
+
+Currently, a clone of simulation generated data can be found in the out/ folder in this repo. To run a test using that, open up the ui/index.html file in a browser (you should be able to do that by double clicking it in the file explorer), then open a terminal and run the commands: `cd server` and `node .` (assuming nodejs is installed on your laptop)
+Note that opening the index.html file and running `node .` can be done in any order you want
+
 ## Rocket-Receiver Communication protocol
 
 Following is outlined the message layout for the packets sent from the rocket.
@@ -81,7 +86,7 @@ The contents of the binary vary depending on message type:
 
 If the message is Schema, the payload is a comma seperated list of the field names of `LogItem`
 
-If the message is Metadata, the first 4 bytes are a `LogMetadataType` (as defined in `lib/log/log.h` in the main rocket code). The next four bytes are a 32 bit integer containing the metadata value. Note that the actual payload size might change as more metadata message types are defined
+If the message is Metadata, the first byte is a `LogMetadataType` (as defined in `lib/log/log.h` in the main rocket code). The next four bytes are a 32 bit integer containing the metadata value. Note that the actual payload size might change as more metadata message types are defined
 
 if the message is DataUpdate, a binary representation of a `LogItem` (as defined in `lib/log/log.h`) is sent over for receivers to update their current rocket state
 
