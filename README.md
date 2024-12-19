@@ -34,6 +34,8 @@ The server also needs to manage websocket connections
 
 Connect to the server, then just render the data it sends
 
+If you are planning on working on the ui, please see the roughdraft ui/plan.jpg file for how I (Chris wood) would like it to eventually somewhat look like. If you have any other ideas, just make a different plan and run it by me
+
 ## How to run
 
 open a terminal and run the commands: `cd server` and `node .` (assuming nodejs is installed on your laptop). Then in a browser, navigate to [localhost:3000](http://localhost:3000)
