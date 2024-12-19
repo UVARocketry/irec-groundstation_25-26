@@ -18,6 +18,9 @@ var points = [];
 /** @type {Graph} */
 var altitudeGraph;
 
+/** @type {Dial} */
+var velocityDial;
+
 const s = (/** @type {p5} */ pi) => {
     p = pi;
     pi.setup = function () {
@@ -28,7 +31,7 @@ const s = (/** @type {p5} */ pi) => {
         $("canvas").contextmenu((e) => {
             e.preventDefault();
         });
-        p.angleMode(p.DEGREES);
+        p.angleMode(p.RADIANS);
 
         // attempt websocket connection
         wsTryConnect();
@@ -46,6 +49,20 @@ const s = (/** @type {p5} */ pi) => {
         );
         altitudeGraph.withMaxDatapoints(1000);
         altitudeGraph.withAlternateSeries(1, [p.color(0, 255, 255)]);
+
+        velocityDial = new Dial(
+            width / height - 0.8,
+            0.45,
+            0.2,
+            0.2,
+            (270 * Math.PI) / 180,
+            p.color(255, 0, 0),
+            p.color(125, 0, 0),
+            [0, 1300],
+            "VELOCITY",
+            5,
+        );
+        velocityDial.update(100);
     };
 
     pi.draw = function () {
@@ -127,8 +144,7 @@ const s = (/** @type {p5} */ pi) => {
             currentState.orientationW !== undefined
         ) {
             console.log(currentState);
-            alt =
-                currentState?.kalmanPosZ - currentState?.startState?.kalmanPosZ;
+            alt = currentState?.apogee - currentState?.startState?.kalmanPosZ;
             alt *= mtoft;
 
             expAp =
@@ -167,8 +183,12 @@ const s = (/** @type {p5} */ pi) => {
         }
         altitudeGraph.draw();
 
+        velocityDial.update(vel.mag());
+        velocityDial.draw();
+
         // reset stuff
         p.noStroke();
+        p.fill(0, 0, 0);
         p.textAlign(p.RIGHT);
 
         // apogee and expected apogee
