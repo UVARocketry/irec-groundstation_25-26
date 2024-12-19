@@ -1,5 +1,8 @@
 import fs from "node:fs";
 
+import http from "node:http";
+import path from "node:path";
+
 import { Message } from "./message.js";
 import { parseMessage } from "./data.js";
 
@@ -91,4 +94,71 @@ wss.on("connection", function (ws) {
     msg = new ServerMessage("state", getState());
     ws.send(JSON.stringify(msg));
     console.log(`${Strings.Ok}: Websocket connection successful`);
+});
+
+// a server to send off the files
+const server = http.createServer((req, res) => {
+    // If the user requests the root '/'
+    const searchDir = process.cwd() + "/../ui/";
+    const commonDir = process.cwd() + "/../common/";
+    if (req.url === "/") {
+        const indexPath = path.join(searchDir, "index.html");
+        console.log(indexPath);
+
+        // Serve index.html file
+        fs.readFile(indexPath, (err, data) => {
+            if (err) {
+                res.statusCode = 500;
+                res.end("Error loading index.html");
+            } else {
+                res.statusCode = 200;
+                res.setHeader("Content-Type", "text/html");
+                res.end(data);
+            }
+        });
+    } else {
+        // Serve other files from the file system
+        var url = req.url ?? "index.html";
+        let filePath = path.join(searchDir, url);
+
+        console.log(url);
+        if (url.startsWith("/common") || url.startsWith("common")) {
+            filePath = path.join(commonDir, url);
+        }
+
+        // Check if file exists
+        fs.exists(filePath, (exists) => {
+            if (exists) {
+                fs.readFile(filePath, (err, data) => {
+                    if (err) {
+                        res.statusCode = 500;
+                        res.end("Error reading the file");
+                    } else {
+                        // Guess the content type based on file extension
+                        let contentType = "text/plain";
+                        if (filePath.endsWith(".html")) {
+                            contentType = "text/html";
+                        } else if (filePath.endsWith(".css")) {
+                            contentType = "text/css";
+                        } else if (filePath.endsWith(".js")) {
+                            contentType = "application/javascript";
+                        }
+
+                        res.statusCode = 200;
+                        res.setHeader("Content-Type", contentType);
+                        res.end(data);
+                    }
+                });
+            } else {
+                res.statusCode = 404;
+                res.end("File not found");
+            }
+        });
+    }
+});
+
+// Set the server to listen on port 3000
+const PORT = 3000;
+server.listen(PORT, () => {
+    console.log(`${Strings.Ok}: Server running at http://localhost:${PORT}`);
 });

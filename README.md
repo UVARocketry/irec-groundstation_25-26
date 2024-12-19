@@ -36,8 +36,7 @@ Connect to the server, then just render the data it sends
 
 ## How to run
 
-Currently, a clone of simulation generated data can be found in the out/ folder in this repo. To run a test using that, open up the ui/index.html file in a browser (you should be able to do that by double clicking it in the file explorer), then open a terminal and run the commands: `cd server` and `node .` (assuming nodejs is installed on your laptop)
-Note that opening the index.html file and running `node .` can be done in any order you want
+open a terminal and run the commands: `cd server` and `node .` (assuming nodejs is installed on your laptop). Then in a browser, navigate to [localhost:3000](http://localhost:3000)
 
 ## Protocols
 

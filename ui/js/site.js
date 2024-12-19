@@ -5,6 +5,9 @@ var width, height;
 var startState = null;
 var light = true;
 const port = 42069;
+
+var startingAltitude = null;
+
 /** @type {WebSocket?} */
 var ws = null;
 
@@ -117,6 +120,7 @@ function wsTryConnect() {
             ws.binaryType = "blob";
             ws.onopen = function () {
                 console.log("Connected");
+                startingAltitude = null;
 
                 if (ws !== null) {
                     ws.onclose = function () {
@@ -138,8 +142,10 @@ var p;
 /** @type {Vector[]} */
 var points = [];
 
-//Just dont look in here
-const s = (pi) => {
+/** @type {Graph} */
+var altitudeGraph;
+
+const s = (/** @type {p5} */ pi) => {
     p = pi;
     pi.setup = function () {
         pi.createCanvas(p.windowWidth, p.windowHeight);
@@ -150,6 +156,18 @@ const s = (pi) => {
         });
         p.angleMode(p.DEGREES);
         wsTryConnect();
+        altitudeGraph = new Graph(
+            width / height - 0.8,
+            0.78,
+            0.8,
+            0.2,
+            pi.color(255, 0, 0),
+            "Altitude",
+            [3500, 0],
+            4,
+        );
+        altitudeGraph.withMaxDatapoints(1000);
+        altitudeGraph.withAlternateSeries(1, [p.color(0, 255, 255)]);
     };
 
     pi.draw = function () {
@@ -229,6 +247,13 @@ const s = (pi) => {
             currentState.orientationW !== null &&
             currentState.orientationW !== undefined
         ) {
+            if (startingAltitude === null) {
+                startingAltitude = currentState?.kalmanPosZ;
+            }
+            altitudeGraph.addDatapoint(
+                currentState?.kalmanPosZ - startingAltitude,
+                [currentState?.predictedApogee - startingAltitude],
+            );
             var vel = p.createVector(
                 currentState.kalmanVelX,
                 currentState.kalmanVelY,
@@ -265,6 +290,9 @@ const s = (pi) => {
             }
             p.noStroke();
         }
+        altitudeGraph.draw();
+        p.noStroke();
+        p.textAlign(p.LEFT);
         // console.log(currentEvent);
         wsTryConnect();
     };
