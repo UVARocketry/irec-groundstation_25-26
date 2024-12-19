@@ -91,9 +91,11 @@ class Graph {
     }
     /**
      * @param {number[]} d
+     * @param {number[][]} altData
      */
-    inputData(d) {
+    inputData(d, altData) {
         this.data = d;
+        this.altData = altData;
     }
 
     /**

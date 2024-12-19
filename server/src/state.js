@@ -1,3 +1,4 @@
+var startingState = null;
 var currentState = {};
 
 /** @type {string} */
@@ -17,6 +18,7 @@ export function setEvent(e) {
 
 /** @return {Object} */
 export function getState() {
+    currentState.startState = startingState;
     return currentState;
 }
 
@@ -24,4 +26,7 @@ export function getState() {
  * @param s {Object} */
 export function setState(s) {
     currentState = s;
+    if (startingState == null) {
+        startingState = { ...s };
+    }
 }
