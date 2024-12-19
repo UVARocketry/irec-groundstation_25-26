@@ -1,6 +1,9 @@
 ﻿/** @import { Vector } from "p5"; */
 /** @import p5 from p5 */
 
+/// converts meters to feet
+const mtoft = 3.28084;
+
 var width, height;
 var startState = null;
 var light = true;
@@ -163,7 +166,7 @@ const s = (/** @type {p5} */ pi) => {
             0.2,
             pi.color(255, 0, 0),
             "Altitude",
-            [3500, 0],
+            [10300, 0],
             4,
         );
         altitudeGraph.withMaxDatapoints(1000);
@@ -243,17 +246,20 @@ const s = (/** @type {p5} */ pi) => {
         //         points.push(point);
         //     }
         // }
+        var alt = 0;
+        var expAp = 0;
         if (
             currentState.orientationW !== null &&
             currentState.orientationW !== undefined
         ) {
+            alt = currentState?.kalmanPosZ - startingAltitude;
+            alt *= mtoft;
+            expAp = currentState?.predictedApogee - startingAltitude;
+            expAp *= mtoft;
             if (startingAltitude === null) {
                 startingAltitude = currentState?.kalmanPosZ;
             }
-            altitudeGraph.addDatapoint(
-                currentState?.kalmanPosZ - startingAltitude,
-                [currentState?.predictedApogee - startingAltitude],
-            );
+            altitudeGraph.addDatapoint(alt, [expAp]);
             var vel = p.createVector(
                 currentState.kalmanVelX,
                 currentState.kalmanVelY,
@@ -293,6 +299,11 @@ const s = (/** @type {p5} */ pi) => {
         altitudeGraph.draw();
         p.noStroke();
         p.textAlign(p.LEFT);
+        p.textSize(height * 0.035);
+        p.text("Apogee: ", width - 0.8 * height, 0.7 * height);
+        p.text(limDecimal(alt), width - 0.75 * height, 0.75 * height);
+        p.text("Predicted Apogee: ", width - 0.5 * height, 0.7 * height);
+        p.text(limDecimal(expAp), width - 0.35 * height, 0.75 * height);
         // console.log(currentEvent);
         wsTryConnect();
     };
