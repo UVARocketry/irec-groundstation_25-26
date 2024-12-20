@@ -19,7 +19,7 @@ var points = [];
 var altitudeGraph;
 
 /** @type {Dial} */
-var velocityDial;
+var velocityDial, accelerationDial, actualDeplDial, expectedDeplDial;
 
 const s = (/** @type {p5} */ pi) => {
     p = pi;
@@ -59,10 +59,45 @@ const s = (/** @type {p5} */ pi) => {
             p.color(255, 0, 0),
             p.color(125, 0, 0),
             [0, 1300],
-            "VELOCITY",
+            "VELOCITY\n(ft/s)",
             5,
         );
-        velocityDial.update(100);
+        accelerationDial = new Dial(
+            width / height - 0.53,
+            0.45,
+            0.2,
+            0.2,
+            (270 * Math.PI) / 180,
+            p.color(255, 0, 0),
+            p.color(125, 0, 0),
+            [0, 30],
+            "ACCEL\n(g)",
+            5,
+        );
+        actualDeplDial = new Dial(
+            width / height - 0.26,
+            0.45,
+            0.2,
+            0.2,
+            (270 * Math.PI) / 180,
+            p.color(255, 0, 0),
+            p.color(125, 0, 0),
+            [0, 100],
+            "DEPLOYMENT\n(actual pct)",
+            5,
+        );
+        expectedDeplDial = new Dial(
+            width / height - 0.26,
+            0.22,
+            0.2,
+            0.2,
+            (270 * Math.PI) / 180,
+            p.color(255, 0, 0),
+            p.color(125, 0, 0),
+            [0, 100],
+            "DEPLOYMENT\n(expected pct)",
+            5,
+        );
     };
 
     pi.draw = function () {
@@ -135,24 +170,37 @@ const s = (/** @type {p5} */ pi) => {
         }
 
         // parse data packets
-        var alt = 0;
+        var ap = 0;
         var expAp = 0;
+        var alt = 0;
         var vel = p.createVector(0, 0, 0);
+        var acc = p.createVector(0, 0, 0);
+        var deplExp = 0;
+        var deplActual = 0;
         if (
-            // just use orientationW to check if everythings there
-            currentState.orientationW !== null &&
-            currentState.orientationW !== undefined
+            currentState !== null &&
+            currentState.startState !== null &&
+            currentState.startState !== undefined
         ) {
-            console.log(currentState);
-            alt = currentState?.apogee - currentState?.startState?.kalmanPosZ;
-            alt *= mtoft;
+            deplExp = currentState.pidDeployment;
+            deplActual = currentState.actualDeployment;
+            ap = currentState.apogee - currentState.startState.kalmanPosZ;
+            ap *= mtoft;
 
             expAp =
-                currentState?.predictedApogee -
-                currentState?.startState?.kalmanPosZ;
+                currentState.predictedApogee -
+                currentState.startState.kalmanPosZ;
             expAp *= mtoft;
 
-            altitudeGraph.addDatapoint(alt, [expAp]);
+            alt = currentState.kalmanPosZ - currentState.startState.kalmanPosZ;
+            alt *= mtoft;
+
+            altitudeGraph.addDatapoint(ap, [expAp]);
+            acc = p.createVector(
+                currentState.accX / 9.8,
+                currentState.accY / 9.8,
+                currentState.accZ / 9.8,
+            );
             vel = p.createVector(
                 currentState.kalmanVelX * mtoft,
                 currentState.kalmanVelY * mtoft,
@@ -161,10 +209,10 @@ const s = (/** @type {p5} */ pi) => {
             /** @type {Quaternion} */
             // show the rockets
             var quat = {
-                w: currentState?.orientationW,
-                x: currentState?.orientationX,
-                y: currentState?.orientationY,
-                z: currentState?.orientationZ,
+                w: currentState.orientationW,
+                x: currentState.orientationX,
+                y: currentState.orientationY,
+                z: currentState.orientationZ,
             };
             quatnormalize(quat);
             var i = 0;
@@ -185,21 +233,46 @@ const s = (/** @type {p5} */ pi) => {
 
         velocityDial.update(vel.mag());
         velocityDial.draw();
+        accelerationDial.update(acc.mag());
+        accelerationDial.draw();
+        actualDeplDial.update(deplActual * 100);
+        actualDeplDial.draw();
+        actualDeplDial.update(deplExp * 100);
+        expectedDeplDial.draw();
+
+        // show the raw values for velocity and acceleration
+        p.textSize(height * 0.013);
+        p.textAlign(p.CENTER);
+        p.noStroke();
+        p.fill(0);
+        p.text(
+            `(${limDecimal(vel.x)}, ${limDecimal(vel.y)}, ${limDecimal(vel.z)})`,
+            (velocityDial.x + velocityDial.width / 2) * height,
+            (velocityDial.y + velocityDial.height) * height,
+        );
+        p.text(
+            `(${limDecimal(acc.x)}, ${limDecimal(acc.y)}, ${limDecimal(acc.z)})`,
+            (accelerationDial.x + accelerationDial.width / 2) * height,
+            (accelerationDial.y + accelerationDial.height) * height,
+        );
 
         // reset stuff
         p.noStroke();
         p.fill(0, 0, 0);
-        p.textAlign(p.RIGHT);
 
         // apogee and expected apogee
         p.textSize(height * 0.035);
-        p.text("Apogee: ", width - 0.6 * height, 0.7 * height);
-        p.text(limDecimal(alt), width - 0.55 * height, 0.75 * height);
-        p.text("Predicted Apogee: ", width - 0.2 * height, 0.7 * height);
-        p.text(limDecimal(expAp), width - 0.15 * height, 0.75 * height);
+        p.textAlign(p.CENTER);
+        p.text("Apogee: ", width - 0.7 * height, 0.72 * height);
+        p.text("Predicted: ", width - 0.45 * height, 0.72 * height);
+        p.text("Altitude: ", width - 0.2 * height, 0.72 * height);
         p.textSize(height * 0.025);
-        p.text("ft", width - 0.53 * height, 0.75 * height);
-        p.text("ft", width - 0.13 * height, 0.75 * height);
+        const apStr = limDecimal(ap) + " ft";
+        const expApStr = limDecimal(expAp) + " ft";
+        const altStr = limDecimal(alt) + " ft";
+        p.text(apStr, width - 0.7 * height, 0.75 * height);
+        p.text(expApStr, width - 0.45 * height, 0.75 * height);
+        p.text(altStr, width - 0.2 * height, 0.75 * height);
         p.textSize(height * 0.035);
         p.textAlign(p.LEFT);
         // velocity view

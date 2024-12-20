@@ -103,14 +103,15 @@ const server = http.createServer((req, res) => {
     const commonDir = process.cwd() + "/../common/";
     if (req.url === "/") {
         const indexPath = path.join(searchDir, "index.html");
-        console.log(indexPath);
 
         // Serve index.html file
         fs.readFile(indexPath, (err, data) => {
             if (err) {
                 res.statusCode = 500;
                 res.end("Error loading index.html");
+                console.log(`${Strings.Warn}: Request for ${indexPath} failed`);
             } else {
+                console.log(`${Strings.Ok}: Request for ${indexPath}`);
                 res.statusCode = 200;
                 res.setHeader("Content-Type", "text/html");
                 res.end(data);
@@ -121,10 +122,10 @@ const server = http.createServer((req, res) => {
         var url = req.url ?? "index.html";
         let filePath = path.join(searchDir, url);
 
-        console.log(url);
         if (url.startsWith("/common") || url.startsWith("common")) {
             filePath = path.join(commonDir, url);
         }
+        const prettyPath = filePath.replace(process.cwd(), "");
 
         // Check if file exists
         fs.exists(filePath, (exists) => {
@@ -133,6 +134,9 @@ const server = http.createServer((req, res) => {
                     if (err) {
                         res.statusCode = 500;
                         res.end("Error reading the file");
+                        console.log(
+                            `${Strings.Warn}: Request for ${prettyPath} failed`,
+                        );
                     } else {
                         // Guess the content type based on file extension
                         let contentType = "text/plain";
@@ -147,9 +151,13 @@ const server = http.createServer((req, res) => {
                         res.statusCode = 200;
                         res.setHeader("Content-Type", contentType);
                         res.end(data);
+                        console.log(`${Strings.Ok}: Request for ${prettyPath}`);
                     }
                 });
             } else {
+                console.log(
+                    `${Strings.Error}: Request for ${prettyPath} failed`,
+                );
                 res.statusCode = 404;
                 res.end("File not found");
             }

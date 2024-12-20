@@ -1,7 +1,8 @@
 /** @type {WebSocket?} */
 var ws = null;
 
-var currentState = {};
+/** @type {LogItem?} */
+var currentState = null;
 var currentEvent = "disconnected";
 /**
  * @param event {MessageEvent}
