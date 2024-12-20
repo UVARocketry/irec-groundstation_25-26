@@ -182,6 +182,7 @@ const s = (/** @type {p5} */ pi) => {
             currentState.startState !== null &&
             currentState.startState !== undefined
         ) {
+            console.log(currentState);
             deplExp = currentState.pidDeployment;
             deplActual = currentState.actualDeployment;
             ap = currentState.apogee - currentState.startState.kalmanPosZ;
@@ -237,7 +238,7 @@ const s = (/** @type {p5} */ pi) => {
         accelerationDial.draw();
         actualDeplDial.update(deplActual * 100);
         actualDeplDial.draw();
-        actualDeplDial.update(deplExp * 100);
+        expectedDeplDial.update(deplExp * 100);
         expectedDeplDial.draw();
 
         // show the raw values for velocity and acceleration
