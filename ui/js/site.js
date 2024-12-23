@@ -1,13 +1,23 @@
 ﻿/** @import { Vector } from "p5"; */
 /** @import p5 from p5 */
+import { Dial } from "./dial.js";
+import { Graph } from "./graph.js";
+import {
+    Quaternion,
+    quatinverse,
+    quatmult,
+    quatnormalize,
+} from "./quaternion.js";
+import { limDecimal } from "./utils.js";
+import { getCurrentState, getCurrentEvent, wsTryConnect } from "./websocket.js";
 
 /// converts meters to feet
 const mtoft = 3.28084;
 
 // global width and height of canvas
 var width, height;
-var light = true;
-const port = 42069;
+export var light = true;
+export const port = 42069;
 
 /** @type {p5}*/
 var p;
@@ -16,12 +26,19 @@ var p;
 var points = [];
 
 /** @type {Graph} */
-var altitudeGraph;
+export var altitudeGraph;
 
 /** @type {Dial} */
 var velocityDial, accelerationDial, actualDeplDial, expectedDeplDial;
 
-const s = (/** @type {p5} */ pi) => {
+export function getP5() {
+    return p;
+}
+export function getHeight() {
+    return height;
+}
+
+export const s = (/** @type {p5} */ pi) => {
     p = pi;
     pi.setup = function () {
         // setup globals
@@ -113,7 +130,8 @@ const s = (/** @type {p5} */ pi) => {
 
         // tell everyone our current event
         p.textSize(30);
-        p.text("Event: " + currentEvent, 10, 40);
+        var ce = getCurrentEvent();
+        p.text("Event: " + ce, 10, 40);
         /** @type {Quaternion[]} */
         var points = [];
 
@@ -177,47 +195,46 @@ const s = (/** @type {p5} */ pi) => {
         var acc = p.createVector(0, 0, 0);
         var deplExp = 0;
         var deplActual = 0;
+        var state = getCurrentState();
         if (
-            currentState !== null &&
-            currentState.startState !== null &&
-            currentState.startState !== undefined
+            state !== null &&
+            state.startState !== null &&
+            state.startState !== undefined
         ) {
-            console.log(currentState);
-            deplExp = currentState.pidDeployment;
-            deplActual = currentState.actualDeployment;
-            ap = currentState.apogee - currentState.startState.kalmanPosZ;
+            // console.log(state);
+            deplExp = state.pidDeployment;
+            deplActual = state.actualDeployment;
+            ap = state.apogee - state.startState.kalmanPosZ;
             ap *= mtoft;
 
-            expAp =
-                currentState.predictedApogee -
-                currentState.startState.kalmanPosZ;
+            expAp = state.predictedApogee - state.startState.kalmanPosZ;
             expAp *= mtoft;
 
-            alt = currentState.kalmanPosZ - currentState.startState.kalmanPosZ;
+            alt = state.kalmanPosZ - state.startState.kalmanPosZ;
             alt *= mtoft;
 
             altitudeGraph.addDatapoint(ap, [expAp]);
             acc = p.createVector(
-                currentState.accX / 9.8,
-                currentState.accY / 9.8,
-                currentState.accZ / 9.8,
+                state.accX / 9.8,
+                state.accY / 9.8,
+                state.accZ / 9.8,
             );
             vel = p.createVector(
-                currentState.kalmanVelX * mtoft,
-                currentState.kalmanVelY * mtoft,
-                currentState.kalmanVelZ * mtoft,
+                state.kalmanVelX * mtoft,
+                state.kalmanVelY * mtoft,
+                state.kalmanVelZ * mtoft,
             );
             /** @type {Quaternion} */
             // show the rockets
             var quat = {
-                w: currentState.orientationW,
-                x: currentState.orientationX,
-                y: currentState.orientationY,
-                z: currentState.orientationZ,
+                w: state.orientationW,
+                x: state.orientationX,
+                y: state.orientationY,
+                z: state.orientationZ,
             };
             quatnormalize(quat);
             var i = 0;
-            var z = currentState.kalmanPosZ - 1050;
+            var z = state.kalmanPosZ - 1050;
             var m = (3500 - z) / 3000;
             p.strokeWeight(3 * m);
             p.stroke(255, 0, 0);

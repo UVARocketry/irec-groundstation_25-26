@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "baseUrl": "js",
+        "paths": {
+            "src/*": [
+                "./*"
+            ]
+        },
+        "moduleResolution": "node",
+        "checkJs": true,
+        "target": "ESNext",
+        "module": "preserve",
+        "strictNullChecks": true,
+        "resolveJsonModule": true
+    },
+    "exclude": [
+        "docs",
+        "thinking"
+    ]
+}

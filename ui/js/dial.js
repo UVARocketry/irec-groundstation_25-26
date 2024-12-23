@@ -1,4 +1,8 @@
-class Dial {
+import { getHeight, getP5 } from "./site.js";
+import { limDecimal } from "./utils.js";
+
+/** @import p5 from p5 */
+export class Dial {
     /// the angle sweep of the dial arc
     angleSweep = 0;
     /// the colors of the main arc
@@ -78,6 +82,8 @@ class Dial {
         this.point = v;
     }
     draw() {
+        const p = getP5();
+        const height = getHeight();
         p.noStroke();
         p.textAlign(p.CENTER);
         p.textSize(this.titleSize * height);

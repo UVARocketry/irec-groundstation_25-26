@@ -1,26 +1,8 @@
-/**
- * @param {number} num
- */
-function limDecimal(num, to = 2) {
-    var str = `${num}`;
-    var ret = "";
-    var count = 0;
-    var willCount = false;
-    for (var i of str) {
-        ret += i;
-        if (willCount) {
-            count++;
-            if (count >= to) {
-                break;
-            }
-        }
-        if (i == ".") {
-            willCount = true;
-        }
-    }
-    return ret;
-}
-class Graph {
+/** @import p5 from p5 */
+
+import { getHeight, getP5 } from "./site.js";
+import { limDecimal } from "./utils.js";
+export class Graph {
     /**
      * @type {number[]}
      */
@@ -140,6 +122,8 @@ class Graph {
         this.maxDatapoints = n;
     }
     draw() {
+        const p = getP5();
+        const height = getHeight();
         var dWidth = this.data.length;
         var xInc = this.width / dWidth;
         var rangeSize = this.range[0] - this.range[1];

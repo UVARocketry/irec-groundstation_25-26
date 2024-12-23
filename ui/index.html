@@ -16,13 +16,16 @@
     <body>
         <script src="./lib/jquery/dist/jquery.min.js"></script>
         <script src="./lib/p5.js/p5.min.js"></script>
-        <script src="./js/graph.js" asp-append-version="true"></script>
-        <script src="./js/dial.js" asp-append-version="true"></script>
-        <script src="./js/websocket.js" asp-append-version="true"></script>
-        <script src="./js/quaternion.js" asp-append-version="true"></script>
-        <script src="./js/site.js" asp-append-version="true"></script>
+        <script src="./common/LogItem.js" type="module"></script>
+        <script src="./common/ServerMessage.js" type="module"></script>
+        <!-- <script src="./js/graph.js"></script> -->
+        <!-- <script src="./js/dial.js"></script> -->
+        <!-- <script src="./js/websocket.js" type="module"></script> -->
+        <!-- <script src="./js/quaternion.js"></script> -->
+        <!-- <script src="./js/site.js" type="module"></script> -->
 
-        <script defer>
+        <script defer type="module">
+            import { s } from "./js/site.js";
             setTimeout(function () {
                 new p5(s); // invoke p5
             }, 500);

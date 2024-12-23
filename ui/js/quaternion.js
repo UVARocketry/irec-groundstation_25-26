@@ -1,4 +1,4 @@
-class Quaternion {
+export class Quaternion {
     /** @type {number}*/
     w = 0;
     /** @type {number}*/
@@ -16,7 +16,7 @@ var q1 = { w: 0, x: 0, y: 0, z: 0 };
  * @param q1 {Quaternion}
  * @param q2 {Quaternion}
  */
-function quatmult(q1, q2) {
+export function quatmult(q1, q2) {
     var a = q1.w;
     var b = q1.x;
     var c = q1.y;
@@ -37,28 +37,28 @@ function quatmult(q1, q2) {
 /**
  * @param q {Quaternion}
  */
-function quattoString(q) {
+export function quattoString(q) {
     return "w: " + q.w + ", \nx: " + q.x + ",\ny: " + q.y + ",\nz: " + q.z;
 }
 //Get the conjugate of a quaternion
 /**
  * @param q {Quaternion}
  */
-function quatconj(q) {
+export function quatconj(q) {
     return { w: q.w, x: -q.x, y: -q.y, z: -q.z };
 }
 //Get the norm of a quaternion
 /**
  * @param q {Quaternion}
  */
-function quatnorm(q) {
+export function quatnorm(q) {
     return Math.sqrt(q.w * q.w + q.x * q.x + q.y * q.y + q.z * q.z);
 }
 //Normalize a quaternion
 /**
  * @param q {Quaternion}
  */
-function quatnormalize(q) {
+export function quatnormalize(q) {
     var n = quatnorm(q);
     q.w /= n;
     q.y /= n;
@@ -69,7 +69,7 @@ function quatnormalize(q) {
 /**
  * @param q {Quaternion}
  */
-function quatinverse(q) {
+export function quatinverse(q) {
     var c = quatconj(q);
     var qn = Math.pow(quatnorm(q), 2);
     c.w /= qn;
