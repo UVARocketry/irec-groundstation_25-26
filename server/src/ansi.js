@@ -1,4 +1,4 @@
-export const Codes = {
+export const AnsiCodes = {
     Reset: "\x1b[0m",
     Bright: "\x1b[1m",
     Dim: "\x1b[2m",
@@ -29,7 +29,7 @@ export const Codes = {
 };
 
 export const Strings = {
-    Error: `${Codes.FgRed}ERROR${Codes.FgWhite}`,
-    Ok: `${Codes.FgGreen}OK${Codes.FgWhite}`,
-    Warn: `${Codes.FgYellow}WARN${Codes.FgWhite}`,
+    Error: `${AnsiCodes.FgRed}ERROR${AnsiCodes.FgWhite}`,
+    Ok: `${AnsiCodes.FgGreen}OK${AnsiCodes.FgWhite}`,
+    Warn: `${AnsiCodes.FgYellow}WARN${AnsiCodes.FgWhite}`,
 };

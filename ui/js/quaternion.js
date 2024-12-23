@@ -7,10 +7,20 @@ export class Quaternion {
     y = 0;
     /** @type {number}*/
     z = 0;
+    /**
+     * @param {number} w
+     * @param {number} x
+     * @param {number} y
+     * @param {number} z
+     */
+    constructor(w, x, y, z) {
+        this.w = w;
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
 }
 
-//The rotation quaternion, set in the draw function
-var q1 = { w: 0, x: 0, y: 0, z: 0 };
 //Multiply 2 quaternions
 /**
  * @param q1 {Quaternion}

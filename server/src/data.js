@@ -1,16 +1,54 @@
+// This file exists entirely to parse a Message payload and return an action to be done
 import { Message, MessageType } from "./message.js";
 
 import { Strings } from "./ansi.js";
 import { setEvent, setState } from "./state.js";
+
+/** @import { EventType } from '../../common/ServerMessage.js' */
+
+// some data to store
 /** @type {string[]} */
 var schema = [];
 var fieldSize = 0;
+
+/**
+ * @param msg {Message}
+ * @return {EventType|""}
+ */
+export function parseMessage(msg) {
+    if (msg.version !== 0) {
+        console.error(
+            `${Strings.Error}: received a message that does not have currect version number (0) (got version ${msg.version}). Packet parse skipped`,
+        );
+        return "";
+    }
+    if (!msg.valid) {
+        console.error(
+            `${Strings.Error}: Received invalid packet. Packet parse skipped`,
+        );
+        return "";
+    }
+    var str = new TextDecoder().decode(msg.data);
+    if (msg.type === MessageType.Schema) {
+        parseSchema(str);
+        setEvent("waiting");
+        return "event";
+    } else if (msg.type === MessageType.Metadata) {
+        parseMetadata(str);
+        return "";
+    } else if (msg.type === MessageType.DataUpdate) {
+        parseData(msg.data);
+        return "state";
+    } else if (msg.type === MessageType.Event) {
+        console.error(`${Strings.Error}: Currently cant handle event updates`);
+        return "event";
+    }
+    return "";
+}
 /**
  * @param payload {string}
  */
 function parseSchema(payload) {
-    // fieldSize = payload.charCodeAt(0);
-
     schema = payload.split(",").filter((v) => v.length !== 0);
 
     console.log(Strings.Ok + ": RECEIVED SCHEMA: " + schema.join(", "));
@@ -23,10 +61,6 @@ function parseMetadata(payload) {
     var mtype = payload.charCodeAt(0);
     if (mtype === 0) {
         fieldSize = payload.charCodeAt(1);
-        // console.log(payload.charCodeAt(1));
-        // console.log(payload.charCodeAt(2));
-        // console.log(payload.charCodeAt(3));
-        // console.log(payload.charCodeAt(4));
         if (fieldSize !== 4 && fieldSize !== 8) {
             console.log(
                 Strings.Error +
@@ -75,44 +109,12 @@ function parseData(payload) {
     var obj = {};
     for (var i = 0; i < array.length; i++) {
         obj[schema[i]] = array[i];
+
         if (schema[i].startsWith("i_")) {
+            // i cant believe im actually doing bitwise marshalling in js
             obj[schema[i]] = floatToInt32(array[i]);
         }
     }
     setState(obj);
     JSON.stringify(obj);
-}
-/**
- * @param msg {Message}
- * @return {"state"|"event"|""}
- */
-export function parseMessage(msg) {
-    if (msg.version !== 0) {
-        console.error(
-            `${Strings.Error}: received a message that does not have currect version number (0) (got version ${msg.version}). Packet parse skipped`,
-        );
-        return "";
-    }
-    if (!msg.valid) {
-        console.error(
-            `${Strings.Error}: Received invalid packet. Packet parse skipped`,
-        );
-        return "";
-    }
-    var str = new TextDecoder().decode(msg.data);
-    if (msg.type === MessageType.Schema) {
-        parseSchema(str);
-        setEvent("waiting");
-        return "event";
-    } else if (msg.type === MessageType.Metadata) {
-        parseMetadata(str);
-        return "";
-    } else if (msg.type === MessageType.DataUpdate) {
-        parseData(msg.data);
-        return "state";
-    } else if (msg.type === MessageType.Event) {
-        console.error(`${Strings.Error}: Currently cant handle event updates`);
-        return "event";
-    }
-    return "";
 }

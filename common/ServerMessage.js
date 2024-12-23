@@ -1,12 +1,16 @@
+/**
+ * @typedef {"event"|"state"|"command"} EventType
+ */
+
 export class ServerMessage {
-    /** @type ("event"|"state") */
+    /** @type EventType */
     type = "event";
 
     /** @type (string|object) */
     data = "";
 
     /**
-     * @param {"event"|"state"} type
+     * @param {EventType} type
      * @param {string|object} data
      */
     constructor(type, data) {

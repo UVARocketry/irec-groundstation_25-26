@@ -38,7 +38,7 @@ If you are planning on working on the ui, please see the roughdraft ui/plan.jpg 
 
 ## How to run
 
-open a terminal and run the commands: `cd server`, `npm i` (NOTE that this only needs to be done when you first run this), and `node .` (assuming nodejs is installed on your laptop). Then in a browser, navigate to [localhost:3000](http://localhost:3000)
+open a terminal and run the commands: `cd server`, `npm i` (NOTE that this only needs to be done once and `node .` (assuming nodejs is installed on your laptop). Then in a browser, navigate to [localhost:3000](http://localhost:3000)
 
 ## Protocols
 

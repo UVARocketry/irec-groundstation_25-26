@@ -1,5 +1,6 @@
 ﻿/** @import { Vector } from "p5"; */
 /** @import p5 from p5 */
+import { Button } from "./button.js";
 import { Dial } from "./dial.js";
 import { Graph } from "./graph.js";
 import {
@@ -9,7 +10,12 @@ import {
     quatnormalize,
 } from "./quaternion.js";
 import { limDecimal } from "./utils.js";
-import { getCurrentState, getCurrentEvent, wsTryConnect } from "./websocket.js";
+import {
+    getCurrentState,
+    getCurrentEvent,
+    wsTryConnect,
+    sendWsCommand,
+} from "./websocket.js";
 
 /// converts meters to feet
 const mtoft = 3.28084;
@@ -22,14 +28,13 @@ export const port = 42069;
 /** @type {p5}*/
 var p;
 
-/** @type {Vector[]} */
-var points = [];
-
 /** @type {Graph} */
 export var altitudeGraph;
 
 /** @type {Dial} */
 var velocityDial, accelerationDial, actualDeplDial, expectedDeplDial;
+
+var reqButton;
 
 export function getP5() {
     return p;
@@ -52,6 +57,20 @@ export const s = (/** @type {p5} */ pi) => {
 
         // attempt websocket connection
         wsTryConnect();
+
+        reqButton = new Button(
+            0.01,
+            0.1,
+            0.12,
+            0.04,
+            p.color(0, 0, 0),
+            p.color(255, 0, 0),
+            p.color(230, 0, 0),
+            p.color(200, 0, 0),
+            "restart dbg run",
+            0.05,
+            0.02,
+        );
 
         // create altitude graph
         altitudeGraph = new Graph(
@@ -247,6 +266,13 @@ export const s = (/** @type {p5} */ pi) => {
             }
             p.noStroke();
         }
+
+        p.textSize(0.015 * height);
+        reqButton.draw();
+        reqButton.handlePress();
+        if (reqButton.isDone()) {
+            sendWsCommand("restart");
+        }
         altitudeGraph.draw();
 
         velocityDial.update(vel.mag());
@@ -293,8 +319,8 @@ export const s = (/** @type {p5} */ pi) => {
         p.text(altStr, width - 0.2 * height, 0.75 * height);
         p.textSize(height * 0.035);
         p.textAlign(p.LEFT);
+        p.fill(100, 100, 100);
         // velocity view
-        p.text("Velocity: " + Math.round(vel.mag()) + " ft/s", 300, 40);
 
         // try ws connection if we dont have one
         wsTryConnect();

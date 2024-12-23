@@ -47,7 +47,6 @@ export function wsTryConnect() {
                     console.log("Connection gone");
                     currentEvent = "disconnected";
                 };
-                ws.send("asdf");
                 currentEvent = "connected";
             };
         }
@@ -63,5 +62,6 @@ export function sendWsCommand(cmd) {
         return;
     }
     var logitem = new ServerMessage("command", cmd);
+    altitudeGraph.inputData([], [[]]);
     ws.send(JSON.stringify(logitem));
 }

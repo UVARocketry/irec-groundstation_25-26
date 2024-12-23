@@ -6,11 +6,12 @@ import path from "node:path";
 import { Message } from "./message.js";
 import { parseMessage } from "./data.js";
 
-import { getState, getEvent } from "./state.js";
+import { getState, getEvent, setEvent } from "./state.js";
 
 import { WebSocketServer } from "ws";
 import { Strings } from "./ansi.js";
 import { ServerMessage } from "../../common/ServerMessage.js";
+import { handleUiRequest } from "./command.js";
 const port = 42069;
 const wss = new WebSocketServer({ port: port, host: "localhost" });
 
@@ -28,6 +29,7 @@ async function readMessage(n) {
     let path = "../out/msg-" + n;
     if (!fs.existsSync(path)) {
         var close = new ServerMessage("event", "done");
+        setEvent("done");
         broadcast(close);
         return;
     }
@@ -62,11 +64,13 @@ async function readMessage(n) {
     if (send !== null) {
         broadcast(send);
     }
-    // if (n !== 0) {
     setTimeout(function () {
         readMessage(n + 1);
     }, 10);
-    // }
+}
+
+export function resetMessageReader() {
+    readMessage(0);
 }
 
 // await readMessage(0);
@@ -81,10 +85,11 @@ wss.on("connection", function (ws) {
             read1 = true;
         }, 1000);
     }
-    ws.on("message", function (_) {
-        console.log(
-            `${Strings.Warn}: Messages from the browser ui are currently not supported`,
-        );
+    ws.on("message", function (v) {
+        handleUiRequest(v.toString());
+        // console.log(
+        //     `${Strings.Warn}: Messages from the browser ui are currently not supported`,
+        // );
     });
     ws.on("close", function () {
         console.log(`${Strings.Warn}: Websocket connection closing`);
@@ -100,7 +105,8 @@ wss.on("connection", function (ws) {
 const server = http.createServer((req, res) => {
     // If the user requests the root '/'
     const searchDir = process.cwd() + "/../ui/";
-    const commonDir = process.cwd() + "/../common/";
+    // leave off the common/ because that's in the url
+    const commonDir = process.cwd() + "/../";
     if (req.url === "/") {
         const indexPath = path.join(searchDir, "index.html");
 
