@@ -23,7 +23,6 @@ const mtoft = 3.28084;
 // global width and height of canvas
 var width, height;
 export var light = true;
-export const port = 42069;
 
 /** @type {p5}*/
 var p;
@@ -329,4 +328,3 @@ export const s = (/** @type {p5} */ pi) => {
     pi.mouseClicked = function () {};
     pi.mouseReleased = function () {};
 };
-console.log("init");

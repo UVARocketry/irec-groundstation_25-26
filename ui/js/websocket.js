@@ -1,7 +1,8 @@
 /** @import { LogItem } from "../../common/LogItem" */
 
 import { ServerMessage } from "../../common/ServerMessage.js";
-import { altitudeGraph, port } from "./site.js";
+import { port } from "../../common/web.js";
+import { altitudeGraph } from "./site.js";
 
 /** @type {WebSocket?} */
 var ws = null;
