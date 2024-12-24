@@ -6,7 +6,6 @@ export const AnsiCodes = {
     Blink: "\x1b[5m",
     Reverse: "\x1b[7m",
     Hidden: "\x1b[8m",
-
     FgBlack: "\x1b[30m",
     FgRed: "\x1b[31m",
     FgGreen: "\x1b[32m",
@@ -32,4 +31,5 @@ export const Strings = {
     Error: `${AnsiCodes.FgRed}ERROR${AnsiCodes.FgWhite}`,
     Ok: `${AnsiCodes.FgGreen}OK${AnsiCodes.FgWhite}`,
     Warn: `${AnsiCodes.FgYellow}WARN${AnsiCodes.FgWhite}`,
+    Info: `${AnsiCodes.FgBlue}INFO${AnsiCodes.FgWhite}`,
 };
