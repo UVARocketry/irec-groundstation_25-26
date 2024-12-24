@@ -6,17 +6,22 @@ import path from "node:path";
 import { Message } from "./message.js";
 import { parseMessage } from "./data.js";
 
-import { getState, getEvent, setEvent } from "./state.js";
+import { getState, getEvent } from "./state.js";
 
 import { WebSocketServer } from "ws";
 import { Strings } from "./ansi.js";
 import { ServerMessage } from "../../common/ServerMessage.js";
 import { handleUiRequest } from "./command.js";
-const port = 42069;
+import { port } from "../../common/web.js";
+import { FileLogReader } from "./fileLogReader.js";
+import { StdinReader } from "./stdinReader.js";
+
 const wss = new WebSocketServer({ port: port, host: "localhost" });
+var reader;
+var useStdin = false;
 
 /** @param msg {ServerMessage} */
-function broadcast(msg) {
+export function broadcast(msg) {
     wss.clients.forEach(function each(client) {
         if (client.readyState === WebSocket.OPEN) {
             client.send(JSON.stringify(msg));
@@ -24,35 +29,11 @@ function broadcast(msg) {
     });
 }
 
-/** @param n {number} */
-async function readMessage(n) {
-    let path = "../out/msg-" + n;
-    if (!fs.existsSync(path)) {
-        var close = new ServerMessage("event", "done");
-        setEvent("done");
-        broadcast(close);
-        return;
-    }
-    const file = await fs.openAsBlob(path);
-
-    const buf = new Uint8Array(await file.arrayBuffer());
-
-    const aCode = "a".charCodeAt(0);
-
-    var newBuf = [];
-
-    for (var i = 0; i < buf.length; i += 2) {
-        var left = buf[i];
-        var right = buf[i + 1];
-        left -= aCode;
-        left = left & 0x0f;
-        left <<= 4;
-        right -= aCode;
-        right = right & 0x0f;
-        newBuf.push(left + right);
-    }
-
-    const msg = new Message(new Uint8Array(newBuf));
+/**
+ * @param {Uint8Array<ArrayBuffer>} buf
+ */
+async function onUpdate(buf) {
+    const msg = new Message(buf);
 
     var ret = parseMessage(msg);
     var send = null;
@@ -64,27 +45,82 @@ async function readMessage(n) {
     if (send !== null) {
         broadcast(send);
     }
-    setTimeout(function () {
-        readMessage(n + 1);
-    }, 10);
 }
 
+const logReader = new FileLogReader(onUpdate, null);
+logReader.path = "../out2";
+
+// async function readMessage(n) {
+//     let path = "../out/msg-" + n;
+//     if (!fs.existsSync(path)) {
+//         var close = new ServerMessage("event", "done");
+//         setEvent("done");
+//         broadcast(close);
+//         return;
+//     }
+//     const file = await fs.openAsBlob(path);
+//
+//     const buf = new Uint8Array(await file.arrayBuffer());
+//
+//     const msg = new Message(new Uint8Array(buf));
+//
+//     var ret = parseMessage(msg);
+//     var send = null;
+//     if (ret === "event") {
+//         send = new ServerMessage("state", getEvent());
+//     } else if (ret === "state") {
+//         send = new ServerMessage("state", getState());
+//     }
+//     if (send !== null) {
+//         broadcast(send);
+//     }
+//     setTimeout(function () {
+//         readMessage(n + 1);
+//     }, 10);
+// }
+
+/**
+ * @param {any} v
+ */
+export function useStdinReader(v) {
+    if (v) {
+        reader = procReader;
+    } else {
+        reader = logReader;
+    }
+}
 export function resetMessageReader() {
-    readMessage(0);
+    reader.reset();
+    // readMessage(0);
 }
 
 // await readMessage(0);
-console.log(`${Strings.Ok}: Starting websocket server at port ${port}`);
+console.log(
+    `${Strings.Ok}: Starting websocket server at ws://localhost:${port}`,
+);
 
 var read1 = false;
+const procReader = new StdinReader(
+    onUpdate,
+    "stderr",
+    "./run",
+    [],
+    "../../sac_24-25/lib",
+);
+procReader.saveFolder = "../out2";
 
 wss.on("connection", function (ws) {
     if (!read1) {
-        setTimeout(function () {
-            readMessage(0);
-            read1 = true;
-        }, 1000);
+        useStdinReader(useStdin);
+        read1 = true;
     }
+    setTimeout(function () {
+        reader.start();
+        // logReader.start();
+        // readMessage(0);
+        // read1 = true;
+    }, 100);
+    // }
     ws.on("message", function (v) {
         handleUiRequest(v.toString());
         // console.log(

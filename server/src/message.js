@@ -37,6 +37,23 @@ export class Message {
      * @param {Uint8Array<ArrayBuffer>} msg
      */
     constructor(msg) {
+        const aCode = "a".charCodeAt(0);
+
+        var newBuf = [];
+        // convert msg from half-packed binary to full-packed binary
+        // (AKA 4 bits of info per byte to 8 bits)
+
+        for (var i = 0; i < msg.length; i += 2) {
+            var left = msg[i];
+            var right = msg[i + 1];
+            left -= aCode;
+            left = left & 0x0f;
+            left <<= 4;
+            right -= aCode;
+            right = right & 0x0f;
+            newBuf.push(left + right);
+        }
+        msg = new Uint8Array(newBuf);
         if (msg.length * 8 < 40) {
             console.error(`${Strings.Error}: Message is too small!`);
             return;
