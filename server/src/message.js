@@ -13,6 +13,8 @@ export const MessageType = {
     DataUpdate: 2,
     /// for sending an event (eg statemachine state change)
     Event: 3,
+    /// for sending eventSchema
+    EventSchema: 4,
     Undefined: -1,
 };
 export class Message {

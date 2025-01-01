@@ -1,6 +1,6 @@
 import { ServerMessage } from "../../common/ServerMessage.js";
 import { Strings } from "./ansi.js";
-import { resetMessageReader } from "./index.js";
+import { resetMessageReader, switchReader } from "./index.js";
 /**@param {string} req */
 export function handleUiRequest(req) {
     /** @type {ServerMessage} */
@@ -20,6 +20,8 @@ export function handleUiRequest(req) {
         }
         if (obj.data === "restart") {
             resetMessageReader();
+        } else if (obj.data == "switch") {
+            switchReader();
         } else {
             console.log(
                 `${Strings.Warn}: Unknown command message "${obj.data}"`,

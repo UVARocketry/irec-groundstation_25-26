@@ -1,8 +1,8 @@
 ﻿/** @import { Vector } from "p5"; */
-/** @import p5 from p5 */
 import { Button } from "./button.js";
 import { Dial } from "./dial.js";
 import { Graph } from "./graph.js";
+/** @import p5 from "p5"; */
 import {
     Quaternion,
     quatinverse,
@@ -24,6 +24,10 @@ const mtoft = 3.28084;
 var width, height;
 export var light = true;
 
+export var TEXT_COL = "#000000";
+export var COL1 = "#ff0000";
+export var BG = "#ffffff";
+
 /** @type {p5}*/
 var p;
 
@@ -33,7 +37,8 @@ export var altitudeGraph;
 /** @type {Dial} */
 var velocityDial, accelerationDial, actualDeplDial, expectedDeplDial;
 
-var reqButton;
+/** @type {Button} */
+var reqButton, switchButton;
 
 export function getP5() {
     return p;
@@ -42,6 +47,47 @@ export function getHeight() {
     return height;
 }
 
+/**@type {p5.Image}*/
+let logo;
+
+/**
+ * @param {string} str1
+ * @param {number} size1
+ * @param {string} str2
+ * @param {number} size2
+ * @param {number} x
+ * @param {number} y
+ */
+function centerString(str1, size1, str2, size2, x, y) {
+    p.textSize(size1);
+    var w1 = p.textWidth(str1);
+    p.textSize(size2);
+    var w2 = p.textWidth(str2);
+    var w = w1 + w2;
+    p.textSize(size1);
+    p.textAlign(p.LEFT);
+    p.text(str1, x - w / 2, y);
+    p.textSize(size2);
+    p.text(str2, x - w / 2 + w1, y);
+}
+/**
+ * @param {string} str1
+ * @param {number} size1
+ * @param {string} str2
+ * @param {number} size2
+ * @param {number} x
+ * @param {number} y
+ */
+function unitString(str1, size1, str2, size2, x, y) {
+    p.textSize(size1);
+    var w1 = p.textWidth(str1);
+    p.textSize(size2);
+    p.textSize(size1);
+    p.textAlign(p.LEFT);
+    p.text(str1, x, y);
+    p.textSize(size2);
+    p.text(str2, x + w1, y);
+}
 export const s = (/** @type {p5} */ pi) => {
     p = pi;
     pi.setup = function () {
@@ -57,18 +103,36 @@ export const s = (/** @type {p5} */ pi) => {
         // attempt websocket connection
         wsTryConnect();
 
+        p.textSize(0.015 * height);
+        var btnText = "restart dbg run";
         reqButton = new Button(
             0.01,
-            0.1,
-            0.12,
+            0.9,
+            p.textWidth(btnText) / height + 0.05,
             0.04,
             p.color(0, 0, 0),
             p.color(255, 0, 0),
             p.color(230, 0, 0),
             p.color(200, 0, 0),
-            "restart dbg run",
-            0.05,
+            btnText,
+            0.005,
             0.02,
+            0.015 * height,
+        );
+        btnText = "dbg switch reader";
+        switchButton = new Button(
+            0.01,
+            0.95,
+            p.textWidth(btnText) / height + 0.05,
+            0.04,
+            p.color(0, 0, 0),
+            p.color(255, 0, 0),
+            p.color(230, 0, 0),
+            p.color(200, 0, 0),
+            btnText,
+            0.005,
+            0.02,
+            0.015 * height,
         );
 
         // create altitude graph
@@ -94,7 +158,7 @@ export const s = (/** @type {p5} */ pi) => {
             p.color(255, 0, 0),
             p.color(125, 0, 0),
             [0, 1300],
-            "VELOCITY\n(ft/s)",
+            "VELOCITY\n(ft\\s)",
             5,
         );
         accelerationDial = new Dial(
@@ -118,7 +182,7 @@ export const s = (/** @type {p5} */ pi) => {
             p.color(255, 0, 0),
             p.color(125, 0, 0),
             [0, 100],
-            "DEPLOYMENT\n(actual pct)",
+            "DEPLOYMENT\n(actual %)",
             5,
         );
         expectedDeplDial = new Dial(
@@ -130,9 +194,11 @@ export const s = (/** @type {p5} */ pi) => {
             p.color(255, 0, 0),
             p.color(125, 0, 0),
             [0, 100],
-            "DEPLOYMENT\n(expected pct)",
+            "DEPLOYMENT\n(expected %)",
             5,
         );
+        p.textFont("TX-02-Trial");
+        logo = p.loadImage("assets/logo.webp");
     };
 
     pi.draw = function () {
@@ -143,67 +209,16 @@ export const s = (/** @type {p5} */ pi) => {
             p.fill(0);
         } else {
             p.fill(255);
-            p.background(4 * 16);
+            p.background(0);
+            TEXT_COL = "#ffffff";
+            BG = "#000000";
         }
 
         // tell everyone our current event
-        p.textSize(30);
+        p.textSize(0.04 * height);
         var ce = getCurrentEvent();
-        p.text("Event: " + ce, 10, 40);
-        /** @type {Quaternion[]} */
-        var points = [];
-
-        // create a rocket as a bunch of quaternion points
-        {
-            for (var i = -50; i < 50; i += 10) {
-                for (var t = 0; t < 2 * Math.PI; t += 1) {
-                    /** @type {Quaternion} */
-                    var point = {
-                        w: 0,
-                        x: Math.sin(t) * 10,
-                        y: Math.cos(t) * 10,
-                        z: i,
-                    };
-                    points.push(point);
-                }
-            }
-            for (var o = 1; o < Math.PI; o += 0.5) {
-                for (var t = 0; t < 2 * Math.PI; t += 1) {
-                    /** @type {Quaternion} */
-                    var point = {
-                        w: 0,
-                        x: Math.cos(o) * Math.sin(t) * 10,
-                        y: Math.cos(o) * Math.cos(t) * 10,
-                        z: -50 - Math.sin(o) * 10,
-                    };
-                    points.push(point);
-                }
-            }
-            for (var i = 0; i < 20; i++) {
-                /** @type {Quaternion} */
-                var point = {
-                    w: 0,
-                    x: (i + 10) * Math.sin(Math.PI),
-                    y: (i + 10) * Math.cos(Math.PI),
-                    z: 40 + i,
-                };
-                points.push(point);
-                point = {
-                    w: 0,
-                    x: (i + 10) * Math.sin(-Math.PI / 3),
-                    y: (i + 10) * Math.cos(-Math.PI / 3),
-                    z: 40 + i,
-                };
-                points.push(point);
-                point = {
-                    w: 0,
-                    x: (i + 10) * Math.sin(Math.PI / 3),
-                    y: (i + 10) * Math.cos(Math.PI / 3),
-                    z: 40 + i,
-                };
-                points.push(point);
-            }
-        }
+        p.fill(TEXT_COL);
+        p.text("Event: " + ce, 0.01 * height, 0.05 * height);
 
         // parse data packets
         var ap = 0;
@@ -214,12 +229,25 @@ export const s = (/** @type {p5} */ pi) => {
         var deplExp = 0;
         var deplActual = 0;
         var state = getCurrentState();
+        var uptime = 0;
+        var airTime = 0;
+        var pos = p.createVector(0, 0, 0);
+        var readerActive = false;
+        var rocketActive = false;
         if (
             state !== null &&
             state.startState !== null &&
             state.startState !== undefined
         ) {
-            // console.log(state);
+            readerActive = state.readerConnected;
+            rocketActive = state.rocketConnected;
+            pos = p.createVector(
+                state.kalmanPosX,
+                state.kalmanPosY,
+                state.kalmanPosZ,
+            );
+            uptime = state.i_timestamp;
+            airTime = state.timeSinceLaunch;
             deplExp = state.pidDeployment;
             deplActual = state.actualDeployment;
             ap = state.apogee - state.startState.kalmanPosZ;
@@ -251,26 +279,115 @@ export const s = (/** @type {p5} */ pi) => {
                 z: state.orientationZ,
             };
             quatnormalize(quat);
-            var i = 0;
             var z = state.kalmanPosZ - 1050;
             var m = (3500 - z) / 3000;
             p.strokeWeight(3 * m);
-            p.stroke(255, 0, 0);
+            p.stroke(COL1);
             p.strokeWeight(3);
-            for (const point of points) {
-                var p2 = quatmult(quatmult(quat, point), quatinverse(quat));
-                p.point(p2.x + 200, p2.z + 200);
-                p.point(p2.x + 200, p2.y + 400);
-                p.point(p2.y + 200, p2.z + 600);
-            }
             p.noStroke();
         }
 
-        p.textSize(0.015 * height);
+        p.strokeWeight(0.0015 * height);
+        p.stroke(0);
+        if (rocketActive) {
+            p.fill(0, 255, 0);
+        } else {
+            p.fill(255, 0, 0);
+        }
+        p.ellipse(0.025 * height, 0.135 * height, 0.01 * height, 0.01 * height);
+        if (readerActive) {
+            p.fill(0, 255, 0);
+        } else {
+            p.fill(255, 0, 0);
+        }
+        p.ellipse(0.025 * height, 0.185 * height, 0.01 * height, 0.01 * height);
+        p.fill(0);
+        p.noStroke();
+        p.textSize(0.03 * height);
+        p.text("System Status:", 0.01 * height, 0.1 * height);
+        p.textSize(0.04 * height);
+        p.text("Rocket", 0.05 * height, 0.15 * height);
+        p.text("Reader", 0.05 * height, 0.2 * height);
+        {
+            let z = pos.z;
+            pos.z = 0;
+            unitString(
+                "Travel: " + `${Math.floor(pos.mag())}`,
+                0.04 * height,
+                "ft",
+                0.03 * height,
+                0.6 * width,
+                0.05 * height,
+            );
+            pos.z = z;
+        }
+        unitString(
+            "Uptime:  " + Math.floor(uptime / 1000),
+            0.04 * height,
+            "s",
+            0.03 * height,
+            0.82 * width,
+            0.1 * height,
+        );
+        unitString(
+            "Airtime: " + Math.floor(airTime / 1000),
+            0.04 * height,
+            "s",
+            0.03 * height,
+            0.82 * width,
+            0.05 * height,
+        );
+
+        p.fill("#999999");
+        var abAngleStart = 70;
+        p.rect(
+            (0.5 - Math.cos((abAngleStart * Math.PI) / 180) * 0.05) * height,
+            (-0.05 * Math.sin((abAngleStart * Math.PI) / 180) + 0.5) * height -
+                deplActual * 30,
+            Math.cos((abAngleStart * Math.PI) / 180) * 0.05 * 2 * height,
+            // 100,
+            Math.sin((abAngleStart * Math.PI) / 180) * 0.05 + deplActual * 30,
+        );
+        p.arc(
+            0.5 * height,
+            0.5 * height - deplActual * 30,
+            0.1 * height,
+            0.1 * height,
+            -p.radians(180 - abAngleStart),
+            -p.radians(abAngleStart),
+        );
+
+        p.fill("#ff8000");
+
+        p.arc(
+            0.5 * height,
+            0.5 * height,
+            0.1 * height,
+            0.1 * height,
+            -p.radians(170),
+            -p.radians(10),
+        );
+        p.fill("#ffffff");
+        p.rect(
+            0.45 * height,
+            0.5 * height,
+            0.1 * height,
+            -Math.sin((10 * Math.PI) / 180) * 0.05 * height,
+        );
+
+        p.fill(0);
+
+        // p.textSize(0.015 * height);
+        p.textAlign(p.LEFT);
         reqButton.draw();
         reqButton.handlePress();
         if (reqButton.isDone()) {
             sendWsCommand("restart");
+        }
+        switchButton.draw();
+        switchButton.handlePress();
+        if (switchButton.isDone()) {
+            sendWsCommand("switch");
         }
         altitudeGraph.draw();
 
@@ -287,7 +404,7 @@ export const s = (/** @type {p5} */ pi) => {
         p.textSize(height * 0.013);
         p.textAlign(p.CENTER);
         p.noStroke();
-        p.fill(0);
+        p.fill(TEXT_COL);
         p.text(
             `(${limDecimal(vel.x)}, ${limDecimal(vel.y)}, ${limDecimal(vel.z)})`,
             (velocityDial.x + velocityDial.width / 2) * height,
@@ -301,21 +418,46 @@ export const s = (/** @type {p5} */ pi) => {
 
         // reset stuff
         p.noStroke();
-        p.fill(0, 0, 0);
+        p.fill(TEXT_COL);
 
         // apogee and expected apogee
         p.textSize(height * 0.035);
         p.textAlign(p.CENTER);
-        p.text("Apogee: ", width - 0.7 * height, 0.72 * height);
-        p.text("Predicted: ", width - 0.45 * height, 0.72 * height);
-        p.text("Altitude: ", width - 0.2 * height, 0.72 * height);
+        p.text("Apogee:", width - 0.7 * height, 0.72 * height);
+        p.text("Predicted:", width - 0.43 * height, 0.72 * height);
+        p.text("Altitude:", width - 0.16 * height, 0.72 * height);
         p.textSize(height * 0.025);
-        const apStr = limDecimal(ap) + " ft";
-        const expApStr = limDecimal(expAp) + " ft";
-        const altStr = limDecimal(alt) + " ft";
-        p.text(apStr, width - 0.7 * height, 0.75 * height);
-        p.text(expApStr, width - 0.45 * height, 0.75 * height);
-        p.text(altStr, width - 0.2 * height, 0.75 * height);
+        p.textAlign(p.CENTER);
+        const apStr = limDecimal(ap);
+        const expApStr = limDecimal(expAp);
+        const altStr = limDecimal(alt);
+        centerString(
+            apStr,
+            0.025 * height,
+            "ft",
+            0.0175 * height,
+            width - 0.7 * height,
+            0.75 * height,
+        );
+        centerString(
+            expApStr,
+            0.025 * height,
+            "ft",
+            0.0175 * height,
+            width - 0.43 * height,
+            0.75 * height,
+        );
+        centerString(
+            altStr,
+            0.025 * height,
+            "ft",
+            0.0175 * height,
+            width - 0.16 * height,
+            0.75 * height,
+        );
+        // p.text(apStr, width - 0.7 * height, 0.75 * height);
+        // p.text(expApStr, width - 0.43 * height, 0.75 * height);
+        // p.text(altStr, width - 0.16 * height, 0.75 * height);
         p.textSize(height * 0.035);
         p.textAlign(p.LEFT);
         p.fill(100, 100, 100);

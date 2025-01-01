@@ -1,3 +1,5 @@
+import { setReaderConnected, setRocketConnected } from "./state.js";
+
 /**
  * @interface
  */
@@ -14,4 +16,18 @@ export class InputReader {
     start() {}
 
     stop() {}
+
+    done() {
+        setReaderConnected(false);
+        setRocketConnected(false);
+    }
+
+    wake() {
+        setReaderConnected(true);
+    }
+
+    active() {
+        setReaderConnected(true);
+        setRocketConnected(true);
+    }
 }

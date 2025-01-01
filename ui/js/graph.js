@@ -1,6 +1,6 @@
 /** @import p5 from p5 */
 
-import { getHeight, getP5 } from "./site.js";
+import { BG, getHeight, getP5, TEXT_COL } from "./site.js";
 import { limDecimal } from "./utils.js";
 export class Graph {
     /**
@@ -128,7 +128,7 @@ export class Graph {
         var xInc = this.width / dWidth;
         var rangeSize = this.range[0] - this.range[1];
         var rangeMult = this.height / rangeSize;
-        p.fill(255);
+        p.fill(BG);
         p.noStroke();
         p.rect(
             this.x * height,
@@ -138,7 +138,7 @@ export class Graph {
         );
         p.textSize(Math.min(20, (this.width * height) / 10));
         p.textAlign(p.CENTER);
-        p.fill(0);
+        p.fill(TEXT_COL);
         p.text(
             this.title,
             (this.x + this.width / 2) * height,
@@ -149,7 +149,7 @@ export class Graph {
             var pt = this.data[this.highlight];
             var newX = xInc * this.highlight;
             p.strokeWeight(1);
-            p.stroke(0);
+            p.stroke(TEXT_COL);
             newX += this.x;
             p.line(
                 newX * height,
@@ -161,7 +161,7 @@ export class Graph {
 
         // Axis drawing
         {
-            p.stroke(0);
+            p.stroke(TEXT_COL);
             p.strokeWeight(1);
             for (var i = 0; i <= 10; i++) {
                 var bottom = this.y + this.height;
@@ -173,7 +173,7 @@ export class Graph {
                     bottom * height + 5,
                 );
             }
-            p.fill(0);
+            p.fill(TEXT_COL);
             // p.noStroke();
             p.textSize(10);
             p.textAlign(p.RIGHT);
@@ -181,7 +181,7 @@ export class Graph {
                 var bottom = this.x + this.width;
                 var y = (i / this.vertSub) * this.height + this.y;
                 p.strokeWeight(1);
-                p.stroke(0, 0, 0);
+                p.stroke(TEXT_COL);
                 p.line(
                     bottom * height,
                     y * height,

@@ -1,8 +1,7 @@
 import fs from "node:fs";
 import { InputReader } from "./inputReader.js";
-import { broadcast } from "./index.js";
+import { broadcast, broadcastEvent } from "./index.js";
 import { setEvent } from "./state.js";
-import { ServerMessage } from "../../common/ServerMessage.js";
 
 export class FileLogReader extends InputReader {
     i = 0;
@@ -23,19 +22,22 @@ export class FileLogReader extends InputReader {
     start() {
         if (!this.readFirst) {
             this.readFirst = true;
+            this.wake();
             setTimeout(() => this.readMessage(), 1000);
         }
     }
     async readMessage() {
         if (this.cancel) {
             this.cancel = false;
+            this.done();
             return;
         }
+        this.active();
         let path = this.path + "/msg-" + this.i;
         if (!fs.existsSync(path)) {
-            var close = new ServerMessage("event", "done");
             setEvent("done");
-            broadcast(close);
+            broadcastEvent();
+            this.done();
             return;
         }
         const file = await fs.openAsBlob(path);
@@ -48,6 +50,7 @@ export class FileLogReader extends InputReader {
     }
     async reset() {
         this.i = 0;
+        this.wake();
         this.readMessage();
     }
 }

@@ -1,0 +1,13 @@
+{
+    "name": "irec-24-25-groundstation/ui",
+    "version": "1.0.0",
+    "description": "",
+    "main": "",
+    "scripts": {},
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/jquery": "^3.5.32",
+        "@types/p5": "^1.7.6"
+    }
+}

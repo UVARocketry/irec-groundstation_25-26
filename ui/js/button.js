@@ -13,8 +13,22 @@ export class Button {
      * @param {string} msg
      * @param {number} tOffX
      * @param {number} tOffY
+     * @param {number} textSize
      */
-    constructor(x, y, w, h, border, inner, hover, press, msg, tOffX, tOffY) {
+    constructor(
+        x,
+        y,
+        w,
+        h,
+        border,
+        inner,
+        hover,
+        press,
+        msg,
+        tOffX,
+        tOffY,
+        textSize,
+    ) {
         this.x = x;
         this.y = y;
         this.w = w;
@@ -29,12 +43,12 @@ export class Button {
         this.offX = tOffX;
         this.offY = tOffY;
         this.hovering = true;
+        this.textSize = textSize;
     }
 
     draw() {
         const p = getP5();
         const height = getHeight();
-        p.textAlign(p.CENTER);
         p.stroke(this.border);
         p.strokeWeight(3);
         p.fill(this.inner);
@@ -53,6 +67,7 @@ export class Button {
         );
         p.noStroke();
         p.fill(255, 255, 255);
+        p.textSize(this.textSize);
         p.text(
             this.msg,
             (this.x + this.offX) * height,

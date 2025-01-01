@@ -2,6 +2,7 @@ import { ChildProcess, spawn } from "node:child_process";
 import { InputReader } from "./inputReader.js";
 import { Strings } from "./ansi.js";
 import fs from "node:fs";
+import { setRocketConnected } from "./state.js";
 
 export class StdinReader extends InputReader {
     /** @type {"stdout"|"stderr"} */
@@ -16,9 +17,16 @@ export class StdinReader extends InputReader {
     /**@type {string?} */
     saveFolder = null;
 
+    /**@type {() => string? } */
+    genSaveFolder = () => null;
+
     msgI = 0;
 
-    restart = true;
+    restart = false;
+    lastMessageTime = 0;
+
+    /** @type {NodeJS.Timeout?}*/
+    lastTimeout = null;
 
     /**
      * @param {(_: Uint8Array) => Promise<void>} update
@@ -26,18 +34,22 @@ export class StdinReader extends InputReader {
      * @param {string} cmd
      * @param {string[]} args
      * @param {string | URL | undefined} cwd
+     * @param {() => string ?} genSaveFolder
      */
-    constructor(update, watchStream, cmd, args, cwd) {
+    constructor(update, watchStream, cmd, args, cwd, genSaveFolder) {
         super(update);
+        this.genSaveFolder = genSaveFolder;
         this.watchStream = watchStream;
         this.cmd = cmd;
         this.args = args;
         this.cwd = cwd;
     }
     reset() {
-        this.restart = true;
         if (this.process !== null) {
+            this.restart = true;
             this.process.kill(9);
+        } else {
+            this.start();
         }
     }
     start() {
@@ -47,7 +59,10 @@ export class StdinReader extends InputReader {
             this.process.kill(9);
             return;
         }
+        this.wake();
         this.process = spawn(this.cmd, this.args, { cwd: this.cwd });
+        this.msgI = 0;
+        this.saveFolder = this.genSaveFolder();
         if (!fs.existsSync(this.saveFolder ?? process.cwd())) {
             fs.mkdir(
                 this.saveFolder ?? process.cwd(),
@@ -68,8 +83,6 @@ export class StdinReader extends InputReader {
             );
             return;
         }
-        // @ts-ignore
-        this.process.stdout.on("data", (v) => {});
         stream.on("data", (v) => {
             /** @type {string[]} */
             const strs = v.toString().split("\n");
@@ -78,6 +91,7 @@ export class StdinReader extends InputReader {
                 if (!s.startsWith("ABCD")) {
                     continue;
                 }
+                this.active();
                 const newV = s.substring(4, s.length);
                 if (this.saveFolder !== null) {
                     fs.writeFile(
@@ -88,10 +102,22 @@ export class StdinReader extends InputReader {
                     this.msgI++;
                 }
                 this.onUpdate(new Uint8Array(Buffer.from(newV)));
+                this.lastMessageTime = new Date().getTime();
+                if (this.lastTimeout !== null) {
+                    clearTimeout(this.lastTimeout);
+                } else {
+                    setRocketConnected(true);
+                }
+
+                this.lastTimeout = setTimeout(() => {
+                    this.lastTimeout = null;
+                    setRocketConnected(false);
+                }, 300);
             }
             // console.log(v.toString());
         });
         stream.on("close", () => {
+            this.done();
             setTimeout(() => {
                 var code = this.process?.exitCode;
                 var str = Strings.Info;

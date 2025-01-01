@@ -15,8 +15,10 @@ import { handleUiRequest } from "./command.js";
 import { port } from "../../common/web.js";
 import { FileLogReader } from "./fileLogReader.js";
 import { StdinReader } from "./stdinReader.js";
+import { InputReader } from "./inputReader.js";
 
 const wss = new WebSocketServer({ port: port, host: "localhost" });
+/**@type {InputReader}*/
 var reader;
 var useStdin = false;
 
@@ -38,7 +40,7 @@ async function onUpdate(buf) {
     var ret = parseMessage(msg);
     var send = null;
     if (ret === "event") {
-        send = new ServerMessage("state", getEvent());
+        send = new ServerMessage("event", getEvent());
     } else if (ret === "state") {
         send = new ServerMessage("state", getState());
     }
@@ -47,40 +49,20 @@ async function onUpdate(buf) {
     }
 }
 
-const logReader = new FileLogReader(onUpdate, null);
-logReader.path = "../out2";
+export function broadcastState() {
+    var send = new ServerMessage("state", getState());
+    broadcast(send);
+}
+export function broadcastEvent() {
+    var send = new ServerMessage("event", getEvent());
+    broadcast(send);
+}
 
-// async function readMessage(n) {
-//     let path = "../out/msg-" + n;
-//     if (!fs.existsSync(path)) {
-//         var close = new ServerMessage("event", "done");
-//         setEvent("done");
-//         broadcast(close);
-//         return;
-//     }
-//     const file = await fs.openAsBlob(path);
-//
-//     const buf = new Uint8Array(await file.arrayBuffer());
-//
-//     const msg = new Message(new Uint8Array(buf));
-//
-//     var ret = parseMessage(msg);
-//     var send = null;
-//     if (ret === "event") {
-//         send = new ServerMessage("state", getEvent());
-//     } else if (ret === "state") {
-//         send = new ServerMessage("state", getState());
-//     }
-//     if (send !== null) {
-//         broadcast(send);
-//     }
-//     setTimeout(function () {
-//         readMessage(n + 1);
-//     }, 10);
-// }
+const logReader = new FileLogReader(onUpdate, null);
+// logReader.path = "../out2";
 
 /**
- * @param {any} v
+ * @param {boolean} v
  */
 export function useStdinReader(v) {
     if (v) {
@@ -88,6 +70,16 @@ export function useStdinReader(v) {
     } else {
         reader = logReader;
     }
+}
+
+export function switchReader() {
+    reader.stop();
+    if (reader == procReader) {
+        reader = logReader;
+    } else {
+        reader = procReader;
+    }
+    reader.start();
 }
 export function resetMessageReader() {
     reader.reset();
@@ -106,8 +98,8 @@ const procReader = new StdinReader(
     "./run",
     [],
     "../../sac_24-25/lib",
+    () => "../out_" + new Date().toISOString().slice(0, 19).replace("T", "_"),
 );
-procReader.saveFolder = "../out2";
 
 wss.on("connection", function (ws) {
     if (!read1) {

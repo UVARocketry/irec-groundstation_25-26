@@ -11,6 +11,9 @@ import { setEvent, setState } from "./state.js";
 var schema = [];
 var fieldSize = 0;
 
+/** @type {string[]} */
+var events = [];
+
 /**
  * @param msg {Message}
  * @return {EventType|""}
@@ -33,6 +36,8 @@ export function parseMessage(msg) {
         parseSchema(str);
         setEvent("waiting");
         return "event";
+    } else if (msg.type === MessageType.EventSchema) {
+        parseEventSchema(str);
     } else if (msg.type === MessageType.Metadata) {
         parseMetadata(str);
         return "";
@@ -40,10 +45,31 @@ export function parseMessage(msg) {
         parseData(msg.data);
         return "state";
     } else if (msg.type === MessageType.Event) {
-        console.error(`${Strings.Error}: Currently cant handle event updates`);
+        parseEvent(str);
         return "event";
     }
     return "";
+}
+/**
+ * @param payload {string}
+ */
+function parseEvent(payload) {
+    const [c4, c3, c2, c1] = [
+        payload[0],
+        payload[1],
+        payload[2],
+        payload[3],
+    ].map((v) => v.charCodeAt(0) & 0xff);
+    const eventIndex = (c1 << 24) | (c2 << 16) | (c3 << 8) | c4;
+
+    const event = events[eventIndex] ?? "NO";
+    if (event === "NO") {
+        console.error(
+            `${Strings.Warn}: Received invalid event index ${eventIndex}`,
+        );
+        return;
+    }
+    setEvent(event);
 }
 /**
  * @param payload {string}
@@ -52,6 +78,14 @@ function parseSchema(payload) {
     schema = payload.split(",").filter((v) => v.length !== 0);
 
     console.log(Strings.Ok + ": RECEIVED SCHEMA: " + schema.join(", "));
+}
+/**
+ * @param payload {string}
+ */
+function parseEventSchema(payload) {
+    events = payload.split(",").filter((v) => v.length !== 0);
+
+    console.log(Strings.Ok + ": RECEIVED EVENT SCHEMA: " + events.join(", "));
 }
 
 /**

@@ -1,4 +1,4 @@
-import { getHeight, getP5 } from "./site.js";
+import { getHeight, getP5, TEXT_COL } from "./site.js";
 import { limDecimal } from "./utils.js";
 
 /** @import p5 from p5 */
@@ -87,7 +87,7 @@ export class Dial {
         p.noStroke();
         p.textAlign(p.CENTER);
         p.textSize(this.titleSize * height);
-        p.fill(0);
+        p.fill(TEXT_COL);
         var centerX = (this.x + this.width / 2) * height;
         var centerY = (this.y + this.height / 2) * height;
         p.text(
@@ -101,7 +101,7 @@ export class Dial {
         p.textSize(0.01 * height);
         for (var i = 0; i < this.ticks; i++) {
             p.strokeWeight(1);
-            p.stroke(0);
+            p.stroke(TEXT_COL);
             var angle =
                 -p.HALF_PI -
                 this.angleSweep / 2 +
