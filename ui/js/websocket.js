@@ -27,6 +27,7 @@ function onWsMessage(event) {
     } else if (msg.type == "state") {
         currentState = msg.data;
     }
+    // console.log(currentState);
 }
 
 export function wsTryConnect() {

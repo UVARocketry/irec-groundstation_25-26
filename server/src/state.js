@@ -1,12 +1,13 @@
 import { broadcastState } from "./index.js";
+import { AddedData } from "../../common/AddedData.js";
 
 /* @type {LogItem} */
 var startingState = null;
 /* @type {LogItem} */
 var currentState = {};
-var readerConnected = false;
-var rocketConnected = false;
 var launchTime = 0;
+
+var addedData = new AddedData();
 
 /** @type {string} */
 var currentEvent = "offline";
@@ -14,6 +15,15 @@ var currentEvent = "offline";
 /** @return {string} */
 export function getEvent() {
     return currentEvent;
+}
+
+/**
+ * @template {keyof AddedData} K
+ * @param {K} k
+ * @param {AddedData[K]} v
+ */
+export function setAdd(k, v) {
+    addedData[k] = v;
 }
 
 /**
@@ -25,9 +35,12 @@ export function setEvent(e) {
 
 /** @return {Object} */
 export function getState() {
+    for (const k in addedData) {
+        currentState[k] = addedData[k];
+    }
     currentState.startState = startingState;
-    currentState.rocketConnected = rocketConnected;
-    currentState.readerConnected = readerConnected;
+    // currentState.rocketConnected = rocketConnected;
+    // currentState.readerConnected = readerConnected;
     currentState.timeSinceLaunch = currentState.i_timestamp - launchTime;
     return currentState;
 }
@@ -49,8 +62,8 @@ export function clearStartingState() {
  * @param {boolean} v
  */
 export function setReaderConnected(v) {
-    if (v !== readerConnected) {
-        readerConnected = v;
+    if (v !== addedData.readerConnected) {
+        setAdd("readerConnected", v);
         broadcastState();
     }
 }
@@ -59,8 +72,8 @@ export function setReaderConnected(v) {
  * @param {boolean} v
  */
 export function setRocketConnected(v) {
-    if (v !== rocketConnected) {
-        rocketConnected = v;
+    if (v !== addedData.rocketConnected) {
+        setAdd("rocketConnected", v);
         broadcastState();
     }
 }

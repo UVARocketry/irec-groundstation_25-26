@@ -6,7 +6,7 @@ import path from "node:path";
 import { Message } from "./message.js";
 import { parseMessage } from "./data.js";
 
-import { getState, getEvent } from "./state.js";
+import { getState, getEvent, setAdd } from "./state.js";
 
 import { WebSocketServer } from "ws";
 import { Strings } from "./ansi.js";
@@ -76,8 +76,10 @@ export function switchReader() {
     reader.stop();
     if (reader == procReader) {
         reader = logReader;
+        setAdd("readerType", "DEBUG");
     } else {
         reader = procReader;
+        setAdd("readerType", "LIVE");
     }
     reader.start();
 }

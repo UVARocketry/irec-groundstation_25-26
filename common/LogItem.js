@@ -1,5 +1,7 @@
+import { AddedData } from "./AddedData.js";
+
 // NOTE: this will need to be changed everytime the main rocket code changes
-export class LogItem {
+export class LogItem extends AddedData {
     /** @type {number} */
     gpsX = 0;
     /** @type {number} */
@@ -66,13 +68,9 @@ export class LogItem {
     pidDeployment = 0;
     /** @type {number} */
     actualDeployment = 0;
+
     /** @type {LogItem?} */
     startState = null;
-
-    /** @type {boolean} */
-    rocketConnected = false;
-    /** @type {boolean} */
-    readerConnected = false;
 
     /** @type {number} */
     timeSinceLaunch = 0;

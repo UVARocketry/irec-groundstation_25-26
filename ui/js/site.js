@@ -1,14 +1,8 @@
-﻿/** @import { Vector } from "p5"; */
-import { Button } from "./button.js";
+﻿import { Button } from "./button.js";
 import { Dial } from "./dial.js";
 import { Graph } from "./graph.js";
 /** @import p5 from "p5"; */
-import {
-    Quaternion,
-    quatinverse,
-    quatmult,
-    quatnormalize,
-} from "./quaternion.js";
+import { Quaternion, quatnormalize } from "./quaternion.js";
 import { limDecimal } from "./utils.js";
 import {
     getCurrentState,
@@ -38,13 +32,97 @@ export var altitudeGraph;
 var velocityDial, accelerationDial, actualDeplDial, expectedDeplDial;
 
 /** @type {Button} */
-var reqButton, switchButton;
+var reqButton, switchButton, btn3;
 
 export function getP5() {
     return p;
 }
 export function getHeight() {
     return height;
+}
+
+/**
+ * @param {number} x
+ * @param {number} y
+ * @param {number} w
+ * @param {number} sweep
+ * @param {number} abSweep
+ * @param {number} deplActual
+ */
+function deploymentVisual(x, y, w, sweep, abSweep, deplActual) {
+    p.fill("#999999");
+    var startAngle = -p.radians(90 - sweep / 2);
+    var abAngleStart = -p.radians(90 - abSweep / 2);
+    p.rect(
+        (x - (Math.cos(abAngleStart) * w) / 2) * height,
+        ((w / 2) * Math.sin(abAngleStart) + y) * height - deplActual * 30,
+        ((Math.cos(abAngleStart) * w) / 2) * 2 * height,
+        (Math.sin(abAngleStart) * w) / 2 + deplActual * 30,
+    );
+    p.arc(
+        x * height,
+        y * height - deplActual * 30,
+        w * height,
+        w * height,
+        -Math.PI - abAngleStart,
+        abAngleStart,
+    );
+
+    p.fill("#ff8000");
+
+    p.arc(
+        x * height,
+        y * height,
+        w * height,
+        w * height,
+        -Math.PI - startAngle,
+        startAngle,
+    );
+    p.fill("#ffffff");
+    p.rect(
+        (x - w / 2) * height,
+        y * height,
+        w * height,
+        ((Math.sin(startAngle) * w) / 2) * height,
+    );
+}
+
+/**
+ * @param {number} x
+ * @param {number} y
+ * @param {number} size1
+ * @param {string[]} names
+ * @param {boolean[]} values
+ * @param {number?} [size2]
+ */
+function status(x, y, size1, names, values, size2) {
+    size2 ??= size1;
+    p.textSize(size1 * height);
+    p.fill(0);
+    p.text("System Status: ", x * height, y * height);
+    for (var i = 0; i < names.length; i++) {
+        p.textSize(size2 * height);
+        p.strokeWeight(0.0015 * height);
+        p.stroke(0);
+        if (values[i]) {
+            p.fill(0, 255, 0);
+        } else {
+            p.fill(255, 0, 0);
+        }
+        p.ellipse(
+            (x + 0.01) * height,
+            (y + i * size2 * 1.3 + size2 - 0.001) * height,
+            0.01 * height,
+            0.01 * height,
+        );
+        p.noStroke();
+        p.fill(0);
+        p.text(
+            names[i],
+            (x + 0.03) * height,
+            (y + i * size2 * 1.3 + size2 * 1.3) * height,
+        );
+    }
 }
 
 /**@type {p5.Image}*/
@@ -88,6 +166,7 @@ function unitString(str1, size1, str2, size2, x, y) {
     p.textSize(size2);
     p.text(str2, x + w1, y);
 }
+
 export const s = (/** @type {p5} */ pi) => {
     p = pi;
     pi.setup = function () {
@@ -108,6 +187,21 @@ export const s = (/** @type {p5} */ pi) => {
         reqButton = new Button(
             0.01,
             0.9,
+            p.textWidth(btnText) / height + 0.05,
+            0.04,
+            p.color(0, 0, 0),
+            p.color(255, 0, 0),
+            p.color(230, 0, 0),
+            p.color(200, 0, 0),
+            btnText,
+            0.005,
+            0.02,
+            0.015 * height,
+        );
+        btnText = "btn idrk";
+        btn3 = new Button(
+            0.01,
+            0.85,
             p.textWidth(btnText) / height + 0.05,
             0.04,
             p.color(0, 0, 0),
@@ -187,7 +281,7 @@ export const s = (/** @type {p5} */ pi) => {
         );
         expectedDeplDial = new Dial(
             width / height - 0.26,
-            0.22,
+            0.18,
             0.2,
             0.2,
             (270 * Math.PI) / 180,
@@ -234,6 +328,7 @@ export const s = (/** @type {p5} */ pi) => {
         var pos = p.createVector(0, 0, 0);
         var readerActive = false;
         var rocketActive = false;
+        var environment = "";
         if (
             state !== null &&
             state.startState !== null &&
@@ -241,6 +336,7 @@ export const s = (/** @type {p5} */ pi) => {
         ) {
             readerActive = state.readerConnected;
             rocketActive = state.rocketConnected;
+            environment = state.readerType;
             pos = p.createVector(
                 state.kalmanPosX,
                 state.kalmanPosY,
@@ -287,27 +383,37 @@ export const s = (/** @type {p5} */ pi) => {
             p.noStroke();
         }
 
-        p.strokeWeight(0.0015 * height);
-        p.stroke(0);
-        if (rocketActive) {
-            p.fill(0, 255, 0);
-        } else {
-            p.fill(255, 0, 0);
-        }
-        p.ellipse(0.025 * height, 0.135 * height, 0.01 * height, 0.01 * height);
-        if (readerActive) {
-            p.fill(0, 255, 0);
-        } else {
-            p.fill(255, 0, 0);
-        }
-        p.ellipse(0.025 * height, 0.185 * height, 0.01 * height, 0.01 * height);
+        // p.strokeWeight(0.0015 * height);
+        // p.stroke(0);
+        // if (rocketActive) {
+        //     p.fill(0, 255, 0);
+        // } else {
+        //     p.fill(255, 0, 0);
+        // }
+        // p.ellipse(0.025 * height, 0.135 * height, 0.01 * height, 0.01 * height);
+        // if (readerActive) {
+        //     p.fill(0, 255, 0);
+        // } else {
+        //     p.fill(255, 0, 0);
+        // }
+        // p.ellipse(0.025 * height, 0.185 * height, 0.01 * height, 0.01 * height);
+        // p.fill(0);
+        // p.noStroke();
+        // p.textSize(0.03 * height);
+        // p.text("System Status:", 0.01 * height, 0.1 * height);
+        // // p.textSize(0.04 * height);
+        // p.text("Rocket", 0.05 * height, 0.15 * height);
+        // p.text("Reader", 0.05 * height, 0.2 * height);
+        status(
+            0.01,
+            0.1,
+            0.03,
+            ["Rocket", "Reader"],
+            [rocketActive, readerActive],
+        );
+
+        // deploymentVisual(0.5, 0.5, 0.1, 120, 40, deplActual);
         p.fill(0);
-        p.noStroke();
-        p.textSize(0.03 * height);
-        p.text("System Status:", 0.01 * height, 0.1 * height);
-        p.textSize(0.04 * height);
-        p.text("Rocket", 0.05 * height, 0.15 * height);
-        p.text("Reader", 0.05 * height, 0.2 * height);
         {
             let z = pos.z;
             pos.z = 0;
@@ -338,43 +444,6 @@ export const s = (/** @type {p5} */ pi) => {
             0.05 * height,
         );
 
-        p.fill("#999999");
-        var abAngleStart = 70;
-        p.rect(
-            (0.5 - Math.cos((abAngleStart * Math.PI) / 180) * 0.05) * height,
-            (-0.05 * Math.sin((abAngleStart * Math.PI) / 180) + 0.5) * height -
-                deplActual * 30,
-            Math.cos((abAngleStart * Math.PI) / 180) * 0.05 * 2 * height,
-            // 100,
-            Math.sin((abAngleStart * Math.PI) / 180) * 0.05 + deplActual * 30,
-        );
-        p.arc(
-            0.5 * height,
-            0.5 * height - deplActual * 30,
-            0.1 * height,
-            0.1 * height,
-            -p.radians(180 - abAngleStart),
-            -p.radians(abAngleStart),
-        );
-
-        p.fill("#ff8000");
-
-        p.arc(
-            0.5 * height,
-            0.5 * height,
-            0.1 * height,
-            0.1 * height,
-            -p.radians(170),
-            -p.radians(10),
-        );
-        p.fill("#ffffff");
-        p.rect(
-            0.45 * height,
-            0.5 * height,
-            0.1 * height,
-            -Math.sin((10 * Math.PI) / 180) * 0.05 * height,
-        );
-
         p.fill(0);
 
         // p.textSize(0.015 * height);
@@ -389,6 +458,8 @@ export const s = (/** @type {p5} */ pi) => {
         if (switchButton.isDone()) {
             sendWsCommand("switch");
         }
+        btn3.handlePress();
+        btn3.draw();
         altitudeGraph.draw();
 
         velocityDial.update(vel.mag());
@@ -460,7 +531,44 @@ export const s = (/** @type {p5} */ pi) => {
         // p.text(altStr, width - 0.16 * height, 0.75 * height);
         p.textSize(height * 0.035);
         p.textAlign(p.LEFT);
-        p.fill(100, 100, 100);
+
+        var envY = 0.82;
+        p.fill(0);
+        p.textSize(0.02 * height);
+        p.text("Environment: " + environment, 0.01 * height, envY * height);
+        p.text("Raw Data: ", 0.26 * height, envY * height);
+        var x = 0.27 * height;
+        var yInc = 0.015 * height;
+        p.textSize(0.012 * height);
+        var y = (envY + 0.02) * height;
+        var items = Math.floor((1 - envY - 0.02) / (0.012 + 0.002));
+        var i = 0;
+        var maxWidth = 0;
+        if (state !== undefined && state !== null) {
+            for (const k in state) {
+                if (typeof state[k] === "object") {
+                    continue;
+                }
+                var decimal = 2;
+                if (k.indexOf("gps") === 0) {
+                    decimal = 5;
+                }
+                if (k.indexOf("orientation") === 0) {
+                    decimal = 4;
+                }
+                var str = k + ": " + limDecimal(state[k], decimal);
+                maxWidth = Math.max(
+                    maxWidth,
+                    p.textWidth(k + ": 0000." + "".padStart(decimal, "0")),
+                );
+                p.text(str, x, y + (i % items) * yInc);
+                i++;
+                if (i % items == 0) {
+                    x += maxWidth + 20;
+                    maxWidth = 0;
+                }
+            }
+        }
         // velocity view
 
         // try ws connection if we dont have one

@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import { InputReader } from "./inputReader.js";
-import { broadcast, broadcastEvent } from "./index.js";
+import { broadcastEvent } from "./index.js";
 import { setEvent } from "./state.js";
 
 export class FileLogReader extends InputReader {
