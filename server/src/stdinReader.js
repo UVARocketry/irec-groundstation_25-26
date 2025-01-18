@@ -1,8 +1,10 @@
 import { ChildProcess, spawn } from "node:child_process";
+/** @import { RenameResponse } from "common/ServerMessage.js"; */
 import { InputReader } from "./inputReader.js";
 import { Strings } from "./ansi.js";
 import fs from "node:fs";
 import { setRocketConnected } from "./state.js";
+import { log } from "./log.js";
 
 export class StdinReader extends InputReader {
     /** @type {"stdout"|"stderr"} */
@@ -28,6 +30,8 @@ export class StdinReader extends InputReader {
     /** @type {NodeJS.Timeout?}*/
     lastTimeout = null;
 
+    renamed = false;
+
     /**
      * @param {(_: Uint8Array) => Promise<void>} update
      * @param {"stdout" | "stderr"} watchStream
@@ -52,9 +56,32 @@ export class StdinReader extends InputReader {
             this.start();
         }
     }
+    /**
+     * @param {string} name
+     */
+    rename(name) {
+        const newFolder = "../" + name;
+        // if (this.saveFolder !== null) {
+        //     fs.cpSync(this.saveFolder, newFolder);
+        //     fs.rmdir(this.saveFolder, () => {});
+        // }
+        this.saveFolder = newFolder;
+        this.renamed = true;
+    }
+    getRenameOptions() {
+        /** @type {RenameResponse} */
+        const ret = {
+            type: "name",
+            data: [],
+        };
+        return ret;
+    }
+    getName() {
+        return this.saveFolder ?? this.genSaveFolder() ?? "NONE";
+    }
     start() {
         if (this.process !== null) {
-            console.log(`${Strings.Warn}: Stdin process already exists!`);
+            log(`${Strings.Warn}: Stdin process already exists!`);
             this.restart = true;
             this.process.kill(9);
             return;
@@ -62,7 +89,10 @@ export class StdinReader extends InputReader {
         this.wake();
         this.process = spawn(this.cmd, this.args, { cwd: this.cwd });
         this.msgI = 0;
-        this.saveFolder = this.genSaveFolder();
+        if (!this.renamed) {
+            this.saveFolder = this.genSaveFolder();
+            this.renamed = false;
+        }
         if (!fs.existsSync(this.saveFolder ?? process.cwd())) {
             fs.mkdir(
                 this.saveFolder ?? process.cwd(),
@@ -71,14 +101,14 @@ export class StdinReader extends InputReader {
             );
         }
         if (this.process === null) {
-            console.log(
+            log(
                 `${Strings.Error}: Failed to spawn child process: ${this.cmd} ${this.args.join(" ")}`,
             );
             return;
         }
         var stream = this.process[this.watchStream];
         if (stream === null) {
-            console.log(
+            log(
                 `${Strings.Error}: error in starting read process: stream ${this.watchStream} does not exist`,
             );
             return;
@@ -87,7 +117,7 @@ export class StdinReader extends InputReader {
             /** @type {string[]} */
             const strs = v.toString().split("\n");
             for (const s of strs) {
-                // console.log(`"${s}": ${s.startsWith("ABCD")}`);
+                // log(`"${s}": ${s.startsWith("ABCD")}`);
                 if (!s.startsWith("ABCD")) {
                     continue;
                 }
@@ -114,7 +144,7 @@ export class StdinReader extends InputReader {
                     setRocketConnected(false);
                 }, 300);
             }
-            // console.log(v.toString());
+            // log(v.toString());
         });
         stream.on("close", () => {
             this.done();
@@ -124,7 +154,7 @@ export class StdinReader extends InputReader {
                 if (code !== 0) {
                     str = Strings.Warn;
                 }
-                console.log(
+                log(
                     `${str}: ${this.cmd} ${this.args.join(" ")} ended with exit code ${this.process?.exitCode}`,
                 );
                 this.process = null;
@@ -134,7 +164,7 @@ export class StdinReader extends InputReader {
                 }
             }, 10);
         });
-        console.log(
+        log(
             `${Strings.Ok}: Started process ${this.cmd} ${this.args.join(" ")}`,
         );
     }

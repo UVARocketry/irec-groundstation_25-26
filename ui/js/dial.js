@@ -158,13 +158,25 @@ export class Dial {
         p.strokeWeight(this.arcStroke * height);
         var pct =
             (this.point - this.range[0]) / (this.range[1] - this.range[0]);
-        p.arc(
-            centerX,
-            centerY,
-            this.width * height,
-            this.height * height,
-            -p.HALF_PI - this.angleSweep / 2,
-            -p.HALF_PI - this.angleSweep / 2 + this.angleSweep * pct,
-        );
+        var pct0 = (0 - this.range[0]) / (this.range[1] - this.range[0]);
+        if (this.point < 0) {
+            p.arc(
+                centerX,
+                centerY,
+                this.width * height,
+                this.height * height,
+                -p.HALF_PI - this.angleSweep / 2 + this.angleSweep * pct,
+                -p.HALF_PI - this.angleSweep / 2 + this.angleSweep * pct0,
+            );
+        } else {
+            p.arc(
+                centerX,
+                centerY,
+                this.width * height,
+                this.height * height,
+                -p.HALF_PI - this.angleSweep / 2 + this.angleSweep * pct0,
+                -p.HALF_PI - this.angleSweep / 2 + this.angleSweep * pct,
+            );
+        }
     }
 }

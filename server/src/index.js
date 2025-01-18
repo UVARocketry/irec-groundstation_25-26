@@ -16,6 +16,8 @@ import { port } from "../../common/web.js";
 import { FileLogReader } from "./fileLogReader.js";
 import { StdinReader } from "./stdinReader.js";
 import { InputReader } from "./inputReader.js";
+import child_process from "node:child_process";
+import { log } from "./log.js";
 
 const wss = new WebSocketServer({ port: port, host: "localhost" });
 /**@type {InputReader}*/
@@ -59,7 +61,6 @@ export function broadcastEvent() {
 }
 
 const logReader = new FileLogReader(onUpdate, null);
-// logReader.path = "../out2";
 
 /**
  * @param {boolean} v
@@ -81,17 +82,19 @@ export function switchReader() {
         reader = procReader;
         setAdd("readerType", "LIVE");
     }
-    reader.start();
+    // reader.start();
 }
 export function resetMessageReader() {
     reader.reset();
     // readMessage(0);
 }
 
+export function getReader() {
+    return reader;
+}
+
 // await readMessage(0);
-console.log(
-    `${Strings.Ok}: Starting websocket server at ws://localhost:${port}`,
-);
+log(`${Strings.Ok}: Starting websocket server at ws://localhost:${port}`);
 
 var read1 = false;
 const procReader = new StdinReader(
@@ -122,13 +125,13 @@ wss.on("connection", function (ws) {
         // );
     });
     ws.on("close", function () {
-        console.log(`${Strings.Warn}: Websocket connection closing`);
+        log(`${Strings.Warn}: Websocket connection closing`);
     });
     var msg = new ServerMessage("event", getEvent());
     ws.send(JSON.stringify(msg));
     msg = new ServerMessage("state", getState());
     ws.send(JSON.stringify(msg));
-    console.log(`${Strings.Ok}: Websocket connection successful`);
+    log(`${Strings.Ok}: Websocket connection successful`);
 });
 
 // a server to send off the files
@@ -145,9 +148,9 @@ const server = http.createServer((req, res) => {
             if (err) {
                 res.statusCode = 500;
                 res.end("Error loading index.html");
-                console.log(`${Strings.Warn}: Request for ${indexPath} failed`);
+                log(`${Strings.Warn}: Request for ${indexPath} failed`);
             } else {
-                console.log(`${Strings.Ok}: Request for ${indexPath}`);
+                log(`${Strings.Ok}: Request for ${indexPath}`);
                 res.statusCode = 200;
                 res.setHeader("Content-Type", "text/html");
                 res.end(data);
@@ -170,7 +173,7 @@ const server = http.createServer((req, res) => {
                     if (err) {
                         res.statusCode = 500;
                         res.end("Error reading the file");
-                        console.log(
+                        log(
                             `${Strings.Warn}: Request for ${prettyPath} failed`,
                         );
                     } else {
@@ -187,13 +190,11 @@ const server = http.createServer((req, res) => {
                         res.statusCode = 200;
                         res.setHeader("Content-Type", contentType);
                         res.end(data);
-                        console.log(`${Strings.Ok}: Request for ${prettyPath}`);
+                        log(`${Strings.Ok}: Request for ${prettyPath}`);
                     }
                 });
             } else {
-                console.log(
-                    `${Strings.Error}: Request for ${prettyPath} failed`,
-                );
+                log(`${Strings.Error}: Request for ${prettyPath} failed`);
                 res.statusCode = 404;
                 res.end("File not found");
             }
@@ -204,5 +205,16 @@ const server = http.createServer((req, res) => {
 // Set the server to listen on port 3000
 const PORT = 3000;
 server.listen(PORT, () => {
-    console.log(`${Strings.Ok}: Server running at http://localhost:${PORT}`);
+    log(`${Strings.Ok}: Server running at http://localhost:${PORT}`);
+    var url = "http://localhost:" + PORT;
+    var start =
+        process.platform == "darwin"
+            ? "open"
+            : process.platform == "win32"
+              ? "start"
+              : "xdg-open";
+    if (process.platform === "win32") {
+        url = url.replaceAll("&", "^&");
+    }
+    child_process.exec(start + " " + url);
 });

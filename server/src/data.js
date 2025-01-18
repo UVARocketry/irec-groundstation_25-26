@@ -3,6 +3,9 @@ import { Message, MessageType } from "./message.js";
 
 import { Strings } from "./ansi.js";
 import { setEvent, setState } from "./state.js";
+import { log } from "./log.js";
+import { ServerMessage } from "../../common/ServerMessage.js";
+import { broadcast } from "./index.js";
 
 /** @import { EventType } from '../../common/ServerMessage.js' */
 
@@ -20,15 +23,13 @@ var events = [];
  */
 export function parseMessage(msg) {
     if (msg.version !== 0) {
-        console.error(
+        log(
             `${Strings.Error}: received a message that does not have currect version number (0) (got version ${msg.version}). Packet parse skipped`,
         );
         return "";
     }
     if (!msg.valid) {
-        console.error(
-            `${Strings.Error}: Received invalid packet. Packet parse skipped`,
-        );
+        log(`${Strings.Error}: Received invalid packet. Packet parse skipped`);
         return "";
     }
     var str = new TextDecoder().decode(msg.data);
@@ -47,6 +48,10 @@ export function parseMessage(msg) {
     } else if (msg.type === MessageType.Event) {
         parseEvent(str);
         return "event";
+    } else if (msg.type === MessageType.Message) {
+        parseMsg(str);
+    } else {
+        log(`${Strings.Error}: Unknown message type ${msg.type}`);
     }
     return "";
 }
@@ -64,9 +69,7 @@ function parseEvent(payload) {
 
     const event = events[eventIndex] ?? "NO";
     if (event === "NO") {
-        console.error(
-            `${Strings.Warn}: Received invalid event index ${eventIndex}`,
-        );
+        log(`${Strings.Warn}: Received invalid event index ${eventIndex}`);
         return;
     }
     setEvent(event);
@@ -77,7 +80,16 @@ function parseEvent(payload) {
 function parseSchema(payload) {
     schema = payload.split(",").filter((v) => v.length !== 0);
 
-    console.log(Strings.Ok + ": RECEIVED SCHEMA: " + schema.join(", "));
+    log(Strings.Ok + ": RECEIVED SCHEMA: " + schema.join(", "));
+}
+/**
+ * @param payload {string}
+ */
+function parseMsg(payload) {
+    var message = JSON.parse(payload);
+
+    const serverMsg = new ServerMessage("message", message);
+    broadcast(serverMsg);
 }
 /**
  * @param payload {string}
@@ -85,7 +97,7 @@ function parseSchema(payload) {
 function parseEventSchema(payload) {
     events = payload.split(",").filter((v) => v.length !== 0);
 
-    console.log(Strings.Ok + ": RECEIVED EVENT SCHEMA: " + events.join(", "));
+    log(Strings.Ok + ": RECEIVED EVENT SCHEMA: " + events.join(", "));
 }
 
 /**
@@ -96,7 +108,7 @@ function parseMetadata(payload) {
     if (mtype === 0) {
         fieldSize = payload.charCodeAt(1);
         if (fieldSize !== 4 && fieldSize !== 8) {
-            console.log(
+            log(
                 Strings.Error +
                     ": INVALID sizeof(FLOAT): " +
                     fieldSize +
@@ -104,10 +116,10 @@ function parseMetadata(payload) {
             );
             fieldSize = 4;
         } else {
-            console.log(Strings.Ok + ": sizeof(FLOAT): " + fieldSize);
+            log(Strings.Ok + ": sizeof(FLOAT): " + fieldSize);
         }
     } else {
-        console.log(Strings.Warn + ": UNKNOWN METADATA TYPE " + mtype);
+        log(Strings.Warn + ": UNKNOWN METADATA TYPE " + mtype);
     }
 }
 
@@ -134,7 +146,7 @@ function parseData(payload) {
     }
 
     if (array.length !== schema.length) {
-        console.log(
+        log(
             `${Strings.Warn}: Expected a float ${fieldSize * 8} array of ${schema.length} elements, but got ${array.length}. Ignoring this data point`,
         );
         return "";

@@ -1,4 +1,4 @@
-import { broadcastState } from "./index.js";
+import { broadcastState, getReader } from "./index.js";
 import { AddedData } from "../../common/AddedData.js";
 
 /* @type {LogItem} */
@@ -23,7 +23,10 @@ export function getEvent() {
  * @param {AddedData[K]} v
  */
 export function setAdd(k, v) {
-    addedData[k] = v;
+    if (addedData[k] !== v) {
+        addedData[k] = v;
+        broadcastState();
+    }
 }
 
 /**
@@ -39,6 +42,7 @@ export function getState() {
         currentState[k] = addedData[k];
     }
     currentState.startState = startingState;
+    currentState.readerName = getReader().getName();
     // currentState.rocketConnected = rocketConnected;
     // currentState.readerConnected = readerConnected;
     currentState.timeSinceLaunch = currentState.i_timestamp - launchTime;

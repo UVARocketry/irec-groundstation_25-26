@@ -1,5 +1,6 @@
 // this file is for parsing a raw binary message into something with a little bit more structure (aka Message)
 import { Strings } from "./ansi.js";
+import { log } from "./log.js";
 /**
  * @readonly
  * @enum {number}
@@ -15,6 +16,10 @@ export const MessageType = {
     Event: 3,
     /// for sending eventSchema
     EventSchema: 4,
+    /// For saying that yes, we have received everything
+    Acknowledgement: 5,
+    /// For receiving messages
+    Message: 6,
     Undefined: -1,
 };
 export class Message {
@@ -57,7 +62,7 @@ export class Message {
         }
         msg = new Uint8Array(newBuf);
         if (msg.length * 8 < 40) {
-            console.error(`${Strings.Error}: Message is too small!`);
+            log(`${Strings.Error}: Message is too small!`);
             return;
         }
         // get version and type
@@ -68,7 +73,7 @@ export class Message {
         var len = (msg[1] << 8) + msg[2];
         // -5 because of 5 byte header
         if (msg.length - 5 !== len) {
-            console.error(
+            log(
                 `${Strings.Error}: MESSAGE SIZE DOES NOT MATCH: ${len}, ${msg.length - 5}`,
             );
             return;
@@ -92,7 +97,7 @@ export class Message {
             actualChecksum[0] !== checksum[0] ||
             actualChecksum[1] !== checksum[1]
         ) {
-            console.error(
+            log(
                 `${Strings.Error}: CHECKSUM VALIDATION FAILED: ${checksum}, ${actualChecksum}`,
             );
             return;

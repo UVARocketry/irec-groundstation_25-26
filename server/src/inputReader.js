@@ -1,3 +1,4 @@
+/** @import { RenameResponse } from "common/ServerMessage.js"; */
 import { setReaderConnected, setRocketConnected } from "./state.js";
 
 /**
@@ -16,6 +17,20 @@ export class InputReader {
     start() {}
 
     stop() {}
+
+    /** @param {string} name */
+    rename(name) {}
+
+    /** @return string */
+    getName() {
+        return "";
+    }
+
+    /** @return {RenameResponse} */
+    getRenameOptions() {
+        // @ts-ignore
+        return {};
+    }
 
     done() {
         setReaderConnected(false);

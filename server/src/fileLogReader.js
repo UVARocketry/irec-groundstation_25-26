@@ -2,6 +2,7 @@ import fs from "node:fs";
 import { InputReader } from "./inputReader.js";
 import { broadcastEvent } from "./index.js";
 import { setEvent } from "./state.js";
+/** @import { RenameResponse } from "common/ServerMessage.js"; */
 
 export class FileLogReader extends InputReader {
     i = 0;
@@ -25,6 +26,33 @@ export class FileLogReader extends InputReader {
             this.wake();
             setTimeout(() => this.readMessage(), 1000);
         }
+    }
+
+    /** @param {string} name */
+    rename(name) {
+        this.path = "../" + name;
+    }
+
+    getRenameOptions() {
+        var items = [];
+
+        const files = fs.readdirSync("..");
+        files.forEach((f) => {
+            if (fs.existsSync(`../${f}/msg-0`)) {
+                items.push(f);
+            }
+        });
+
+        /** @type {RenameResponse} */
+        const ret = {
+            type: "choice",
+            data: items,
+        };
+        return ret;
+    }
+
+    getName() {
+        return this.path;
     }
     async readMessage() {
         if (this.cancel) {
