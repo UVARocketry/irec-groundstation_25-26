@@ -101,7 +101,7 @@ const procReader = new StdinReader(
     onUpdate,
     "stderr",
     "./run",
-    [],
+    ["noinput"],
     "../../sac_24-25/lib",
     () => "../out_" + new Date().toISOString().slice(0, 19).replace("T", "_"),
 );
@@ -216,5 +216,5 @@ server.listen(PORT, () => {
     if (process.platform === "win32") {
         url = url.replaceAll("&", "^&");
     }
-    child_process.exec(start + " " + url);
+    // child_process.exec(start + " " + url);
 });

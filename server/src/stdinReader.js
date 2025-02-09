@@ -3,14 +3,14 @@ import { ChildProcess, spawn } from "node:child_process";
 import { InputReader } from "./inputReader.js";
 import { Strings } from "./ansi.js";
 import fs from "node:fs";
-import { setRocketConnected } from "./state.js";
+import { clearConnected, setRocketConnected } from "./state.js";
 import { log } from "./log.js";
 
 export class StdinReader extends InputReader {
     /** @type {"stdout"|"stderr"} */
     watchStream = "stdout";
     cmd = "pio";
-    args = ["run"];
+    args = ["device", "monitor"];
     /** @type {string|URL|undefined} */
     cwd = undefined;
     /** @type {ChildProcess?} */
@@ -80,6 +80,7 @@ export class StdinReader extends InputReader {
         return this.saveFolder ?? this.genSaveFolder() ?? "NONE";
     }
     start() {
+        clearConnected();
         if (this.process !== null) {
             log(`${Strings.Warn}: Stdin process already exists!`);
             this.restart = true;
@@ -117,7 +118,7 @@ export class StdinReader extends InputReader {
             /** @type {string[]} */
             const strs = v.toString().split("\n");
             for (const s of strs) {
-                // log(`"${s}": ${s.startsWith("ABCD")}`);
+                // log(`"${s}": ${s}`);
                 if (!s.startsWith("ABCD")) {
                     continue;
                 }

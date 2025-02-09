@@ -18,11 +18,11 @@ export class LogItem extends AddedData {
     predictedApogee = 0;
 
     /** @type {number} */
-    accX = 0;
+    vnAccX = 0;
     /** @type {number} */
-    accY = 0;
+    vnAccY = 0;
     /** @type {number} */
-    accZ = 0;
+    vnAccZ = 0;
 
     /** @type {number} */
     gyroX = 0;

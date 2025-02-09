@@ -7,7 +7,7 @@ var startingState = null;
 var currentState = {};
 var launchTime = 0;
 
-var addedData = new AddedData();
+const addedData = new AddedData();
 
 /** @type {string} */
 var currentEvent = "offline";
@@ -15,6 +15,27 @@ var currentEvent = "offline";
 /** @return {string} */
 export function getEvent() {
     return currentEvent;
+}
+
+/**
+ * @param item {string}
+ * @param c {boolean}
+ */
+export function setConnected(item, c) {
+    var i = 0;
+    for (; i < addedData.connected.length; i++) {
+        if (addedData.connected[i][0] === item) {
+            addedData.connected[i][1] = c;
+            break;
+        }
+    }
+    if (i === addedData.connected.length) {
+        addedData.connected.push([item, c]);
+    }
+}
+
+export function clearConnected() {
+    addedData.connected = [];
 }
 
 /**

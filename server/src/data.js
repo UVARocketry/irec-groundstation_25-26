@@ -2,12 +2,12 @@
 import { Message, MessageType } from "./message.js";
 
 import { Strings } from "./ansi.js";
-import { setEvent, setState } from "./state.js";
+import { setConnected, setEvent, setState } from "./state.js";
 import { log } from "./log.js";
 import { ServerMessage } from "../../common/ServerMessage.js";
-import { broadcast } from "./index.js";
+import { broadcast, broadcastState } from "./index.js";
 
-/** @import { EventType } from '../../common/ServerMessage.js' */
+/** @import { EventType, RocketMessage } from '../../common/ServerMessage.js' */
 
 // some data to store
 /** @type {string[]} */
@@ -86,7 +86,26 @@ function parseSchema(payload) {
  * @param payload {string}
  */
 function parseMsg(payload) {
+    /** @type {RocketMessage} */
     var message = JSON.parse(payload);
+    var stateSet = false;
+    if (message.subject === "Init" || message.subject === "Connection") {
+        if (message.verb === "Failed" || message.verb === "Started") {
+            stateSet = true;
+            setConnected(message.device, false);
+        } else if (message.verb === "Succeeded") {
+            stateSet = true;
+            setConnected(message.device, true);
+        }
+    } else if (message.subject === "Deactivation") {
+        if (message.verb === "Succeeded") {
+            stateSet = true;
+            setConnected(message.device, false);
+        }
+    }
+    if (stateSet) {
+        broadcastState();
+    }
 
     const serverMsg = new ServerMessage("message", message);
     broadcast(serverMsg);

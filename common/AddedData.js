@@ -6,4 +6,7 @@ export class AddedData {
 
     /** @type {string} */
     readerType = "NONE";
+
+    /** @type {[string, boolean][]} */
+    connected = [];
 }

@@ -347,6 +347,7 @@ function draw() {
     var readerActive = false;
     var rocketActive = false;
     var environment = "";
+    var connected = [];
     if (
         state !== null &&
         state.startState !== null &&
@@ -354,6 +355,7 @@ function draw() {
     ) {
         readerActive = state.readerConnected;
         rocketActive = state.rocketConnected;
+        connected = state.connected;
         environment = state.readerType;
         pos = p.createVector(
             state.kalmanPosX,
@@ -375,9 +377,9 @@ function draw() {
 
         altitudeGraph.addDatapoint(ap, [expAp]);
         acc = p.createVector(
-            state.accX / 9.8,
-            state.accY / 9.8,
-            state.accZ / 9.8,
+            state.vnAccX / 9.8,
+            state.vnAccY / 9.8,
+            state.vnAccZ / 9.8,
         );
         vel = p.createVector(
             state.kalmanVelX * mtoft,
@@ -402,7 +404,7 @@ function draw() {
     }
 
     const envY = 0.82;
-    const mts = 0.014;
+    var mts = 0.014;
     p.textSize(mts * height);
     p.noStroke();
     p.fill(0);
@@ -413,7 +415,9 @@ function draw() {
             continue;
         }
     }
-    var msgCount = messageQueue.length;
+
+    /// notifications
+    var msgCount = Math.min(messageQueue.length, 8);
     for (var i = 0; i < msgCount && i < messageQueue.length; i++) {
         const m = messageQueue[messageQueue.length - 1 - i];
         // m.left--;
@@ -442,14 +446,17 @@ function draw() {
                 i * (mts * 1.01 * height),
         );
     }
+    mts = 0.028;
+    p.textSize(mts * height);
     for (const v of errorQueue) {
-        v.left--;
+        v.left -= 0.5;
         if (v.left < 0) {
             errorQueue.shift();
             continue;
         }
     }
     msgCount = errorQueue.length;
+    const errorY = 0;
     for (var i = 0; i < msgCount && i < errorQueue.length; i++) {
         const m = errorQueue[errorQueue.length - 1 - i];
         // m.left--;
@@ -457,16 +464,14 @@ function draw() {
         p.fill("#ff0000");
         p.text(
             type,
-            0.5 * height,
-            (envY - mts * 1.01 * msgCount - 0.005) * height +
-                i * (mts * 1.01 * height),
+            0.6 * height,
+            (errorY + mts * 1.28) * height + i * (mts * 1.01 * height),
         );
         p.fill(0);
         p.text(
             ` ${m.device} ${m.subject} ${m.verb}`,
-            0.5 * height + p.textWidth(type),
-            (envY - mts * 1.01 * msgCount - 0.005) * height +
-                i * (mts * 1.01 * height),
+            0.6 * height + p.textWidth(type),
+            (errorY + mts * 1.28) * height + i * (mts * 1.01 * height),
         );
     }
 
@@ -495,13 +500,19 @@ function draw() {
         0.01,
         0.1,
         0.03,
-        ["Rocket", "Reader", "Filters", "Prediction", "PID"],
+        [
+            "Rocket",
+            "Reader",
+            // "Filters",
+            // "Prediction",
+            ...connected.map((v) => v[0]),
+        ],
         [
             rocketActive,
             readerActive,
-            (state?.kalmanPosX ?? 0) !== 0,
-            (state?.predictedApogee ?? 0) !== 0,
-            (state?.pidDeployment ?? 0) !== 0,
+            // (state?.kalmanPosX ?? 0) !== 0,
+            // (state?.predictedApogee ?? 0) !== 0,
+            ...connected.map((v) => v[1]),
         ],
     );
 
@@ -590,6 +601,8 @@ function draw() {
     p.fill(TEXT_COL);
 
     // apogee and expected apogee
+
+    // send apogee, predicted, and altitude
     p.textSize(height * 0.035);
     p.textAlign(p.CENTER);
     p.text("Apogee:", width - 0.7 * height, 0.72 * height);
@@ -627,9 +640,9 @@ function draw() {
     // p.text(apStr, width - 0.7 * height, 0.75 * height);
     // p.text(expApStr, width - 0.43 * height, 0.75 * height);
     // p.text(altStr, width - 0.16 * height, 0.75 * height);
-    p.textSize(height * 0.035);
-    p.textAlign(p.LEFT);
 
+    // output raw data
+    p.textAlign(p.LEFT);
     p.fill(0);
     p.textSize(0.02 * height);
     p.text("Environment: " + environment, 0.01 * height, envY * height);
@@ -647,10 +660,13 @@ function draw() {
                 continue;
             }
             var decimal = 2;
-            if (k.indexOf("gps") === 0) {
+            if (k.indexOf("vnPos") === 0) {
                 decimal = 5;
             }
-            if (k.indexOf("orientation") === 0) {
+            if (
+                k.indexOf("orientation") === 0 ||
+                k.indexOf("vnOrientation") === 0
+            ) {
                 decimal = 4;
             }
             var str = k + ": " + limDecimal(state[k], decimal);

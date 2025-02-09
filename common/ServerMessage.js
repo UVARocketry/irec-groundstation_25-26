@@ -19,12 +19,12 @@ export class ServerMessage {
     /** @type EventType */
     type = "event";
 
-    /** @type (string|object) */
+    /** @type (string|LogItem|RenameResponse|RocketMessage) */
     data = "";
 
     /**
      * @param {EventType} type
-     * @param {string|LogItem|RenameResponse} data
+     * @param {string|LogItem|RenameResponse|RocketMessage} data
      */
     constructor(type, data) {
         this.type = type;

@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import { InputReader } from "./inputReader.js";
 import { broadcastEvent } from "./index.js";
-import { setEvent } from "./state.js";
+import { clearConnected, setEvent } from "./state.js";
 /** @import { RenameResponse } from "common/ServerMessage.js"; */
 
 export class FileLogReader extends InputReader {
@@ -19,9 +19,11 @@ export class FileLogReader extends InputReader {
     }
     stop() {
         this.cancel = true;
+        clearConnected();
     }
     start() {
         if (!this.readFirst) {
+            clearConnected();
             this.readFirst = true;
             this.wake();
             setTimeout(() => this.readMessage(), 1000);
