@@ -53,6 +53,13 @@ export class LogItem extends AddedData {
     vnPosZ = 0;
 
     /** @type {number} */
+    vnGpsX = 0;
+    /** @type {number} */
+    vnGpsY = 0;
+    /** @type {number} */
+    vnGpsZ = 0;
+
+    /** @type {number} */
     kalmanVelX = 0;
     /** @type {number} */
     kalmanVelY = 0;

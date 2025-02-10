@@ -405,20 +405,20 @@ function draw() {
     var uptime = 0;
     var airTime = 0;
     var pos = p.createVector(0, 0, 0);
-    var vnPos = p.createVector(0, 0, 0);
+    var vnGps = p.createVector(0, 0, 0);
     var readerActive = false;
     var rocketActive = false;
     var environment = "";
     var connected = [];
     var mainBat = 0;
     var servoBat = 0;
-    var vnPos = p.createVector(0, 0, 0);
+    var vnGps = p.createVector(0, 0, 0);
     if (
         state !== null &&
         state.startState !== null &&
         state.startState !== undefined
     ) {
-        vnPos = p.createVector(state.vnPosX, state.vnPosY);
+        vnGps = p.createVector(state.vnGpsX, state.vnGpsY);
         readerActive = state.readerConnected;
         rocketActive = state.rocketConnected;
         connected = state.connected;
@@ -475,6 +475,7 @@ function draw() {
         altBelowForReset = -1;
     }
 
+    // compass map display thing
     {
         if (pos.x !== 0 && pos.y !== 0 && altBelowForReset === -1) {
             pastPos.push(pos);
@@ -502,7 +503,7 @@ function draw() {
             p.z = 0;
             biggestDist = Math.max(biggestDist, p.mag());
         }
-        if (biggestDist / travelMeterDiv > 6) {
+        if (biggestDist / travelMeterDiv > 8) {
             travelMeterDiv *= 2;
         }
         console.log(biggestDist, travelMeterDiv);
@@ -569,15 +570,15 @@ function draw() {
         p.fill(0);
         p.noStroke();
         p.textSize(0.04 * height);
-        var x = 0.56 * width;
-        p.text("GPS: ", 0.56 * width, 0.1 * height);
+        var x = 0.55 * width;
+        p.text("GPS: ", x, 0.1 * height);
         x += p.textWidth("GPS:");
         p.textSize(0.025 * height);
         p.text(
-            " (" +
-                limDecimal(vnPos.x, 5) +
+            "(" +
+                limDecimal(vnGps.x, 5) +
                 "°, " +
-                limDecimal(vnPos.y, 5) +
+                limDecimal(vnGps.y, 5) +
                 "°)",
             x,
             0.1 * height,
@@ -712,7 +713,7 @@ function draw() {
             0.04 * height,
             "ft",
             0.03 * height,
-            0.56 * width,
+            0.55 * width,
             0.05 * height,
         );
         pos.z = z;
@@ -724,7 +725,7 @@ function draw() {
         0.04 * height,
         "s",
         0.03 * height,
-        0.8 * width,
+        0.78 * width,
         0.1 * height,
     );
     unitString(
@@ -732,7 +733,7 @@ function draw() {
         0.04 * height,
         "s",
         0.03 * height,
-        0.8 * width,
+        0.78 * width,
         0.05 * height,
     );
 
