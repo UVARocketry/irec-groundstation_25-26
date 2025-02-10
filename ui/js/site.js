@@ -405,17 +405,20 @@ function draw() {
     var uptime = 0;
     var airTime = 0;
     var pos = p.createVector(0, 0, 0);
+    var vnPos = p.createVector(0, 0, 0);
     var readerActive = false;
     var rocketActive = false;
     var environment = "";
     var connected = [];
     var mainBat = 0;
     var servoBat = 0;
+    var vnPos = p.createVector(0, 0, 0);
     if (
         state !== null &&
         state.startState !== null &&
         state.startState !== undefined
     ) {
+        vnPos = p.createVector(state.vnPosX, state.vnPosY);
         readerActive = state.readerConnected;
         rocketActive = state.rocketConnected;
         connected = state.connected;
@@ -560,7 +563,27 @@ function draw() {
     }
 
     const envY = 0.8;
-    // notifications
+
+    // gps coords
+    {
+        p.fill(0);
+        p.noStroke();
+        p.textSize(0.04 * height);
+        var x = 0.56 * width;
+        p.text("GPS: ", 0.56 * width, 0.1 * height);
+        x += p.textWidth("GPS:");
+        p.textSize(0.025 * height);
+        p.text(
+            " (" +
+                limDecimal(vnPos.x, 5) +
+                "°, " +
+                limDecimal(vnPos.y, 5) +
+                "°)",
+            x,
+            0.1 * height,
+        );
+    }
+    // notifications / messages
     {
         var mts = 0.014;
         p.textSize(mts * height);
@@ -620,13 +643,13 @@ function draw() {
             p.fill("#ff0000");
             p.text(
                 type,
-                0.6 * height,
+                0.55 * height,
                 (errorY + mts * 1.28) * height + i * (mts * 1.01 * height),
             );
             p.fill(0);
             p.text(
                 ` ${m.device} ${m.subject} ${m.verb}`,
-                0.6 * height + p.textWidth(type),
+                0.55 * height + p.textWidth(type),
                 (errorY + mts * 1.28) * height + i * (mts * 1.01 * height),
             );
         }
@@ -689,7 +712,7 @@ function draw() {
             0.04 * height,
             "ft",
             0.03 * height,
-            0.6 * width,
+            0.56 * width,
             0.05 * height,
         );
         pos.z = z;
