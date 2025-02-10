@@ -62,6 +62,11 @@ export class LogItem extends AddedData {
     orientationZ = 0;
 
     /** @type {number} */
+    mainBat = 0;
+    /** @type {number} */
+    servoBat = 0;
+
+    /** @type {number} */
     apogee = 0;
 
     /** @type {number} */

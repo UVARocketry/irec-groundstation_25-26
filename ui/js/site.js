@@ -48,6 +48,59 @@ export function getHeight() {
 }
 
 /**
+ * @param {string} label
+ * @param {number} level
+ * @param {number} x
+ * @param {number} y
+ * @param {number} w1
+ * @param {number} h1
+ * @param {number} r1
+ * @param {number} w2
+ * @param {number} h2
+ * @param {number} r2
+ */
+function drawBattery(label, level, x, y, w1, h1, r1, w2, h2, r2) {
+    p.stroke(0);
+    p.strokeWeight(2);
+    p.fill(255);
+    p.rect(
+        (x + w1 - w2 * 0.1) * height,
+        (y + h1 / 2 - h2 / 2) * height,
+        w2 * height,
+        h2 * height,
+        r2,
+    );
+    p.noStroke();
+    p.fill(255);
+    p.rect(x * height, y * height, w1 * height, h1 * height, r1);
+    if (level <= 30) {
+        p.fill(255, 0, 0);
+    } else if (level <= 60) {
+        p.fill(255, 255, 0);
+    } else {
+        p.fill(0, 255, 0);
+    }
+    p.rect(
+        x * height,
+        y * height,
+        ((w1 * (level + 10)) / 110) * height,
+        h1 * height,
+        r1,
+    );
+    p.stroke(0);
+    p.noFill();
+    p.rect(x * height, y * height, w1 * height, h1 * height, r1);
+    p.textAlign(p.CENTER);
+    p.noStroke();
+    p.fill(0);
+    p.textSize(h1 * height * 0.9);
+    p.text(level + "%", (x + w1 / 2) * height, (y + h1 * 0.85) * height);
+    p.textAlign(p.LEFT);
+    p.text(label, x * height - 10, y * height - 5);
+    p.noStroke();
+}
+
+/**
  * @param {number} x
  * @param {number} y
  * @param {number} w
@@ -102,6 +155,7 @@ export function getHeight() {
  * @param {number?} [size2]
  */
 function status(x, y, size1, names, values, size2) {
+    p.textAlign(p.LEFT);
     size2 ??= size1;
     p.textSize(size1 * height);
     p.fill(0);
@@ -348,6 +402,8 @@ function draw() {
     var rocketActive = false;
     var environment = "";
     var connected = [];
+    var mainBat = 0;
+    var servoBat = 0;
     if (
         state !== null &&
         state.startState !== null &&
@@ -357,6 +413,8 @@ function draw() {
         rocketActive = state.rocketConnected;
         connected = state.connected;
         environment = state.readerType;
+        mainBat = state.mainBat;
+        servoBat = state.servoBat;
         pos = p.createVector(
             state.kalmanPosX,
             state.kalmanPosY,
@@ -475,6 +533,48 @@ function draw() {
         );
     }
 
+    drawBattery(
+        "Main:",
+        70,
+        width / height - 0.07,
+        0.03,
+        0.05,
+        0.02,
+        3,
+        0.005,
+        0.01,
+        3,
+    );
+    drawBattery(
+        "Servo:",
+        50,
+        width / height - 0.07,
+        0.08,
+        0.05,
+        0.02,
+        3,
+        0.005,
+        0.01,
+        3,
+    );
+    // p.strokeWeight(2);
+    // p.fill(255);
+    // p.rect(
+    //     width - 0.066 * height,
+    //     0.0425 * height,
+    //     0.03 * height,
+    //     0.005 * height,
+    //     3,
+    // );
+    // p.rect(
+    //     width - 0.07 * height,
+    //     0.04 * height,
+    //     0.03 * height,
+    //     0.01 * height,
+    //     3,
+    // );
+    p.noStroke();
+
     // p.strokeWeight(0.0015 * height);
     // p.stroke(0);
     // if (rocketActive) {
@@ -536,7 +636,7 @@ function draw() {
         0.04 * height,
         "s",
         0.03 * height,
-        0.82 * width,
+        0.8 * width,
         0.1 * height,
     );
     unitString(
@@ -544,7 +644,7 @@ function draw() {
         0.04 * height,
         "s",
         0.03 * height,
-        0.82 * width,
+        0.8 * width,
         0.05 * height,
     );
 
