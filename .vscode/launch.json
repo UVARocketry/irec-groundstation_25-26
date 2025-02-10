@@ -2,11 +2,14 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch Chrome",
+            "name": "Launch Program",
+            "program": "${workspaceFolder}/server/src/index.js",
             "request": "launch",
-            "type": "chrome",
-            "url": "${workspaceFolder}/index.html",
-            "webRoot": "${workspaceFolder}"
-        }
+            "cwd": "${workspaceFolder}/server",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node"
+        },
     ]
 }
