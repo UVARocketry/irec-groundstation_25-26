@@ -216,5 +216,5 @@ server.listen(PORT, () => {
     if (process.platform === "win32") {
         url = url.replaceAll("&", "^&");
     }
-    // child_process.exec(start + " " + url);
+    child_process.exec(start + " " + url);
 });

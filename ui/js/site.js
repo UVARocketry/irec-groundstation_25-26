@@ -155,6 +155,7 @@ function drawBattery(label, level, x, y, w1, h1, r1, w2, h2, r2) {
  * @param {number?} [size2]
  */
 function status(x, y, size1, names, values, size2) {
+    p.noStroke();
     p.textAlign(p.LEFT);
     size2 ??= size1;
     p.textSize(size1 * height);
@@ -229,7 +230,12 @@ function unitString(str1, size1, str2, size2, x, y) {
     p.text(str2, x + w1, y);
 }
 
+/** @type {p5.Vector[]}*/
+var pastPos = [];
+var altBelowForReset = -1;
+var travelMeterDiv = 1;
 function init() {
+    pastPos.push(p.createVector(0, 0, 0));
     // setup globals
     p.createCanvas(p.windowWidth, p.windowHeight);
     width = p.windowWidth;
@@ -387,6 +393,7 @@ function draw() {
     p.text("Event: " + ce, 0.01 * height, 0.05 * height);
 
     // parse data packets
+    // aka state unpacking
     var ap = 0;
     var expAp = 0;
     var alt = 0;
@@ -461,81 +468,174 @@ function draw() {
         p.noStroke();
     }
 
-    const envY = 0.82;
-    var mts = 0.014;
-    p.textSize(mts * height);
-    p.noStroke();
-    p.fill(0);
-    for (const v of messageQueue) {
-        v.left--;
-        if (v.left < 0) {
-            messageQueue.shift();
-            continue;
+    if (alt < altBelowForReset) {
+        altBelowForReset = -1;
+    }
+
+    {
+        if (pos.x !== 0 && pos.y !== 0 && altBelowForReset === -1) {
+            pastPos.push(pos);
+        }
+        const w = 0.22;
+        const x = width / height - 0.7;
+        const y = 0.27;
+        p.strokeWeight(0.001 * height);
+        p.stroke(0);
+        const extra = 0.05 * w * height;
+        p.line(
+            (x - w / 2) * height - extra,
+            y * height,
+            (x + w / 2) * height + extra,
+            y * height,
+        );
+        p.line(
+            x * height,
+            (y - w / 2) * height - extra,
+            x * height,
+            (y + w / 2) * height + extra,
+        );
+        var biggestDist = 0;
+        for (const p of pastPos) {
+            p.z = 0;
+            biggestDist = Math.max(biggestDist, p.mag());
+        }
+        if (biggestDist / travelMeterDiv > 6) {
+            travelMeterDiv *= 2;
+        }
+        console.log(biggestDist, travelMeterDiv);
+        p.textSize(0.01 * height);
+        for (
+            var dist = travelMeterDiv;
+            dist <= biggestDist;
+            dist += travelMeterDiv
+        ) {
+            p.noFill();
+            p.stroke(0);
+            p.ellipse(
+                x * height,
+                y * height,
+                (dist / biggestDist) * w * height,
+                (dist / biggestDist) * w * height,
+            );
+            p.fill(0);
+            p.noStroke();
+            p.text(
+                dist,
+                x * height + 1,
+                (y - ((dist / biggestDist) * w) / 2) * height - 1,
+            );
+        }
+        p.text(
+            Math.floor(biggestDist),
+            x * height + 1,
+            (y - w / 2) * height - 1,
+        );
+        p.textAlign(p.CENTER);
+        p.textSize(0.015 * height);
+        p.text("N", x * height, (y - w / 2) * height - extra - 2);
+        p.text("S", x * height, (y + w / 2 + 0.015) * height + extra);
+        p.textAlign(p.LEFT);
+        p.text("E", (x + w / 2) * height + extra, (y + 0.015 / 2) * height - 2);
+        p.text(
+            "W",
+            (x - w / 2) * height - extra - p.textWidth("W") - 1,
+            (y + 0.015 / 2) * height - 2,
+        );
+        p.noFill();
+        p.stroke(0);
+        p.ellipse(x * height, y * height, w * height, w * height);
+        p.fill(255, 0, 0);
+        p.noStroke();
+        for (const point of pastPos) {
+            if (point === pastPos.at(-1)) {
+                p.fill(0, 255, 255);
+            }
+            p.ellipse(
+                (x + ((point.x / biggestDist) * w) / 2) * height,
+                (y + ((point.y / biggestDist) * w) / 2) * height,
+                5,
+                5,
+            );
         }
     }
 
-    /// notifications
-    var msgCount = Math.min(messageQueue.length, 8);
-    for (var i = 0; i < msgCount && i < messageQueue.length; i++) {
-        const m = messageQueue[messageQueue.length - 1 - i];
-        // m.left--;
-
-        var type = m.type + ":";
-        if (m.type === "Info") {
-            p.fill("#0035eb");
-        } else if (m.type === "Success") {
-            p.fill("#00ff00");
-        } else if (m.type === "Warning") {
-            p.fill("#d78200");
-        } else {
-            p.fill("#ffff00");
-        }
-        p.text(
-            type,
-            0.01 * height,
-            (envY - mts * 1.01 * msgCount - 0.005) * height +
-                i * (mts * 1.01 * height),
-        );
+    const envY = 0.8;
+    // notifications
+    {
+        var mts = 0.014;
+        p.textSize(mts * height);
+        p.noStroke();
         p.fill(0);
-        p.text(
-            ` ${m.device} ${m.subject} ${m.verb}`,
-            0.01 * height + p.textWidth(type),
-            (envY - mts * 1.01 * msgCount - 0.005) * height +
-                i * (mts * 1.01 * height),
-        );
-    }
-    mts = 0.028;
-    p.textSize(mts * height);
-    for (const v of errorQueue) {
-        v.left -= 0.5;
-        if (v.left < 0) {
-            errorQueue.shift();
-            continue;
+        for (const v of messageQueue) {
+            v.left--;
+            if (v.left < 0) {
+                messageQueue.shift();
+                continue;
+            }
+        }
+        var msgCount = Math.min(messageQueue.length, 8);
+        for (var i = 0; i < msgCount && i < messageQueue.length; i++) {
+            const m = messageQueue[messageQueue.length - 1 - i];
+            // m.left--;
+
+            var type = m.type + ":";
+            if (m.type === "Info") {
+                p.fill("#0035eb");
+            } else if (m.type === "Success") {
+                p.fill("#00ff00");
+            } else if (m.type === "Warning") {
+                p.fill("#d78200");
+            } else {
+                p.fill("#ffff00");
+            }
+            p.text(
+                type,
+                0.01 * height,
+                (envY - mts * 1.01 * msgCount - 0.005) * height +
+                    i * (mts * 1.01 * height),
+            );
+            p.fill(0);
+            p.text(
+                ` ${m.device} ${m.subject} ${m.verb}`,
+                0.01 * height + p.textWidth(type),
+                (envY - mts * 1.01 * msgCount - 0.005) * height +
+                    i * (mts * 1.01 * height),
+            );
+        }
+        mts = 0.028;
+        p.textSize(mts * height);
+        for (const v of errorQueue) {
+            v.left -= 0.5;
+            if (v.left < 0) {
+                errorQueue.shift();
+                continue;
+            }
+        }
+        msgCount = errorQueue.length;
+        const errorY = 0;
+        for (var i = 0; i < msgCount && i < errorQueue.length; i++) {
+            const m = errorQueue[errorQueue.length - 1 - i];
+            // m.left--;
+            var type = m.type + ":";
+            p.fill("#ff0000");
+            p.text(
+                type,
+                0.6 * height,
+                (errorY + mts * 1.28) * height + i * (mts * 1.01 * height),
+            );
+            p.fill(0);
+            p.text(
+                ` ${m.device} ${m.subject} ${m.verb}`,
+                0.6 * height + p.textWidth(type),
+                (errorY + mts * 1.28) * height + i * (mts * 1.01 * height),
+            );
         }
     }
-    msgCount = errorQueue.length;
-    const errorY = 0;
-    for (var i = 0; i < msgCount && i < errorQueue.length; i++) {
-        const m = errorQueue[errorQueue.length - 1 - i];
-        // m.left--;
-        var type = m.type + ":";
-        p.fill("#ff0000");
-        p.text(
-            type,
-            0.6 * height,
-            (errorY + mts * 1.28) * height + i * (mts * 1.01 * height),
-        );
-        p.fill(0);
-        p.text(
-            ` ${m.device} ${m.subject} ${m.verb}`,
-            0.6 * height + p.textWidth(type),
-            (errorY + mts * 1.28) * height + i * (mts * 1.01 * height),
-        );
-    }
 
+    // battery levels
     drawBattery(
         "Main:",
-        70,
+        Math.round(mainBat),
         width / height - 0.07,
         0.03,
         0.05,
@@ -547,7 +647,7 @@ function draw() {
     );
     drawBattery(
         "Servo:",
-        50,
+        Math.round(servoBat),
         width / height - 0.07,
         0.08,
         0.05,
@@ -557,45 +657,8 @@ function draw() {
         0.01,
         3,
     );
-    // p.strokeWeight(2);
-    // p.fill(255);
-    // p.rect(
-    //     width - 0.066 * height,
-    //     0.0425 * height,
-    //     0.03 * height,
-    //     0.005 * height,
-    //     3,
-    // );
-    // p.rect(
-    //     width - 0.07 * height,
-    //     0.04 * height,
-    //     0.03 * height,
-    //     0.01 * height,
-    //     3,
-    // );
-    p.noStroke();
 
-    // p.strokeWeight(0.0015 * height);
-    // p.stroke(0);
-    // if (rocketActive) {
-    //     p.fill(0, 255, 0);
-    // } else {
-    //     p.fill(255, 0, 0);
-    // }
-    // p.ellipse(0.025 * height, 0.135 * height, 0.01 * height, 0.01 * height);
-    // if (readerActive) {
-    //     p.fill(0, 255, 0);
-    // } else {
-    //     p.fill(255, 0, 0);
-    // }
-    // p.ellipse(0.025 * height, 0.185 * height, 0.01 * height, 0.01 * height);
-    // p.fill(0);
-    // p.noStroke();
-    // p.textSize(0.03 * height);
-    // p.text("System Status:", 0.01 * height, 0.1 * height);
-    // // p.textSize(0.04 * height);
-    // p.text("Rocket", 0.05 * height, 0.15 * height);
-    // p.text("Reader", 0.05 * height, 0.2 * height);
+    // subsystem status
     status(
         0.01,
         0.1,
@@ -616,9 +679,9 @@ function draw() {
         ],
     );
 
-    // deploymentVisual(0.5, 0.5, 0.1, 120, 40, deplActual);
-    p.fill(0);
+    // show how far we have traveled
     {
+        p.fill(0);
         let z = pos.z;
         pos.z = 0;
         unitString(
@@ -631,6 +694,8 @@ function draw() {
         );
         pos.z = z;
     }
+
+    // uptime + airtime
     unitString(
         "Uptime:  " + Math.floor(uptime / 1000),
         0.04 * height,
@@ -648,53 +713,61 @@ function draw() {
         0.05 * height,
     );
 
-    p.fill(0);
+    // Draw buttons
+    {
+        p.textAlign(p.LEFT);
+        reqButton.draw();
+        reqButton.handlePress();
+        if (reqButton.isDone()) {
+            altBelowForReset = alt * 0.95;
+            pastPos = [];
+            travelMeterDiv = 1;
+            sendWsCommand("restart");
+        }
+        switchButton.draw();
+        switchButton.handlePress();
+        if (switchButton.isDone()) {
+            sendWsCommand("switch");
+        }
+        renameButton.handlePress();
+        renameButton.draw();
+        if (renameButton.isDone()) {
+            sendWsCommand("getRenameData");
+        }
+    }
 
-    // p.textSize(0.015 * height);
-    p.textAlign(p.LEFT);
-    reqButton.draw();
-    reqButton.handlePress();
-    if (reqButton.isDone()) {
-        sendWsCommand("restart");
-    }
-    switchButton.draw();
-    switchButton.handlePress();
-    if (switchButton.isDone()) {
-        sendWsCommand("switch");
-    }
-    renameButton.handlePress();
-    renameButton.draw();
-    if (renameButton.isDone()) {
-        sendWsCommand("getRenameData");
-    }
+    // draw our altitude graph
     altitudeGraph.draw();
 
-    velocityDial.update(vel.mag());
-    velocityDial.draw();
-    accelerationDial.update(acc.mag());
-    accelerationDial.draw();
-    actualDeplDial.update(deplActual * 100);
-    actualDeplDial.draw();
-    expectedDeplDial.update(deplExp * 100);
-    expectedDeplDial.draw();
-    deploymentDiffDial.update(deplActual * 100 - deplExp * 100);
-    deploymentDiffDial.draw();
+    // lotsa dials
+    {
+        velocityDial.update(vel.mag());
+        velocityDial.draw();
+        accelerationDial.update(acc.mag());
+        accelerationDial.draw();
+        actualDeplDial.update(deplActual * 100);
+        actualDeplDial.draw();
+        expectedDeplDial.update(deplExp * 100);
+        expectedDeplDial.draw();
+        deploymentDiffDial.update(deplActual * 100 - deplExp * 100);
+        deploymentDiffDial.draw();
 
-    // show the raw values for velocity and acceleration
-    p.textSize(height * 0.013);
-    p.textAlign(p.CENTER);
-    p.noStroke();
-    p.fill(TEXT_COL);
-    p.text(
-        `(${limDecimal(vel.x)}, ${limDecimal(vel.y)}, ${limDecimal(vel.z)})`,
-        (velocityDial.x + velocityDial.width / 2) * height,
-        (velocityDial.y + velocityDial.height) * height,
-    );
-    p.text(
-        `(${limDecimal(acc.x)}, ${limDecimal(acc.y)}, ${limDecimal(acc.z)})`,
-        (accelerationDial.x + accelerationDial.width / 2) * height,
-        (accelerationDial.y + accelerationDial.height) * height,
-    );
+        // show the raw values for velocity and acceleration
+        p.textSize(height * 0.013);
+        p.textAlign(p.CENTER);
+        p.noStroke();
+        p.fill(TEXT_COL);
+        p.text(
+            `(${limDecimal(vel.x)}, ${limDecimal(vel.y)}, ${limDecimal(vel.z)})`,
+            (velocityDial.x + velocityDial.width / 2) * height,
+            (velocityDial.y + velocityDial.height) * height,
+        );
+        p.text(
+            `(${limDecimal(acc.x)}, ${limDecimal(acc.y)}, ${limDecimal(acc.z)})`,
+            (accelerationDial.x + accelerationDial.width / 2) * height,
+            (accelerationDial.y + accelerationDial.height) * height,
+        );
+    }
 
     // reset stuff
     p.noStroke();
@@ -703,86 +776,94 @@ function draw() {
     // apogee and expected apogee
 
     // send apogee, predicted, and altitude
-    p.textSize(height * 0.035);
-    p.textAlign(p.CENTER);
-    p.text("Apogee:", width - 0.7 * height, 0.72 * height);
-    p.text("Predicted:", width - 0.43 * height, 0.72 * height);
-    p.text("Altitude:", width - 0.16 * height, 0.72 * height);
-    p.textSize(height * 0.025);
-    p.textAlign(p.CENTER);
-    const apStr = limDecimal(ap);
-    const expApStr = limDecimal(expAp);
-    const altStr = limDecimal(alt);
-    centerString(
-        apStr,
-        0.025 * height,
-        "ft",
-        0.0175 * height,
-        width - 0.7 * height,
-        0.75 * height,
-    );
-    centerString(
-        expApStr,
-        0.025 * height,
-        "ft",
-        0.0175 * height,
-        width - 0.43 * height,
-        0.75 * height,
-    );
-    centerString(
-        altStr,
-        0.025 * height,
-        "ft",
-        0.0175 * height,
-        width - 0.16 * height,
-        0.75 * height,
-    );
+    {
+        p.textSize(height * 0.035);
+        p.textAlign(p.CENTER);
+        p.text("Apogee:", width - 0.7 * height, 0.72 * height);
+        p.text("Predicted:", width - 0.43 * height, 0.72 * height);
+        p.text("Altitude:", width - 0.16 * height, 0.72 * height);
+        p.textSize(height * 0.025);
+        p.textAlign(p.CENTER);
+        const apStr = limDecimal(ap);
+        const expApStr = limDecimal(expAp);
+        const altStr = limDecimal(alt);
+        centerString(
+            apStr,
+            0.025 * height,
+            "ft",
+            0.0175 * height,
+            width - 0.7 * height,
+            0.75 * height,
+        );
+        centerString(
+            expApStr,
+            0.025 * height,
+            "ft",
+            0.0175 * height,
+            width - 0.43 * height,
+            0.75 * height,
+        );
+        centerString(
+            altStr,
+            0.025 * height,
+            "ft",
+            0.0175 * height,
+            width - 0.16 * height,
+            0.75 * height,
+        );
+    }
     // p.text(apStr, width - 0.7 * height, 0.75 * height);
     // p.text(expApStr, width - 0.43 * height, 0.75 * height);
     // p.text(altStr, width - 0.16 * height, 0.75 * height);
 
     // output raw data
-    p.textAlign(p.LEFT);
-    p.fill(0);
-    p.textSize(0.02 * height);
-    p.text("Environment: " + environment, 0.01 * height, envY * height);
-    p.text("Raw Data: ", 0.26 * height, envY * height);
-    var x = 0.27 * height;
-    var yInc = 0.015 * height;
-    p.textSize(0.012 * height);
-    var y = (envY + 0.02) * height;
-    var items = Math.floor((1 - envY - 0.02) / (0.012 + 0.002));
-    var i = 0;
-    var maxWidth = 0;
-    if (state !== undefined && state !== null) {
-        for (const k in state) {
-            if (typeof state[k] === "object") {
-                continue;
-            }
-            var decimal = 2;
-            if (k.indexOf("vnPos") === 0) {
-                decimal = 5;
-            }
-            if (
-                k.indexOf("orientation") === 0 ||
-                k.indexOf("vnOrientation") === 0
-            ) {
-                decimal = 4;
-            }
-            var str = k + ": " + limDecimal(state[k], decimal);
-            maxWidth = Math.max(
-                maxWidth,
-                p.textWidth(k + ": 0000." + "".padStart(decimal, "0")),
-            );
-            p.text(str, x, y + (i % items) * yInc);
-            i++;
-            if (i % items == 0) {
-                x += maxWidth + 20;
-                maxWidth = 0;
+    {
+        p.textAlign(p.LEFT);
+        p.fill(0);
+        p.textSize(0.02 * height);
+        p.text("Environment: " + environment, 0.01 * height, envY * height);
+        p.text("Raw Data: ", 0.26 * height, envY * height);
+        var x = 0.27 * height;
+        var yInc = 0.015 * height;
+        p.textSize(0.012 * height);
+        var y = (envY + 0.02) * height;
+        var items = Math.floor((1 - envY - 0.02) / (0.012 + 0.002));
+        var i = 0;
+        var maxWidth = 0;
+        if (state !== undefined && state !== null) {
+            for (const k in state) {
+                if (typeof state[k] === "object") {
+                    continue;
+                }
+                var leads = 4;
+                var decimal = 2;
+                if (k.indexOf("vnPos") === 0 && k.indexOf("Z") === -1) {
+                    decimal = 5;
+                }
+                if (
+                    k.indexOf("orientation") === 0 ||
+                    k.indexOf("vnOrientation") === 0
+                ) {
+                    leads = 1;
+                    decimal = 4;
+                }
+                if (k.indexOf("predictedApogee") === 0) {
+                    decimal = 0;
+                }
+                var str = k + ": " + limDecimal(state[k], decimal);
+                maxWidth = Math.max(
+                    maxWidth,
+                    p.textWidth(k + ": ." + "".padStart(decimal + leads, "0")),
+                );
+                p.text(str, x, y + (i % items) * yInc);
+                i++;
+                if (i % items == 0) {
+                    x += maxWidth + 10;
+                    maxWidth = 0;
+                }
             }
         }
     }
-    // velocity view
 
     // try ws connection if we dont have one
     wsTryConnect();
