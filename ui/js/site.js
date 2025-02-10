@@ -317,7 +317,7 @@ function init() {
         (270 * Math.PI) / 180,
         p.color(255, 0, 0),
         p.color(125, 0, 0),
-        [0, 1300],
+        [0, 1000],
         "VELOCITY\n(ft\\s)",
         5,
     );
@@ -329,7 +329,7 @@ function init() {
         (270 * Math.PI) / 180,
         p.color(255, 0, 0),
         p.color(125, 0, 0),
-        [0, 30],
+        [0, 10],
         "ACCEL\n(g)",
         5,
     );
