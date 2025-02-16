@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Video Input Example</title>
+    </head>
+    <body>
+        <h1>Video Input Example</h1>
+        <select id="cameraSelect"></select>
+        <video
+            id="videoElement"
+            width="640"
+            height="480"
+            autoplay
+            muted
+        ></video>
+        <script>
+            const videoElement = document.getElementById("videoElement");
+            const cameraSelect = document.getElementById("cameraSelect");
+            async function populateCameraList() {
+                try {
+                    await navigator.mediaDevices.getUserMedia({
+                        audio: false,
+                        video: true,
+                    });
+                    const devices =
+                        await navigator.mediaDevices.enumerateDevices();
+                    const videoDevices = devices.filter(
+                        (device) => device.kind === "videoinput",
+                    );
+                    console.log(videoDevices);
+                    cameraSelect.innerHTML = "";
+                    videoDevices.forEach((device) => {
+                        const option = document.createElement("option");
+                        option.value = device.deviceId;
+                        option.text =
+                            device.label || `Camera ${cameraSelect.length + 1}`;
+                        cameraSelect.appendChild(option);
+                    });
+                    cameraSelect.onchange = startVideo;
+                    if (videoDevices.length > 0) {
+                        startVideo();
+                    } else {
+                        alert("No video input devices found.");
+                    }
+                } catch (error) {
+                    console.error("Error enumerating devices:", error);
+                }
+            }
+            async function startVideo() {
+                const deviceId = cameraSelect.value;
+                const constraints = {
+                    video: { deviceId: { exact: deviceId } },
+                    audio: false,
+                };
+                try {
+                    const stream =
+                        await navigator.mediaDevices.getUserMedia(constraints);
+                    videoElement.srcObject = stream;
+                } catch (error) {
+                    console.error("Error accessing media devices:", error);
+                }
+            }
+            populateCameraList();
+        </script>
+    </body>
+</html>

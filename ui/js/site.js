@@ -369,7 +369,13 @@ function init() {
         "DEPLOYMENT ERR\n(%)",
         5,
     );
-    p.textFont("TX-02-Trial");
+    document.fonts.ready.then(() => {
+        if (document.fonts.check("16px TX-02-Trial")) {
+            p.textFont("TX-02-Trial");
+        } else {
+            p.textFont("monospace");
+        }
+    });
     logo = p.loadImage("assets/logo.webp");
 }
 
@@ -506,7 +512,6 @@ function draw() {
         if (biggestDist / travelMeterDiv > 8) {
             travelMeterDiv *= 2;
         }
-        console.log(biggestDist, travelMeterDiv);
         p.textSize(0.01 * height);
         for (
             var dist = travelMeterDiv;
