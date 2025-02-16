@@ -383,8 +383,6 @@ function draw() {
     // light mode/dark mode bg
     if (light) {
         p.background(255);
-        p.strokeWeight(0);
-        p.fill(0);
     } else {
         p.fill(255);
         p.background(0);
@@ -568,7 +566,7 @@ function draw() {
         }
     }
 
-    const envY = 0.8;
+    const envY = 0.83;
 
     // gps coords
     {
@@ -745,6 +743,10 @@ function draw() {
     // Draw buttons
     {
         p.textAlign(p.LEFT);
+        p.noStroke();
+        p.fill(0);
+        p.textSize(0.02 * height);
+        p.text("Environment: " + environment, 0.01 * height, envY * height);
         reqButton.draw();
         reqButton.handlePress();
         if (reqButton.isDone()) {
@@ -850,13 +852,14 @@ function draw() {
         p.textAlign(p.LEFT);
         p.fill(0);
         p.textSize(0.02 * height);
-        p.text("Environment: " + environment, 0.01 * height, envY * height);
-        p.text("Raw Data: ", 0.26 * height, envY * height);
-        var x = 0.27 * height;
+        const dataY = 0.8;
+        p.text("Raw Data: ", 0.31 * height, dataY * height);
+        var x = 0.32 * height;
         var yInc = 0.015 * height;
         p.textSize(0.012 * height);
-        var y = (envY + 0.02) * height;
-        var items = Math.floor((1 - envY - 0.02) / (0.012 + 0.002));
+        var y = (dataY + 0.02) * height;
+        const dataHeight = 1;
+        var items = Math.floor((dataHeight - dataY - 0.02) / (0.012 + 0.002));
         var i = 0;
         var maxWidth = 0;
         if (state !== undefined && state !== null) {
