@@ -24,7 +24,7 @@
         ></select>
         <video
             id="videoElement"
-            style="position: absolute; left: 15%; bottom: 28%"
+            style="position: absolute; left: 15%; bottom: 28%; z-index: -1"
             width="40%"
             autoplay
             muted
@@ -83,7 +83,7 @@
             import { s } from "./js/site.js";
             setTimeout(function () {
                 new p5(s); // invoke p5
-            }, 500);
+            }, 10);
         </script>
     </body>
 </html>

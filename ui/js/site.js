@@ -382,7 +382,14 @@ function init() {
 function draw() {
     // light mode/dark mode bg
     if (light) {
-        p.background(255);
+        // p.background(255);
+        p.fill(255);
+        p.noStroke();
+        p.clear();
+        p.rect(0, 0, 0.15 * width, height);
+        p.rect(0, 0, width, 0.13 * height);
+        p.rect(0, height, width, -0.28 * height);
+        p.rect(0.55 * width, 0, width, height);
     } else {
         p.fill(255);
         p.background(0);
