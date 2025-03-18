@@ -71,12 +71,15 @@ export class Message {
 
         // get len
         var len = (msg[1] << 8) + msg[2];
+        if (msg.length - 5 > len) {
+            msg = msg.slice(0, len + 5);
+        }
         // -5 because of 5 byte header
         if (msg.length - 5 !== len) {
             log(
                 `${Strings.Error}: MESSAGE SIZE DOES NOT MATCH: ${len}, ${msg.length - 5}`,
             );
-            return;
+            // return;
         }
 
         // do `0 & 0` to cast it to 32 (or 64) bit integers
@@ -100,7 +103,7 @@ export class Message {
             log(
                 `${Strings.Error}: CHECKSUM VALIDATION FAILED: ${checksum}, ${actualChecksum}`,
             );
-            return;
+            // return;
         }
         this.valid = true;
         this.data = new Uint8Array(data);

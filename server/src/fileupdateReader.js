@@ -6,15 +6,9 @@ import fs from "node:fs";
 import { clearConnected, setRocketConnected } from "./state.js";
 import { log } from "./log.js";
 
-export class StdinReader extends InputReader {
-    /** @type {"stdout"|"stderr"} */
-    watchStream = "stdout";
-    cmd = "pio";
-    args = ["device", "monitor"];
-    /** @type {string|URL|undefined} */
-    cwd = undefined;
-    /** @type {ChildProcess?} */
-    process = null;
+export class FileUpdateReader extends InputReader {
+    /** @type {string} */
+    path = "";
 
     /**@type {string?} */
     saveFolder = null;
@@ -27,34 +21,29 @@ export class StdinReader extends InputReader {
     restart = false;
     lastMessageTime = 0;
 
-    /** @type {NodeJS.Timeout?}*/
-    lastTimeout = null;
+    lastLineChecked = 0;
+    updateInterval = 10;
+    lastLineCount = 0;
+    /** @type {NodeJS.Timeout|undefined} */
+    intervalId = undefined;
 
     renamed = false;
 
     /**
      * @param {(_: Uint8Array) => Promise<void>} update
-     * @param {"stdout" | "stderr"} watchStream
-     * @param {string} cmd
-     * @param {string[]} args
-     * @param {string | URL | undefined} cwd
+     * @param {string} path
+     * @param {number} updateTime
      * @param {() => string ?} genSaveFolder
      */
-    constructor(update, watchStream, cmd, args, cwd, genSaveFolder) {
+    constructor(update, path, updateTime, genSaveFolder) {
         super(update);
         this.genSaveFolder = genSaveFolder;
-        this.watchStream = watchStream;
-        this.cmd = cmd;
-        this.args = args;
-        this.cwd = cwd;
+        this.path = path;
+        this.updateInterval = updateTime;
     }
     reset() {
-        if (this.process !== null) {
-            this.restart = true;
-            this.process.kill(9);
-        } else {
-            this.start();
-        }
+        this.lastLineChecked = 0;
+        this.start();
     }
     /**
      * @param {string} name
@@ -81,19 +70,8 @@ export class StdinReader extends InputReader {
     }
     start() {
         clearConnected();
-        if (this.process !== null) {
-            log(`${Strings.Warn}: Stdin process already exists!`);
-            this.restart = true;
-            this.process.kill(9);
-            return;
-        }
+
         this.wake();
-        this.process = spawn(this.cmd, this.args, {
-            cwd: this.cwd,
-            env: {
-                GPG_TTY: "/dev/pts/6",
-            },
-        });
         this.msgI = 0;
         if (!this.renamed) {
             this.saveFolder = this.genSaveFolder();
@@ -106,23 +84,21 @@ export class StdinReader extends InputReader {
                 () => {},
             );
         }
-        if (this.process === null) {
-            log(
-                `${Strings.Error}: Failed to spawn child process: ${this.cmd} ${this.args.join(" ")}`,
-            );
-            return;
+        if (!fs.existsSync(this.path)) {
+            log(`${Strings.Warn}: File ${this.path} does not exist yet`);
         }
-        var stream = this.process[this.watchStream];
-        if (stream === null) {
-            log(
-                `${Strings.Error}: error in starting read process: stream ${this.watchStream} does not exist`,
-            );
-            return;
-        }
-        stream.on("data", (v) => {
-            /** @type {string[]} */
-            const strs = v.toString().split("\n");
-            for (const s of strs) {
+        this.intervalId = setInterval(() => {
+            if (!fs.existsSync(this.path)) {
+                return;
+            }
+            const lines = fs.readFileSync(this.path).toString().split("\n");
+            if (lines.length < this.lastLineCount) {
+                this.lastLineChecked = 0;
+            }
+            this.lastLineCount = lines.length;
+            for (var i = this.lastLineChecked; i < lines.length; i++) {
+                const s = lines[i];
+                // log(s);
                 if (!s.startsWith("ABCD")) {
                     continue;
                 }
@@ -147,33 +123,15 @@ export class StdinReader extends InputReader {
                 this.lastTimeout = setTimeout(() => {
                     this.lastTimeout = null;
                     setRocketConnected(false);
-                }, 300);
+                }, 900);
             }
-            // log(v.toString());
-        });
-        stream.on("close", () => {
-            this.done();
-            setTimeout(() => {
-                var code = this.process?.exitCode;
-                var str = Strings.Info;
-                if (code !== 0) {
-                    str = Strings.Warn;
-                }
-                log(
-                    `${str}: ${this.cmd} ${this.args.join(" ")} ended with exit code ${this.process?.exitCode}`,
-                );
-                this.process = null;
-                if (this.restart) {
-                    this.restart = false;
-                    this.start();
-                }
-            }, 10);
-        });
-        log(
-            `${Strings.Ok}: Started process ${this.cmd} ${this.args.join(" ")}`,
-        );
+            this.lastLineChecked = lines.length;
+        }, this.updateInterval);
+        log(`${Strings.Ok}: Started file read ${this.path}`);
     }
     stop() {
-        this.process?.kill();
+        try {
+            clearInterval(this.intervalId);
+        } catch (_) {}
     }
 }

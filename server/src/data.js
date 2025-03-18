@@ -17,6 +17,12 @@ var fieldSize = 0;
 /** @type {string[]} */
 var events = [];
 
+export var sysTime = 0;
+
+export function clearSysTime() {
+    sysTime = 0;
+}
+
 /**
  * @param msg {Message}
  * @return {EventType|""}
@@ -66,6 +72,13 @@ function parseEvent(payload) {
         payload[3],
     ].map((v) => v.charCodeAt(0) & 0xff);
     const eventIndex = (c1 << 24) | (c2 << 16) | (c3 << 8) | c4;
+    const [t4, t3, t2, t1] = [
+        payload[4],
+        payload[5],
+        payload[6],
+        payload[7],
+    ].map((v) => v.charCodeAt(0) & 0xff);
+    const timestamp = (t1 << 24) | (t2 << 16) | (t3 << 8) | t4;
 
     const event = events[eventIndex] ?? "NO";
     if (event === "NO") {
@@ -73,6 +86,7 @@ function parseEvent(payload) {
         return;
     }
     setEvent(event);
+    sysTime = Math.max(timestamp, sysTime);
 }
 /**
  * @param payload {string}
@@ -106,7 +120,7 @@ function parseMsg(payload) {
     if (stateSet) {
         broadcastState();
     }
-
+    sysTime = Math.max(message.time, sysTime);
     const serverMsg = new ServerMessage("message", message);
     broadcast(serverMsg);
 }
@@ -180,6 +194,7 @@ function parseData(payload) {
             obj[schema[i]] = floatToInt32(array[i]);
         }
     }
+    sysTime = Math.max(obj.i_timestamp, sysTime);
     setState(obj);
     JSON.stringify(obj);
 }

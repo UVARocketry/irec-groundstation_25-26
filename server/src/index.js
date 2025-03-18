@@ -4,7 +4,7 @@ import http from "node:http";
 import path from "node:path";
 
 import { Message } from "./message.js";
-import { parseMessage } from "./data.js";
+import { clearSysTime, parseMessage } from "./data.js";
 
 import { getState, getEvent, setAdd } from "./state.js";
 
@@ -14,10 +14,10 @@ import { ServerMessage } from "../../common/ServerMessage.js";
 import { handleUiRequest } from "./command.js";
 import { port } from "../../common/web.js";
 import { FileLogReader } from "./fileLogReader.js";
-import { StdinReader } from "./stdinReader.js";
 import { InputReader } from "./inputReader.js";
 import child_process from "node:child_process";
 import { log } from "./log.js";
+import { SerialPortReader } from "./serialportReader.js";
 
 const wss = new WebSocketServer({ port: port, host: "localhost" });
 /**@type {InputReader}*/
@@ -39,11 +39,11 @@ export function broadcast(msg) {
 async function onUpdate(buf) {
     const msg = new Message(buf);
 
-    var ret = parseMessage(msg);
+    var command = parseMessage(msg);
     var send = null;
-    if (ret === "event") {
+    if (command === "event") {
         send = new ServerMessage("event", getEvent());
-    } else if (ret === "state") {
+    } else if (command === "state") {
         send = new ServerMessage("state", getState());
     }
     if (send !== null) {
@@ -85,6 +85,7 @@ export function switchReader() {
     // reader.start();
 }
 export function resetMessageReader() {
+    clearSysTime();
     reader.reset();
     // readMessage(0);
 }
@@ -97,14 +98,25 @@ export function getReader() {
 log(`${Strings.Ok}: Starting websocket server at ws://localhost:${port}`);
 
 var read1 = false;
-const procReader = new StdinReader(
+const procReader = new SerialPortReader(
     onUpdate,
-    "stderr",
-    "./run",
-    ["noinput"],
-    "../../sac_24-25/lib",
+    "/dev/ttyACM0",
     () => "../out_" + new Date().toISOString().slice(0, 19).replace("T", "_"),
 );
+// const procReader = new StdinReader(
+//     onUpdate,
+//     "stderr",
+//     "./run",
+//     ["noinput"],
+//     "../../sac_24-25/lib",
+//     () => "../out_" + new Date().toISOString().slice(0, 19).replace("T", "_"),
+// );
+// const procReader = new FileUpdateReader(
+//     onUpdate,
+//     "cat.txt",
+//     1,
+//     () => "../out_" + new Date().toISOString().slice(0, 19).replace("T", "_"),
+// );
 
 wss.on("connection", function (ws) {
     if (!read1) {

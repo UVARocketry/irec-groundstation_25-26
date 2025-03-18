@@ -2,6 +2,9 @@ import fs from "node:fs";
 import { InputReader } from "./inputReader.js";
 import { broadcastEvent } from "./index.js";
 import { clearConnected, setEvent } from "./state.js";
+import { sysTime } from "./data.js";
+import { Strings } from "./ansi.js";
+import { log } from "./log.js";
 /** @import { RenameResponse } from "common/ServerMessage.js"; */
 
 export class FileLogReader extends InputReader {
@@ -9,6 +12,7 @@ export class FileLogReader extends InputReader {
     readFirst = false;
     path = "../out";
     cancel = false;
+    currentTime = 0;
     /**
      * @param {(_: Uint8Array) => Promise<void>} fn
      * @param {string?} path
@@ -76,7 +80,12 @@ export class FileLogReader extends InputReader {
 
         this.i++;
         this.onUpdate(buf);
-        setTimeout(() => this.readMessage(), 10);
+        const delta = sysTime - this.currentTime;
+        log(`${Strings.Info}: Waiting for ${delta}ms`);
+        setTimeout(() => {
+            this.currentTime += delta;
+            this.readMessage();
+        }, delta);
     }
     async reset() {
         this.i = 0;
