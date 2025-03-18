@@ -1,0 +1,63 @@
+acaanigoeflcacaaaaaplokgehaaaaaaaaaaaaaaaaaaaaaaaagkjhboebaigfeembadnojiecpcjkcllkmdcdaodnfbcnaolkgkjhboebaigfeembadnojiecpcjkcllkmdcdaodnfbcnaolkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalfnjepdplnibgjdpdikglbeephjdnjeadaalpfdojbfcfjeckfphaleaccjambcfnhgolbeedcddkbmceaoboeebomlilbeegmadoceaoibiegchfalffjecaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakckkdedpppcndflndgbcdfdnnmkjdelppnhpaaaampkfjfpidikglbeeaaaaaaaaaaaaaaaa
+Len: 442
+
+main.MsgHeader{ .version = 0, .type = main.MsgType.DataUpdate, .length = 141, .checksumLeft = 110, .checksumRight = 69 }
+Lengths: 221 146
+
+Body data:
+DataUpdate:
+  i_timestamp     : 690
+  baro            : 8.537212e4
+  predictedApogee : 0e0
+  mainBat         : 0e0
+  servoBat        : 0e0
+  vnAccX          : 9.911966e0
+  vnAccY          : -1.2274666e1
+  vnAccZ          : 7.643362e1
+  vnGyroX         : -6.546221e-4
+  vnGyroY         : 3.4702074e-2
+  vnGyroZ         : -5.423623e-4
+  vnUnAccX        : 9.911966e0
+  vnUnAccY        : -1.2274666e1
+  vnUnAccZ        : 7.643362e1
+  vnUnGyroX       : -6.546221e-4
+  vnUnGyroY       : 3.4702074e-2
+  vnUnGyroZ       : -5.423623e-4
+  vnMagX          : 0e0
+  vnMagY          : 0e0
+  vnMagZ          : 0e0
+  obAccX          : 0e0
+  obAccY          : 0e0
+  obAccZ          : 0e0
+  obGyroX         : 0e0
+  obGyroY         : 0e0
+  obGyroZ         : 0e0
+  kalmanPosX      : 8.119157e-1
+  kalmanPosY      : 9.121359e-1
+  kalmanPosZ      : 1.4211943e3
+  kalmanVelX      : 6.799312e0
+  kalmanVelY      : 4.7860098e-1
+  kalmanVelZ      : 5.433063e1
+  vnPosX          : 2.18699e0
+  vnPosY          : 3.357783e-16
+  vnPosZ          : 1.4194637e3
+  vnGpsX          : -8.059999e1
+  vnGpsY          : 2.8609985e1
+  vnGpsZ          : 1.4217788e3
+  vnVelX          : 7.0629177e0
+  vnVelY          : 2.7491522e-15
+  vnVelZ          : 5.4427063e1
+  vnOrientationW  : 0e0
+  vnOrientationX  : 0e0
+  vnOrientationY  : 0e0
+  vnOrientationZ  : 0e0
+  orientationW    : 7.0572865e-1
+  orientationX    : -4.423332e-2
+  orientationY    : 4.420682e-2
+  orientationZ    : -7.0571685e-1
+  vnTemp          : 4.5914e-41
+  vnPressure      : -2.4281726e34
+  apogee          : 1.4211943e3
+  pidDeployment   : 0e0
+  actualDeployment: 0e0
+

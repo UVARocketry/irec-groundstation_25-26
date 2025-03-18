@@ -1,0 +1,8 @@
+agaaflefgchlcacchegjgngfccdkcadacmcacchehjhagfccdkcaccefhchcgphccccmccgegfhggjgdgfccdkcaccfahcgfgegjgdhegphccccmcacchdhfgcgkgfgdheccdkcaccejgogjhecccmcacchggfhcgcccdkcaccfdhfgdgdgfgfgegfgecchn
+Len: 192
+
+main.MsgHeader{ .version = 0, .type = main.MsgType.Message, .length = 181, .checksumLeft = 69, .checksumRight = 98 }
+Lengths: 96 186
+
+Body data:
+{ "time": 0, "type": "Error","device": "Predictor", "subject": "Init", "verb": "Succeeded"}

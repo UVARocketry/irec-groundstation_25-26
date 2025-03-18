@@ -1,0 +1,8 @@
+adaaaiacaaacaaaaaaaaaaaaaa
+Len: 26
+
+main.MsgHeader{ .version = 0, .type = main.MsgType.Event, .length = 128, .checksumLeft = 2, .checksumRight = 0 }
+Lengths: 13 133
+
+Body data:
+main.Event{ .event = main.LogEventType.Launch, .timestamp = 0 }

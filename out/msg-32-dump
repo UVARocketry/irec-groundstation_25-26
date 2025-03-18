@@ -1,0 +1,8 @@
+agaafhfbglhlcacchegjgngfccdkcadacmcacchehjhagfccdkcaccefhchcgphccccmccgegfhggjgdgfccdkcaccfdgfhchggpcccmcacchdhfgcgkgfgdheccdkcaccejgogjhecccmcacchggfhcgcccdkcaccfdhfgdgdgfgfgegfgecchn
+Len: 184
+
+main.MsgHeader{ .version = 0, .type = main.MsgType.Message, .length = 117, .checksumLeft = 81, .checksumRight = 107 }
+Lengths: 92 122
+
+Body data:
+{ "time": 0, "type": "Error","device": "Servo", "subject": "Init", "verb": "Succeeded"}

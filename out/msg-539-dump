@@ -1,0 +1,8 @@
+agaaggdfdbhlcacchegjgngfccdkcadfdadbdacmcacchehjhagfccdkcaccfdhfgdgdgfhdhdcccmccgegfhggjgdgfccdkcaccfahcgfgegjgdhegphccccmcacchdhfgcgkgfgdheccdkcaccedgpgogogfgdhegjgpgocccmcacchggfhcgcccdkcaccfdhfgdgdgfgfgegfgecchn
+Len: 214
+
+main.MsgHeader{ .version = 0, .type = main.MsgType.Message, .length = 102, .checksumLeft = 53, .checksumRight = 49 }
+Lengths: 107 107
+
+Body data:
+{ "time": 5010, "type": "Success","device": "Predictor", "subject": "Connection", "verb": "Succeeded"}

@@ -1,0 +1,11 @@
+abaaafaaaeaaaeaaaaaa
+Len: 20
+
+main.MsgHeader{ .version = 0, .type = main.MsgType.Metadata, .length = 80, .checksumLeft = 0, .checksumRight = 4 }
+Lengths: 10 85
+
+Body data:
+Type: main.MetadataType.FloatSize
+Value: main.MetadataValue@7ffd0443209c
+  floatSize: main.FloatSizeMetadata{ .floatSize = 4, .padding = 0 }
+

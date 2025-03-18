@@ -1,0 +1,8 @@
+agaafjdpamhlcacchegjgngfccdkcadacmcacchehjhagfccdkcaccefhchcgphccccmccgegfhggjgdgfccdkcaccfahcgpghhcgbgncccmcacchdhfgcgkgfgdheccdkcaccejgogjhecccmcacchggfhcgcccdkcaccfdhfgdgdgfgfgegfgecchn
+Len: 188
+
+main.MsgHeader{ .version = 0, .type = main.MsgType.Message, .length = 149, .checksumLeft = 63, .checksumRight = 12 }
+Lengths: 94 154
+
+Body data:
+{ "time": 0, "type": "Error","device": "Program", "subject": "Init", "verb": "Succeeded"}

@@ -1,0 +1,8 @@
+agaaffclbbhlcacchegjgngfccdkcadacmcacchehjhagfccdkcaccefhchcgphccccmccgegfhggjgdgfccdkcaccfagjgecccmcacchdhfgcgkgfgdheccdkcaccejgogjhecccmcacchggfhcgcccdkcaccfdhfgdgdgfgfgegfgecchn
+Len: 180
+
+main.MsgHeader{ .version = 0, .type = main.MsgType.Message, .length = 85, .checksumLeft = 43, .checksumRight = 17 }
+Lengths: 90 90
+
+Body data:
+{ "time": 0, "type": "Error","device": "Pid", "subject": "Init", "verb": "Succeeded"}

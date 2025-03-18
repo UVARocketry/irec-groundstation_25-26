@@ -1,0 +1,8 @@
+agaafmadgohlcacchegjgngfccdkcadacmcacchehjhagfccdkcaccefhchcgphccccmccgegfhggjgdgfccdkcaccepgogcgpgbhcgeejgnhfcccmcacchdhfgcgkgfgdheccdkcaccejgogjhecccmcacchggfhcgcccdkcaccfdhfgdgdgfgfgegfgecchn
+Len: 194
+
+main.MsgHeader{ .version = 0, .type = main.MsgType.Message, .length = 197, .checksumLeft = 3, .checksumRight = 110 }
+Lengths: 97 202
+
+Body data:
+{ "time": 0, "type": "Error","device": "OnboardImu", "subject": "Init", "verb": "Succeeded"}

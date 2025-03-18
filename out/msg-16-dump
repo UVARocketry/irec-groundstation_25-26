@@ -1,0 +1,8 @@
+agaafheghahlcacchegjgngfccdkcadacmcacchehjhagfccdkcaccefhchcgphccccmccgegfhggjgdgfccdkcaccfcgbgegjgpcccmcacchdhfgcgkgfgdheccdkcaccejgogjhecccmcacchggfhcgcccdkcaccfdhfgdgdgfgfgegfgecchn
+Len: 184
+
+main.MsgHeader{ .version = 0, .type = main.MsgType.Message, .length = 117, .checksumLeft = 70, .checksumRight = 112 }
+Lengths: 92 122
+
+Body data:
+{ "time": 0, "type": "Error","device": "Radio", "subject": "Init", "verb": "Succeeded"}

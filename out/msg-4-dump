@@ -1,0 +1,8 @@
+agaafkbefehlcacchegjgngfccdkcadacmcacchehjhagfccdkcaccejgogggpcccmccgegfhggjgdgfccdkcaccfagjgecccmcacchdhfgcgkgfgdheccdkcaccedgpgogogfgdhegjgpgocccmcacchggfhcgcccdkcaccfdhfgdgdgfgfgegfgecchn
+Len: 190
+
+main.MsgHeader{ .version = 0, .type = main.MsgType.Message, .length = 165, .checksumLeft = 20, .checksumRight = 84 }
+Lengths: 95 170
+
+Body data:
+{ "time": 0, "type": "Info","device": "Pid", "subject": "Connection", "verb": "Succeeded"}

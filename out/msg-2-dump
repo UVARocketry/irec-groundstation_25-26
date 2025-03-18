@@ -1,0 +1,8 @@
+aeaaeoafcifdhegbhchehfhacmfhgbgjhecmemgbhfgogdgicmengphegphcechfhcgocmebgjhcgchcgbglgfhdeegfhagmgphjcmfagbhcgbgdgihfhegfcmemgbgogegjgoghcmebhhgbgjhefcgfgdgphggfhchjcm
+Len: 166
+
+main.MsgHeader{ .version = 0, .type = main.MsgType.EventSchema, .length = 228, .checksumLeft = 5, .checksumRight = 40 }
+Lengths: 83 233
+
+Body data:
+Startup,Wait,Launch,MotorBurn,AirbrakesDeploy,Parachute,Landing,AwaitRecovery,
