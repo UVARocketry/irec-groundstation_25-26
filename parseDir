@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# parses a directory of messages into a more readable format
+
+cd msgparser
+zig build
+cd -
+
+cd $1
+
+ls **-dump | xargs rm
+
+ls -d * | xargs -I{}  ../parseMsg {}
+
+cd -

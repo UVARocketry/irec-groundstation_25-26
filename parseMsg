@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# parses a single message
+
+cat $1 | ../msgparser/zig-out/bin/msgparser > "$1-dump"
