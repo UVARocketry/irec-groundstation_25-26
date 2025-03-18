@@ -32,7 +32,12 @@ const MetadataValue = packed union {
 const MetadataPacket = packed struct {
     type: MetadataType,
     value: MetadataValue,
-    pub fn format(self: MetadataPacket, comptime fmt: []const u8, options: std.fmt.FormatOptions, writer: anytype) !void {
+    pub fn format(
+        self: MetadataPacket,
+        comptime fmt: []const u8,
+        options: std.fmt.FormatOptions,
+        writer: anytype,
+    ) !void {
         _ = fmt;
         _ = options;
         try writer.print("Type: {?}\n", .{self.type});
@@ -41,7 +46,10 @@ const MetadataPacket = packed struct {
         switch (info) {
             .@"union" => |v| {
                 inline for (v.fields) |field| {
-                    try writer.print("  {s}: {?}\n", .{ field.name, @field(self.value, field.name) });
+                    try writer.print(
+                        "  {s}: {?}\n",
+                        .{ field.name, @field(self.value, field.name) },
+                    );
                 }
             },
             else => unreachable,
@@ -104,7 +112,12 @@ const DataUpdate = packed struct {
     apogee: f32,
     pidDeployment: f32,
     actualDeployment: f32,
-    pub fn format(self: DataUpdate, comptime fmt: []const u8, options: std.fmt.FormatOptions, writer: anytype) !void {
+    pub fn format(
+        self: DataUpdate,
+        comptime fmt: []const u8,
+        options: std.fmt.FormatOptions,
+        writer: anytype,
+    ) !void {
         _ = fmt;
         _ = options;
         try writer.print("DataUpdate:\n", .{});
@@ -128,7 +141,16 @@ const DataUpdate = packed struct {
     }
 };
 
-const LogEventType = enum(u32) { Startup = 0, Wait = 1, Launch = 2, MotorBurn = 3, AirbrakesDeploy = 4, Parachute = 5, Landing = 6, AwaitRecovery = 7 };
+const LogEventType = enum(u32) {
+    Startup = 0,
+    Wait = 1,
+    Launch = 2,
+    MotorBurn = 3,
+    AirbrakesDeploy = 4,
+    Parachute = 5,
+    Landing = 6,
+    AwaitRecovery = 7,
+};
 
 const Event = packed struct {
     event: LogEventType,
@@ -145,7 +167,10 @@ const MsgHeader = packed struct {
 
 pub fn main() !void {
     comptime if (@bitSizeOf(MsgHeader) != 40) {
-        @compileError(std.fmt.comptimePrint("Bytes: {}, bits: {}", .{ @sizeOf(MsgHeader), @bitSizeOf(MsgHeader) }));
+        @compileError(std.fmt.comptimePrint(
+            "Bytes: {}, bits: {}",
+            .{ @sizeOf(MsgHeader), @bitSizeOf(MsgHeader) },
+        ));
     };
     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
     const allocator = gpa.allocator();
@@ -172,7 +197,10 @@ pub fn main() !void {
         _ = buf.pop();
     }
     if (buf.items.len % 2 != 0) {
-        try stdout.print("dawg you gotta gimme an even number of chars, i got {}\n", .{buf.items.len});
+        try stdout.print(
+            "dawg you gotta gimme an even number of chars, i got {}\n",
+            .{buf.items.len},
+        );
         return;
     }
     try stdout.print("Len: {}\n", .{buf.items.len});
@@ -196,7 +224,10 @@ pub fn main() !void {
         i += 2;
     }
 
-    var header: *align(1) MsgHeader = std.mem.bytesAsValue(MsgHeader, actualData.items[0..5]);
+    var header: *align(1) MsgHeader = std.mem.bytesAsValue(
+        MsgHeader,
+        actualData.items[0..5],
+    );
     header.length = ((header.length & 0xff00) >> 8) + ((header.length & 0x00ff) << 8);
     try stdout.print("{}\n", .{header});
     try stdout.print("Lengths: {} {}\n", .{ actualData.items.len, header.length + 5 });
@@ -210,15 +241,24 @@ pub fn main() !void {
             try stdout.print("{s}\n", .{slice});
         },
         .DataUpdate => {
-            const data: *align(1) DataUpdate = std.mem.bytesAsValue(DataUpdate, actualData.items[5..]);
+            const data: *align(1) DataUpdate = std.mem.bytesAsValue(
+                DataUpdate,
+                actualData.items[5..],
+            );
             try stdout.print("{?}\n", .{data});
         },
         .Metadata => {
-            const data: *align(1) MetadataPacket = std.mem.bytesAsValue(MetadataPacket, actualData.items[5..]);
+            const data: *align(1) MetadataPacket = std.mem.bytesAsValue(
+                MetadataPacket,
+                actualData.items[5..],
+            );
             try stdout.print("{any}\n", .{data});
         },
         .Event => {
-            const data: *align(1) Event = std.mem.bytesAsValue(Event, actualData.items[5..]);
+            const data: *align(1) Event = std.mem.bytesAsValue(
+                Event,
+                actualData.items[5..],
+            );
             try stdout.print("{?}\n", .{data});
         },
         .Acknowledgement => {},
