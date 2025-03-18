@@ -3,7 +3,7 @@
 # parses a directory of messages into a more readable format
 
 cd msgparser
-zig build
+zig build || exit 0
 cd -
 
 cd $1

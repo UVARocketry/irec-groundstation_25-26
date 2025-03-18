@@ -17,6 +17,38 @@ const MsgType = enum(u4) {
     Message = 6,
 };
 
+const MetadataType = enum(u8) {
+    FloatSize,
+};
+const FloatSizeMetadata = packed struct {
+    floatSize: u8,
+    padding: u24,
+};
+
+const MetadataValue = packed union {
+    floatSize: FloatSizeMetadata,
+};
+
+const MetadataPacket = packed struct {
+    type: MetadataType,
+    value: MetadataValue,
+    pub fn format(self: MetadataPacket, comptime fmt: []const u8, options: std.fmt.FormatOptions, writer: anytype) !void {
+        _ = fmt;
+        _ = options;
+        try writer.print("Type: {?}\n", .{self.type});
+        try writer.print("Value: {?}\n", .{self.value});
+        const info: std.builtin.Type = @typeInfo(MetadataValue);
+        switch (info) {
+            .@"union" => |v| {
+                inline for (v.fields) |field| {
+                    try writer.print("  {s}: {?}\n", .{ field.name, @field(self.value, field.name) });
+                }
+            },
+            else => unreachable,
+        }
+    }
+};
+
 const DataUpdate = packed struct {
     i_timestamp: i32,
     baro: f32,
@@ -146,6 +178,7 @@ pub fn main() !void {
     header.length = ((header.length & 0xff00) >> 8) + ((header.length & 0x00ff) << 8);
     try stdout.print("{}\n", .{header});
     try stdout.print("Lengths: {} {}\n", .{ actualData.items.len, header.length + 5 });
+    try stdout.print("\nBody data:\n", .{});
     switch (header.type) {
         .Schema, .EventSchema => {
             try stdout.print("{s}\n", .{actualData.items[5..]});
@@ -159,7 +192,8 @@ pub fn main() !void {
             try stdout.print("{?}\n", .{data});
         },
         .Metadata => {
-            try stdout.print("Metadata\n", .{});
+            const data: *align(1) MetadataPacket = std.mem.bytesAsValue(MetadataPacket, actualData.items[5..]);
+            try stdout.print("{any}\n", .{data});
         },
         .Event => {
             const data: *align(1) Event = std.mem.bytesAsValue(Event, actualData.items[5..]);
