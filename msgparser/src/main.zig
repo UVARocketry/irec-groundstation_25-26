@@ -104,6 +104,28 @@ const DataUpdate = packed struct {
     apogee: f32,
     pidDeployment: f32,
     actualDeployment: f32,
+    pub fn format(self: DataUpdate, comptime fmt: []const u8, options: std.fmt.FormatOptions, writer: anytype) !void {
+        _ = fmt;
+        _ = options;
+        try writer.print("DataUpdate:\n", .{});
+        const info: std.builtin.Type = @typeInfo(DataUpdate);
+        switch (info) {
+            .@"struct" => |v| {
+                comptime var maxLen = 0;
+                inline for (v.fields) |field| {
+                    if (field.name.len > maxLen) {
+                        maxLen = field.name.len;
+                    }
+                }
+                // A format string so that all names are the same length
+                const str = std.fmt.comptimePrint("  {{s: <{d}}}: {{?}}\n", .{maxLen});
+                inline for (v.fields) |field| {
+                    try writer.print(str, .{ field.name, @field(self, field.name) });
+                }
+            },
+            else => unreachable,
+        }
+    }
 };
 
 const LogEventType = enum(u32) { Startup = 0, Wait = 1, Launch = 2, MotorBurn = 3, AirbrakesDeploy = 4, Parachute = 5, Landing = 6, AwaitRecovery = 7 };
