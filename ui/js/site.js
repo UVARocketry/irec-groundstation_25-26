@@ -60,6 +60,10 @@ export function getHeight() {
  * @param {number} r2
  */
 function drawBattery(label, level, x, y, w1, h1, r1, w2, h2, r2) {
+    if (level < 0) {
+        level = 0;
+    }
+
     p.stroke(0);
     p.strokeWeight(2);
     p.fill(255);
