@@ -17,6 +17,12 @@ export function getEvent() {
     return currentEvent;
 }
 
+export function resetInternalState() {
+    clearStartingState();
+    clearConnected();
+    currentState = {};
+}
+
 /**
  * @param item {string}
  * @param c {boolean}
@@ -55,6 +61,9 @@ export function setAdd(k, v) {
  */
 export function setEvent(e) {
     currentEvent = e;
+    if (e == "MotorBurn") {
+        launchNow();
+    }
 }
 
 /** @return {Object} */
