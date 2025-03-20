@@ -70,17 +70,17 @@ export class SerialPortReader extends InputReader {
             done = true;
         });
         while (!done) {
-            deasync.sleep(100);
+            deasync.sleep(1000);
         }
         /** @type {RenameResponse} */
         const ret = {
-            type: "name",
+            type: "choice",
             data: ports,
         };
         return ret;
     }
     getName() {
-        return this.saveFolder ?? this.genSaveFolder() ?? "NONE";
+        return this.path;
     }
     start() {
         clearConnected();
@@ -94,13 +94,13 @@ export class SerialPortReader extends InputReader {
             return;
         }
         var ports = [];
-        var done = true;
+        var done = false;
         SerialPort.list().then((res) => {
             ports = res.map((v) => v.path);
             done = true;
         });
         while (!done) {
-            deasync.sleep(100);
+            deasync.sleep(1000);
         }
         if (!ports.some((v) => v === this.path)) {
             log(
@@ -108,18 +108,25 @@ export class SerialPortReader extends InputReader {
             );
             return;
         }
-        this.port = new SerialPort({
-            path: this.path,
-            baudRate: 96000,
-        });
-        if (!this.port.isOpen) {
-            this.port.destroy();
+        try {
+            this.port = new SerialPort({
+                path: this.path,
+                baudRate: 96000,
+            });
+            deasync.sleep(1000);
+        } catch (_) {
             this.port = null;
             log(`${Strings.Error}: Failed to open serial port ${this.path}`);
             return;
         }
+        if (!this.port.isOpen) {
+            this.port.destroy();
+            // this.port = null;
+            log(`${Strings.Error}: Failed to open serial port ${this.path}`);
+            // return;
+        }
         this.wake();
-        this.parser = this.port.pipe(new ReadlineParser({ delimiter: "\r\n" }));
+        this.parser = this.port.pipe(new ReadlineParser({ delimiter: "\n" }));
 
         this.msgI = 0;
         if (!this.renamed) {
@@ -137,6 +144,7 @@ export class SerialPortReader extends InputReader {
         this.parser.on("data", (v) => {
             /** @type {string} */
             const str = v;
+            console.log(str);
             if (!str.startsWith("ABCD")) {
                 return;
             }
