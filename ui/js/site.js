@@ -105,6 +105,61 @@ function drawBattery(label, level, x, y, w1, h1, r1, w2, h2, r2) {
 }
 
 /**
+ * @param {string} label
+ * @param {number} level
+ * @param {number} x
+ * @param {number} y
+ * @param {number} w
+ * @param {number} h
+ */
+function drawSignalStrength(label, level, x, y, w, h) {
+    const dw = w / 4;
+    // p.noStroke();
+    p.strokeWeight(1);
+    p.stroke(0);
+    const radius = 3;
+    const widthMul = 0.81;
+    const heightMul = 1 / 4;
+    level *= 10;
+    // y += h;
+    for (var i = 0; i < 4; i++) {
+        if (level > i * 25) {
+            p.fill("#7dfa82");
+        } else {
+            p.fill("#a0a0a0");
+        }
+        p.rect(
+            (x + i * dw) * height,
+            (y + h) * height,
+            dw * height * widthMul,
+            -h * height * (i + 1) * heightMul,
+            radius,
+        );
+    }
+    // p.rect(
+    //     (x + dw) * height,
+    //     y * height,
+    //     dw * height * widthMul,
+    //     -h * height * 2 * heightMul,
+    //     radius,
+    // );
+    // p.rect(
+    //     (x + 2 * dw) * height,
+    //     y * height,
+    //     dw * height * widthMul,
+    //     -h * height * 3 * heightMul,
+    //     radius,
+    // );
+    // p.rect(
+    //     (x + 3 * dw) * height,
+    //     y * height,
+    //     dw * height * widthMul,
+    //     -h * height * 4 * heightMul,
+    //     radius,
+    // );
+}
+
+/**
  * @param {number} x
  * @param {number} y
  * @param {number} w
@@ -428,12 +483,15 @@ function draw() {
     var mainBat = 0;
     var servoBat = 0;
     var vnGps = p.createVector(0, 0, 0);
+    var rssi = 0;
     if (
         state !== null &&
         state.startState !== null &&
         state.startState !== undefined
     ) {
         vnGps = p.createVector(state.vnGpsX, state.vnGpsY);
+        rssi = state.rssi;
+        // pos = p.createVector(state.vnPosX, state.vnPosY);
         readerActive = state.readerConnected;
         rocketActive = state.rocketConnected;
         connected = state.connected;
@@ -695,6 +753,7 @@ function draw() {
         0.01,
         3,
     );
+    drawSignalStrength("", rssi, width / height - 0.07, 0.12, 0.05, 0.035);
 
     // subsystem status
     status(
