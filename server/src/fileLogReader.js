@@ -81,7 +81,7 @@ export class FileLogReader extends InputReader {
         this.i++;
         this.onUpdate(buf);
         const delta = sysTime - this.currentTime;
-        log(`${Strings.Info}: Waiting for ${delta}ms`);
+        // log(`${Strings.Info}: Waiting for ${delta}ms`);
         setTimeout(() => {
             this.currentTime += delta;
             this.readMessage();
