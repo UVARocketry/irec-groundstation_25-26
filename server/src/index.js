@@ -6,7 +6,15 @@ import path from "node:path";
 import { Message } from "./message.js";
 import { clearSysTime, parseMessage } from "./data.js";
 
-import { getState, getEvent, setAdd } from "./state.js";
+import {
+    getState,
+    getEvent,
+    setAdd,
+    clearStartingState,
+    clearConnected,
+    resetInternalState,
+    setEvent,
+} from "./state.js";
 
 import { WebSocketServer } from "ws";
 import { Strings } from "./ansi.js";
@@ -74,7 +82,9 @@ export function useStdinReader(v) {
 }
 
 export function switchReader() {
+    resetInternalState();
     reader.stop();
+    setEvent("waiting");
     if (reader == procReader) {
         reader = logReader;
         setAdd("readerType", "DEBUG");
@@ -85,6 +95,7 @@ export function switchReader() {
     // reader.start();
 }
 export function resetMessageReader() {
+    resetInternalState();
     clearSysTime();
     reader.reset();
     // readMessage(0);

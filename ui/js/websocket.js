@@ -119,7 +119,7 @@ export function sendWsCommand(cmd) {
         return;
     }
     var logitem = new ServerMessage("command", cmd);
-    if (cmd === "restart") {
+    if (cmd === "restart" || cmd == "switch") {
         altitudeGraph.inputData([], [[]]);
     }
     var str = JSON.stringify(logitem);

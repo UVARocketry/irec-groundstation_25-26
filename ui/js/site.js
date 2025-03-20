@@ -765,6 +765,7 @@ function draw() {
         switchButton.draw();
         switchButton.handlePress();
         if (switchButton.isDone()) {
+            pastPos = [];
             sendWsCommand("switch");
         }
         renameButton.handlePress();
