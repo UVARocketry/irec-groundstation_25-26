@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# parses a directory of messages into a more readable format
+
+cd msgparser
+zig build || exit 0
+cd -
+
+cd $1
+
+../msgparser/zig-out/bin/msgparser -H $3 > ../$2
+
+echo $3
+
+ls -d * | xargs -I{}  ../csvRow {} ../$2 $3
+
+cd -

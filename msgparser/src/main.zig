@@ -1,4 +1,5 @@
 const std = @import("std");
+const clap = @import("clap");
 
 const MsgType = enum(u4) {
     /// list of comma seperated strings of field names
@@ -60,6 +61,7 @@ const MetadataPacket = packed struct {
 const DataUpdate = packed struct {
     i_timestamp: i32,
     baro: f32,
+    baroTemperature: f32,
     predictedApogee: f32,
     mainBat: f32,
     servoBat: f32,
@@ -69,12 +71,6 @@ const DataUpdate = packed struct {
     vnGyroX: f32,
     vnGyroY: f32,
     vnGyroZ: f32,
-    vnUnAccX: f32,
-    vnUnAccY: f32,
-    vnUnAccZ: f32,
-    vnUnGyroX: f32,
-    vnUnGyroY: f32,
-    vnUnGyroZ: f32,
     vnMagX: f32,
     vnMagY: f32,
     vnMagZ: f32,
@@ -99,19 +95,17 @@ const DataUpdate = packed struct {
     vnVelX: f32,
     vnVelY: f32,
     vnVelZ: f32,
-    vnOrientationW: f32,
-    vnOrientationX: f32,
-    vnOrientationY: f32,
-    vnOrientationZ: f32,
+    vnYPRX: f32,
+    vnYPRY: f32,
+    vnYPRZ: f32,
     orientationW: f32,
     orientationX: f32,
     orientationY: f32,
     orientationZ: f32,
-    vnTemp: f32,
-    vnPressure: f32,
     apogee: f32,
     pidDeployment: f32,
     actualDeployment: f32,
+    rssi: f32,
     pub fn format(
         self: DataUpdate,
         comptime fmt: []const u8,
@@ -131,7 +125,7 @@ const DataUpdate = packed struct {
                     }
                 }
                 // A format string so that all names are the same length
-                const str = std.fmt.comptimePrint("  {{s: <{d}}}: {{?}}\n", .{maxLen});
+                const str = std.fmt.comptimePrint("  {{s: <{d}}}: {{d:10.7}}\n", .{maxLen});
                 inline for (v.fields) |field| {
                     try writer.print(str, .{ field.name, @field(self, field.name) });
                 }
@@ -180,34 +174,94 @@ pub fn main() !void {
             @panic("LEAKED MEMORY!");
         }
     }
-    const reader = std.io.getStdIn().reader();
-    var buf = std.ArrayList(u8).init(allocator);
-    defer buf.deinit();
-    try reader.readAllArrayList(&buf, 3000);
+    // First we specify what parameters our program can take.
+    // We can use `parseParamsComptime` to parse a string into an array of `Param(Help)`.
+    const params = comptime clap.parseParamsComptime(
+        \\-h, --help             Display this help and exit.
+        \\-p, --parse            Parses the stdin as a message and outputs the value
+        \\-c, --csv <str>        Parses the stdin as a message and outputs the selected fields as a csv
+        \\-H, --header <str>     Parses the headers and outputs the valid csv headers
+        \\<str>...
+        \\
+    );
+
+    // Initialize our diagnostics, which can be used for reporting useful errors.
+    // This is optional. You can also pass `.{}` to `clap.parse` if you don't
+    // care about the extra information `Diagnostics` provides.
+    var diag = clap.Diagnostic{};
+    var res = clap.parse(clap.Help, &params, clap.parsers.default, .{
+        .diagnostic = &diag,
+        .allocator = gpa.allocator(),
+    }) catch |err| {
+        // Report useful error and exit.
+        diag.report(std.io.getStdErr().writer(), err) catch {};
+        return err;
+    };
+    defer res.deinit();
     const stdout_file = std.io.getStdOut().writer();
     var bw = std.io.bufferedWriter(stdout_file);
     const stdout = bw.writer();
 
-    try stdout.print("{s}\n", .{buf.items});
+    if (res.args.header) |header| {
+        const isStar = std.mem.eql(u8, header, "all");
+        std.debug.print("{s}\n", .{header});
+        var headers = std.mem.splitScalar(u8, header, ',');
+        const info = @typeInfo(DataUpdate);
+        var outputComma = false;
+        while (headers.next()) |csvRow| {
+            if (csvRow.len == 0) {
+                continue;
+            }
+            switch (info) {
+                .@"struct" => |st| {
+                    inline for (st.fields) |field| {
+                        if (std.mem.eql(u8, csvRow, field.name) or isStar) {
+                            if (outputComma) {
+                                try stdout.print(",", .{});
+                            }
+                            try stdout.print("{s}", .{field.name});
+                            outputComma = true;
+                        }
+                    }
+                },
+                else => unreachable,
+            }
+        }
+        try stdout.print("\n", .{});
+        try bw.flush();
+        return;
+    }
+    const isParse = res.args.parse != 0;
+    const reader = std.io.getStdIn().reader();
+    var buf = std.ArrayList(u8).init(allocator);
+    defer buf.deinit();
+    try reader.readAllArrayList(&buf, 3000);
+
+    if (isParse)
+        try stdout.print("{s}\n", .{buf.items});
     if (buf.items.len == 0) {
-        try stdout.print("AYYO NOTHING THERE\n", .{});
+        if (isParse)
+            try stdout.print("AYYO NOTHING THERE\n", .{});
         return;
     }
     if (buf.items[buf.items.len - 1] == '\n') {
         _ = buf.pop();
     }
     if (buf.items.len % 2 != 0) {
-        try stdout.print(
-            "dawg you gotta gimme an even number of chars, i got {}\n",
-            .{buf.items.len},
-        );
+        if (isParse)
+            try stdout.print(
+                "dawg you gotta gimme an even number of chars, i got {}\n",
+                .{buf.items.len},
+            );
         return;
     }
-    try stdout.print("Len: {}\n", .{buf.items.len});
+    if (isParse)
+        try stdout.print("Len: {}\n", .{buf.items.len});
     // for (buf.items) |c| {
     //     try stdout.print("{} ", .{c});
     // }
-    try stdout.print("\n", .{});
+    if (isParse)
+        try stdout.print("\n", .{});
 
     var actualData = std.ArrayList(u8).init(allocator);
     defer actualData.deinit();
@@ -229,39 +283,76 @@ pub fn main() !void {
         actualData.items[0..5],
     );
     header.length = ((header.length & 0xff00) >> 8) + ((header.length & 0x00ff) << 8);
-    try stdout.print("{}\n", .{header});
-    try stdout.print("Lengths: {} {}\n", .{ actualData.items.len, header.length + 5 });
-    try stdout.print("\nBody data:\n", .{});
+    if (isParse)
+        try stdout.print("{}\n", .{header});
+    if (isParse)
+        try stdout.print("Lengths: {} {}\n", .{ actualData.items.len, header.length + 5 });
+    if (isParse)
+        try stdout.print("\nBody data:\n", .{});
+    var needsNewline = false;
     switch (header.type) {
         .Schema, .EventSchema => {
-            try stdout.print("{s}\n", .{actualData.items[5..]});
+            if (isParse)
+                try stdout.print("{s}\n", .{actualData.items[5..]});
         },
         .Message => {
             const slice = actualData.items[5..];
-            try stdout.print("{s}\n", .{slice});
+            if (isParse)
+                try stdout.print("{s}\n", .{slice});
         },
         .DataUpdate => {
             const data: *align(1) DataUpdate = std.mem.bytesAsValue(
                 DataUpdate,
                 actualData.items[5..],
             );
-            try stdout.print("{?}\n", .{data});
+            if (isParse)
+                try stdout.print("{?}\n", .{data});
+            const info = @typeInfo(DataUpdate);
+            var headers = std.mem.splitScalar(u8, res.args.csv orelse "", ',');
+            var outputComma = false;
+            while (headers.next()) |csvRow| {
+                const isStar = std.mem.eql(u8, res.args.csv orelse "", "all");
+                if (csvRow.len == 0) {
+                    continue;
+                }
+                switch (info) {
+                    .@"struct" => |st| {
+                        inline for (st.fields) |field| {
+                            if (std.mem.eql(u8, csvRow, field.name) or isStar) {
+                                const value = @field(data, field.name);
+                                if (outputComma) {
+                                    try stdout.print(",", .{});
+                                }
+                                try stdout.print("{d:10.7}", .{value});
+                                outputComma = true;
+                                needsNewline = true;
+                            }
+                        }
+                    },
+                    else => unreachable,
+                }
+            }
         },
         .Metadata => {
             const data: *align(1) MetadataPacket = std.mem.bytesAsValue(
                 MetadataPacket,
                 actualData.items[5..],
             );
-            try stdout.print("{any}\n", .{data});
+            if (isParse)
+                try stdout.print("{any}\n", .{data});
         },
         .Event => {
             const data: *align(1) Event = std.mem.bytesAsValue(
                 Event,
                 actualData.items[5..],
             );
-            try stdout.print("{?}\n", .{data});
+            if (isParse)
+                try stdout.print("{?}\n", .{data});
         },
         .Acknowledgement => {},
+    }
+    if (res.args.csv != null and needsNewline) {
+        try stdout.print("\n", .{});
     }
     try bw.flush(); // don't forget to flush!
 }

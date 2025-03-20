@@ -1,0 +1,3 @@
+#!/bin/bash
+
+cat $1 | ../msgparser/zig-out/bin/msgparser -c $3 >> $2
