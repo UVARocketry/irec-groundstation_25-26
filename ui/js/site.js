@@ -445,10 +445,10 @@ function draw() {
         p.fill(255);
         p.noStroke();
         p.clear();
-        p.rect(0, 0, 0.15 * width, height);
-        p.rect(0, 0, width, 0.13 * height);
-        p.rect(0, height, width, -0.28 * height);
-        p.rect(0.55 * width, 0, width, height);
+        p.rect(0, 0, 0.14 * width, height);
+        p.rect(0, 0, width, 0.08 * height);
+        p.rect(0, height, width, -0.33 * height);
+        p.rect(0.54 * width, 0, width, height);
     } else {
         p.fill(255);
         p.background(0);
@@ -546,6 +546,13 @@ function draw() {
 
     if (alt < altBelowForReset) {
         altBelowForReset = -1;
+    }
+
+    // rocket rotation thingy
+    {
+        // p.strokeWeight(10);
+        // p.stroke(0);
+        // p.line(0.8 * height, 0.7 * height, 0.9 * height, 0.7 * height);
     }
 
     // compass map display thing
