@@ -7,7 +7,7 @@ var startingState = null;
 var currentState = {};
 var launchTime = 0;
 
-const addedData = new AddedData();
+var addedData = new AddedData();
 
 /** @type {string} */
 var currentEvent = "offline";
@@ -38,6 +38,7 @@ export function setConnected(item, c) {
     if (i === addedData.connected.length) {
         addedData.connected.push([item, c]);
     }
+    broadcastState();
 }
 
 export function clearConnected() {
