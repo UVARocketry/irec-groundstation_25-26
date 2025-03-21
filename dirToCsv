@@ -12,6 +12,7 @@ cd $1
 
 echo $3
 
-ls -d * | xargs -I{}  ../csvRow {} ../$2 $3
+
+ls -d * | grep "^msg-\([0-9]\)*$" | xargs -I{}  ../csvRow {} ../$2 $3
 
 cd -
