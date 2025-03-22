@@ -550,9 +550,23 @@ function draw() {
 
     // rocket rotation thingy
     {
-        // p.strokeWeight(10);
-        // p.stroke(0);
+        p.strokeWeight(1);
+        p.stroke(0);
         // p.line(0.8 * height, 0.7 * height, 0.9 * height, 0.7 * height);
+        p.noFill();
+        var x = 0.85;
+        var ytip = 0.7;
+        var h = 0.03;
+        p.bezier(
+            0.8 * height,
+            0.75 * height,
+            0.8 * height,
+            0.73 * height,
+            0.8 * height,
+            (0.7 + 0.016) * height,
+            0.8125 * height,
+            0.7 * height,
+        );
     }
 
     // compass map display thing

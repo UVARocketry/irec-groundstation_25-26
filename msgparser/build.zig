@@ -38,6 +38,13 @@ pub fn build(b: *std.Build) void {
 
     const clap = b.dependency("clap", .{});
     exe.root_module.addImport("clap", clap.module("clap"));
+    const exe_check = b.addExecutable(.{
+        .name = "zls",
+        .root_module = exe.root_module,
+    });
+
+    const check = b.step("check", "Check if ZLS compiles");
+    check.dependOn(&exe_check.step);
 
     // This declares intent for the executable to be installed into the
     // standard location when the user invokes the "install" step (the default
