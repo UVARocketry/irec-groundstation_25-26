@@ -39,7 +39,7 @@ export class FileLogReader extends InputReader {
         this.path = "../" + name;
     }
 
-    getRenameOptions() {
+    async getRenameOptions() {
         var items = [];
 
         const files = fs.readdirSync("..");

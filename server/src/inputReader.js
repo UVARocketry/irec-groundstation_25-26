@@ -26,8 +26,8 @@ export class InputReader {
         return "";
     }
 
-    /** @return {RenameResponse} */
-    getRenameOptions() {
+    /** @return {Promise<RenameResponse>} */
+    async getRenameOptions() {
         // @ts-ignore
         return {};
     }

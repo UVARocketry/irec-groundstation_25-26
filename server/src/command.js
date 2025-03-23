@@ -19,6 +19,7 @@ export function handleUiRequest(req) {
         return;
     }
     if (obj.type === "rename") {
+        // @ts-ignore
         getReader().rename(obj.data);
         broadcastState();
     } else if (obj.type === "command") {
@@ -33,10 +34,13 @@ export function handleUiRequest(req) {
         } else if (obj.data === "switch") {
             switchReader();
         } else if (obj.data === "getRenameData") {
-            var options = getReader().getRenameOptions();
-            /** @type {ServerMessage} */
-            const reply = new ServerMessage("renameResponse", options);
-            broadcast(reply);
+            getReader()
+                .getRenameOptions()
+                .then((options) => {
+                    /** @type {ServerMessage} */
+                    const reply = new ServerMessage("renameResponse", options);
+                    broadcast(reply);
+                });
         } else {
             log(`${Strings.Warn}: Unknown command message "${obj.data}"`);
         }

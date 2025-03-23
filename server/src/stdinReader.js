@@ -68,7 +68,7 @@ export class StdinReader extends InputReader {
         this.saveFolder = newFolder;
         this.renamed = true;
     }
-    getRenameOptions() {
+    async getRenameOptions() {
         /** @type {RenameResponse} */
         const ret = {
             type: "name",

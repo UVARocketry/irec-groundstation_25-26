@@ -5,8 +5,6 @@ import { Strings } from "./ansi.js";
 import fs from "node:fs";
 import { clearConnected, setRocketConnected } from "./state.js";
 import { log } from "./log.js";
-import deasync from "deasync";
-import { Serializer } from "node:v8";
 
 export class SerialPortReader extends InputReader {
     /** @type {string} */
@@ -62,16 +60,10 @@ export class SerialPortReader extends InputReader {
         // this.saveFolder = newFolder;
         // this.renamed = true;
     }
-    getRenameOptions() {
-        var done = false;
-        var ports = [];
-        SerialPort.list().then((res) => {
-            ports = res.map((v) => v.path);
-            done = true;
-        });
-        while (!done) {
-            deasync.sleep(1000);
-        }
+    async getRenameOptions() {
+        const portInfo = await SerialPort.list();
+        const ports = portInfo.map((v) => v.path);
+
         /** @type {RenameResponse} */
         const ret = {
             type: "choice",
@@ -93,98 +85,98 @@ export class SerialPortReader extends InputReader {
             // this.port = null;
             return;
         }
-        var ports = [];
-        var done = false;
         SerialPort.list().then((res) => {
-            ports = res.map((v) => v.path);
-            done = true;
-        });
-        while (!done) {
-            deasync.sleep(1000);
-        }
-        if (!ports.some((v) => v === this.path)) {
-            log(
-                `${Strings.Error}: Could not find serial port at path ${this.path}`,
-            );
-            return;
-        }
-        try {
-            this.port = new SerialPort({
-                path: this.path,
-                baudRate: 96000,
-            });
-            deasync.sleep(1000);
-        } catch (_) {
-            this.port = null;
-            log(`${Strings.Error}: Failed to open serial port ${this.path}`);
-            return;
-        }
-        if (!this.port.isOpen) {
-            this.port.destroy();
-            // this.port = null;
-            log(`${Strings.Error}: Failed to open serial port ${this.path}`);
-            // return;
-        }
-        this.wake();
-        this.parser = this.port.pipe(new ReadlineParser({ delimiter: "\n" }));
+            const ports = res.map((v) => v.path);
 
-        this.msgI = 0;
-        if (!this.renamed) {
-            this.saveFolder = this.genSaveFolder();
-            this.renamed = false;
-        }
-        if (!fs.existsSync(this.saveFolder ?? process.cwd())) {
-            fs.mkdir(
-                this.saveFolder ?? process.cwd(),
-                { recursive: true },
-                () => {},
-            );
-        }
-
-        this.parser.on("data", (v) => {
-            /** @type {string} */
-            const str = v;
-            console.log(str);
-            if (!str.startsWith("ABCD")) {
+            if (!ports.some((v) => v === this.path)) {
+                log(
+                    `${Strings.Error}: Could not find serial port at path ${this.path}`,
+                );
                 return;
             }
-            this.active();
-            const newV = str.substring(4, str.length);
-            if (this.saveFolder !== null) {
-                fs.writeFile(
-                    this.saveFolder + "/msg-" + this.msgI,
-                    newV,
-                    function () {},
+            try {
+                this.port = new SerialPort({
+                    path: this.path,
+                    baudRate: 96000,
+                });
+            } catch (_) {
+                this.port = null;
+                log(
+                    `${Strings.Error}: Failed to open serial port ${this.path}`,
                 );
-                this.msgI++;
+                return;
             }
-            this.onUpdate(new Uint8Array(Buffer.from(newV)));
-            this.lastMessageTime = new Date().getTime();
-            if (this.lastTimeout !== null) {
-                clearTimeout(this.lastTimeout);
-            } else {
-                setRocketConnected(true);
+            if (!this.port.isOpen) {
+                this.port.destroy();
+                // this.port = null;
+                log(
+                    `${Strings.Error}: Failed to open serial port ${this.path}`,
+                );
+                // return;
+            }
+            this.wake();
+            this.parser = this.port.pipe(
+                new ReadlineParser({ delimiter: "\n" }),
+            );
+
+            this.msgI = 0;
+            if (!this.renamed) {
+                this.saveFolder = this.genSaveFolder();
+                this.renamed = false;
+            }
+            if (!fs.existsSync(this.saveFolder ?? process.cwd())) {
+                fs.mkdir(
+                    this.saveFolder ?? process.cwd(),
+                    { recursive: true },
+                    () => {},
+                );
             }
 
-            this.lastTimeout = setTimeout(() => {
-                this.lastTimeout = null;
-                setRocketConnected(false);
-            }, 300);
-        });
-        this.parser.on("close", () => {
-            this.done();
-            var str = Strings.Info;
-            log(`${str}: Serial stream from ${this.path}  ended`);
-            setTimeout(() => {
-                this.parser = null;
-                this.port = null;
-                if (this.restart) {
-                    this.restart = false;
-                    this.start();
+            this.parser.on("data", (v) => {
+                /** @type {string} */
+                const str = v;
+                console.log(str);
+                if (!str.startsWith("ABCD")) {
+                    return;
                 }
-            }, 10);
+                this.active();
+                const newV = str.substring(4, str.length);
+                if (this.saveFolder !== null) {
+                    fs.writeFile(
+                        this.saveFolder + "/msg-" + this.msgI,
+                        newV,
+                        function () {},
+                    );
+                    this.msgI++;
+                }
+                this.onUpdate(new Uint8Array(Buffer.from(newV)));
+                this.lastMessageTime = new Date().getTime();
+                if (this.lastTimeout !== null) {
+                    clearTimeout(this.lastTimeout);
+                } else {
+                    setRocketConnected(true);
+                }
+
+                this.lastTimeout = setTimeout(() => {
+                    this.lastTimeout = null;
+                    setRocketConnected(false);
+                }, 300);
+            });
+            this.parser.on("close", () => {
+                this.done();
+                var str = Strings.Info;
+                log(`${str}: Serial stream from ${this.path}  ended`);
+                setTimeout(() => {
+                    this.parser = null;
+                    this.port = null;
+                    if (this.restart) {
+                        this.restart = false;
+                        this.start();
+                    }
+                }, 10);
+            });
+            log(`${Strings.Ok}: Started stream at ${this.path}`);
         });
-        log(`${Strings.Ok}: Started stream at ${this.path}`);
     }
     stop() {
         // this.port?.destroy();
