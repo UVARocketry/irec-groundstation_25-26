@@ -1,3 +1,4 @@
+import fs from "node:fs";
 /** @import { RenameResponse } from "common/ServerMessage.js"; */
 import { setReaderConnected, setRocketConnected } from "./state.js";
 
@@ -6,6 +7,7 @@ import { setReaderConnected, setRocketConnected } from "./state.js";
  */
 export class InputReader {
     onUpdate = async function (/** @type {Uint8Array} */ _) {};
+    itemI = 0;
     /**
      * @param {(_: Uint8Array) => Promise<void>} onUpdate
      */
@@ -14,7 +16,7 @@ export class InputReader {
     }
     reset() {}
 
-    start() {}
+    async start() {}
 
     stop() {}
 
@@ -32,16 +34,31 @@ export class InputReader {
         return {};
     }
 
-    done() {
+    /** @param {string} saveFolder */
+    async createSaveFolder(saveFolder) {
+        var existsProm = new Promise((resolve, _) => {
+            fs.exists(saveFolder ?? process.cwd(), (exists) => resolve(exists));
+        });
+        // need to synchrounously create the file bc we dont want to accidentally try creating files in there and crash
+        if (!existsProm) {
+            await new Promise((res, _) => {
+                fs.mkdir(saveFolder ?? process.cwd(), { recursive: true }, () =>
+                    res(null),
+                );
+            });
+        }
+    }
+
+    signalDone() {
         setReaderConnected(false);
         setRocketConnected(false);
     }
 
-    wake() {
+    signalWake() {
         setReaderConnected(true);
     }
 
-    active() {
+    signalActive() {
         setReaderConnected(true);
         setRocketConnected(true);
     }

@@ -79,7 +79,7 @@ export class StdinReader extends InputReader {
     getName() {
         return this.saveFolder ?? this.genSaveFolder() ?? "NONE";
     }
-    start() {
+    async start() {
         clearConnected();
         if (this.process !== null) {
             log(`${Strings.Warn}: Stdin process already exists!`);
@@ -87,7 +87,7 @@ export class StdinReader extends InputReader {
             this.process.kill(9);
             return;
         }
-        this.wake();
+        this.signalWake();
         this.process = spawn(this.cmd, this.args, {
             cwd: this.cwd,
             env: {
@@ -99,13 +99,8 @@ export class StdinReader extends InputReader {
             this.saveFolder = this.genSaveFolder();
             this.renamed = false;
         }
-        if (!fs.existsSync(this.saveFolder ?? process.cwd())) {
-            fs.mkdir(
-                this.saveFolder ?? process.cwd(),
-                { recursive: true },
-                () => {},
-            );
-        }
+        this.saveFolder = this.saveFolder ?? process.cwd() + "/out";
+        await this.createSaveFolder(this.saveFolder);
         if (this.process === null) {
             log(
                 `${Strings.Error}: Failed to spawn child process: ${this.cmd} ${this.args.join(" ")}`,
@@ -126,7 +121,7 @@ export class StdinReader extends InputReader {
                 if (!s.startsWith("ABCD")) {
                     continue;
                 }
-                this.active();
+                this.signalActive();
                 const newV = s.substring(4, s.length);
                 if (this.saveFolder !== null) {
                     fs.writeFile(
@@ -152,7 +147,7 @@ export class StdinReader extends InputReader {
             // log(v.toString());
         });
         stream.on("close", () => {
-            this.done();
+            this.signalDone();
             setTimeout(() => {
                 var code = this.process?.exitCode;
                 var str = Strings.Info;

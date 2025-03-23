@@ -68,22 +68,17 @@ export class FileUpdateReader extends InputReader {
     getName() {
         return this.saveFolder ?? this.genSaveFolder() ?? "NONE";
     }
-    start() {
+    async start() {
         clearConnected();
 
-        this.wake();
+        this.signalWake();
         this.msgI = 0;
         if (!this.renamed) {
             this.saveFolder = this.genSaveFolder();
             this.renamed = false;
         }
-        if (!fs.existsSync(this.saveFolder ?? process.cwd())) {
-            fs.mkdir(
-                this.saveFolder ?? process.cwd(),
-                { recursive: true },
-                () => {},
-            );
-        }
+        this.saveFolder = this.saveFolder ?? "out_no_save";
+        await this.createSaveFolder(this.saveFolder);
         if (!fs.existsSync(this.path)) {
             log(`${Strings.Warn}: File ${this.path} does not exist yet`);
         }
@@ -102,7 +97,7 @@ export class FileUpdateReader extends InputReader {
                 if (!s.startsWith("ABCD")) {
                     continue;
                 }
-                this.active();
+                this.signalActive();
                 const newV = s.substring(4, s.length);
                 if (this.saveFolder !== null) {
                     fs.writeFile(

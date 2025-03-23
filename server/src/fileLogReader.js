@@ -3,8 +3,6 @@ import { InputReader } from "./inputReader.js";
 import { broadcastEvent } from "./index.js";
 import { clearConnected, setEvent } from "./state.js";
 import { sysTime } from "./data.js";
-import { Strings } from "./ansi.js";
-import { log } from "./log.js";
 /** @import { RenameResponse } from "common/ServerMessage.js"; */
 
 export class FileLogReader extends InputReader {
@@ -25,11 +23,11 @@ export class FileLogReader extends InputReader {
         this.cancel = true;
         clearConnected();
     }
-    start() {
+    async start() {
         if (!this.readFirst) {
             clearConnected();
             this.readFirst = true;
-            this.wake();
+            this.signalWake();
             setTimeout(() => this.readMessage(), 1000);
         }
     }
@@ -63,15 +61,15 @@ export class FileLogReader extends InputReader {
     async readMessage() {
         if (this.cancel) {
             this.cancel = false;
-            this.done();
+            this.signalDone();
             return;
         }
-        this.active();
+        this.signalActive();
         let path = this.path + "/msg-" + this.i;
         if (!fs.existsSync(path)) {
             setEvent("done");
             broadcastEvent();
-            this.done();
+            this.signalDone();
             return;
         }
         const file = await fs.openAsBlob(path);
@@ -89,7 +87,7 @@ export class FileLogReader extends InputReader {
     }
     async reset() {
         this.i = 0;
-        this.wake();
+        this.signalWake();
         this.readMessage();
     }
 }

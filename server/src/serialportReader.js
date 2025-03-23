@@ -52,13 +52,6 @@ export class SerialPortReader extends InputReader {
      */
     rename(name) {
         this.path = name;
-        // const newFolder = "../" + name;
-        // if (this.saveFolder !== null) {
-        //     fs.cpSync(this.saveFolder, newFolder);
-        //     fs.rmdir(this.saveFolder, () => {});
-        // }
-        // this.saveFolder = newFolder;
-        // this.renamed = true;
     }
     async getRenameOptions() {
         const portInfo = await SerialPort.list();
@@ -74,7 +67,7 @@ export class SerialPortReader extends InputReader {
     getName() {
         return this.path;
     }
-    start() {
+    async start() {
         clearConnected();
         if (this.parser !== null) {
             log(`${Strings.Warn}: Stdin process already exists!`);
@@ -85,98 +78,87 @@ export class SerialPortReader extends InputReader {
             // this.port = null;
             return;
         }
-        SerialPort.list().then((res) => {
-            const ports = res.map((v) => v.path);
+        const portInfo = await SerialPort.list();
+        const ports = portInfo.map((v) => v.path);
 
-            if (!ports.some((v) => v === this.path)) {
-                log(
-                    `${Strings.Error}: Could not find serial port at path ${this.path}`,
-                );
-                return;
-            }
-            try {
-                this.port = new SerialPort({
-                    path: this.path,
-                    baudRate: 96000,
-                });
-            } catch (_) {
-                this.port = null;
-                log(
-                    `${Strings.Error}: Failed to open serial port ${this.path}`,
-                );
-                return;
-            }
-            if (!this.port.isOpen) {
-                this.port.destroy();
-                // this.port = null;
-                log(
-                    `${Strings.Error}: Failed to open serial port ${this.path}`,
-                );
-                // return;
-            }
-            this.wake();
-            this.parser = this.port.pipe(
-                new ReadlineParser({ delimiter: "\n" }),
+        if (!ports.some((v) => v === this.path)) {
+            log(
+                `${Strings.Error}: Could not find serial port at path ${this.path}`,
             );
+            return;
+        }
+        try {
+            this.port = new SerialPort({
+                path: this.path,
+                baudRate: 96000,
+            });
+        } catch (_) {
+            this.port = null;
+            log(`${Strings.Error}: Failed to open serial port ${this.path}`);
+            return;
+        }
+        if (!this.port.isOpen) {
+            this.port.destroy();
+            // this.port = null;
+            log(`${Strings.Error}: Failed to open serial port ${this.path}`);
+            // return;
+        }
+        this.signalWake();
+        this.parser = this.port.pipe(new ReadlineParser({ delimiter: "\n" }));
 
-            this.msgI = 0;
-            if (!this.renamed) {
-                this.saveFolder = this.genSaveFolder();
-                this.renamed = false;
+        this.msgI = 0;
+        if (!this.renamed) {
+            this.saveFolder = this.genSaveFolder();
+            this.renamed = false;
+        }
+        this.saveFolder = this.saveFolder ?? "out_no_save";
+        await this.createSaveFolder(this.saveFolder);
+
+        this.parser.on("data", (v) => {
+            /** @type {string} */
+            const str = v;
+            console.log(str);
+            if (!str.startsWith("ABCD")) {
+                return;
             }
-            if (!fs.existsSync(this.saveFolder ?? process.cwd())) {
-                fs.mkdir(
-                    this.saveFolder ?? process.cwd(),
-                    { recursive: true },
-                    () => {},
+            this.signalActive();
+            const newV = str.substring(4, str.length);
+            if (this.saveFolder !== null) {
+                // can ignore the callback bc we have no dependency on having the new file exist
+                fs.writeFile(
+                    this.saveFolder + "/msg-" + this.msgI,
+                    newV,
+                    function () {},
                 );
+                this.msgI++;
+            }
+            this.onUpdate(new Uint8Array(Buffer.from(newV)));
+            this.lastMessageTime = new Date().getTime();
+            if (this.lastTimeout !== null) {
+                clearTimeout(this.lastTimeout);
+            } else {
+                setRocketConnected(true);
             }
 
-            this.parser.on("data", (v) => {
-                /** @type {string} */
-                const str = v;
-                console.log(str);
-                if (!str.startsWith("ABCD")) {
-                    return;
-                }
-                this.active();
-                const newV = str.substring(4, str.length);
-                if (this.saveFolder !== null) {
-                    fs.writeFile(
-                        this.saveFolder + "/msg-" + this.msgI,
-                        newV,
-                        function () {},
-                    );
-                    this.msgI++;
-                }
-                this.onUpdate(new Uint8Array(Buffer.from(newV)));
-                this.lastMessageTime = new Date().getTime();
-                if (this.lastTimeout !== null) {
-                    clearTimeout(this.lastTimeout);
-                } else {
-                    setRocketConnected(true);
-                }
-
-                this.lastTimeout = setTimeout(() => {
-                    this.lastTimeout = null;
-                    setRocketConnected(false);
-                }, 300);
-            });
-            this.parser.on("close", () => {
-                this.done();
-                var str = Strings.Info;
-                log(`${str}: Serial stream from ${this.path}  ended`);
-                setTimeout(() => {
-                    this.parser = null;
-                    this.port = null;
-                    if (this.restart) {
-                        this.restart = false;
-                        this.start();
-                    }
-                }, 10);
-            });
-            log(`${Strings.Ok}: Started stream at ${this.path}`);
+            this.lastTimeout = setTimeout(() => {
+                this.lastTimeout = null;
+                setRocketConnected(false);
+            }, 300);
         });
+        this.parser.on("close", () => {
+            this.signalDone();
+            var str = Strings.Info;
+            log(`${str}: Serial stream from ${this.path}  ended`);
+            setTimeout(() => {
+                this.parser = null;
+                this.port = null;
+                if (this.restart) {
+                    this.restart = false;
+                    this.start();
+                }
+            }, 10);
+        });
+        log(`${Strings.Ok}: Started stream at ${this.path}`);
     }
     stop() {
         // this.port?.destroy();
