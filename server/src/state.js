@@ -114,7 +114,7 @@ export function setRocketConnected(v) {
 }
 
 export function launchNow() {
-    if (startingState !== null) {
-        launchTime = startingState.i_timestamp;
-    }
+    // if (startingState !== null) {
+    launchTime = currentState.i_timestamp ?? startingState?.i_timestamp ?? 0;
+    // }
 }
