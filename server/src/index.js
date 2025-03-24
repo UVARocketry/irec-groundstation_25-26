@@ -134,12 +134,12 @@ wss.on("connection", function (ws) {
         useStdinReader(useStdin);
         read1 = true;
     }
-    setTimeout(function () {
-        reader.start();
-        // logReader.start();
-        // readMessage(0);
-        // read1 = true;
-    }, 100);
+    // setTimeout(function () {
+    //     // reader.start();
+    //     // logReader.start();
+    //     // readMessage(0);
+    //     // read1 = true;
+    // }, 100);
     // }
     ws.on("message", function (v) {
         handleUiRequest(v.toString());
