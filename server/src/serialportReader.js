@@ -68,16 +68,18 @@ export class SerialPortReader extends InputReader {
         return this.path;
     }
     async start() {
-        clearConnected();
-        if (this.parser !== null) {
+        if (this.port !== null) {
+            console.log("restarting...");
             log(`${Strings.Warn}: Stdin process already exists!`);
             this.restart = true;
             // this.port.close();
-            this.parser.destroy();
-            this.parser = null;
+            this.parser?.destroy();
+            // this.port = null;
             // this.port = null;
             return;
         }
+        clearConnected();
+        console.log("starting");
         const portInfo = await SerialPort.list();
         const ports = portInfo.map((v) => v.path);
 
@@ -98,7 +100,7 @@ export class SerialPortReader extends InputReader {
             return;
         }
         if (!this.port.isOpen) {
-            this.port.destroy();
+            // this.port.destroy();
             // this.port = null;
             log(`${Strings.Error}: Failed to open serial port ${this.path}`);
             // return;
@@ -112,7 +114,9 @@ export class SerialPortReader extends InputReader {
             this.renamed = false;
         }
         this.saveFolder = this.saveFolder ?? "out_no_save";
+        console.log("ayyo we got a folder: " + this.saveFolder);
         await this.createSaveFolder(this.saveFolder);
+        console.log("yo folder now");
 
         this.parser.on("data", (v) => {
             /** @type {string} */
@@ -155,6 +159,7 @@ export class SerialPortReader extends InputReader {
             }, 10);
         });
         log(`${Strings.Ok}: Started stream at ${this.path}`);
+        this.signalWake();
     }
     stop() {
         // this.port?.destroy();
