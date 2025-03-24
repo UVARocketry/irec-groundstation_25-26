@@ -12,7 +12,7 @@ import { broadcast, broadcastState } from "./index.js";
 // some data to store
 /** @type {string[]} */
 var schema = [];
-var fieldSize = 0;
+var fieldSize = 4;
 
 /** @type {string[]} */
 var events = [];
