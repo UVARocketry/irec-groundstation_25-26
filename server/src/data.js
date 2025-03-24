@@ -65,6 +65,12 @@ export function parseMessage(msg) {
  * @param payload {string}
  */
 function parseEvent(payload) {
+    if (payload.length < 8) {
+        console.log(
+            `${Strings.Warn}: payload is too small in parseEvent (got length ${payload.length})`,
+        );
+        return;
+    }
     const [c4, c3, c2, c1] = [
         payload[0],
         payload[1],
