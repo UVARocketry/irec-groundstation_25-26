@@ -19,7 +19,9 @@ const MsgType = enum(u4) {
 };
 
 const MetadataType = enum(u8) {
-    FloatSize,
+    FloatSize = 0,
+    GpsTow = 1,
+    GpsWeek = 2,
 };
 const FloatSizeMetadata = packed struct {
     floatSize: u8,
@@ -28,6 +30,11 @@ const FloatSizeMetadata = packed struct {
 
 const MetadataValue = packed union {
     floatSize: FloatSizeMetadata,
+    gpsTow: packed struct {
+        gpsTow: f64,
+        timestamp: i32,
+    },
+    gpsWeek: u16,
 };
 
 const MetadataPacket = packed struct {
