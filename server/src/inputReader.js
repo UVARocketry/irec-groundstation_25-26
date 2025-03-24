@@ -8,6 +8,7 @@ import { setReaderConnected, setRocketConnected } from "./state.js";
 export class InputReader {
     onUpdate = async function (/** @type {Uint8Array} */ _) {};
     itemI = 0;
+    saveFileNumLength = 5;
     /**
      * @param {(_: Uint8Array) => Promise<void>} onUpdate
      */
@@ -47,6 +48,30 @@ export class InputReader {
                 );
             });
         }
+    }
+
+    /**
+     * @param {string} saveFolder
+     * @param {number} i
+     * @return string
+     */
+    getSaveItemName(saveFolder, i) {
+        return (
+            saveFolder +
+            "/msg-" +
+            (i + "").padStart(this.saveFileNumLength, "0")
+        );
+    }
+
+    /** @param {string} saveFolder
+     * @param {string} msg
+     * @param {number} i*/
+    async saveItem(saveFolder, msg, i) {
+        await new Promise((res, _) => {
+            fs.writeFile(this.getSaveItemName(saveFolder, i), msg, () =>
+                res(null),
+            );
+        });
     }
 
     signalDone() {

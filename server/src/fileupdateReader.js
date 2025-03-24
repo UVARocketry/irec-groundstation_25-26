@@ -100,11 +100,7 @@ export class FileUpdateReader extends InputReader {
                 this.signalActive();
                 const newV = s.substring(4, s.length);
                 if (this.saveFolder !== null) {
-                    fs.writeFile(
-                        this.saveFolder + "/msg-" + this.msgI,
-                        newV,
-                        function () {},
-                    );
+                    this.saveItem(this.saveFolder, newV, this.msgI);
                     this.msgI++;
                 }
                 this.onUpdate(new Uint8Array(Buffer.from(newV)));

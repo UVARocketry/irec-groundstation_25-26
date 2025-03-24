@@ -125,11 +125,7 @@ export class SerialPortReader extends InputReader {
             const newV = str.substring(4, str.length);
             if (this.saveFolder !== null) {
                 // can ignore the callback bc we have no dependency on having the new file exist
-                fs.writeFile(
-                    this.saveFolder + "/msg-" + this.msgI,
-                    newV,
-                    function () {},
-                );
+                this.saveItem(this.saveFolder, newV, this.msgI);
                 this.msgI++;
             }
             this.onUpdate(new Uint8Array(Buffer.from(newV)));

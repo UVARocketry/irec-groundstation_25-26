@@ -3,6 +3,8 @@ import { InputReader } from "./inputReader.js";
 import { broadcastEvent } from "./index.js";
 import { clearConnected, setEvent } from "./state.js";
 import { sysTime } from "./data.js";
+import { log } from "./log.js";
+import { Strings } from "./ansi.js";
 /** @import { RenameResponse } from "common/ServerMessage.js"; */
 
 export class FileLogReader extends InputReader {
@@ -42,7 +44,7 @@ export class FileLogReader extends InputReader {
 
         const files = fs.readdirSync("..");
         files.forEach((f) => {
-            if (fs.existsSync(`../${f}/msg-0`)) {
+            if (fs.existsSync(this.getSaveItemName(f, 0))) {
                 items.push(f);
             }
         });
@@ -65,7 +67,7 @@ export class FileLogReader extends InputReader {
             return;
         }
         this.signalActive();
-        let path = this.path + "/msg-" + this.i;
+        let path = this.getSaveItemName(this.path, this.i);
         if (!fs.existsSync(path)) {
             setEvent("done");
             broadcastEvent();
@@ -79,7 +81,9 @@ export class FileLogReader extends InputReader {
         this.i++;
         this.onUpdate(buf);
         const delta = sysTime - this.currentTime;
-        // log(`${Strings.Info}: Waiting for ${delta}ms`);
+        if (delta > 1000) {
+            log(`${Strings.Info}: Waiting for ${delta}ms`);
+        }
         setTimeout(() => {
             this.currentTime += delta;
             this.readMessage();
