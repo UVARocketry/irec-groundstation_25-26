@@ -288,6 +288,25 @@ function unitString(str1, size1, str2, size2, x, y) {
     p.textSize(size2);
     p.text(str2, x + w1, y);
 }
+/**
+ * @param {string[]} strs
+ * @param {number} size1
+ * @param {number} size2
+ * @param {number} x
+ * @param {number} y
+ */
+function multiUnitString(strs, size1, size2, x, y) {
+    var w = 0;
+    for (var i = 0; i < strs.length; i++) {
+        if (i % 2 == 0) {
+            p.textSize(size1);
+        } else {
+            p.textSize(size2);
+        }
+        p.text(strs[i], x + w, y);
+        w += p.textWidth(strs[i]);
+    }
+}
 
 /** @type {p5.Vector[]}*/
 var pastPos = [];
@@ -905,20 +924,37 @@ function draw() {
     }
 
     // uptime + airtime
-    unitString(
-        "Uptime:  " + Math.floor(uptime / 1000),
+    const uptimeMins = Math.floor(uptime / 1000 / 60) + "";
+    const uptimeSecs = ((Math.floor(uptime / 1000) % 60) + "").padStart(2, "0");
+    multiUnitString(
+        [
+            "Uptime:  ",
+            "".padStart(3 - uptimeMins.length, " "),
+            uptimeMins,
+            ":",
+            uptimeSecs,
+        ],
         0.04 * height,
-        "s",
         0.03 * height,
-        0.78 * width,
+        0.775 * width,
         0.1 * height,
     );
-    unitString(
-        "Airtime: " + Math.floor(airTime / 1000),
+    const airTimeMins = Math.floor(airTime / 1000 / 60) + "";
+    const airTimeSecs = ((Math.floor(airTime / 1000) % 60) + "").padStart(
+        2,
+        "0",
+    );
+    multiUnitString(
+        [
+            "Airtime: ",
+            "".padStart(3 - airTimeMins.length, " "),
+            airTimeMins,
+            ":",
+            airTimeSecs,
+        ],
         0.04 * height,
-        "s",
         0.03 * height,
-        0.78 * width,
+        0.775 * width,
         0.05 * height,
     );
 
