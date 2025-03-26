@@ -2,7 +2,7 @@
 import { Dial } from "./dial.js";
 import { Graph } from "./graph.js";
 /** @import p5 from "p5"; */
-import { Quaternion, quatnormalize } from "./quaternion.js";
+import { Quaternion, quatmult, quatnormalize } from "./quaternion.js";
 import { limDecimal } from "./utils.js";
 import {
     getCurrentState,
@@ -498,11 +498,7 @@ function draw() {
         environment = state.readerType;
         mainBat = state.mainBat;
         servoBat = state.servoBat;
-        pos = p.createVector(
-            state.kalmanPosX,
-            state.kalmanPosY,
-            state.kalmanPosZ,
-        );
+        pos = p.createVector(state.vnPosX, state.vnPosY, state.vnPosZ);
         uptime = state.i_timestamp;
         airTime = state.timeSinceLaunch;
         deplExp = state.pidDeployment;
@@ -513,7 +509,7 @@ function draw() {
         expAp = state.predictedApogee - state.startState.kalmanPosZ;
         expAp *= mtoft;
 
-        alt = state.kalmanPosZ - state.startState.kalmanPosZ;
+        alt = state.vnPosZ - state.startState.vnPosZ;
         alt *= mtoft;
 
         altitudeGraph.addDatapoint(ap, [expAp]);
@@ -523,9 +519,9 @@ function draw() {
             state.vnAccZ / 9.8,
         );
         vel = p.createVector(
-            state.kalmanVelX * mtoft,
-            state.kalmanVelY * mtoft,
-            state.kalmanVelZ * mtoft,
+            state.vnVelX * mtoft,
+            state.vnVelY * mtoft,
+            state.vnVelZ * mtoft,
         );
         /** @type {Quaternion} */
         // show the rockets
@@ -554,19 +550,114 @@ function draw() {
         p.stroke(0);
         // p.line(0.8 * height, 0.7 * height, 0.9 * height, 0.7 * height);
         p.noFill();
-        var x = 0.85;
-        var ytip = 0.7;
-        var h = 0.03;
+        var angle = 0;
+        if (state != null) {
+            /** @type {Quaternion} */
+            var quat = {
+                w: state.orientationW,
+                x: state.orientationX,
+                y: state.orientationY,
+                z: state.orientationZ,
+            };
+            quatnormalize(quat);
+            /** @type {Quaternion} */
+            var dir = {
+                w: 0,
+                x: 0,
+                y: 0,
+                z: 1,
+            };
+
+            const quatPrime = {
+                w: quat.w,
+                x: -quat.x,
+                y: -quat.y,
+                z: -quat.z,
+            };
+
+            const newquat = quatmult(quatmult(quat, dir), quatPrime);
+
+            // the y of the triangle
+            var z = -newquat.z;
+            var x = newquat.x;
+            angle = Math.acos(z);
+        }
+
+        p.push();
+        var x = 0.7;
+        var yTip = 0.7;
+
+        var hBody = 0.07;
+        var wBody = 0.013;
+        var wb2 = wBody / 2;
+        var hb2 = hBody / 2;
+        p.translate(x * height, (yTip + hBody / 2) * height);
+        p.rotate(angle);
+
+        var cp1y = 0.02;
+
+        var slope = 3;
+
+        var finW = wBody / 1.9;
+        var finBase = (hBody * 119) / 124;
+        var finBlock = (hBody * 112) / 124;
+        var finEndY = (hBody * 93) / 124;
+
+        // rescaling so that we dont have to repeat '* height' so much
+        wb2 *= height;
+        hb2 *= height;
+        cp1y *= height;
+        finW *= height;
+        finBase *= height;
+        finBlock *= height;
+        finEndY *= height;
+        hBody *= height;
+        wBody *= height;
+
+        // the two main beziers that form the rocket body
         p.bezier(
-            0.8 * height,
-            0.75 * height,
-            0.8 * height,
-            0.73 * height,
-            0.8 * height,
-            (0.7 + 0.016) * height,
-            0.8125 * height,
-            0.7 * height,
+            -wb2,
+            hb2,
+            -wb2,
+            -hb2 + hBody - cp1y,
+            -wb2,
+            -hb2 + slope * wb2,
+            0,
+            -hb2,
         );
+        p.bezier(
+            wb2,
+            hb2,
+            wb2,
+            -hb2 + hBody - cp1y,
+            wb2,
+            -hb2 + slope * wb2,
+            0,
+            -hb2,
+        );
+        // the base line of the rocket
+        p.line(-wb2, hb2, wb2, hb2);
+
+        // LEFT fin
+
+        // the bottom line of the fin
+        p.line(-wb2, -hb2 + finBase, -wb2 - finW, -hb2 + finBase);
+        // the outer vertical line of the fin
+        p.line(-wb2 - finW, -hb2 + finBase, -wb2 - finW, -hb2 + finBlock);
+        // the sloped line back to the body
+        p.line(-wb2 - finW, -hb2 + finBlock, -wb2, -hb2 + finEndY);
+
+        // RIGHT fin (same thing but mirrored)
+        p.line(wb2, -hb2 + finBase, -wb2 + wBody + finW, -hb2 + finBase);
+        p.line(
+            -wb2 + wBody + finW,
+            -hb2 + finBase,
+            -wb2 + wBody + finW,
+            -hb2 + finBlock,
+        );
+        p.line(-wb2 + wBody + finW, -hb2 + finBlock, wb2, -hb2 + finEndY);
+
+        p.pop();
     }
 
     // compass map display thing
