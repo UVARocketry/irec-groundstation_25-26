@@ -10,6 +10,6 @@ cd $1
 
 ls **-dump | xargs rm
 
-ls -d * | xargs -I{}  ../parseMsg {}
+ls -d * | xargs -P 200 -I{}  ../parseMsg {}
 
 cd -
