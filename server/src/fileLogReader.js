@@ -13,6 +13,7 @@ export class FileLogReader extends InputReader {
     path = "../out";
     cancel = false;
     currentTime = 0;
+    maxI = 0;
     /**
      * @param {(_: Uint8Array) => Promise<void>} fn
      * @param {string?} path
@@ -30,6 +31,17 @@ export class FileLogReader extends InputReader {
             clearConnected();
             this.readFirst = true;
             this.signalWake();
+            const files = fs.readdirSync(this.path);
+            this.maxI = 0;
+            files.forEach((f) => {
+                if (/^msg-\d*$/.test(f)) {
+                    const numStr = f.substring("msg-".length);
+                    const num = parseInt(numStr, 10);
+                    if (num > this.maxI) {
+                        this.maxI = num;
+                    }
+                }
+            });
             setTimeout(() => this.readMessage(), 1000);
         }
     }
@@ -44,7 +56,8 @@ export class FileLogReader extends InputReader {
 
         const files = fs.readdirSync("..");
         files.forEach((f) => {
-            if (fs.existsSync(this.getSaveItemName(f, 0))) {
+            const name = this.getSaveItemName("../" + f, 0);
+            if (fs.existsSync(name)) {
                 items.push(f);
             }
         });
@@ -68,10 +81,14 @@ export class FileLogReader extends InputReader {
         }
         this.signalActive();
         let path = this.getSaveItemName(this.path, this.i);
-        if (!fs.existsSync(path)) {
+        if (this.i > this.maxI) {
             setEvent("done");
             broadcastEvent();
             this.signalDone();
+        }
+        if (!fs.existsSync(path)) {
+            this.i++;
+            this.readMessage();
             return;
         }
         const file = await fs.openAsBlob(path);
@@ -84,7 +101,11 @@ export class FileLogReader extends InputReader {
         if (delta > 1000) {
             log(`${Strings.Info}: Waiting for ${delta}ms`);
         }
+
         setTimeout(() => {
+            if (delta > 1000) {
+                log(`${Strings.Info}: Done waiting for ${delta}ms`);
+            }
             this.currentTime += delta;
             this.readMessage();
         }, delta);
