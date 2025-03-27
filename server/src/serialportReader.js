@@ -25,8 +25,6 @@ export class SerialPortReader extends InputReader {
 
     lastLineChecked = 0;
     lastLineCount = 0;
-    /** @type {NodeJS.Timeout|undefined} */
-    intervalId = undefined;
 
     /** @type {ReadlineParser?} */
     parser = null;
@@ -134,16 +132,7 @@ export class SerialPortReader extends InputReader {
             }
             this.onUpdate(new Uint8Array(Buffer.from(newV)));
             this.lastMessageTime = new Date().getTime();
-            if (this.lastTimeout !== null) {
-                clearTimeout(this.lastTimeout);
-            } else {
-                setRocketConnected(true);
-            }
-
-            this.lastTimeout = setTimeout(() => {
-                this.lastTimeout = null;
-                setRocketConnected(false);
-            }, 300);
+            setRocketConnected(true);
         });
         this.parser.on("close", () => {
             this.signalDone();

@@ -105,16 +105,6 @@ export class FileUpdateReader extends InputReader {
                 }
                 this.onUpdate(new Uint8Array(Buffer.from(newV)));
                 this.lastMessageTime = new Date().getTime();
-                if (this.lastTimeout !== null) {
-                    clearTimeout(this.lastTimeout);
-                } else {
-                    setRocketConnected(true);
-                }
-
-                this.lastTimeout = setTimeout(() => {
-                    this.lastTimeout = null;
-                    setRocketConnected(false);
-                }, 900);
             }
             this.lastLineChecked = lines.length;
         }, this.updateInterval);

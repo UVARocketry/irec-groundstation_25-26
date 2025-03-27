@@ -12,6 +12,9 @@ var addedData = new AddedData();
 /** @type {string} */
 var currentEvent = "offline";
 
+/** @type {NodeJS.Timeout?} */
+var connectionTimeout = null;
+
 /** @return {string} */
 export function getEvent() {
     return currentEvent;
@@ -107,6 +110,17 @@ export function setReaderConnected(v) {
  * @param {boolean} v
  */
 export function setRocketConnected(v) {
+    if (connectionTimeout !== null && v) {
+        clearTimeout(connectionTimeout);
+        connectionTimeout = null;
+    }
+    if (v) {
+        connectionTimeout = setTimeout(() => {
+            connectionTimeout = null;
+            console.log("yo no");
+            setRocketConnected(false);
+        }, 500);
+    }
     if (v !== addedData.rocketConnected) {
         setAdd("rocketConnected", v);
         broadcastState();

@@ -27,9 +27,6 @@ export class StdinReader extends InputReader {
     restart = false;
     lastMessageTime = 0;
 
-    /** @type {NodeJS.Timeout?}*/
-    lastTimeout = null;
-
     renamed = false;
 
     /**
@@ -115,6 +112,7 @@ export class StdinReader extends InputReader {
             return;
         }
         stream.on("data", (v) => {
+            setRocketConnected(true);
             /** @type {string[]} */
             const strs = v.toString().split("\n");
             for (const s of strs) {
@@ -129,16 +127,6 @@ export class StdinReader extends InputReader {
                 }
                 this.onUpdate(new Uint8Array(Buffer.from(newV)));
                 this.lastMessageTime = new Date().getTime();
-                if (this.lastTimeout !== null) {
-                    clearTimeout(this.lastTimeout);
-                } else {
-                    setRocketConnected(true);
-                }
-
-                this.lastTimeout = setTimeout(() => {
-                    this.lastTimeout = null;
-                    setRocketConnected(false);
-                }, 300);
             }
             // log(v.toString());
         });
