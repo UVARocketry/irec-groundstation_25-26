@@ -464,10 +464,14 @@ function draw() {
 		p.fill(255);
 		p.noStroke();
 		p.clear();
-		p.rect(0, 0, 0.14 * width, height);
-		p.rect(0, 0, width, 0.08 * height);
-		p.rect(0, height, width, -0.33 * height);
-		p.rect(0.54 * width, 0, width, height);
+		const vidHeight = 0.55;
+		const vidWidth = (height * vidHeight * 4) / 3;
+		const vidLeft = 0.15;
+		const vidBottom = 0.35;
+		p.rect(0, 0, vidLeft * width, height);
+		p.rect(0, 0, width, (1 - vidBottom - vidHeight) * height);
+		p.rect(0, height, width, -vidBottom * height);
+		p.rect(vidLeft * width + vidWidth, 0, width, height);
 	} else {
 		p.fill(255);
 		p.background(0);

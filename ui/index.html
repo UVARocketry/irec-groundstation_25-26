@@ -20,12 +20,11 @@
         <script src="./common/ServerMessage.js" type="module"></script>
         <select
             id="cameraSelect"
-            style="position: absolute; left: 14%; bottom: 29%"
+            style="position: absolute; left: 15%; bottom: 29%"
         ></select>
         <video
             id="videoElement"
-            style="position: absolute; left: 14%; bottom: 33%; z-index: -1"
-            width="40%"
+            style="position: absolute; left: 15%; bottom: 35%; z-index: -1; height: 55%"
             autoplay
             muted
         ></video>
@@ -45,7 +44,7 @@
                     );
                     console.log(videoDevices);
                     cameraSelect.innerHTML = "";
-                    videoDevices.forEach((device) => {
+                    videoDevices.toReversed().forEach((device) => {
                         const option = document.createElement("option");
                         option.value = device.deviceId;
                         option.text =
