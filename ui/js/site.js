@@ -662,7 +662,7 @@ function draw() {
 		if (pos.x !== 0 && pos.y !== 0 && altBelowForReset === -1) {
 			pastPos.push(pos);
 		}
-		const w = 0.22;
+		const w = 0.2;
 		const x = width / height - 0.7;
 		const y = 0.27;
 		p.strokeWeight(0.001 * height);
