@@ -8,7 +8,7 @@ cd -
 
 cd $1
 
-ls **-dump | xargs rm
+ls **-dump | xargs rm || echo "no msgs"
 
 ls -d * | xargs -P 200 -I{}  ../parseMsg {}
 

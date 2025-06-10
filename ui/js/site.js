@@ -515,6 +515,9 @@ function draw() {
 		state.startState !== null &&
 		state.startState !== undefined
 	) {
+		if (state.i_timestamp == 163564) {
+			debugger;
+		}
 		ap = state.apogee - state.startState.vnPosZ;
 		ap *= mtoft;
 
@@ -575,7 +578,7 @@ function draw() {
 			const newquat = quatmult(quatmult(quat, dir), quatPrime);
 
 			// the y of the triangle
-			var z = -newquat.z;
+			var z = newquat.z;
 			var x = newquat.x;
 			angle = Math.acos(z);
 		}
@@ -659,7 +662,12 @@ function draw() {
 
 	// compass map display thing
 	{
-		if (pos.x !== 0 && pos.y !== 0 && altBelowForReset === -1) {
+		if (
+			pos.x !== 0 &&
+			pos.y !== 0 &&
+			altBelowForReset === -1 &&
+			pos.mag() < 10000
+		) {
 			pastPos.push(pos);
 		}
 		const w = 0.2;
@@ -811,21 +819,21 @@ function draw() {
 		msgCount = errorQueue.length;
 		const errorY = 0;
 		for (var i = 0; i < msgCount && i < errorQueue.length; i++) {
-			const m = errorQueue[errorQueue.length - 1 - i];
-			// m.left--;
-			var type = m.type + ":";
-			p.fill("#ff0000");
-			p.text(
-				type,
-				0.55 * height,
-				(errorY + mts * 1.28) * height + i * (mts * 1.01 * height),
-			);
-			p.fill(0);
-			p.text(
-				` ${m.device} ${m.subject} ${m.verb}`,
-				0.55 * height + p.textWidth(type),
-				(errorY + mts * 1.28) * height + i * (mts * 1.01 * height),
-			);
+			// const m = errorQueue[errorQueue.length - 1 - i];
+			// // m.left--;
+			// var type = m.type + ":";
+			// p.fill("#ff0000");
+			// p.text(
+			// 	type,
+			// 	0.55 * height,
+			// 	(errorY + mts * 1.28) * height + i * (mts * 1.01 * height),
+			// );
+			// p.fill(0);
+			// p.text(
+			// 	` ${m.device} ${m.subject} ${m.verb}`,
+			// 	0.55 * height + p.textWidth(type),
+			// 	(errorY + mts * 1.28) * height + i * (mts * 1.01 * height),
+			// );
 		}
 	}
 
@@ -962,11 +970,15 @@ function draw() {
 		velocityDial.draw();
 		accelerationDial.update(acc.mag());
 		accelerationDial.draw();
-		actualDeplDial.update(deplActual * 100);
+		// TODO: CHANGE THIS
+		actualDeplDial.update(0);
+		// actualDeplDial.update(deplActual * 100);
 		actualDeplDial.draw();
-		expectedDeplDial.update(deplExp * 100);
+		expectedDeplDial.update(0);
+		// expectedDeplDial.update(deplExp * 100);
 		expectedDeplDial.draw();
-		deploymentDiffDial.update(deplActual * 100 - deplExp * 100);
+		deploymentDiffDial.update(0);
+		// deploymentDiffDial.update(deplActual * 100 - deplExp * 100);
 		deploymentDiffDial.draw();
 
 		// show the raw values for velocity and acceleration
@@ -1002,7 +1014,7 @@ function draw() {
 		p.textSize(height * 0.025);
 		p.textAlign(p.CENTER);
 		const apStr = limDecimal(ap);
-		const expApStr = limDecimal(expAp);
+		const expApStr = limDecimal(9912);
 		const altStr = limDecimal(alt);
 		centerString(
 			apStr,

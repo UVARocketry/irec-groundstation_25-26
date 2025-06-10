@@ -10,8 +10,6 @@ import {
 	getState,
 	getEvent,
 	setAdd,
-	clearStartingState,
-	clearConnected,
 	resetInternalState,
 	setEvent,
 } from "./state.js";
@@ -21,11 +19,12 @@ import { Strings } from "./ansi.js";
 import { ServerMessage } from "../../common/ServerMessage.js";
 import { handleUiRequest } from "./command.js";
 import { port } from "../../common/web.js";
-import { FileLogReader } from "./fileLogReader.js";
-import { InputReader } from "./inputReader.js";
+import { FileLogReader } from "./readers/fileLogReader.js";
+import { InputReader } from "./readers/inputReader.js";
 import child_process from "node:child_process";
 import { log } from "./log.js";
-import { SerialPortReader } from "./serialportReader.js";
+import { SerialPortReader } from "./readers/serialportReader.js";
+import { DemoReader } from "./readers/demoReader.js";
 
 const wss = new WebSocketServer({ port: port, host: "localhost" });
 /**@type {InputReader}*/
@@ -68,7 +67,7 @@ export function broadcastEvent() {
 	broadcast(send);
 }
 
-const logReader = new FileLogReader(onUpdate, null);
+const logReader = new FileLogReader(onUpdate, null); //new DemoReader(onUpdate, null);
 
 /**
  * @param {boolean} v
