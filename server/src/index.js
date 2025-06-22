@@ -24,7 +24,7 @@ import { InputReader } from "./readers/inputReader.js";
 import child_process from "node:child_process";
 import { log } from "./log.js";
 import { SerialPortReader } from "./readers/serialportReader.js";
-import { DemoReader } from "./readers/demoReader.js";
+import { StdinReader } from "./readers/stdinReader.js";
 
 const wss = new WebSocketServer({ port: port, host: "localhost" });
 /**@type {InputReader}*/
@@ -108,19 +108,19 @@ export function getReader() {
 log(`${Strings.Ok}: Starting websocket server at ws://localhost:${port}`);
 
 var read1 = false;
-const procReader = new SerialPortReader(
+// const procReader = new SerialPortReader(
+// 	onUpdate,
+// 	"/dev/ttyACM0",
+// 	() => "../out_" + new Date().toISOString().slice(0, 19).replace("T", "_"),
+// );
+const procReader = new StdinReader(
 	onUpdate,
-	"/dev/ttyACM0",
+	"stderr",
+	"./run",
+	[],
+	"../../irec_25-26/lib",
 	() => "../out_" + new Date().toISOString().slice(0, 19).replace("T", "_"),
 );
-// const procReader = new StdinReader(
-//     onUpdate,
-//     "stderr",
-//     "./run",
-//     ["noinput"],
-//     "../../sac_24-25/lib",
-//     () => "../out_" + new Date().toISOString().slice(0, 19).replace("T", "_"),
-// );
 // const procReader = new FileUpdateReader(
 //     onUpdate,
 //     "cat.txt",

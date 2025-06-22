@@ -110,6 +110,7 @@ export class StdinReader extends InputReader {
 			);
 			return;
 		}
+		this.process.stdout.on("data", (v) => {});
 		stream.on("data", (v) => {
 			setRocketConnected(true);
 			/** @type {string[]} */

@@ -515,16 +515,17 @@ function draw() {
 		state.startState !== null &&
 		state.startState !== undefined
 	) {
+		state.startZ = state.startState.kalmanPosZ;
 		if (state.i_timestamp == 163564) {
 			debugger;
 		}
-		ap = state.apogee - state.startState.vnPosZ;
+		ap = state.apogee - state.startState.kalmanPosZ;
 		ap *= mtoft;
 
-		expAp = state.predictedApogee - state.startState.vnPosZ;
+		expAp = state.predictedApogee - state.startState.kalmanPosZ;
 		expAp *= mtoft;
 
-		alt = state.vnPosZ - state.startState.vnPosZ;
+		alt = state.kalmanPosZ - state.startState.kalmanPosZ;
 		alt *= mtoft;
 
 		altitudeGraph.addDatapoint(ap, [expAp]);
@@ -971,14 +972,14 @@ function draw() {
 		accelerationDial.update(acc.mag());
 		accelerationDial.draw();
 		// TODO: CHANGE THIS
-		actualDeplDial.update(0);
-		// actualDeplDial.update(deplActual * 100);
+		// actualDeplDial.update(0);
+		actualDeplDial.update(deplActual * 100);
 		actualDeplDial.draw();
-		expectedDeplDial.update(0);
-		// expectedDeplDial.update(deplExp * 100);
+		// expectedDeplDial.update(0);
+		expectedDeplDial.update(deplExp * 100);
 		expectedDeplDial.draw();
-		deploymentDiffDial.update(0);
-		// deploymentDiffDial.update(deplActual * 100 - deplExp * 100);
+		// deploymentDiffDial.update(0);
+		deploymentDiffDial.update(deplActual * 100 - deplExp * 100);
 		deploymentDiffDial.draw();
 
 		// show the raw values for velocity and acceleration
@@ -1014,7 +1015,7 @@ function draw() {
 		p.textSize(height * 0.025);
 		p.textAlign(p.CENTER);
 		const apStr = limDecimal(ap);
-		const expApStr = limDecimal(9912);
+		const expApStr = limDecimal(expAp);
 		const altStr = limDecimal(alt);
 		centerString(
 			apStr,
