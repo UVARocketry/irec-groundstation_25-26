@@ -9,6 +9,8 @@ import {
 import { port } from "../../common/web.js";
 import { altitudeGraph } from "./site.js";
 
+var host = null;
+
 /** @type {WebSocket?} */
 var ws = null;
 
@@ -70,22 +72,31 @@ function onWsMessage(event) {
 }
 
 export function wsTryConnect() {
-	window.setTimeout(function () {
+	window.setTimeout(function() {
 		try {
 			if (ws === null || ws.readyState === ws.CLOSED) {
-				var url = "ws://localhost:" + port;
+				if (host === null) {
+					const val = window.prompt("Please input the websocket host (leave blank if same host as this site)");
+
+					if (val === null || val === "") {
+						host = window.location.hostname;
+					} else {
+						host = val;
+					}
+				}
+				var url = "ws://" + host + ":" + port;
 				console.log("Attempting connection to " + url);
 				ws = new WebSocket(url);
 				ws.onmessage = onWsMessage;
 				ws.binaryType = "blob";
-				ws.onopen = function () {
+				ws.onopen = function() {
 					console.log("Connected");
 					altitudeGraph.inputData([], [[]]);
 
 					if (ws === null) {
 						return;
 					}
-					ws.onclose = function () {
+					ws.onclose = function() {
 						console.log("Connection gone");
 						currentEvent = "disconnected";
 					};

@@ -26,7 +26,7 @@ import { log } from "./log.js";
 import { SerialPortReader } from "./readers/serialportReader.js";
 import { StdinReader } from "./readers/stdinReader.js";
 
-const wss = new WebSocketServer({ port: port, host: "localhost" });
+const wss = new WebSocketServer({ port: port });
 /**@type {InputReader}*/
 var reader;
 var useStdin = false;
