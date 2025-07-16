@@ -5,39 +5,39 @@
 /** @import { LogItem } from "./LogItem" */
 
 export class RenameResponse {
-    /**
-     * @type {"name"|"choice"}
-     */
-    type = "name";
-    /**
-     * @type {string[]}
-     */
-    data = [];
+	/**
+	 * @type {"name"|"choice"}
+	 */
+	type = "name";
+	/**
+	 * @type {string[]}
+	 */
+	data = [];
 }
 
 export class ServerMessage {
-    /** @type EventType */
-    type = "event";
+	/** @type EventType */
+	type = "event";
 
-    /** @type (string|LogItem|RenameResponse|RocketMessage) */
-    data = "";
+	/** @type (string|LogItem|RenameResponse|RocketMessage) */
+	data = "";
 
-    /**
-     * @param {EventType} type
-     * @param {string|LogItem|RenameResponse|RocketMessage} data
-     */
-    constructor(type, data) {
-        this.type = type;
-        this.data = data;
-    }
+	/**
+	 * @param {EventType} type
+	 * @param {string|LogItem|RenameResponse|RocketMessage} data
+	 */
+	constructor(type, data) {
+		this.type = type;
+		this.data = data;
+	}
 }
 
 export class RocketMessage {
-    /** @type string */
-    type = "";
-    device = "";
-    subject = "";
-    verb = "";
-    time = 0;
-    left = 0;
+	/** @type string */
+	type = "";
+	device = "";
+	subject = "";
+	verb = "";
+	time = 0;
+	left = 0;
 }

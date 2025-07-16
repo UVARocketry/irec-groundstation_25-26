@@ -1,32 +1,47 @@
+// this file holds all the state that gets sent in to the groundstation ui
 import { broadcastState, getReader } from "./index.js";
 import { AddedData } from "../../common/AddedData.js";
 import { LogItem } from "../../common/LogItem.js";
 
+// the first state gotten from the reader
+// (there for the purposes of determining stuff like travel distance)
 /* @type {LogItem} */
 var startingState = null;
+
+// the current rocket state
 /* @type {object} */
 var currentState = new LogItem();
+
+// the rocket timestamp that the launch happened at
 var launchTime = 0;
 
+// extra data added by the server to provide info about the rocket
 var addedData = new AddedData();
 
+// the current rocket state machine state
 /** @type {string} */
 var currentEvent = "offline";
 
+// a timer. if it finishes before we get a rocket message then the rocket
+// is deemed "disconnected". gets restarted when we get a message to not mistakenly
+// set the rocket as "disconnected" when it isnt
 /** @type {NodeJS.Timeout?} */
 var connectionTimeout = null;
 
+// Returns the current state machine state of the rocket
 /** @return {string} */
 export function getEvent() {
 	return currentEvent;
 }
 
+// Resets this module's state variables
 export function resetInternalState() {
 	clearStartingState();
 	clearConnected();
 	currentState = new LogItem();
 }
 
+// Sets the connection status of an on-rocket device (eg accelerometer)
 /**
  * @param item {string}
  * @param c {boolean}
@@ -39,12 +54,15 @@ export function setConnected(item, c) {
 			break;
 		}
 	}
+	// if this device has not been encountered before, add it to our connection list
 	if (i === addedData.connected.length) {
 		addedData.connected.push([item, c]);
 	}
+	// we need to update the ui's about our new state
 	broadcastState();
 }
 
+// clears the devices connected (for when changing the reader)
 export function clearConnected() {
 	addedData.connected = [];
 }

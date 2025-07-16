@@ -1,3 +1,5 @@
+// Exports a function to handle a request from the UI
+// The request is expected to be encoded as a JSON string that follows the type `ServerMessage` 
 import { ServerMessage } from "../../common/ServerMessage.js";
 import { Strings } from "./ansi.js";
 import {

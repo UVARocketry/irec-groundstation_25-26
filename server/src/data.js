@@ -1,4 +1,4 @@
-// This file exists entirely to parse a Message payload and return an action to be done
+// This file exports a function (parseMessage) that takes in a `Message` parameter and parses out the payload to set global variables
 import { Message, MessageType } from "./message.js";
 
 import { Strings } from "./ansi.js";
@@ -25,7 +25,7 @@ export function clearSysTime() {
 
 /**
  * @param msg {Message}
- * @return {EventType|""}
+ * @return {EventType|""} What kind of data was sent
  */
 export function parseMessage(msg) {
 	if (msg.version !== 0) {
