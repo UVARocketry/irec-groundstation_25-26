@@ -1,9 +1,3 @@
-Okay, thank you for those clarifications! I've incorporated your answers and added the requested notes.
-
-Here's the updated and finalized version of the UI Communication Protocol:
-
-***
-
 # UI Communication Protocol
 
 This document defines the communication protocol between a ground station User Interface (UI) and a server. It outlines the fundamental principles, connection procedures, and message structures for effective data exchange.
