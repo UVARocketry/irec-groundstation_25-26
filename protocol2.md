@@ -90,36 +90,36 @@ These fields are transmitted directly from the rocket's onboard systems:
 *   `predictedApogee` (number): The predicted apogee (highest point) of the rocket. Unit is in meters (m).
 *   `mainBat` (number): Main PCB battery level as a percentage (%).
 *   `servoBat` (number): Servo battery level as a percentage (%).
-*   `vnAccX` (number): VectorNav acceleration along the X-axis in meters per second squared (\( \text{m/s}^2 \)).
-*   `vnAccY` (number): VectorNav acceleration along the Y-axis in meters per second squared (\( \text{m/s}^2 \)).
-*   `vnAccZ` (number): VectorNav acceleration along the Z-axis in meters per second squared (\( \text{m/s}^2 \)).
-*   `vnGyroX` (number): VectorNav gyroscope reading along the X-axis in radians per second (\( \text{rad/s} \)).
-*   `vnGyroY` (number): VectorNav gyroscope reading along the Y-axis in radians per second (\( \text{rad/s} \)).
-*   `vnGyroZ` (number): VectorNav gyroscope reading along the Z-axis in radians per second (\( \text{rad/s} \)).
+*   `vnAccX` (number): VectorNav acceleration along the X-axis in meters per second squared ($m/s^2$).
+*   `vnAccY` (number): VectorNav acceleration along the Y-axis in meters per second squared ($m/s^2$).
+*   `vnAccZ` (number): VectorNav acceleration along the Z-axis in meters per second squared ($m/s^2$).
+*   `vnGyroX` (number): VectorNav gyroscope reading along the X-axis in radians per second ($rad/s$).
+*   `vnGyroY` (number): VectorNav gyroscope reading along the Y-axis in radians per second ($rad/s$).
+*   `vnGyroZ` (number): VectorNav gyroscope reading along the Z-axis in radians per second ($rad/s$).
 *   `vnMagX` (number): VectorNav magnetometer reading along the X-axis. **Unit Undefined.**
 *   `vnMagY` (number): VectorNav magnetometer reading along the Y-axis. **Unit Undefined.**
 *   `vnMagZ` (number): VectorNav magnetometer reading along the Z-axis. **Unit Undefined.**
-*   `obAccX` (number): Onboard IMU acceleration along the X-axis in meters per second squared (\( \text{m/s}^2 \)).
-*   `obAccY` (number): Onboard IMU acceleration along the Y-axis in meters per second squared (\( \text{m/s}^2 \)).
-*   `obAccZ` (number): Onboard IMU acceleration along the Z-axis in meters per second squared (\( \text{m/s}^2 \)).
-*   `obGyroX` (number): Onboard IMU gyroscope reading along the X-axis in radians per second (\( \text{rad/s} \)).
-*   `obGyroY` (number): Onboard IMU gyroscope reading along the Y-axis in radians per second (\( \text{rad/s} \)).
-*   `obGyroZ` (number): Onboard IMU gyroscope reading along the Z-axis in radians per second (\( \text{rad/s} \)).
+*   `obAccX` (number): Onboard IMU acceleration along the X-axis in meters per second squared ($m/s^2$).
+*   `obAccY` (number): Onboard IMU acceleration along the Y-axis in meters per second squared ($m/s^2$).
+*   `obAccZ` (number): Onboard IMU acceleration along the Z-axis in meters per second squared ($m/s^2$).
+*   `obGyroX` (number): Onboard IMU gyroscope reading along the X-axis in radians per second ($rad/s$).
+*   `obGyroY` (number): Onboard IMU gyroscope reading along the Y-axis in radians per second ($rad/s$).
+*   `obGyroZ` (number): Onboard IMU gyroscope reading along the Z-axis in radians per second ($rad/s$).
 *   `kalmanPosX` (number): Kalman filter estimated position along the X-axis in meters (m).
 *   `kalmanPosY` (number): Kalman filter estimated position along the Y-axis in meters (m).
 *   `kalmanPosZ` (number): Kalman filter estimated position along the Z-axis in meters (m).
-*   `kalmanVelX` (number): Kalman filter estimated velocity along the X-axis in meters per second (\( \text{m/s} \)).
-*   `kalmanVelY` (number): Kalman filter estimated velocity along the Y-axis in meters per second (\( \text{m/s} \)).
-*   `kalmanVelZ` (number): Kalman filter estimated velocity along the Z-axis in meters per second (\( \text{m/s} \)).
+*   `kalmanVelX` (number): Kalman filter estimated velocity along the X-axis in meters per second ($m/s$).
+*   `kalmanVelY` (number): Kalman filter estimated velocity along the Y-axis in meters per second ($m/s$).
+*   `kalmanVelZ` (number): Kalman filter estimated velocity along the Z-axis in meters per second ($m/s$).
 *   `vnPosX` (number): VectorNav reported position along the X-axis in meters (m).
 *   `vnPosY` (number): VectorNav reported position along the Y-axis in meters (m).
 *   `vnPosZ` (number): VectorNav reported position along the Z-axis in meters (m).
 *   `vnGpsX` (number): VectorNav GPS latitude in degrees (deg).
 *   `vnGpsY` (number): VectorNav GPS longitude in degrees (deg).
 *   `vnGpsZ` (number): VectorNav GPS altitude in meters (m).
-*   `vnVelX` (number): VectorNav velocity along the X-axis in meters per second (\( \text{m/s} \)).
-*   `vnVelY` (number): VectorNav velocity along the Y-axis in meters per second (\( \text{m/s} \)).
-*   `vnVelZ` (number): VectorNav velocity along the Z-axis in meters per second (\( \text{m/s} \)).
+*   `vnVelX` (number): VectorNav velocity along the X-axis in meters per second ($m/s$).
+*   `vnVelY` (number): VectorNav velocity along the Y-axis in meters per second ($m/s$).
+*   `vnVelZ` (number): VectorNav velocity along the Z-axis in meters per second ($m/s$).
 *   `vnYPRX` (number): VectorNav Yaw angle in degrees (deg).
 *   `vnYPRY` (number): VectorNav Pitch angle in degrees (deg).
 *   `vnYPRZ` (number): VectorNav Roll angle in degrees (deg).
