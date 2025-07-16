@@ -21,6 +21,8 @@ Clients are designed to be "stateless." This implies that all data rendered by t
 
 The stateless nature of the client is paramount for system robustness. It ensures that the UI can be closed, refreshed, or unexpectedly terminated without losing data integrity, as the displayed information is always a direct reflection of the current server state.
 
+Clients *can* hold some state as long as it is unnecesary for the look of the UI. The current ground station draws an altitude graph which must use some state history to be drawn
+
 ## 2. Connection Procedure
 
 Establishing a connection involves setting up a WebSocket connection with the server.
