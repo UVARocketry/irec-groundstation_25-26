@@ -1,8 +1,0 @@
-agaafjhohfhlcacchegjgngfccdkcadacmcacchehjhagfccdkcaccejgogggpcccmccgegfhggjgdgfccdkcacceggmgbhdgifdhagjcccmcacchdhfgcgkgfgdheccdkcaccejgogjhecccmcacchggfhcgcccdkcaccfdhfgdgdgfgfgegfgecchn
-Len: 188
-
-main.MsgHeader{ .version = 0, .type = main.MsgType.Message, .length = 149, .checksumLeft = 126, .checksumRight = 117 }
-Lengths: 94 154
-
-Body data:
-{ "time": 0, "type": "Info","device": "FlashSpi", "subject": "Init", "verb": "Succeeded"}
