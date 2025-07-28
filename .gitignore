@@ -4,4 +4,6 @@ zig-out/
 
 out**/**-dump
 
+out**
+
 log
