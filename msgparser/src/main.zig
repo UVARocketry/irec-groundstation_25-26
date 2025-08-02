@@ -277,10 +277,10 @@ pub fn main() !void {
     while (i < buf.items.len) {
         const lb: u8 = ((buf.items[i] - 'a') << 4) & 0xf0;
         const rb: u8 = (buf.items[i + 1] - 'a') & 0x0f;
-        if (i == 4 or i == 2) {
-            try stdout.print("{b:0>4}\n", .{lb});
-            try stdout.print("{b:0>4}\n", .{rb});
-        }
+        // if (i == 4 or i == 2) {
+        //     try stdout.print("{b:0>4}\n", .{lb});
+        //     try stdout.print("{b:0>4}\n", .{rb});
+        // }
         const byte = lb + rb;
         // if (i < 1)
         //     (lb >> 4) + (rb << 4)
@@ -297,7 +297,7 @@ pub fn main() !void {
     header.length = ((header.length & 0xff00) >> 8) + ((header.length & 0x00ff) << 8);
     if (isParse) {
         try stdout.print("{}\n", .{header});
-        try stdout.print("{b:0>16}\n", .{header.length});
+        // try stdout.print("{b:0>16}\n", .{header.length});
         try stdout.print("Lengths: {} {}\n", .{ actualData.items.len, header.length + 5 });
         const body = actualData.items[5..];
         var j: u32 = 0;
