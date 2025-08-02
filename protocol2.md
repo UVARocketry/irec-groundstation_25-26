@@ -205,6 +205,8 @@ This message is sent by the server in response to a `getRenameData` command. It 
 }
 ```
 
+**Note**: Naming the subfields `type` and `data` is confusing. For next year, please consider a new name
+
 ### 4.5. `rename`
 
 **Direction:** UI to Server
