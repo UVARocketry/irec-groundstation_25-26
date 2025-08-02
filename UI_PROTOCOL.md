@@ -1,177 +1,189 @@
 # UI Communication Protocol
 
-This document outlines the protocol for communications between a ground station ui and server
+This document defines the communication protocol between a ground station User Interface (UI) and a server. It outlines the fundamental principles, connection procedures, and message structures for effective data exchange.
 
-## Basics
+## 1. Core Concepts
 
-### Vocabulary
+### 1.1. Vocabulary
 
-In this document:
+For the purpose of this document, the following terms are defined:
 
-- "client" refers to a process that renders the data (eg a webpage or a window). This is the actual thing that people see for a groundstation
-- "server" refers to the process that sends data to a client to be rendered
+*   **Client**: Refers to the process responsible for rendering data, such as a web application or a desktop window. This represents the visual interface observed by the user.
+*   **Server**: Refers to the backend process that transmits data to a client for rendering.
 
-### Communcation Method
+### 1.2. Communication Method
 
-All communications happen over a single websocket connection. If the websocket is disconnected, clients must reconnect
+All communication between the client and server is conducted over a single [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) connection. Clients are responsible for re-establishing the connection if the WebSocket is disconnected.
 
-### Stateless
+### 1.3. Stateless Client Design
 
-Clients should be "stateless". This means that all data rendered should be data received from the server in the last server message. Clients should not try to keep track of how a datapoint changes over time or some other thing that requires to keep a history of past messages.
+Clients are designed to be "stateless." This implies that all data rendered by the client should be derived solely from the most recent message received from the server. Clients **must not** attempt to maintain a historical record of data changes or any state that requires referencing past messages.
 
-Statelessness is extremely important for robustness because it means that the ui page can be closed, refreshed, etc and the data presented is the same
+The stateless nature of the client is paramount for system robustness. It ensures that the UI can be closed, refreshed, or unexpectedly terminated without losing data integrity, as the displayed information is always a direct reflection of the current server state.
 
-## Connecting
+Clients *can* hold some state as long as it is unnecesary for the look of the UI. The current ground station draws an altitude graph which must use some state history to be drawn
 
-Connecting requires setting up a websocket connection with the server. The actual path to connect to is `ws://<host>:<port>`. If the client is a webpage, the host can be generally (but not always) assumed to be the same host from which the page is from (`window.location.hostname`). 
+## 2. Connection Procedure
 
-The port, as of now, is 42069.
+Establishing a connection involves setting up a WebSocket connection with the server.
 
-An example of this is: `ws://locahost:42069`
+*   **Connection Path**: `ws://<host>:<port>`
+*   **Host**: For web-based clients, the host can generally be assumed to be the same as the originating webpage's host (`window.location.hostname`). However, this is not universally guaranteed and may vary based on deployment configuration.
+*   **Port**: Currently, the designated port for WebSocket connections is `42069`.
 
-## Message layout
+**Example:** `ws://localhost:42069`
 
-Messages are sent as a JSON string with two keys: `type` and `data`
+## 3. Message Structure
 
-The `type` field is one of:
+All messages exchanged between the client and server are transmitted as JSON strings. Each message must contain two primary keys: `type` and `data`.
 
-- "event"
-- "state"
-- "command"
-- "renameResponse"
-- "rename"
-- "message"
+*   **`type` (string)**: Specifies the category or purpose of the message.
+    *   Valid values: `"event"`, `"state"`, `"command"`, `"renameResponse"`, `"rename"`, `"message"`.
+*   **`data` (any)**: The content of the message, whose structure and value depend on the `type` field.
 
-The value of the `data` field changes depending on what the value of the `type` field
-
-An example message would look like:
+**Example Message Format:**
 
 ```json
-{ 
+{
   "type": "event",
-  "data": ...,
+  "data": "..."
 }
 ```
 
-## Message Types
+## 4. Message Types
 
-### `event`
+This section details the various message types and their specific structures.
 
-These messages are sent from the server to the ui
+### 4.1. `event`
 
-If `type` is "event", then the data field will contain a string that contains the current state of the rocket state machine. The server sets the event to be "offline" if no reader is connected and "waiting" if the rocket is initializing. UIs are allowed to provide their default state value if they have not received an `event` message yet
+**Direction:** Server to UI
 
-Example:
+This message type conveys the current state of the rocket's state machine.
+
+*   **`data` (string)**: A string representing the current state.
+    *   The server sets the `data` to `"offline"` if no data reader is connected.
+    *   The server sets the `data` to `"waiting"` if the rocket is undergoing initialization.
+*   **Client Behavior**: UIs are permitted to display a default state value if an `event` message has not yet been received.
+
+**Example:**
 
 ```json
-{ 
+{
   "type": "event",
   "data": "AirbrakesDeploy"
 }
 ```
 
-### `state`
+### 4.2. `state`
 
-These messages are sent from the server to the ui
+**Direction:** Server to UI
 
-This is the message that contains all of the data to be rendered by the ui. The data field is an object. Most keys of the object are data sent directly from the rocket, a few keys are added by the server.
+This message is the primary channel for transmitting all data intended for rendering by the UI. The `data` field is a JSON object. Most keys within this object represent data directly sourced from the rocket, while a few are added by the server.
 
-The fields from the rocket are:
+#### 4.2.1. Rocket-Sourced Fields
 
-- `i_timestamp` (number): The number of milliseconds since the board was turned on
-- `baro` (number): The barometer reading pressure in Pa
-- `baroTemperature` (number): The barometer temperature (C)
-- `predictedApogee` (number): The predicted apogee of the rocket
-- `mainBat` (number): The main pcb battery level (pct)
-- `servoBat` (number): The servo battery level (pct)
-- `vnAccX` (number): The acceleration of the vectornav (in m/s)
-- `vnAccY` (number): The acceleration of the vectornav (in m/s)
-- `vnAccZ` (number): The acceleration of the vectornav (in m/s)
-- `vnGyroX` (number): The gyro reading of the vectornav (in rad/s)
-- `vnGyroY` (number): The gyro reading of the vectornav (in rad/s)
-- `vnGyroZ` (number): The gyro reading of the vectornav (in rad/s)
-- `vnMagX` (number): The vectornav magnetometer reading (in gauss)
-- `vnMagY` (number): The vectornav magnetometer reading (in gauss)
-- `vnMagZ` (number): The vectornav magnetometer reading (in gauss)
-- `obAccX` (number): The acceleration of the onboard imu (in m/s)
-- `obAccY` (number): The acceleration of the onboard imu (in m/s)
-- `obAccZ` (number): The acceleration of the onboard imu (in m/s)
-- `obGyroX` (number): The gyro reading of the onboard imu (in rad/s)
-- `obGyroY` (number): The gyro reading of the onboard imu (in rad/s)
-- `obGyroZ` (number): The gyro reading of the onboard imu (in rad/s)
-- `kalmanPosX` (number): The position from the kalman filter (in m)
-- `kalmanPosY` (number): The position from the kalman filter (in m)
-- `kalmanPosZ` (number): The position from the kalman filter (in m)
-- `kalmanVelX` (number): The velocity from the kalman filter (in m/s)
-- `kalmanVelY` (number): The velocity from the kalman filter (in m/s)
-- `kalmanVelZ` (number): The velocity from the kalman filter (in m/s)
-- `vnPosX` (number): The position from the vectornav (in m)
-- `vnPosY` (number): The position from the vectornav (in m)
-- `vnPosZ` (number): The position from the vectornav (in m)
-- `vnGpsX` (number): The gps from the vectornav (in deg)
-- `vnGpsY` (number): The gps from the vectornav (in deg)
-- `vnGpsZ` (number): The gps from the vectornav (in m)
-- `vnVelX` (number): The velocity from the vectornav (in m/s)
-- `vnVelY` (number): The velocity from the vectornav (in m/s)
-- `vnVelZ` (number): The velocity from the vectornav (in m/s)
-- `vnYPRX` (number): The yaw from the vectornav (in deg)
-- `vnYPRY` (number): The pitch from the vectornav (in deg)
-- `vnYPRZ` (number): The roll from the vectornav (in deg)
-- `orientationX` (number): The orientation quaternion
-- `orientationY` (number): The orientation quaternion
-- `orientationZ` (number): The orientation quaternion
-- `orientationW` (number): The orientation quaternion
-- `apogee` (number): The highest point the rocket has reached (in m)
-- `pidDeployment` (number): The expected deployment of the airbrakes (pct)
-- `actualDeployment` (number): The actual deployment of the airbrakes (pct)
-- `rssi` (number): The groundstation pcb radio's rssi
+These fields are transmitted directly from the rocket's onboard systems:
 
-In the future, the number of fields sent by the rocket will drastically decrease due to radio requirements
+*   `i_timestamp` (number): Milliseconds since the board was powered on.
+*   `baro` (number): Barometric pressure reading in Pascals (Pa).
+*   `baroTemperature` (number): Barometer temperature in degrees Celsius (C).
+*   `predictedApogee` (number): The predicted apogee (highest point) of the rocket. Unit is in meters (m).
+*   `mainBat` (number): Main PCB battery level as a percentage (%).
+*   `servoBat` (number): Servo battery level as a percentage (%).
+*   `vnAccX` (number): VectorNav acceleration along the X-axis in meters per second squared ($m/s^2$).
+*   `vnAccY` (number): VectorNav acceleration along the Y-axis in meters per second squared ($m/s^2$).
+*   `vnAccZ` (number): VectorNav acceleration along the Z-axis in meters per second squared ($m/s^2$).
+*   `vnGyroX` (number): VectorNav gyroscope reading along the X-axis in radians per second ($rad/s$).
+*   `vnGyroY` (number): VectorNav gyroscope reading along the Y-axis in radians per second ($rad/s$).
+*   `vnGyroZ` (number): VectorNav gyroscope reading along the Z-axis in radians per second ($rad/s$).
+*   `vnMagX` (number): VectorNav magnetometer reading along the X-axis Gauss
+*   `vnMagY` (number): VectorNav magnetometer reading along the Y-axis Gauss
+*   `vnMagZ` (number): VectorNav magnetometer reading along the Z-axis Gauss
+*   `obAccX` (number): Onboard IMU acceleration along the X-axis in meters per second squared ($m/s^2$).
+*   `obAccY` (number): Onboard IMU acceleration along the Y-axis in meters per second squared ($m/s^2$).
+*   `obAccZ` (number): Onboard IMU acceleration along the Z-axis in meters per second squared ($m/s^2$).
+*   `obGyroX` (number): Onboard IMU gyroscope reading along the X-axis in radians per second ($rad/s$).
+*   `obGyroY` (number): Onboard IMU gyroscope reading along the Y-axis in radians per second ($rad/s$).
+*   `obGyroZ` (number): Onboard IMU gyroscope reading along the Z-axis in radians per second ($rad/s$).
+*   `kalmanPosX` (number): Kalman filter estimated position along the X-axis in meters (m).
+*   `kalmanPosY` (number): Kalman filter estimated position along the Y-axis in meters (m).
+*   `kalmanPosZ` (number): Kalman filter estimated position along the Z-axis in meters (m).
+*   `kalmanVelX` (number): Kalman filter estimated velocity along the X-axis in meters per second ($m/s$).
+*   `kalmanVelY` (number): Kalman filter estimated velocity along the Y-axis in meters per second ($m/s$).
+*   `kalmanVelZ` (number): Kalman filter estimated velocity along the Z-axis in meters per second ($m/s$).
+*   `vnPosX` (number): VectorNav reported position along the X-axis in meters (m).
+*   `vnPosY` (number): VectorNav reported position along the Y-axis in meters (m).
+*   `vnPosZ` (number): VectorNav reported position along the Z-axis in meters (m).
+*   `vnGpsX` (number): VectorNav GPS latitude in degrees (deg).
+*   `vnGpsY` (number): VectorNav GPS longitude in degrees (deg).
+*   `vnGpsZ` (number): VectorNav GPS altitude in meters (m).
+*   `vnVelX` (number): VectorNav velocity along the X-axis in meters per second ($m/s$).
+*   `vnVelY` (number): VectorNav velocity along the Y-axis in meters per second ($m/s$).
+*   `vnVelZ` (number): VectorNav velocity along the Z-axis in meters per second ($m/s$).
+*   `vnYPRX` (number): VectorNav Yaw angle in degrees (deg).
+*   `vnYPRY` (number): VectorNav Pitch angle in degrees (deg).
+*   `vnYPRZ` (number): VectorNav Roll angle in degrees (deg).
+*   `orientationX` (number): Quaternion X component for rocket orientation.
+*   `orientationY` (number): Quaternion Y component for rocket orientation.
+*   `orientationZ` (number): Quaternion Z component for rocket orientation.
+*   `orientationW` (number): Quaternion W component for rocket orientation.
+*   `apogee` (number): The highest altitude reached by the rocket during its flight, in meters (m).
+*   `pidDeployment` (number): The expected deployment percentage of the airbrakes (%).
+*   `actualDeployment` (number): The actual deployment percentage of the airbrakes (%).
+*   `rssi` (number): Received Signal Strength Indicator (RSSI) of the ground station PCB radio.
 
-The server adds the fields:
+**Note on Future Changes:** The number of fields directly sent by the rocket is expected to significantly decrease in the future due to radio communication bandwidth constraints.
 
-- `rocketConnected` (boolean): Set to true when the rocket is actively communicating with the server
-- `readerConnected` (boolean): Set to true when a reader is connected to the server. A reader is the part of the server that actively listens to the rocket for data. `readerConnected` *does not* imply that the rocket is connected, just that the server is able to receive data from the rocket
-- `readerType` (string): This returns the type of the reader that the rocket is using. Currently it is either "DEBUG" (for a debug run) and "LIVE" (for when getting data from the actual rocket). These specific values will definitely change in the future
-- `connected` (`[string, boolean][]`): This contains a list of all the rocket subsystems that are running and whether they are running or not. This is useful for debugging if a sensor failed to connect or something
-- `startState` (`LogItem?`): This contains the original state of the rocket and can be used to determine things like travel distance and stuff. Currently this field is broken because it contains the value of the state *before* the gps comes alive. It should contain the value of the state *since* the gps comes alive so that clients can use that to compute gps offsets and determine how far the rocket has moved from launchpad (though can also determin that with kalmanPos or vnPos)
-- `timeSinceLaunch` (number): This field contains the number of ms since the rocket launched. Before launch it is equal to the `i_timestamp` field
+#### 4.2.2. Server-Added Fields
 
-### `command`
+These fields are augmented by the server before being sent to the client:
 
-These messages are sent from the ui to the server
+*   `rocketConnected` (boolean): `true` if the rocket is actively communicating with the server; otherwise, `false`.
+*   `readerConnected` (boolean): `true` if a data reader (e.g., serial port, log file) is connected to the server; otherwise, `false`. A reader is the part of the server that actively listens to the rocket for data. `readerConnected` *does not* imply that the rocket is connected, just that the server is able to receive data from the rocket
+*   `readerType` (string): Indicates the type of data reader currently in use.
+    *   Currently: `"DEBUG"` (for debug runs) or `"LIVE"` (for live rocket data). These specific values are subject to change in future revisions.
+*   `connected` (`[string, boolean][]`): An array of tuples, where each tuple represents a rocket subsystem (as a string) and its connection status. This is useful for debugging sensor failures or connection issues. The string type can be any arbitrary identifier for a subsystem.
+*   `startState` (`LogItem?`): Represents the initial state of the rocket. This can be used for calculations like total travel distance.
+    *   **Note:** A `LogItem` refers to the collection of rocket-sourced fields found within a `state` message (`i_timestamp` through `rssi`).
+    *   **Known Issue:** Currently, this field contains the state *before* the GPS becomes active, which may lead to inaccuracies in initial position determination.
+*   `timeSinceLaunch` (number): The number of milliseconds elapsed since the rocket launched (used to determine the amount of time the rocket spent in the air). Before launch, this field is equal to `i_timestamp`, and not 0.
 
-A command is a message that the ui sends to the server to get it to change some internal state.
+### 4.3. `command`
 
-The valid commands are:
+**Direction:** UI to Server
 
-- `restart`: Restarts the reader that the server is connected to
-- `switch`: Switches the reader being used (from LIVE to DEBUG or vice versa)
-- `getRenameData`: Asks the server to reply with a `renameResponse` to determine valid name changes for the reader. Name changes can be used to switch the serial port that the groundstation pcb is connected to or switch the folder path of the file log reader
+A `command` message is sent by the UI to request a change in the server's internal state or to trigger a specific action.
 
-Example:
+*   **`data` (string)**: The specific command to be executed.
+    *   **Valid Commands:**
+        *   `"restart"`: Restarts the data reader connected to the server.
+        *   `"switch"`: Toggles the active data reader between "LIVE" and "DEBUG" modes (or equivalent types).
+        *   `"getRenameData"`: Requests the server to respond with a `renameResponse` message, providing information about valid name changes for the active reader. Name changes typically relate to switching the serial port connected to the ground station PCB or changing the folder path for a file log reader.
+
+**Example:**
 
 ```json
 {
   "type": "command",
-  "data": "restart",
+  "data": "restart"
 }
 ```
 
-### `renameResponse`
+### 4.4. `renameResponse`
 
-These messages are sent from the server to the ui
+**Direction:** Server to UI
 
-This is the message that is sent in response to a `getRenameData` command message. It has two fields:
+This message is sent by the server in response to a `getRenameData` command. It provides options for renaming or reconfiguring the data reader.
 
-- `type`: This is either `"name"` or `"choice"`. 
-- `data`: This is a string array
+*   **`data` (object)**: Contains details about the renaming options.
+    *   **`type` (string)**: Specifies the nature of the renaming option.
+        *   `"name"`: Indicates that the user can provide any arbitrary name for the reader.
+        *   `"choice"`: Indicates that the user must select one of the predefined names provided in the `data` array.
+    *   **`data` (string[])**: An array of strings.
+        *   If `type` is `"name"`, this array will be empty.
+        *   If `type` is `"choice"`, this array will list the allowed names for the reader.
 
-If `type` is `name`, then the user can choose any name they want
-
-If `type` is `choice`, then the user must choose one of the allowed names. The allowed names are listed in the `data` field
-
-Examples:
+**Examples:**
 
 ```json
 {
@@ -188,43 +200,48 @@ Examples:
   "type": "renameResponse",
   "data": {
     "type": "choice",
-    "data": ["name1", "name2", "name3"]
+    "data": ["/dev/ttyUSB0", "/dev/ttyUSB1", "LogFolder_Run1"]
   }
 }
 ```
 
-### `rename`
+**Note**: Naming the subfields `type` and `data` is confusing. For next year, please consider a new name
 
-These messages are sent from the ui to the server
+### 4.5. `rename`
 
-This message requests a reader to be renamed. The `data` field is a name string. 
+**Direction:** UI to Server
 
-Example:
+This message is sent by the UI to request that the active data reader be renamed or reconfigured.
+
+*   **`data` (string)**: The new name or identifier for the reader. This value must correspond to the options provided by a preceding `renameResponse` message.
+
+**Example:**
 
 ```json
 {
   "type": "rename",
-  "data": "name1",
+  "data": "/dev/ttyUSB0"
 }
 ```
 
-### `message`
+### 4.6. `message`
 
-These messages are sent from the server to the ui.
+**Direction:** Server to UI
 
-They are messages from the rocket. They contain six fields: 
+These messages originate from the rocket and are forwarded by the server to the UI. They typically convey status, errors, or significant events from onboard systems.
 
-- `type` (string): The type of the message being sent (eg `Error` or `Success`)
-- `device` (string): The device that the message is being sent about (eg `VectorNav`)
-- `subject` (string): What the message is about (eg `Initialization`)
-- `verb` (string): What happened (eg `Failed` or `Succeeded`)
-- `time` (number): The rocket program time that the message was sent at
-- `left` (number): This field is expected to be set by the ui to track how long until the message should be removed. This violates the statelessness, however, messages are expected to be shown for a short amount of time, so it doesnt really matter
+*   **`data` (object)**: Contains details about the rocket message.
+    *   `type` (string): The category of the message (e.g., `"Error"`, `"Warning"`, `"Success"`, `"Info"`).
+    *   `device` (string): The onboard device or subsystem associated with the message (e.g., `"Barometer"`, `"VectorNav"`, `"FlightComputer"`).
+    *   `subject` (string): The specific operation or component the message pertains to (e.g., `"Initialization"`, `"Telemetry"`, `"Deployment"`).
+    *   `verb` (string): Describes the outcome or action (e.g., `"Failed"`, `"Succeeded"`, `"Started"`, `"Stopped"`).
+    *   `time` (number): The rocket program time (in milliseconds) when the message was generated.
+    *   `left` (number): This field is intended to be managed by the UI to track the remaining display time for the message before it should be removed. The server will typically send this field with a default value of `0`. Its interpretation (e.g., as milliseconds, animation frames) is left to the individual UI implementation. This field does violate the stateless principle, however, it does not really matter a huge amount because messages are intended to be displayed for a short period of time.
 
-Example:
+**Example:**
 
 ```json
-{ 
+{
   "type": "message",
   "data": {
     "type": "Error",
@@ -232,7 +249,7 @@ Example:
     "subject": "Initialization",
     "verb": "Failed",
     "time": 11400,
-    "left": 0,
+    "left": 0
   }
 }
 ```
