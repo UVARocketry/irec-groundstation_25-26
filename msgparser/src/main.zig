@@ -275,6 +275,7 @@ pub fn main() !void {
 
     var i: u32 = 0;
     while (i < buf.items.len) {
+        // The file encoding is a modified hexadecimal but uses a-p instead of 0-9,a-f
         const lb: u8 = ((buf.items[i] - 'a') << 4) & 0xf0;
         const rb: u8 = (buf.items[i + 1] - 'a') & 0x0f;
         // if (i == 4 or i == 2) {
