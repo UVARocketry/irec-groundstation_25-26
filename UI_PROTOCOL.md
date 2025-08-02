@@ -134,7 +134,7 @@ The server adds the fields:
 - `readerConnected` (boolean): Set to true when a reader is connected to the server.
 - `readerType` (string): This returns the type of the reader that the rocket is using. Currently it is either "DEBUG" (for a debug run) and "LIVE" (for when getting data from the actual rocket). These specific values will definitely change in the future
 - `connected` (`[string, boolean][]`): This contains a list of all the rocket subsystems that are running and whether they are running or not. This is useful for debugging if a sensor failed to connect or something
-- `startState` (`LogItem?`): This contains the original state of the rocket and can be used to determine things like travel distance and stuff. Currently this field is broken because it contains the value of the state *before* the gps comes alive
+- `startState` (`LogItem?`): This contains the original state of the rocket and can be used to determine things like travel distance and stuff. Currently this field is broken because it contains the value of the state *before* the gps comes alive. It should contain the value of the state *since* the gps comes alive so that clients can use that to compute gps offsets and determine how far the rocket has moved from launchpad (though can also determin that with kalmanPos or vnPos)
 - `timeSinceLaunch` (number): This field contains the number of ms since the rocket launched. Before launch it is equal to the `i_timestamp` field
 
 ### `command`
