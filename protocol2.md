@@ -96,9 +96,9 @@ These fields are transmitted directly from the rocket's onboard systems:
 *   `vnGyroX` (number): VectorNav gyroscope reading along the X-axis in radians per second ($rad/s$).
 *   `vnGyroY` (number): VectorNav gyroscope reading along the Y-axis in radians per second ($rad/s$).
 *   `vnGyroZ` (number): VectorNav gyroscope reading along the Z-axis in radians per second ($rad/s$).
-*   `vnMagX` (number): VectorNav magnetometer reading along the X-axis. **Unit Undefined.**
-*   `vnMagY` (number): VectorNav magnetometer reading along the Y-axis. **Unit Undefined.**
-*   `vnMagZ` (number): VectorNav magnetometer reading along the Z-axis. **Unit Undefined.**
+*   `vnMagX` (number): VectorNav magnetometer reading along the X-axis Gauss
+*   `vnMagY` (number): VectorNav magnetometer reading along the Y-axis Gauss
+*   `vnMagZ` (number): VectorNav magnetometer reading along the Z-axis Gauss
 *   `obAccX` (number): Onboard IMU acceleration along the X-axis in meters per second squared ($m/s^2$).
 *   `obAccY` (number): Onboard IMU acceleration along the Y-axis in meters per second squared ($m/s^2$).
 *   `obAccZ` (number): Onboard IMU acceleration along the Z-axis in meters per second squared ($m/s^2$).
