@@ -18,6 +18,14 @@ const MsgType = enum(u4) {
     Message = 6,
 };
 
+const MsgHeader = packed struct {
+    type: MsgType,
+    version: u4,
+    length: u16,
+    checksumLeft: u8,
+    checksumRight: u8,
+};
+
 const MetadataType = enum(u8) {
     FloatSize = 0,
     GpsTow = 1,
@@ -158,14 +166,6 @@ const Event = packed struct {
     timestamp: u32,
 };
 
-const MsgHeader = packed struct {
-    version: u4,
-    type: MsgType,
-    length: u16,
-    checksumLeft: u8,
-    checksumRight: u8,
-};
-
 pub fn main() !void {
     comptime if (@bitSizeOf(MsgHeader) != 40) {
         @compileError(std.fmt.comptimePrint(
@@ -275,27 +275,49 @@ pub fn main() !void {
 
     var i: u32 = 0;
     while (i < buf.items.len) {
+        // The file encoding is a modified hexadecimal but uses a-p instead of 0-9,a-f
         const lb: u8 = ((buf.items[i] - 'a') << 4) & 0xf0;
         const rb: u8 = (buf.items[i + 1] - 'a') & 0x0f;
-        const byte = if (i < 5)
-            (lb >> 4) + (rb << 4)
-        else
-            lb + rb;
+        // if (i == 4 or i == 2) {
+        //     try stdout.print("{b:0>4}\n", .{lb});
+        //     try stdout.print("{b:0>4}\n", .{rb});
+        // }
+        const byte = lb + rb;
+        // if (i < 1)
+        //     (lb >> 4) + (rb << 4)
+        // else
+        //     lb + rb;
         try actualData.append(byte);
         i += 2;
     }
 
-    var header: *align(1) MsgHeader = std.mem.bytesAsValue(
+    const header: *align(1) MsgHeader = std.mem.bytesAsValue(
         MsgHeader,
         actualData.items[0..5],
     );
     header.length = ((header.length & 0xff00) >> 8) + ((header.length & 0x00ff) << 8);
-    if (isParse)
+    if (isParse) {
         try stdout.print("{}\n", .{header});
-    if (isParse)
+        // try stdout.print("{b:0>16}\n", .{header.length});
         try stdout.print("Lengths: {} {}\n", .{ actualData.items.len, header.length + 5 });
-    if (isParse)
+        const body = actualData.items[5..];
+        var j: u32 = 0;
+        var csuml: u8 = 0;
+        var csumr: u8 = 0;
+        while (j < body.len) : (j += 2) {
+            csuml ^= body[j];
+            if (j + 1 < body.len) {
+                csumr ^= body[j + 1];
+            }
+        }
+        try stdout.print("Checksum: {}, {} (expected {}, {})\n", .{
+            csuml,
+            csumr,
+            header.checksumLeft,
+            header.checksumRight,
+        });
         try stdout.print("\nBody data:\n", .{});
+    }
     var needsNewline = false;
     switch (header.type) {
         .Schema, .EventSchema => {
