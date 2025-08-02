@@ -139,7 +139,7 @@ These fields are transmitted directly from the rocket's onboard systems:
 These fields are augmented by the server before being sent to the client:
 
 *   `rocketConnected` (boolean): `true` if the rocket is actively communicating with the server; otherwise, `false`.
-*   `readerConnected` (boolean): `true` if a data reader (e.g., serial port, log file) is connected to the server; otherwise, `false`.
+*   `readerConnected` (boolean): `true` if a data reader (e.g., serial port, log file) is connected to the server; otherwise, `false`. A reader is the part of the server that actively listens to the rocket for data. `readerConnected` *does not* imply that the rocket is connected, just that the server is able to receive data from the rocket
 *   `readerType` (string): Indicates the type of data reader currently in use.
     *   Currently: `"DEBUG"` (for debug runs) or `"LIVE"` (for live rocket data). These specific values are subject to change in future revisions.
 *   `connected` (`[string, boolean][]`): An array of tuples, where each tuple represents a rocket subsystem (as a string) and its connection status. This is useful for debugging sensor failures or connection issues. The string type can be any arbitrary identifier for a subsystem.
