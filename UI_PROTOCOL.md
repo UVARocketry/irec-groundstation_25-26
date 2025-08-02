@@ -219,7 +219,7 @@ They are messages from the rocket. They contain six fields:
 - `subject` (string): What the message is about (eg `Initialization`)
 - `verb` (string): What happened (eg `Failed` or `Succeeded`)
 - `time` (number): The rocket program time that the message was sent at
-- `left` (number): This field is expected to be set by the ui to track how long until the message should be removed
+- `left` (number): This field is expected to be set by the ui to track how long until the message should be removed. This violates the statelessness, however, messages are expected to be shown for a short amount of time, so it doesnt really matter
 
 Example:
 
