@@ -234,7 +234,7 @@ These messages originate from the rocket and are forwarded by the server to the 
     *   `subject` (string): The specific operation or component the message pertains to (e.g., `"Initialization"`, `"Telemetry"`, `"Deployment"`).
     *   `verb` (string): Describes the outcome or action (e.g., `"Failed"`, `"Succeeded"`, `"Started"`, `"Stopped"`).
     *   `time` (number): The rocket program time (in milliseconds) when the message was generated.
-    *   `left` (number): This field is intended to be managed by the UI to track the remaining display time for the message before it should be removed. The server will typically send this field with a default value of `0`. Its interpretation (e.g., as milliseconds, animation frames) is left to the individual UI implementation.
+    *   `left` (number): This field is intended to be managed by the UI to track the remaining display time for the message before it should be removed. The server will typically send this field with a default value of `0`. Its interpretation (e.g., as milliseconds, animation frames) is left to the individual UI implementation. This field does violate the stateless principle, however, it does not really matter a huge amount because messages are intended to be displayed for a short period of time.
 
 **Example:**
 
