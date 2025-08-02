@@ -1,0 +1,8 @@
+agaafkaahbhlcacchegjgngfccdkcadacmcacchehjhagfccdkcaccejgogggpcccmccgegfhggjgdgfccdkcaccfggfgdhegphceogbhgcccmcacchdhfgcgkgfgdheccdkcaccejgogjhecccmcacchggfhcgcccdkcaccfdhfgdgdgfgfgegfgecchn
+Len: 190
+
+main.MsgHeader{ .version = 0, .type = main.MsgType.Message, .length = 165, .checksumLeft = 0, .checksumRight = 113 }
+Lengths: 95 170
+
+Body data:
+{ "time": 0, "type": "Info","device": "VectorNav", "subject": "Init", "verb": "Succeeded"}

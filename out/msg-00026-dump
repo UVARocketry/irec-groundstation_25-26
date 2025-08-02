@@ -1,0 +1,8 @@
+agaafiaaedhlcacchegjgngfccdkcadacmcacchehjhagfccdkcaccefhchcgphccccmccgegfhggjgdgfccdkcaccelgbgmgngbgocccmcacchdhfgcgkgfgdheccdkcaccejgogjhecccmcacchggfhcgcccdkcaccfdhfgdgdgfgfgegfgecchn
+Len: 186
+
+main.MsgHeader{ .version = 0, .type = main.MsgType.Message, .length = 133, .checksumLeft = 0, .checksumRight = 67 }
+Lengths: 93 138
+
+Body data:
+{ "time": 0, "type": "Error","device": "Kalman", "subject": "Init", "verb": "Succeeded"}

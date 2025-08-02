@@ -1,0 +1,8 @@
+agaafkhlcfhlcacchegjgngfccdkcadacmcacchehjhagfccdkcaccefhchcgphccccmccgegfhggjgdgfccdkcaccengbgeghhhgjgdglcccmcacchdhfgcgkgfgdheccdkcaccejgogjhecccmcacchggfhcgcccdkcaccfdhfgdgdgfgfgegfgecchn
+Len: 190
+
+main.MsgHeader{ .version = 0, .type = main.MsgType.Message, .length = 165, .checksumLeft = 123, .checksumRight = 37 }
+Lengths: 95 170
+
+Body data:
+{ "time": 0, "type": "Error","device": "Madgwick", "subject": "Init", "verb": "Succeeded"}

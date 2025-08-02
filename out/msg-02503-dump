@@ -1,0 +1,8 @@
+agaafmbmhihlcacchegjgngfccdkcadcdedgdedacmcacchehjhagfccdkcaccfdhfgdgdgfhdhdcccmccgegfhggjgdgfccdkcaccfdeecccmcacchdhfgcgkgfgdheccdkcaccffhagegbhegfcccmcacchggfhcgcccdkcaccfdhfgdgdgfgfgegfgecchn
+Len: 194
+
+main.MsgHeader{ .version = 0, .type = main.MsgType.Message, .length = 197, .checksumLeft = 28, .checksumRight = 120 }
+Lengths: 97 202
+
+Body data:
+{ "time": 24640, "type": "Success","device": "SD", "subject": "Update", "verb": "Succeeded"}
