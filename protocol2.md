@@ -146,7 +146,7 @@ These fields are augmented by the server before being sent to the client:
 *   `startState` (`LogItem?`): Represents the initial state of the rocket. This can be used for calculations like total travel distance.
     *   **Note:** A `LogItem` refers to the collection of rocket-sourced fields found within a `state` message (`i_timestamp` through `rssi`).
     *   **Known Issue:** Currently, this field contains the state *before* the GPS becomes active, which may lead to inaccuracies in initial position determination.
-*   `timeSinceLaunch` (number): The number of milliseconds elapsed since the rocket launched. Before launch, this field is equal to `i_timestamp`.
+*   `timeSinceLaunch` (number): The number of milliseconds elapsed since the rocket launched (used to determine the amount of time the rocket spent in the air). Before launch, this field is equal to `i_timestamp`, and not 0.
 
 ### 4.3. `command`
 
