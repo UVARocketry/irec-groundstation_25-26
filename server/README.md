@@ -124,6 +124,20 @@ Eg, if the current reader is a `StdinReader`, then the `currentConfig` would ret
 }
 ```
 
+or if it is a `SerialPortReader`:
+
+```json
+{
+    "manager": {
+        "saveFolder": "out_idrk",
+        "readerType": "serialport",
+        "reader": {
+            "port": "COM2",
+        },
+    },
+}
+```
+
 Then, UIs should provide some way to edit that json and send it back through `configure`
 protocol element.
 
