@@ -145,3 +145,7 @@ from `UI_PROTOCOL.md`, and replace with `command/getConfiguration`,
 
 Also, upgrade `command/switch` implementation to allow more than two readers 
 (this will be easy once we get `ReaderManager` finished)
+
+Lowkey, maybe also remove `command/getConfiguration` and just have the server send out
+a `currentConfiguration` message everytime the configuration updates or when a client
+connects
