@@ -33,6 +33,26 @@ Establishing a connection involves setting up a WebSocket connection with the se
 
 **Example:** `ws://localhost:42069`
 
+```js
+const ws = new Websocket("ws://localhost:42069");
+ws.onmessage = function(event){
+  // just print the value
+  console.log(event.data);
+  const msg = JSON.parse(event.data);
+  // now can do things with msg.
+  // msg format follows the structure documented below
+  console.log(msg.type);
+  console.log(msg.data);
+};
+ws.onopen = function(){
+  // a demo of sending a command to the server
+  ws.send(JSON.stringify({
+    type: "command",
+    data: "restart",
+  }));
+};
+```
+
 ## 3. Message Structure
 
 All messages exchanged between the client and server are transmitted as JSON strings. Each message must contain two primary keys: `type` and `data`.
