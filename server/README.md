@@ -136,3 +136,12 @@ just save that json file to disk along with other helpful info (like is this rea
 actually recoverable or not (`StdinReader` is not, `SeralReader` might be)) and
 if we restart after a crash, we just read that file then just internally call the 
 `configure` protocol method and *hopefully* chill
+
+### ok ok ok what does this all mean
+
+Basically: nuke `command/getRenameData`, `renameResponse`, and `rename` 
+from `UI_PROTOCOL.md`, and replace with `command/getConfiguration`, 
+`currentConfiguration`, and `configure`.
+
+Also, upgrade `command/switch` implementation to allow more than two readers 
+(this will be easy once we get `ReaderManager` finished)
