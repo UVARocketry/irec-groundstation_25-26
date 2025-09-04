@@ -163,3 +163,59 @@ Also, upgrade `command/switch` implementation to allow more than two readers
 Lowkey, maybe also remove `command/getConfiguration` and just have the server send out
 a `currentConfiguration` message everytime the configuration updates or when a client
 connects
+
+### One more thing
+
+So the problem with my current idea is that nuking `renameResponse` loses data because some of the systems would provide options for the values. Maybe that can be done? Eg for `SerialPortReader`:
+
+`currentConfiguration`
+
+```json
+{
+    "type": "currentConfiguration",
+    "data": {
+        "manager": {
+            "saveFolder": "out_idrk",
+            "readerType": "serialport",
+            "reader": {
+                "port": "COM3",
+            },
+        },
+        // maybe the options field specifies which values are allowed to be set?
+        "options": {
+            "manager": {
+                // can be any string value, so allow that
+                "saveFolder": "",
+                // readerType is expected to be set with a `switch` command,
+                // so it cant be edited by a `configure` message
+                "reader": {
+                    // port has multiple allowed values, specify that
+                    "port": ["COM1", "COM2", "COM3"],
+                }
+            },
+        },
+    }
+}
+```
+
+`configure`
+
+```json
+{
+    "type": "configure",
+    "data": {
+        "manager": {
+            "saveFolder": "out_idrk",
+            "readerType": "serialport",
+            "reader": {
+                "port": "COM2",
+            },
+        },
+    }
+}
+```
+
+Lowkey, this might actually be a good idea bc it simplifies the ui implementation: they 
+dont have to force users to edit a json, and instead just provide which fields *can* 
+be edited and possible input values (array means the value must be from that list,
+string means it can be any arbitrary string)
