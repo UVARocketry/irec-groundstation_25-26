@@ -6,30 +6,54 @@ import path from "node:path";
 import { Message } from "./message.js";
 import { clearSysTime, parseMessage } from "./data.js";
 
-import {
-	getState,
-	getEvent,
-	setAdd,
-	resetInternalState,
-	setEvent,
-} from "./state.js";
-
 import { WebSocketServer } from "ws";
 import { Strings } from "./ansi.js";
 import { ServerMessage } from "../../common/ServerMessage.js";
 import { handleUiRequest } from "./command.js";
 import { port } from "../../common/web.js";
-import { FileLogReader } from "./readers/fileLogReader.js";
-import { InputReader } from "./readers/inputReader.js";
+// import { FileLogReader } from "./readers/fileLogReader.js";
+// import { InputReader } from "./readers/inputReader.js";
 import child_process from "node:child_process";
 import { log } from "./log.js";
-import { SerialPortReader } from "./readers/serialportReader.js";
-import { StdinReader } from "./readers/stdinReader.js";
+// import { SerialPortReader } from "./readers/serialportReader.js";
+// import { StdinReader } from "./readers/stdinReader.js";
+
+import mgr from "./readerManager.js";
+import state from "./state.js";
+import data from "./data.js";
+import { Configuration } from "./configuration.js";
+
+export const argv = process.argv.slice(2);
+
+class Config {
+	manager = new Configuration(new mgr.Config());
+	state = new Configuration(new state.Config());
+	data = new Configuration(new data.Config());
+}
+
+var config = new Configuration(new Config());
+config.setRoot("save.json");
+
+mgr.init();
+
+config.getConfigOptions().then((res) => {
+	console.log(JSON.stringify(res));
+});
+
+/** @template {keyof Config} K
+ * @param key {K}
+ * @return {Config[K]}
+ */
+export function getConfigField(key) {
+	return config.get(key);
+}
+
+export function getRootConfig() {
+	return config;
+}
 
 const wss = new WebSocketServer({ port: port });
-/**@type {InputReader}*/
-var reader;
-var useStdin = false;
+// var useStdin = false;
 
 /** @param msg {ServerMessage} */
 export function broadcast(msg) {
@@ -40,87 +64,72 @@ export function broadcast(msg) {
 	});
 }
 
-/**
- * @param {Uint8Array<ArrayBuffer>} buf
- */
-async function onUpdate(buf) {
-	const msg = new Message(buf);
-
-	var command = parseMessage(msg);
-	var send = null;
-	if (command === "event") {
-		send = new ServerMessage("event", getEvent());
-	} else if (command === "state") {
-		send = new ServerMessage("state", getState());
-	}
-	if (send !== null) {
-		broadcast(send);
-	}
-}
-
 export function broadcastState() {
-	var send = new ServerMessage("state", getState());
+	var send = new ServerMessage("state", state.getState());
 	broadcast(send);
 }
 export function broadcastEvent() {
-	var send = new ServerMessage("event", getEvent());
+	var send = new ServerMessage("event", state.getEvent());
 	broadcast(send);
 }
 
-const logReader = new FileLogReader(onUpdate, null); //new DemoReader(onUpdate, null);
+// const logReader = new FileLogReader(onUpdate, null); //new DemoReader(onUpdate, null);
 
-/**
- * @param {boolean} v
- */
-export function useStdinReader(v) {
-	if (v) {
-		reader = procReader;
-	} else {
-		reader = logReader;
-	}
-}
+// /**
+//  * @param {boolean} v
+// */
+// export function useStdinReader(v) {
+// 	if (v) {
+// 		reader = procReader;
+// 	} else {
+// 		reader = logReader;
+// 	}
+// }
 
-export function switchReader() {
-	resetInternalState();
-	reader.stop();
-	setEvent("waiting");
-	if (reader == procReader) {
-		reader = logReader;
-		setAdd("readerType", "DEBUG");
-	} else {
-		reader = procReader;
-		setAdd("readerType", "LIVE");
-	}
-	// reader.start();
-}
+// export function switchReader() {
+// 	state.resetInternalState();
+// 	reader.stop();
+// 	state.setEvent("waiting");
+// 	if (reader == procReader) {
+// 		reader = logReader;
+// 		state.setAdd("readerType", "DEBUG");
+// 	} else {
+// 		reader = procReader;
+// 		state.setAdd("readerType", "LIVE");
+// 	}
+// 	// reader.start();
+// }
+
 export function resetMessageReader() {
-	resetInternalState();
+	state.resetInternalState();
 	clearSysTime();
-	reader.reset();
+	mgr.reset();
+	mgr.start();
+	// reader.reset();
 	// readMessage(0);
 }
 
-export function getReader() {
-	return reader;
-}
+// export function getReader() {
+// 	return reader;
+// }
 
 // await readMessage(0);
 log(`${Strings.Ok}: Starting websocket server at ws://localhost:${port}`);
 
-var read1 = false;
+// var read1 = false;
 // const procReader = new SerialPortReader(
 // 	onUpdate,
 // 	"/dev/ttyACM0",
 // 	() => "../out_" + new Date().toISOString().slice(0, 19).replace("T", "_"),
 // );
-const procReader = new StdinReader(
-	onUpdate,
-	"stderr",
-	"./run",
-	[],
-	"../../irec_25-26/lib",
-	() => "../out_" + new Date().toISOString().slice(0, 19).replace("T", "_"),
-);
+// const procReader = new StdinReader(
+// 	onUpdate,
+// 	"stderr",
+// 	"./run",
+// 	[],
+// 	"../../irec_25-26/lib",
+// 	() => "../out_" + new Date().toISOString().slice(0, 19).replace("T", "_"),
+// );
 // const procReader = new FileUpdateReader(
 //     onUpdate,
 //     "cat.txt",
@@ -129,10 +138,10 @@ const procReader = new StdinReader(
 // );
 
 wss.on("connection", function (ws) {
-	if (!read1) {
-		useStdinReader(useStdin);
-		read1 = true;
-	}
+	// if (!read1) {
+	// useStdinReader(useStdin);
+	// 	read1 = true;
+	// }
 	// setTimeout(function () {
 	//     // reader.start();
 	//     // logReader.start();
@@ -149,9 +158,9 @@ wss.on("connection", function (ws) {
 	ws.on("close", function () {
 		log(`${Strings.Warn}: Websocket connection closing`);
 	});
-	var msg = new ServerMessage("event", getEvent());
+	var msg = new ServerMessage("event", state.getEvent());
 	ws.send(JSON.stringify(msg));
-	msg = new ServerMessage("state", getState());
+	msg = new ServerMessage("state", state.getState());
 	ws.send(JSON.stringify(msg));
 	log(`${Strings.Ok}: Websocket connection successful`);
 });
@@ -236,5 +245,7 @@ server.listen(PORT, () => {
 	if (process.platform === "win32") {
 		url = url.replaceAll("&", "^&");
 	}
-	child_process.exec(start + " " + url);
+	if (argv.indexOf("--nowin") !== 0) {
+		child_process.exec(start + " " + url);
+	}
 });

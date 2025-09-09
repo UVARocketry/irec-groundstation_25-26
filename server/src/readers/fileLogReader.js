@@ -2,7 +2,7 @@ import fs from "node:fs";
 import { InputReader } from "./inputReader.js";
 import { broadcastEvent } from "../index.js";
 import { clearConnected, setEvent, setRocketConnected } from "../state.js";
-import { clearSysTime, sysTime } from "../data.js";
+import { clearSysTime, getSysTime } from "../data.js";
 import { log } from "../log.js";
 import { Strings } from "../ansi.js";
 import readline from "node:readline";
@@ -106,25 +106,9 @@ export class FileLogReader extends InputReader {
 
 		const buf = new Uint8Array(await file.arrayBuffer());
 
-		console.log(this.i);
 		this.i++;
-		if (this.i >= 239) {
-			console.log("a");
-			// await new Promise((res, rej) => {
-			// 	const rl = readline.createInterface({
-			// 		input: process.stdin,
-			// 		output: process.stdout,
-			// 	});
-			//
-			// 	rl.question(`What's your name?`, (name) => {
-			// 		console.log(`Hi ${name}!`);
-			// 		rl.close();
-			// 		res("ok");
-			// 	});
-			// });
-		}
 		this.onUpdate(buf);
-		const delta = sysTime - this.currentTime;
+		const delta = getSysTime() - this.currentTime;
 		if (delta > 1000) {
 			log(`${Strings.Info}: Waiting for ${delta}ms`);
 		}

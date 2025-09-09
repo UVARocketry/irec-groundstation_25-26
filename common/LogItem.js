@@ -102,4 +102,7 @@ export class LogItem extends AddedData {
 
 	/** @type {number} */
 	timeSinceLaunch = 0;
+
+	/**@type {string} */
+	readerName = "";
 }

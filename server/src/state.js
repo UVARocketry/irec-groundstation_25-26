@@ -1,26 +1,42 @@
 // this file holds all the state that gets sent in to the groundstation ui
-import { broadcastState, getReader } from "./index.js";
+import { broadcastState, getConfigField } from "./index.js";
 import { AddedData } from "../../common/AddedData.js";
 import { LogItem } from "../../common/LogItem.js";
+import { Configuration } from "./configuration.js";
 
-// the first state gotten from the reader
-// (there for the purposes of determining stuff like travel distance)
-/* @type {LogItem} */
-var startingState = null;
+import mgr from "./readerManager.js";
 
-// the current rocket state
-/* @type {object} */
-var currentState = new LogItem();
+export class Config {
+	/** @type {LogItem?} */
+	startingState = null;
 
-// the rocket timestamp that the launch happened at
-var launchTime = 0;
+	/** @type {LogItem} */
+	currentState = new LogItem();
 
-// extra data added by the server to provide info about the rocket
-var addedData = new AddedData();
+	/** @type {number} */
+	launchTime = 0;
 
-// the current rocket state machine state
-/** @type {string} */
-var currentEvent = "offline";
+	/** @type {Configuration<AddedData>} */
+	addedData = new Configuration(new AddedData());
+
+	/** @type {string} */
+	currentEvent = "offline";
+}
+
+/** @typedef {Configuration<Config>} StateConfig */
+
+/** @return {StateConfig} */
+function config() {
+	return getConfigField("state");
+}
+
+// config.setRoot("idk.json");
+
+// config.setField("startingState", null);
+// config.setField("currentState", new LogItem());
+// config.setField("launchTime", 0);
+// config.setField("addedData", new Configuration(new AddedData()));
+// config.setField("currentEvent", "offline");
 
 // a timer. if it finishes before we get a rocket message then the rocket
 // is deemed "disconnected". gets restarted when we get a message to not mistakenly
@@ -30,15 +46,22 @@ var connectionTimeout = null;
 
 // Returns the current state machine state of the rocket
 /** @return {string} */
-export function getEvent() {
-	return currentEvent;
+function getEvent() {
+	return config().get("currentEvent");
 }
 
 // Resets this module's state variables
-export function resetInternalState() {
+function resetInternalState() {
 	clearStartingState();
 	clearConnected();
-	currentState = new LogItem();
+	config().setField("currentState", new LogItem());
+	// currentState = new LogItem();
+	config().setField("currentState", new LogItem());
+}
+
+/** @return {StateConfig} */
+function getConfig() {
+	return config();
 }
 
 // Sets the connection status of an on-rocket device (eg accelerometer)
@@ -46,25 +69,26 @@ export function resetInternalState() {
  * @param item {string}
  * @param c {boolean}
  */
-export function setConnected(item, c) {
+function setConnected(item, c) {
 	var i = 0;
-	for (; i < addedData.connected.length; i++) {
-		if (addedData.connected[i][0] === item) {
-			addedData.connected[i][1] = c;
+	var connected = config().get("addedData").get("connected");
+	for (; i < connected.length; i++) {
+		if (connected[i][0] === item) {
+			connected[i][1] = c;
 			break;
 		}
 	}
 	// if this device has not been encountered before, add it to our connection list
-	if (i === addedData.connected.length) {
-		addedData.connected.push([item, c]);
+	if (i === connected.length) {
+		connected.push([item, c]);
 	}
 	// we need to update the ui's about our new state
 	broadcastState();
 }
 
 // clears the devices connected (for when changing the reader)
-export function clearConnected() {
-	addedData.connected = [];
+function clearConnected() {
+	config().get("addedData").setField("connected", []);
 }
 
 /**
@@ -72,9 +96,9 @@ export function clearConnected() {
  * @param {K} k
  * @param {AddedData[K]} v
  */
-export function setAdd(k, v) {
-	if (addedData[k] !== v) {
-		addedData[k] = v;
+function setAdd(k, v) {
+	if (config().get("addedData").get(k) !== v) {
+		config().get("addedData").setField(k, v);
 		broadcastState();
 	}
 }
@@ -82,44 +106,50 @@ export function setAdd(k, v) {
 /**
  * @param e {string}
  */
-export function setEvent(e) {
-	currentEvent = e;
+function setEvent(e) {
+	config().setField("currentEvent", e);
+	// currentEvent = e;
 	if (e == "MotorBurn") {
 		launchNow();
 	}
 }
 
 /** @return {Object} */
-export function getState() {
-	for (const k in addedData) {
-		currentState[k] = addedData[k];
+function getState() {
+	/** @type {LogItem} */
+	var ret = config().get("currentState");
+	for (const k in config().get("addedData").convertToObject()) {
+		// @ts-ignore
+		ret[k] = config().get("addedData").get(k);
 	}
-	currentState.startState = startingState;
-	currentState.readerName = getReader().getName();
+	ret.startState = config().get("startingState");
+	ret.readerName = mgr.getCurrentReaderType();
 	// currentState.rocketConnected = rocketConnected;
 	// currentState.readerConnected = readerConnected;
-	currentState.timeSinceLaunch = currentState.i_timestamp - launchTime;
-	return currentState;
+	ret.timeSinceLaunch = ret.i_timestamp - config().get("launchTime");
+	return ret;
 }
 
 /**
  * @param s {Object} */
-export function setState(s) {
-	currentState = s;
-	if (startingState == null) {
-		startingState = { ...s };
+function setState(s) {
+	config().setField("currentState", s);
+	if (config().get("startingState") == null) {
+		config().setField("startingState", { ...s });
+		// startingState = { ...s };
 	}
 }
 
-export function clearStartingState() {
-	startingState = null;
+function clearStartingState() {
+	config().setField("startingState", null);
+	// startingState = null;
 }
 
 /**
  * @param {boolean} v
  */
-export function setReaderConnected(v) {
-	if (v !== addedData.readerConnected) {
+function setReaderConnected(v) {
+	if (v !== config().get("addedData").get("readerConnected")) {
 		setAdd("readerConnected", v);
 		broadcastState();
 	}
@@ -128,7 +158,7 @@ export function setReaderConnected(v) {
 /**
  * @param {boolean} v
  */
-export function setRocketConnected(v) {
+function setRocketConnected(v) {
 	if (connectionTimeout !== null && v) {
 		clearTimeout(connectionTimeout);
 		connectionTimeout = null;
@@ -140,14 +170,33 @@ export function setRocketConnected(v) {
 			setRocketConnected(false);
 		}, 1000);
 	}
-	if (v !== addedData.rocketConnected) {
+	if (v !== config().get("addedData").get("rocketConnected")) {
 		setAdd("rocketConnected", v);
 		broadcastState();
 	}
 }
 
-export function launchNow() {
+function launchNow() {
 	// if (startingState !== null) {
-	launchTime = currentState.i_timestamp ?? startingState?.i_timestamp ?? 0;
+	config().setField(
+		"launchTime",
+		config().get("currentState").i_timestamp ?? 0,
+	);
 	// }
 }
+
+export default {
+	Config,
+	getEvent,
+	resetInternalState,
+	setConnected,
+	clearConnected,
+	setAdd,
+	setEvent,
+	getState,
+	setState,
+	clearStartingState,
+	setReaderConnected,
+	setRocketConnected,
+	launchNow,
+};
