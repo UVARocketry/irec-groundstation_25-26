@@ -2,11 +2,17 @@
 // The request is expected to be encoded as a JSON string that follows the type `ServerMessage`
 import { ServerMessage } from "../../common/ServerMessage.js";
 import { Strings } from "./ansi.js";
-import { broadcastState, resetMessageReader } from "./index.js";
+import {
+	broadcast,
+	broadcastState,
+	getRootConfig,
+	reconfigure,
+	resetMessageReader,
+} from "./index.js";
 import { log } from "./log.js";
 import readerManager from "./readerManager.js";
 /**@param {string} req */
-export function handleUiRequest(req) {
+function handleUiRequest(req) {
 	/** @type {ServerMessage} */
 	var obj;
 	try {
@@ -15,10 +21,10 @@ export function handleUiRequest(req) {
 		log(`${Strings.Error}: Invalid json packet from ui: ${req}`);
 		return;
 	}
-	if (obj.type === "rename") {
+	if (obj.type === "setConfiguration") {
+		console.log("setConfiguration req");
 		// @ts-ignore
-		// getReader().rename(obj.data);
-		broadcastState();
+		reconfigure(obj.data);
 	} else if (obj.type === "command") {
 		if (typeof obj.data !== "string") {
 			log(
@@ -31,15 +37,16 @@ export function handleUiRequest(req) {
 		} else if (obj.data === "switch") {
 			readerManager.switchReader();
 			broadcastState();
-			// broadcast();
-		} else if (obj.data === "getRenameData") {
-			// getReader()
-			// 	.getRenameOptions()
-			// 	.then((options) => {
-			// 		/** @type {ServerMessage} */
-			// 		const reply = new ServerMessage("renameResponse", options);
-			// 		broadcast(reply);
-			// 	});
+		} else if (obj.data === "getConfiguration") {
+			getRootConfig()
+				.getConfigOptions()
+				.then((val) => {
+					console.log(val);
+					broadcast({
+						type: "configuration",
+						data: val,
+					});
+				});
 		} else {
 			log(`${Strings.Warn}: Unknown command message "${obj.data}"`);
 		}
@@ -47,3 +54,7 @@ export function handleUiRequest(req) {
 		log(`${Strings.Warn}: Unknown message request type "${obj.type}"`);
 	}
 }
+
+export default {
+	handleUiRequest,
+};

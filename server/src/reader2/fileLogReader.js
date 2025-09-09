@@ -101,41 +101,45 @@ export class FileLogReader {
 		}
 	}
 
+	async determineNewMaxI() {
+		var ceil = 10000;
+		while (await this.saveFileExists(ceil)) {
+			ceil *= 2;
+		}
+		var floor = 1;
+
+		while (ceil - 1 >= floor) {
+			var middle = Math.floor((ceil - 1 + floor) / 2);
+			var exists = await this.saveFileExists(middle);
+			if (exists) {
+				if (floor == middle) {
+					break;
+				}
+				floor = middle;
+			} else {
+				if (ceil == middle) {
+					ceil = middle - 1;
+				}
+				ceil = middle;
+			}
+		}
+		this.config.setField("maxI", floor);
+	}
+
 	async readMessage() {
 		let path = ReaderUtils.getSaveItemName(
 			this.config.get("dir"),
 			this.config.get("i"),
 		);
 		console.log(this.shouldEnd);
-		if (this.shouldEnd) {
-			this.onDone();
-			return;
-		}
+		// if (this.shouldEnd) {
+		// 	this.onDone();
+		// 	return;
+		// }
 		console.log("i: " + this.config.get("i"));
 		console.log("Path: " + path);
 		if (this.config.get("i") === 0) {
-			var ceil = 10000;
-			while (await this.saveFileExists(ceil)) {
-				ceil *= 2;
-			}
-			var floor = 1;
-
-			while (ceil - 1 >= floor) {
-				var middle = Math.floor((ceil - 1 + floor) / 2);
-				var exists = await this.saveFileExists(middle);
-				if (exists) {
-					if (floor == middle) {
-						break;
-					}
-					floor = middle;
-				} else {
-					if (ceil == middle) {
-						ceil = middle - 1;
-					}
-					ceil = middle;
-				}
-			}
-			this.config.setField("maxI", floor);
+			this.determineNewMaxI();
 		}
 		console.log("maxI: " + this.config.get("maxI"));
 		if (this.config.get("i") > this.config.get("maxI")) {
@@ -144,7 +148,8 @@ export class FileLogReader {
 		}
 		if (!fs.existsSync(path)) {
 			this.config.setField("i", this.config.get("i") + 1);
-			setTimeout(function () {
+			await this.determineNewMaxI();
+			setTimeout(() => {
 				this.readMessage();
 			}, 1);
 			return;
@@ -158,9 +163,9 @@ export class FileLogReader {
 		var currentTime = getSysTime();
 		this.onData(buf);
 		const delta = getSysTime() - currentTime;
-		if (delta > 1000) {
-			log(`${Strings.Info}: Waiting for ${delta}ms`);
-		}
+		// if (delta > 1000) {
+		log(`${Strings.Info}: Waiting for ${delta}ms`);
+		// }
 
 		setTimeout(() => {
 			this.readMessage();
@@ -168,7 +173,6 @@ export class FileLogReader {
 	}
 
 	async start() {
-		console.log("yo");
 		this.shouldEnd = false;
 		this.readMessage();
 		return true;

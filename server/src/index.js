@@ -3,13 +3,12 @@ import fs from "node:fs";
 import http from "node:http";
 import path from "node:path";
 
-import { Message } from "./message.js";
-import { clearSysTime, parseMessage } from "./data.js";
+import { clearSysTime } from "./data.js";
 
 import { WebSocketServer } from "ws";
 import { Strings } from "./ansi.js";
 import { ServerMessage } from "../../common/ServerMessage.js";
-import { handleUiRequest } from "./command.js";
+import command from "./command.js";
 import { port } from "../../common/web.js";
 // import { FileLogReader } from "./readers/fileLogReader.js";
 // import { InputReader } from "./readers/inputReader.js";
@@ -52,16 +51,28 @@ export function getRootConfig() {
 	return config;
 }
 
+var wsConnected = false;
 const wss = new WebSocketServer({ port: port });
 // var useStdin = false;
 
 /** @param msg {ServerMessage} */
 export function broadcast(msg) {
-	wss.clients.forEach(function each(client) {
+	if (!wsConnected) {
+		return;
+	}
+	wss.clients.forEach(function (client) {
 		if (client.readyState === WebSocket.OPEN) {
 			client.send(JSON.stringify(msg));
 		}
 	});
+}
+
+/**
+ * @param {Config} obj
+ */
+export function reconfigure(obj) {
+	config.useConfigOptions(obj);
+	mgr.postReconfigure();
 }
 
 export function broadcastState() {
@@ -73,33 +84,6 @@ export function broadcastEvent() {
 	broadcast(send);
 }
 
-// const logReader = new FileLogReader(onUpdate, null); //new DemoReader(onUpdate, null);
-
-// /**
-//  * @param {boolean} v
-// */
-// export function useStdinReader(v) {
-// 	if (v) {
-// 		reader = procReader;
-// 	} else {
-// 		reader = logReader;
-// 	}
-// }
-
-// export function switchReader() {
-// 	state.resetInternalState();
-// 	reader.stop();
-// 	state.setEvent("waiting");
-// 	if (reader == procReader) {
-// 		reader = logReader;
-// 		state.setAdd("readerType", "DEBUG");
-// 	} else {
-// 		reader = procReader;
-// 		state.setAdd("readerType", "LIVE");
-// 	}
-// 	// reader.start();
-// }
-
 export function resetMessageReader() {
 	state.resetInternalState();
 	clearSysTime();
@@ -108,10 +92,6 @@ export function resetMessageReader() {
 	// reader.reset();
 	// readMessage(0);
 }
-
-// export function getReader() {
-// 	return reader;
-// }
 
 // await readMessage(0);
 log(`${Strings.Ok}: Starting websocket server at ws://localhost:${port}`);
@@ -138,6 +118,7 @@ log(`${Strings.Ok}: Starting websocket server at ws://localhost:${port}`);
 // );
 
 wss.on("connection", function (ws) {
+	wsConnected = true;
 	// if (!read1) {
 	// useStdinReader(useStdin);
 	// 	read1 = true;
@@ -150,10 +131,7 @@ wss.on("connection", function (ws) {
 	// }, 100);
 	// }
 	ws.on("message", function (v) {
-		handleUiRequest(v.toString());
-		// console.log(
-		//     `${Strings.Warn}: Messages from the browser ui are currently not supported`,
-		// );
+		command.handleUiRequest(v.toString());
 	});
 	ws.on("close", function () {
 		log(`${Strings.Warn}: Websocket connection closing`);

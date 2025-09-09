@@ -274,11 +274,11 @@ export class Configuration {
 	/**
 	 * @param {T} obj - Note that not all fields in obj must be set
 	 */
-	setConfigOptions(obj) {
+	useConfigOptions(obj) {
 		for (const key in obj) {
 			const currentVal = this.value[key];
 			if (currentVal instanceof Configuration) {
-				currentVal.setConfigOptions(obj[key]);
+				currentVal.useConfigOptions(obj[key]);
 			} else {
 				currentVal.set(obj[key]);
 			}

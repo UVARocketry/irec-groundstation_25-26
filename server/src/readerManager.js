@@ -7,23 +7,48 @@ import state from "./state.js";
 import { broadcast, getConfigField } from "./index.js";
 import { FileLogReader } from "./reader2/fileLogReader.js";
 import { Strings } from "./ansi.js";
+import { SerialPortReader } from "./reader2/serialPortReader.js";
 
 const nilFolder = "no";
 
+class ReaderMeta {
+	/** @type {ReaderType}*/
+	type;
+	/** @type {Reader}*/
+	reader;
+	/** @type {boolean}*/
+	isActive = false;
+
+	/**
+	 * @param {ReaderType} tp
+	 * @param {Reader} reader
+	 * @param {boolean?} isActive
+	 */
+	constructor(tp, reader, isActive) {
+		this.type = tp;
+		this.reader = reader;
+		this.isActive = isActive ?? false;
+	}
+}
+
 /** @typedef {"serial"|"stdout"|"log"|"fileupdate"} ReaderType */
 
-/** @type {[ReaderType, Reader][]} */
-var readers = [["log", new FileLogReader()]];
+/** @type {ReaderMeta[]} */
+var readers = [
+	new ReaderMeta("log", new FileLogReader(), false),
+	new ReaderMeta("serial", new SerialPortReader("/dev/ttyACM0"), false),
+];
+
 var readerIndex = 0;
 
 /** @return {ReaderType} */
 function getCurrentReaderType() {
-	return readers[readerIndex][0];
+	return readers[readerIndex].type;
 }
 
 /** @return {Reader} */
 function getCurrentReader() {
-	return readers[readerIndex][1];
+	return readers[readerIndex].reader;
 }
 
 export class Config {
@@ -71,7 +96,7 @@ function recover() {
 	var found = false;
 	for (var i = 0; i < readers.length; i++) {
 		useReader(i);
-		if (readers[i][0] == neededType) {
+		if (readers[i].type == neededType) {
 			found = true;
 			break;
 		}
@@ -94,13 +119,16 @@ function useReader(index) {
 		index %= readers.length;
 	}
 	if (index == readerIndex) {
+		state.setAdd("readerType", readers[index].type);
 		return;
 	}
 	getCurrentReader().setDataCallback(() => {});
 	getCurrentReader().setDoneCallback(() => {});
 	readerIndex = index;
+	config().replaceField("readerConfig", getCurrentReader().getConfig());
 	getCurrentReader().setDataCallback(onMessage);
 	getCurrentReader().setDoneCallback(onDone);
+	state.setAdd("readerType", readers[index].type);
 }
 
 function switchReader() {
@@ -141,7 +169,9 @@ async function start() {
 	state.setReaderConnected(true);
 	await createSaveFolder();
 	console.log("Startin...");
-	getCurrentReader().start();
+	if (!(await getCurrentReader().start())) {
+		state.setReaderConnected(false);
+	}
 }
 
 function stop() {
@@ -211,6 +241,7 @@ function init() {
 		});
 
 	config().replaceField("readerConfig", getCurrentReader().getConfig());
+	useReader(0);
 	getCurrentReader().setDataCallback(onMessage);
 	getCurrentReader().setDoneCallback(onDone);
 }
