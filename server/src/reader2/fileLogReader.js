@@ -3,7 +3,11 @@ import fs from "node:fs";
 
 import { ReaderUtils } from "../readerManager.js";
 
-import { Configuration } from "../configuration.js";
+import {
+	Configuration,
+	InputConfigOptions,
+	SelectConfigOptions,
+} from "../configuration.js";
 import { getSysTime } from "../data.js";
 import { log } from "../log.js";
 import { Strings } from "../ansi.js";
@@ -26,11 +30,13 @@ class Config {
 export class FileLogReader {
 	config = new Configuration(new Config());
 
-	/** @type {(v: Uint8Array<ArrayBuffer>) => void}*/
-	onData = () => {};
+	/** @type {(v: Uint8Array<ArrayBuffer>) => Promise<void>}*/
+	onData;
 	_onDone = () => {};
 
 	shouldEnd = false;
+
+	active = false;
 
 	constructor() {
 		this.config.getConfigurable("dir").setConfigGetter(async () => {
@@ -50,7 +56,10 @@ export class FileLogReader {
 					}
 				});
 
-			return items;
+			return new SelectConfigOptions(items);
+		});
+		this.config.getConfigurable("shouldSave").setConfigGetter(async () => {
+			return new InputConfigOptions("boolean", "false");
 		});
 	}
 
@@ -80,6 +89,7 @@ export class FileLogReader {
 
 	signalStop() {
 		this.shouldEnd = true;
+		this.onDone();
 	}
 
 	async reset() {
@@ -131,17 +141,16 @@ export class FileLogReader {
 			this.config.get("dir"),
 			this.config.get("i"),
 		);
-		console.log(this.shouldEnd);
-		// if (this.shouldEnd) {
-		// 	this.onDone();
-		// 	return;
-		// }
-		console.log("i: " + this.config.get("i"));
-		console.log("Path: " + path);
+		if (this.shouldEnd) {
+			this.onDone();
+			return;
+		}
+		// console.log("i: " + this.config.get("i"));
+		// console.log("Path: " + path);
 		if (this.config.get("i") === 0) {
 			this.determineNewMaxI();
 		}
-		console.log("maxI: " + this.config.get("maxI"));
+		// console.log("maxI: " + this.config.get("maxI"));
 		if (this.config.get("i") > this.config.get("maxI")) {
 			this.onDone();
 			return;
@@ -161,10 +170,10 @@ export class FileLogReader {
 
 		this.config.setField("i", this.config.get("i") + 1);
 		var currentTime = getSysTime();
-		this.onData(buf);
+		await this.onData(buf);
 		const delta = getSysTime() - currentTime;
 		// if (delta > 1000) {
-		log(`${Strings.Info}: Waiting for ${delta}ms`);
+		// log(`${Strings.Info}: Waiting for ${delta}ms`);
 		// }
 
 		setTimeout(() => {
@@ -179,7 +188,7 @@ export class FileLogReader {
 	}
 
 	/**
-	 * @param {(v: Uint8Array<ArrayBuffer>) => void} fn
+	 * @param {(v: Uint8Array<ArrayBuffer>) => Promise<void>} fn
 	 */
 	setDataCallback(fn) {
 		this.onData = fn;

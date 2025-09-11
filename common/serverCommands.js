@@ -1,5 +1,5 @@
 /**
- * @typedef {"restart"|"switch"|"getRenameData"|"rename"} ServerCommandType
+ * @typedef {"restart"|"switch"|"rename"|"getConfiguration"|"getConfigurationOptions"|"stop"} ServerCommandType
  */
 
 export class idk {}

@@ -1,5 +1,5 @@
 /**
- * @typedef {"event"|"state"|"command"|"setConfiguration"|"configuration"|"message"} EventType
+ * @typedef {"event"|"state"|"command"|"setConfiguration"|"configurationOptions"|"configuration"|"message"} EventType
  */
 
 /** @import { LogItem } from "./LogItem" */

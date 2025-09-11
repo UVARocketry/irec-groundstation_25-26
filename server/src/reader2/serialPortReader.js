@@ -1,9 +1,8 @@
 /** @import {Reader} from "../readerManager.js" */
 import { ReadlineParser, SerialPort } from "serialport";
-/** @import { RenameResponse } from "common/ServerMessage.js"; */
 import { Strings } from "../ansi.js";
 import { log } from "../log.js";
-import { Configuration } from "../configuration.js";
+import { Configuration, SelectConfigOptions } from "../configuration.js";
 
 class Config {
 	/** @type {string} */
@@ -34,7 +33,7 @@ export class SerialPortReader {
 			const portInfo = await SerialPort.list();
 			const ports = portInfo.map((v) => v.path);
 
-			return ports;
+			return new SelectConfigOptions(ports);
 		});
 		this.config.setField("portPath", path);
 	}
@@ -70,17 +69,6 @@ export class SerialPortReader {
 	}
 	reset() {
 		this.signalStop();
-	}
-	async getRenameOptions() {
-		const portInfo = await SerialPort.list();
-		const ports = portInfo.map((v) => v.path);
-
-		/** @type {RenameResponse} */
-		const ret = {
-			type: "choice",
-			data: ports,
-		};
-		return ret;
 	}
 
 	getPath() {

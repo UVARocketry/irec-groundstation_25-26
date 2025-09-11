@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+<style> 
+#connection {
+    color: red;
+}
+#connection.connected {
+    color: green;
+}
+
+#configurationplace div:not(.name) {
+    padding-left: 10px;
+}
+</style>
+    </head>
+
+    <body>
+        <h1> Server configuration yay</h1>
+        <div>Connection Status: <span id="connection">disconnected</span> </div>
+        <br>
+        <button id="get">Get configuration:</button>
+
+        <br>
+        <br>
+        <div id="configurationcont"> 
+            <button id="submit">submit</button>
+            <div id="configurationplace">
+            </div>
+        </div>
+
+        <script type="module">
+            import idk from "./uiforconfig/site.js";
+        </script>
+    </body>
+</html>

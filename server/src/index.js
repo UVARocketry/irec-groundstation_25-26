@@ -67,10 +67,15 @@ export function broadcast(msg) {
 	});
 }
 
+export function stopReader() {
+	mgr.stop();
+}
+
 /**
  * @param {Config} obj
  */
 export function reconfigure(obj) {
+	mgr.stop();
 	config.useConfigOptions(obj);
 	mgr.postReconfigure();
 }
@@ -146,11 +151,11 @@ wss.on("connection", function (ws) {
 // a server to send off the files
 const server = http.createServer((req, res) => {
 	// If the user requests the root '/'
-	const searchDir = process.cwd() + "/../ui/";
+	const searchDir = process.cwd() + "/../";
 	// leave off the common/ because that's in the url
-	const commonDir = process.cwd() + "/../";
+	// const commonDir = process.cwd() + "/../";
 	if (req.url === "/") {
-		const indexPath = path.join(searchDir, "index.html");
+		const indexPath = path.join(searchDir, "ui/index.html");
 
 		// Serve index.html file
 		fs.readFile(indexPath, (err, data) => {
@@ -167,12 +172,21 @@ const server = http.createServer((req, res) => {
 		});
 	} else {
 		// Serve other files from the file system
-		var url = req.url ?? "index.html";
+		var url = req.url ?? "/ui/index.html";
 		let filePath = path.join(searchDir, url);
 
-		if (url.startsWith("/common") || url.startsWith("common")) {
-			filePath = path.join(commonDir, url);
-		}
+		// if (url.startsWith("/common") || url.startsWith("common")) {
+		// 	filePath = path.join(commonDir, url);
+		// }
+
+		try {
+			if (fs.statSync(filePath).isDirectory()) {
+				if (!filePath.endsWith("/")) {
+					filePath += "/";
+				}
+				filePath += "index.html";
+			}
+		} catch (_) {}
 		const prettyPath = filePath.replace(process.cwd(), "");
 
 		// Check if file exists
@@ -209,11 +223,10 @@ const server = http.createServer((req, res) => {
 	}
 });
 
-// Set the server to listen on port 3000
-const PORT = 3000;
-server.listen(PORT, () => {
-	log(`${Strings.Ok}: Server running at http://localhost:${PORT}`);
-	var url = "http://localhost:" + PORT;
+/**
+ * @param {string} url
+ */
+function openUrl(url) {
 	var start =
 		process.platform == "darwin"
 			? "open"
@@ -223,7 +236,16 @@ server.listen(PORT, () => {
 	if (process.platform === "win32") {
 		url = url.replaceAll("&", "^&");
 	}
+	child_process.exec(start + " " + url);
+}
+
+// Set the server to listen on port 3000
+const PORT = 3000;
+server.listen(PORT, () => {
+	log(`${Strings.Ok}: Server running at http://localhost:${PORT}`);
+	var url = "http://localhost:" + PORT;
 	if (argv.indexOf("--nowin") !== 0) {
-		child_process.exec(start + " " + url);
+		openUrl(url);
+		openUrl(url + "/uiforconfig");
 	}
 });

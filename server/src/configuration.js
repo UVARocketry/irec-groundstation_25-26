@@ -3,6 +3,40 @@ import fs from "node:fs";
  * @typedef {"value"|"configuration"} ConfigType
  */
 
+export class InputConfigOptions {
+	element = "input";
+	/** @type {string} */
+	default = "";
+
+	type = "string";
+
+	/**
+	 * @param {string} tp
+	 * @param {string} val
+	 */
+	constructor(tp, val) {
+		this.default = val;
+		this.type = tp;
+	}
+}
+export class SelectConfigOptions {
+	element = "select";
+
+	/** @type {any[]}*/
+	options = [];
+
+	/**
+	 * @param {any[]} options
+	 */
+	constructor(options) {
+		this.options = options;
+	}
+}
+
+/**
+ * @typedef {InputConfigOptions | SelectConfigOptions} ConfigOptions
+ */
+
 /**
  * @template  T
  */
@@ -13,11 +47,11 @@ export class ConfigurationValue {
 	value;
 	/** @type {Configuration} */
 	parent;
-	/**@type {(() => Promise<T[]|T>)|null}*/
+	/**@type {(() => Promise<ConfigOptions>)|null}*/
 	getConfig = null;
 	/**
 	 * @param {T} value
-	 * @param {(() => Promise<T[] | T>)?} getConfig
+	 * @param {(() => Promise<ConfigOptions>)?} getConfig
 	 */
 	constructor(value, getConfig) {
 		this.value = value;
@@ -39,7 +73,7 @@ export class ConfigurationValue {
 	}
 
 	/**
-	 * @param {(() => Promise<T[] | T>) | null} fn
+	 * @param {(() => Promise<ConfigOptions>) | null} fn
 	 */
 	setConfigGetter(fn) {
 		this.getConfig = fn;
@@ -262,7 +296,20 @@ export class Configuration {
 			} else if (val.getConfig !== null) {
 				const fn = async function () {
 					// @ts-ignore
-					ret[key] = await val.getConfig();
+					const v = await val.getConfig();
+					// @ts-ignore
+					if (v.element === "input" && v.default === "") {
+						// @ts-ignore
+						v.default = val.value;
+					} else {
+						// @ts-ignore
+						const el = v.options.indexOf(val.value);
+						if (el !== -1) {
+							// @ts-ignore
+							v.options.unshift(v.options[el]);
+						}
+					}
+					ret[key] = [v];
 				};
 				promises.push(fn());
 			}

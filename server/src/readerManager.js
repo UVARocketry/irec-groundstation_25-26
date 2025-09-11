@@ -1,6 +1,6 @@
 import { ServerMessage } from "../../common/ServerMessage.js";
 import fs from "node:fs";
-import { Configuration } from "./configuration.js";
+import { Configuration, InputConfigOptions } from "./configuration.js";
 import { parseMessage } from "./data.js";
 import { Message } from "./message.js";
 import state from "./state.js";
@@ -9,7 +9,7 @@ import { FileLogReader } from "./reader2/fileLogReader.js";
 import { Strings } from "./ansi.js";
 import { SerialPortReader } from "./reader2/serialPortReader.js";
 
-const nilFolder = "no";
+const nilFolder = "";
 
 class ReaderMeta {
 	/** @type {ReaderType}*/
@@ -30,6 +30,8 @@ class ReaderMeta {
 		this.isActive = isActive ?? false;
 	}
 }
+
+var active = false;
 
 /** @typedef {"serial"|"stdout"|"log"|"fileupdate"} ReaderType */
 
@@ -60,6 +62,9 @@ export class Config {
 
 	/** @type {Configuration<any>} */
 	readerConfig = new Configuration({});
+
+	/** @type {number} */
+	msgI = 0;
 }
 
 export class ReaderUtils {
@@ -81,7 +86,7 @@ export class ReaderUtils {
 /**
  * @typedef Reader
  * @property {() => Configuration} getConfig
- * @property {(fn: (v: Uint8Array<ArrayBuffer>) => void) => void} setDataCallback
+ * @property {(fn: (v: Uint8Array<ArrayBuffer>) => Promise<void>) => void} setDataCallback
  * @property {() => Promise<boolean>} start
  * @property {() => void} reset
  * @property {() => void} signalStop
@@ -122,7 +127,7 @@ function useReader(index) {
 		state.setAdd("readerType", readers[index].type);
 		return;
 	}
-	getCurrentReader().setDataCallback(() => {});
+	getCurrentReader().setDataCallback(async () => {});
 	getCurrentReader().setDoneCallback(() => {});
 	readerIndex = index;
 	config().replaceField("readerConfig", getCurrentReader().getConfig());
@@ -132,6 +137,7 @@ function useReader(index) {
 }
 
 function switchReader() {
+	stop();
 	state.setReaderConnected(false);
 	useReader(readerIndex + 1);
 	config().setField("saveFolder", nilFolder);
@@ -148,7 +154,8 @@ async function createSaveFolder() {
 		await fs.promises.access(saveFolder);
 		exists = true;
 	} catch (_) {}
-	// need to synchrounously create the file bc we dont want to accidentally try creating files in there and crash
+	// need to synchrounously create the file bc we dont want to
+	// accidentally try creating files in there and crash
 	if (!exists) {
 		await fs.promises.mkdir(saveFolder, { recursive: true });
 	}
@@ -166,20 +173,29 @@ async function start() {
 	if (config().get("saveFolder") === nilFolder) {
 		config().setField("saveFolder", genSaveFolder());
 	}
+	const saveFolder = config().get("saveFolder");
+	if (saveFolder.length > 2 && !saveFolder.startsWith("..")) {
+		config().setField("saveFolder", "../" + saveFolder);
+	}
+	config().setField("msgI", 0);
 	state.setReaderConnected(true);
 	await createSaveFolder();
 	console.log("Startin...");
 	if (!(await getCurrentReader().start())) {
 		state.setReaderConnected(false);
 	}
+	active = true;
 }
 
 function stop() {
-	getCurrentReader().signalStop();
+	if (active) {
+		getCurrentReader().signalStop();
+	}
 	config().setField("saveFolder", nilFolder);
 }
 
 function onDone() {
+	active = false;
 	state.setReaderConnected(false);
 	state.setRocketConnected(false);
 	config().setField("saveFolder", nilFolder);
@@ -197,25 +213,19 @@ async function saveItem(msg, i) {
 	if (!getCurrentReader().shouldSave()) {
 		return;
 	}
-	if (config().get("saveFolder") === "") {
-		return;
+	if (config().get("saveFolder") === nilFolder) {
+		config().setField("saveFolder", genSaveFolder());
 	}
 	const saveFolder = config().get("saveFolder");
-	await fs.promises.writeFile(this.getSaveItemName(saveFolder, i), msg);
+	await fs.promises.writeFile(ReaderUtils.getSaveItemName(saveFolder, i), msg);
 }
 
 /**
  * @param {Uint8Array<ArrayBuffer>} buf
  */
 async function onMessage(buf) {
-	console.log("onMessage");
 	state.setRocketConnected(true);
 	const msg = new Message(buf);
-
-	const decoder = new TextDecoder("utf-8");
-	const originalString = decoder.decode(buf);
-	saveItem(originalString, 0);
-
 	var command = parseMessage(msg);
 	var send = null;
 	if (command === "event") {
@@ -226,6 +236,12 @@ async function onMessage(buf) {
 	if (send !== null) {
 		broadcast(send);
 	}
+
+	const decoder = new TextDecoder("utf-8");
+	const originalString = decoder.decode(buf);
+	console.log("msgI: " + config().get("msgI"));
+	await saveItem(originalString, config().get("msgI"));
+	config().setField("msgI", config().get("msgI") + 1);
 }
 
 /** @return {Configuration<Config>} */
@@ -237,7 +253,7 @@ function init() {
 	config()
 		.getConfigurable("saveFolder")
 		.setConfigGetter(async () => {
-			return "";
+			return new InputConfigOptions("string", "");
 		});
 
 	config().replaceField("readerConfig", getCurrentReader().getConfig());

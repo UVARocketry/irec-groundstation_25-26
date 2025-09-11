@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>thing</title>
         <link rel="shortcut-icon" href="favicon.ico" />
-        <link rel="stylesheet" href="./css/site.css" />
+        <link rel="stylesheet" href="./ui/css/site.css" />
         <style>
             body {
                 background: #ffffff;
@@ -14,10 +14,10 @@
     </head>
 
     <body>
-        <script src="./lib/jquery/dist/jquery.min.js"></script>
-        <script src="./lib/p5.js/p5.min.js"></script>
-        <script src="./common/LogItem.js" type="module"></script>
-        <script src="./common/ServerMessage.js" type="module"></script>
+        <script src="./ui/lib/jquery/dist/jquery.min.js"></script>
+        <script src="./ui/lib/p5.js/p5.min.js"></script>
+        <script src="common/LogItem.js" type="module"></script>
+        <script src="common/ServerMessage.js" type="module"></script>
         <select
             id="cameraSelect"
             style="position: absolute; left: 15%; bottom: 29%"
@@ -79,7 +79,7 @@
         </script>
 
         <script defer type="module">
-            import { s } from "./js/site.js";
+            import { s } from "./ui/js/site.js";
             setTimeout(function () {
                 new p5(s); // invoke p5
             }, 10);

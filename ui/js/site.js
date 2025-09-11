@@ -38,7 +38,7 @@ var velocityDial,
 	deploymentDiffDial;
 
 /** @type {Button} */
-var reqButton, switchButton, renameButton;
+var reqButton, switchButton, stopButton;
 
 export function getP5() {
 	return p;
@@ -342,8 +342,8 @@ function init() {
 		0.02,
 		0.015 * height,
 	);
-	btnText = "rename";
-	renameButton = new Button(
+	btnText = "stop";
+	stopButton = new Button(
 		0.01,
 		0.85,
 		p.textWidth(btnText) / height + 0.05,
@@ -454,7 +454,7 @@ function init() {
 			p.textFont("monospace");
 		}
 	});
-	logo = p.loadImage("assets/logo.webp");
+	logo = p.loadImage("./ui/assets/logo.webp");
 }
 
 function draw() {
@@ -955,10 +955,10 @@ function draw() {
 			pastPos = [];
 			sendWsCommand("switch");
 		}
-		renameButton.handlePress();
-		renameButton.draw();
-		if (renameButton.isDone()) {
-			sendWsCommand("getRenameData");
+		stopButton.handlePress();
+		stopButton.draw();
+		if (stopButton.isDone()) {
+			sendWsCommand("stop");
 		}
 	}
 

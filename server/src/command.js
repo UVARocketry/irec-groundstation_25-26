@@ -8,6 +8,7 @@ import {
 	getRootConfig,
 	reconfigure,
 	resetMessageReader,
+	stopReader,
 } from "./index.js";
 import { log } from "./log.js";
 import readerManager from "./readerManager.js";
@@ -34,19 +35,27 @@ function handleUiRequest(req) {
 		}
 		if (obj.data === "restart") {
 			resetMessageReader();
+		} else if (obj.data === "stop") {
+			stopReader();
 		} else if (obj.data === "switch") {
 			readerManager.switchReader();
 			broadcastState();
-		} else if (obj.data === "getConfiguration") {
+		} else if (obj.data === "getConfigurationOptions") {
 			getRootConfig()
 				.getConfigOptions()
 				.then((val) => {
-					console.log(val);
 					broadcast({
-						type: "configuration",
+						type: "configurationOptions",
 						data: val,
 					});
 				});
+		} else if (obj.data === "getConfiguration") {
+			const val = getRootConfig().convertToObject();
+
+			broadcast({
+				type: "configuration",
+				data: val,
+			});
 		} else {
 			log(`${Strings.Warn}: Unknown command message "${obj.data}"`);
 		}
