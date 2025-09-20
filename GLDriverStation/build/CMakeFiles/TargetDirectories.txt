@@ -1,0 +1,13 @@
+/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build/CMakeFiles/Strelka.dir
+/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build/CMakeFiles/edit_cache.dir
+/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build/CMakeFiles/rebuild_cache.dir
+/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build/libs/glm/CMakeFiles/edit_cache.dir
+/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build/libs/glm/CMakeFiles/rebuild_cache.dir
+/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build/libs/glm/glm/CMakeFiles/glm.dir
+/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build/libs/glm/glm/CMakeFiles/edit_cache.dir
+/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build/libs/glm/glm/CMakeFiles/rebuild_cache.dir
+/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build/libs/sdl/CMakeFiles/SDL3-shared.dir
+/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build/libs/sdl/CMakeFiles/SDL3_test.dir
+/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build/libs/sdl/CMakeFiles/SDL_uclibc.dir
+/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build/libs/sdl/CMakeFiles/edit_cache.dir
+/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build/libs/sdl/CMakeFiles/rebuild_cache.dir

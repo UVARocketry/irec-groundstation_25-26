@@ -1,0 +1,9 @@
+[submodule "GLDriverStation/libs/SDL"]
+	path = GLDriverStation/libs/SDL
+	url = https://github.com/libsdl-org/SDL
+[submodule "GLDriverStation/libs/imgui"]
+	path = GLDriverStation/libs/imgui
+	url = https://github.com/ocornut/imgui/
+[submodule "GLDriverStation/libs/glm"]
+	path = GLDriverStation/libs/glm
+	url = https://github.com/icaven/glm

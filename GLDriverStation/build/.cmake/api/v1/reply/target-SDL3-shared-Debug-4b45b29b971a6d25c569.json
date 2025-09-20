@@ -1,0 +1,5412 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "Debug/libSDL3.dylib"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"target_link_options",
+			"sdl_shared_link_options",
+			"sdl_generic_link_dependency",
+			"sdl_link_dependency",
+			"CheckPTHREAD",
+			"target_link_libraries",
+			"target_compile_options",
+			"sdl_target_compile_option_all_languages",
+			"SDL_AddCommonCompilerFlags",
+			"sdl_compile_options",
+			"target_compile_definitions",
+			"sdl_compile_definitions",
+			"target_include_directories",
+			"sdl_include_directories",
+			"target_precompile_headers",
+			"target_compile_features",
+			"target_sources",
+			"sdl_glob_sources",
+			"CheckHIDAPI",
+			"sdl_sources",
+			"CheckCOCOA"
+		],
+		"files" : 
+		[
+			"libs/sdl/CMakeLists.txt",
+			"libs/sdl/cmake/sdlcommands.cmake",
+			"libs/sdl/cmake/sdlchecks.cmake",
+			"libs/sdl/cmake/sdlcompilers.cmake"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 456,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 648,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 208,
+				"parent" : 2
+			},
+			{
+				"command" : 5,
+				"file" : 0,
+				"line" : 2752,
+				"parent" : 0
+			},
+			{
+				"command" : 4,
+				"file" : 2,
+				"line" : 908,
+				"parent" : 4
+			},
+			{
+				"command" : 3,
+				"file" : 1,
+				"line" : 98,
+				"parent" : 5
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 73,
+				"parent" : 6
+			},
+			{
+				"command" : 4,
+				"file" : 0,
+				"line" : 1076,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 1,
+				"line" : 98,
+				"parent" : 8
+			},
+			{
+				"command" : 6,
+				"file" : 1,
+				"line" : 72,
+				"parent" : 9
+			},
+			{
+				"command" : 6,
+				"file" : 0,
+				"line" : 1273,
+				"parent" : 0
+			},
+			{
+				"command" : 9,
+				"file" : 0,
+				"line" : 458,
+				"parent" : 0
+			},
+			{
+				"command" : 8,
+				"file" : 3,
+				"line" : 61,
+				"parent" : 12
+			},
+			{
+				"command" : 7,
+				"file" : 3,
+				"line" : 23,
+				"parent" : 13
+			},
+			{
+				"command" : 8,
+				"file" : 3,
+				"line" : 69,
+				"parent" : 12
+			},
+			{
+				"command" : 7,
+				"file" : 3,
+				"line" : 23,
+				"parent" : 15
+			},
+			{
+				"command" : 8,
+				"file" : 3,
+				"line" : 74,
+				"parent" : 12
+			},
+			{
+				"command" : 7,
+				"file" : 3,
+				"line" : 23,
+				"parent" : 17
+			},
+			{
+				"command" : 8,
+				"file" : 3,
+				"line" : 79,
+				"parent" : 12
+			},
+			{
+				"command" : 7,
+				"file" : 3,
+				"line" : 23,
+				"parent" : 19
+			},
+			{
+				"command" : 8,
+				"file" : 3,
+				"line" : 90,
+				"parent" : 12
+			},
+			{
+				"command" : 7,
+				"file" : 3,
+				"line" : 23,
+				"parent" : 21
+			},
+			{
+				"command" : 8,
+				"file" : 3,
+				"line" : 101,
+				"parent" : 12
+			},
+			{
+				"command" : 7,
+				"file" : 3,
+				"line" : 23,
+				"parent" : 23
+			},
+			{
+				"command" : 8,
+				"file" : 3,
+				"line" : 106,
+				"parent" : 12
+			},
+			{
+				"command" : 7,
+				"file" : 3,
+				"line" : 23,
+				"parent" : 25
+			},
+			{
+				"command" : 8,
+				"file" : 3,
+				"line" : 116,
+				"parent" : 12
+			},
+			{
+				"command" : 7,
+				"file" : 3,
+				"line" : 23,
+				"parent" : 27
+			},
+			{
+				"command" : 8,
+				"file" : 3,
+				"line" : 121,
+				"parent" : 12
+			},
+			{
+				"command" : 7,
+				"file" : 3,
+				"line" : 23,
+				"parent" : 29
+			},
+			{
+				"command" : 8,
+				"file" : 3,
+				"line" : 126,
+				"parent" : 12
+			},
+			{
+				"command" : 7,
+				"file" : 3,
+				"line" : 23,
+				"parent" : 31
+			},
+			{
+				"command" : 8,
+				"file" : 3,
+				"line" : 154,
+				"parent" : 12
+			},
+			{
+				"command" : 7,
+				"file" : 3,
+				"line" : 23,
+				"parent" : 33
+			},
+			{
+				"command" : 10,
+				"file" : 0,
+				"line" : 539,
+				"parent" : 0
+			},
+			{
+				"command" : 7,
+				"file" : 1,
+				"line" : 151,
+				"parent" : 35
+			},
+			{
+				"command" : 10,
+				"file" : 0,
+				"line" : 641,
+				"parent" : 0
+			},
+			{
+				"command" : 7,
+				"file" : 1,
+				"line" : 151,
+				"parent" : 37
+			},
+			{
+				"command" : 10,
+				"file" : 2,
+				"line" : 907,
+				"parent" : 4
+			},
+			{
+				"command" : 7,
+				"file" : 1,
+				"line" : 151,
+				"parent" : 39
+			},
+			{
+				"command" : 10,
+				"file" : 0,
+				"line" : 3787,
+				"parent" : 0
+			},
+			{
+				"command" : 7,
+				"file" : 1,
+				"line" : 151,
+				"parent" : 41
+			},
+			{
+				"command" : 11,
+				"file" : 0,
+				"line" : 459,
+				"parent" : 0
+			},
+			{
+				"command" : 12,
+				"file" : 0,
+				"line" : 3978,
+				"parent" : 0
+			},
+			{
+				"command" : 11,
+				"file" : 1,
+				"line" : 132,
+				"parent" : 44
+			},
+			{
+				"command" : 12,
+				"file" : 0,
+				"line" : 530,
+				"parent" : 0
+			},
+			{
+				"command" : 11,
+				"file" : 1,
+				"line" : 132,
+				"parent" : 46
+			},
+			{
+				"command" : 14,
+				"file" : 0,
+				"line" : 531,
+				"parent" : 0
+			},
+			{
+				"command" : 13,
+				"file" : 1,
+				"line" : 180,
+				"parent" : 48
+			},
+			{
+				"command" : 13,
+				"file" : 0,
+				"line" : 3933,
+				"parent" : 0
+			},
+			{
+				"command" : 15,
+				"file" : 0,
+				"line" : 3950,
+				"parent" : 0
+			},
+			{
+				"command" : 16,
+				"file" : 0,
+				"line" : 462,
+				"parent" : 0
+			},
+			{
+				"command" : 7,
+				"file" : 3,
+				"line" : 25,
+				"parent" : 13
+			},
+			{
+				"command" : 7,
+				"file" : 3,
+				"line" : 25,
+				"parent" : 15
+			},
+			{
+				"command" : 7,
+				"file" : 3,
+				"line" : 25,
+				"parent" : 17
+			},
+			{
+				"command" : 7,
+				"file" : 3,
+				"line" : 25,
+				"parent" : 19
+			},
+			{
+				"command" : 7,
+				"file" : 3,
+				"line" : 25,
+				"parent" : 21
+			},
+			{
+				"command" : 7,
+				"file" : 3,
+				"line" : 25,
+				"parent" : 23
+			},
+			{
+				"command" : 7,
+				"file" : 3,
+				"line" : 25,
+				"parent" : 25
+			},
+			{
+				"command" : 7,
+				"file" : 3,
+				"line" : 25,
+				"parent" : 27
+			},
+			{
+				"command" : 7,
+				"file" : 3,
+				"line" : 25,
+				"parent" : 29
+			},
+			{
+				"command" : 7,
+				"file" : 3,
+				"line" : 25,
+				"parent" : 31
+			},
+			{
+				"command" : 7,
+				"file" : 3,
+				"line" : 25,
+				"parent" : 33
+			},
+			{
+				"command" : 18,
+				"file" : 0,
+				"line" : 1200,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 64
+			},
+			{
+				"command" : 18,
+				"file" : 0,
+				"line" : 1299,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 66
+			},
+			{
+				"command" : 18,
+				"file" : 0,
+				"line" : 1308,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 68
+			},
+			{
+				"command" : 18,
+				"file" : 0,
+				"line" : 1321,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 70
+			},
+			{
+				"command" : 18,
+				"file" : 0,
+				"line" : 1343,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 72
+			},
+			{
+				"command" : 18,
+				"file" : 0,
+				"line" : 1359,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 74
+			},
+			{
+				"command" : 18,
+				"file" : 0,
+				"line" : 1369,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 76
+			},
+			{
+				"command" : 18,
+				"file" : 0,
+				"line" : 2443,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 78
+			},
+			{
+				"command" : 18,
+				"file" : 0,
+				"line" : 2451,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 80
+			},
+			{
+				"command" : 18,
+				"file" : 0,
+				"line" : 2457,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 82
+			},
+			{
+				"command" : 19,
+				"file" : 0,
+				"line" : 2468,
+				"parent" : 0
+			},
+			{
+				"command" : 18,
+				"file" : 2,
+				"line" : 1171,
+				"parent" : 84
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 85
+			},
+			{
+				"command" : 18,
+				"file" : 2,
+				"line" : 1172,
+				"parent" : 84
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 87
+			},
+			{
+				"command" : 18,
+				"file" : 0,
+				"line" : 2472,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 89
+			},
+			{
+				"command" : 18,
+				"file" : 0,
+				"line" : 2484,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 91
+			},
+			{
+				"command" : 18,
+				"file" : 0,
+				"line" : 2527,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 93
+			},
+			{
+				"command" : 18,
+				"file" : 0,
+				"line" : 2546,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 95
+			},
+			{
+				"command" : 18,
+				"file" : 0,
+				"line" : 2553,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 97
+			},
+			{
+				"command" : 18,
+				"file" : 0,
+				"line" : 2557,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 99
+			},
+			{
+				"command" : 18,
+				"file" : 0,
+				"line" : 2561,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 101
+			},
+			{
+				"command" : 18,
+				"file" : 0,
+				"line" : 2565,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 103
+			},
+			{
+				"command" : 18,
+				"file" : 0,
+				"line" : 2570,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 105
+			},
+			{
+				"command" : 18,
+				"file" : 0,
+				"line" : 2573,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 107
+			},
+			{
+				"command" : 20,
+				"file" : 0,
+				"line" : 2581,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 45,
+				"parent" : 109
+			},
+			{
+				"command" : 21,
+				"file" : 0,
+				"line" : 2610,
+				"parent" : 0
+			},
+			{
+				"command" : 18,
+				"file" : 2,
+				"line" : 670,
+				"parent" : 111
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 112
+			},
+			{
+				"command" : 18,
+				"file" : 0,
+				"line" : 2657,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 114
+			},
+			{
+				"command" : 18,
+				"file" : 0,
+				"line" : 2666,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 116
+			},
+			{
+				"command" : 18,
+				"file" : 0,
+				"line" : 2676,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 118
+			},
+			{
+				"command" : 20,
+				"file" : 2,
+				"line" : 966,
+				"parent" : 4
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 45,
+				"parent" : 120
+			},
+			{
+				"command" : 20,
+				"file" : 2,
+				"line" : 974,
+				"parent" : 4
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 45,
+				"parent" : 122
+			},
+			{
+				"command" : 20,
+				"file" : 0,
+				"line" : 3363,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 45,
+				"parent" : 124
+			},
+			{
+				"command" : 20,
+				"file" : 0,
+				"line" : 3365,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 45,
+				"parent" : 126
+			},
+			{
+				"command" : 20,
+				"file" : 0,
+				"line" : 3383,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 45,
+				"parent" : 128
+			},
+			{
+				"command" : 20,
+				"file" : 0,
+				"line" : 3388,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 45,
+				"parent" : 130
+			},
+			{
+				"command" : 18,
+				"file" : 0,
+				"line" : 3434,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 132
+			},
+			{
+				"command" : 18,
+				"file" : 0,
+				"line" : 3448,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 134
+			},
+			{
+				"command" : 18,
+				"file" : 0,
+				"line" : 3457,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 136
+			},
+			{
+				"command" : 18,
+				"file" : 0,
+				"line" : 3469,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 138
+			},
+			{
+				"command" : 18,
+				"file" : 0,
+				"line" : 3520,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 140
+			},
+			{
+				"command" : 18,
+				"file" : 0,
+				"line" : 3603,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 142
+			},
+			{
+				"command" : 20,
+				"file" : 0,
+				"line" : 3651,
+				"parent" : 0
+			},
+			{
+				"command" : 17,
+				"file" : 1,
+				"line" : 45,
+				"parent" : 144
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g -std=gnu99 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk -fPIC -fvisibility=hidden"
+				},
+				{
+					"backtrace" : 14,
+					"fragment" : "-Wall"
+				},
+				{
+					"backtrace" : 16,
+					"fragment" : "-Wundef"
+				},
+				{
+					"backtrace" : 18,
+					"fragment" : "-Wfloat-conversion"
+				},
+				{
+					"backtrace" : 20,
+					"fragment" : "-fno-strict-aliasing"
+				},
+				{
+					"backtrace" : 22,
+					"fragment" : "-Wdocumentation"
+				},
+				{
+					"backtrace" : 24,
+					"fragment" : "-Wdocumentation-unknown-command"
+				},
+				{
+					"backtrace" : 26,
+					"fragment" : "-fcomment-block-commands=threadsafety"
+				},
+				{
+					"backtrace" : 28,
+					"fragment" : "-Wshadow"
+				},
+				{
+					"backtrace" : 30,
+					"fragment" : "-Wno-unused-local-typedefs"
+				},
+				{
+					"backtrace" : 32,
+					"fragment" : "-Wimplicit-fallthrough"
+				},
+				{
+					"backtrace" : 34,
+					"fragment" : "-fcolor-diagnostics"
+				},
+				{
+					"backtrace" : 36,
+					"fragment" : "-idirafter/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/khronos"
+				},
+				{
+					"backtrace" : 38,
+					"fragment" : "-Wno-error=deprecated-declarations"
+				},
+				{
+					"backtrace" : 40,
+					"fragment" : "-D_REENTRANT"
+				},
+				{
+					"backtrace" : 42,
+					"fragment" : "-fobjc-arc"
+				},
+				{
+					"fragment" : "-Winvalid-pch -Xclang -emit-pch -Xclang -include -Xclang /Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build/libs/sdl/CMakeFiles/SDL3-shared.dir/cmake_pch.h -x c-header"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 43,
+					"define" : "DEBUG"
+				},
+				{
+					"define" : "DLL_EXPORT"
+				},
+				{
+					"backtrace" : 45,
+					"define" : "SDL_BUILD_MAJOR_VERSION=3"
+				},
+				{
+					"backtrace" : 45,
+					"define" : "SDL_BUILD_MICRO_VERSION=0"
+				},
+				{
+					"backtrace" : 45,
+					"define" : "SDL_BUILD_MINOR_VERSION=3"
+				},
+				{
+					"backtrace" : 47,
+					"define" : "USING_GENERATED_CONFIG_H"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 49,
+					"path" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build/libs/sdl/include-config-debug/build_config"
+				},
+				{
+					"backtrace" : 49,
+					"path" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build/libs/sdl/include-revision"
+				},
+				{
+					"backtrace" : 49,
+					"path" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/include"
+				},
+				{
+					"backtrace" : 50,
+					"path" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src"
+				}
+			],
+			"language" : "C",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					52
+				],
+				"standard" : "99"
+			},
+			"precompileHeaders" : 
+			[
+				{
+					"backtrace" : 51,
+					"header" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/SDL_internal.h"
+				}
+			],
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g -std=gnu99 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk -fPIC -fvisibility=hidden"
+				},
+				{
+					"backtrace" : 14,
+					"fragment" : "-Wall"
+				},
+				{
+					"backtrace" : 16,
+					"fragment" : "-Wundef"
+				},
+				{
+					"backtrace" : 18,
+					"fragment" : "-Wfloat-conversion"
+				},
+				{
+					"backtrace" : 20,
+					"fragment" : "-fno-strict-aliasing"
+				},
+				{
+					"backtrace" : 22,
+					"fragment" : "-Wdocumentation"
+				},
+				{
+					"backtrace" : 24,
+					"fragment" : "-Wdocumentation-unknown-command"
+				},
+				{
+					"backtrace" : 26,
+					"fragment" : "-fcomment-block-commands=threadsafety"
+				},
+				{
+					"backtrace" : 28,
+					"fragment" : "-Wshadow"
+				},
+				{
+					"backtrace" : 30,
+					"fragment" : "-Wno-unused-local-typedefs"
+				},
+				{
+					"backtrace" : 32,
+					"fragment" : "-Wimplicit-fallthrough"
+				},
+				{
+					"backtrace" : 34,
+					"fragment" : "-fcolor-diagnostics"
+				},
+				{
+					"backtrace" : 36,
+					"fragment" : "-idirafter/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/khronos"
+				},
+				{
+					"backtrace" : 38,
+					"fragment" : "-Wno-error=deprecated-declarations"
+				},
+				{
+					"backtrace" : 40,
+					"fragment" : "-D_REENTRANT"
+				},
+				{
+					"backtrace" : 42,
+					"fragment" : "-fobjc-arc"
+				},
+				{
+					"fragment" : "-Winvalid-pch -Xclang -include-pch -Xclang /Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build/libs/sdl/CMakeFiles/SDL3-shared.dir/cmake_pch.h.pch -Xclang -include -Xclang /Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build/libs/sdl/CMakeFiles/SDL3-shared.dir/cmake_pch.h"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 43,
+					"define" : "DEBUG"
+				},
+				{
+					"define" : "DLL_EXPORT"
+				},
+				{
+					"backtrace" : 45,
+					"define" : "SDL_BUILD_MAJOR_VERSION=3"
+				},
+				{
+					"backtrace" : 45,
+					"define" : "SDL_BUILD_MICRO_VERSION=0"
+				},
+				{
+					"backtrace" : 45,
+					"define" : "SDL_BUILD_MINOR_VERSION=3"
+				},
+				{
+					"backtrace" : 47,
+					"define" : "USING_GENERATED_CONFIG_H"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 49,
+					"path" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build/libs/sdl/include-config-debug/build_config"
+				},
+				{
+					"backtrace" : 49,
+					"path" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build/libs/sdl/include-revision"
+				},
+				{
+					"backtrace" : 49,
+					"path" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/include"
+				},
+				{
+					"backtrace" : 50,
+					"path" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src"
+				}
+			],
+			"language" : "C",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					52
+				],
+				"standard" : "99"
+			},
+			"precompileHeaders" : 
+			[
+				{
+					"backtrace" : 51,
+					"header" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/SDL_internal.h"
+				}
+			],
+			"sourceIndexes" : 
+			[
+				1,
+				2,
+				4,
+				6,
+				7,
+				9,
+				12,
+				14,
+				16,
+				18,
+				20,
+				21,
+				22,
+				25,
+				26,
+				28,
+				30,
+				32,
+				33,
+				35,
+				37,
+				40,
+				41,
+				49,
+				51,
+				53,
+				55,
+				57,
+				59,
+				61,
+				63,
+				65,
+				67,
+				69,
+				71,
+				73,
+				74,
+				76,
+				78,
+				82,
+				88,
+				91,
+				93,
+				96,
+				106,
+				108,
+				111,
+				112,
+				115,
+				117,
+				121,
+				124,
+				126,
+				128,
+				129,
+				132,
+				133,
+				135,
+				137,
+				139,
+				141,
+				144,
+				145,
+				151,
+				152,
+				163,
+				165,
+				168,
+				170,
+				171,
+				178,
+				181,
+				182,
+				185,
+				186,
+				188,
+				189,
+				191,
+				193,
+				195,
+				198,
+				200,
+				202,
+				204,
+				206,
+				208,
+				209,
+				212,
+				215,
+				216,
+				222,
+				226,
+				227,
+				228,
+				230,
+				231,
+				232,
+				233,
+				234,
+				235,
+				236,
+				237,
+				238,
+				239,
+				240,
+				241,
+				244,
+				247,
+				249,
+				251,
+				253,
+				255,
+				257,
+				258,
+				259,
+				260,
+				261,
+				263,
+				265,
+				267,
+				268,
+				270,
+				272,
+				273,
+				275,
+				278,
+				280,
+				281,
+				284,
+				286,
+				288,
+				289,
+				296,
+				299,
+				302,
+				305,
+				307,
+				309,
+				310,
+				311,
+				313,
+				315,
+				317,
+				323,
+				324,
+				325,
+				326,
+				327,
+				328,
+				329,
+				330,
+				331,
+				332,
+				333,
+				334,
+				335,
+				336,
+				337,
+				338,
+				339,
+				340,
+				341,
+				342,
+				343,
+				344,
+				345,
+				346,
+				347,
+				348,
+				351,
+				353,
+				355,
+				357,
+				358,
+				360,
+				361,
+				363,
+				382,
+				383,
+				384,
+				385,
+				386,
+				387,
+				388,
+				389,
+				391,
+				392,
+				393,
+				395,
+				397,
+				399,
+				401,
+				403,
+				405,
+				406,
+				408,
+				410
+			]
+		},
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g -std=gnu99 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk -fPIC -fvisibility=hidden"
+				},
+				{
+					"backtrace" : 14,
+					"fragment" : "-Wall"
+				},
+				{
+					"backtrace" : 16,
+					"fragment" : "-Wundef"
+				},
+				{
+					"backtrace" : 18,
+					"fragment" : "-Wfloat-conversion"
+				},
+				{
+					"backtrace" : 20,
+					"fragment" : "-fno-strict-aliasing"
+				},
+				{
+					"backtrace" : 22,
+					"fragment" : "-Wdocumentation"
+				},
+				{
+					"backtrace" : 24,
+					"fragment" : "-Wdocumentation-unknown-command"
+				},
+				{
+					"backtrace" : 26,
+					"fragment" : "-fcomment-block-commands=threadsafety"
+				},
+				{
+					"backtrace" : 28,
+					"fragment" : "-Wshadow"
+				},
+				{
+					"backtrace" : 30,
+					"fragment" : "-Wno-unused-local-typedefs"
+				},
+				{
+					"backtrace" : 32,
+					"fragment" : "-Wimplicit-fallthrough"
+				},
+				{
+					"backtrace" : 34,
+					"fragment" : "-fcolor-diagnostics"
+				},
+				{
+					"backtrace" : 36,
+					"fragment" : "-idirafter/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/khronos"
+				},
+				{
+					"backtrace" : 38,
+					"fragment" : "-Wno-error=deprecated-declarations"
+				},
+				{
+					"backtrace" : 40,
+					"fragment" : "-D_REENTRANT"
+				},
+				{
+					"backtrace" : 42,
+					"fragment" : "-fobjc-arc"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 43,
+					"define" : "DEBUG"
+				},
+				{
+					"define" : "DLL_EXPORT"
+				},
+				{
+					"backtrace" : 45,
+					"define" : "SDL_BUILD_MAJOR_VERSION=3"
+				},
+				{
+					"backtrace" : 45,
+					"define" : "SDL_BUILD_MICRO_VERSION=0"
+				},
+				{
+					"backtrace" : 45,
+					"define" : "SDL_BUILD_MINOR_VERSION=3"
+				},
+				{
+					"backtrace" : 47,
+					"define" : "USING_GENERATED_CONFIG_H"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 49,
+					"path" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build/libs/sdl/include-config-debug/build_config"
+				},
+				{
+					"backtrace" : 49,
+					"path" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build/libs/sdl/include-revision"
+				},
+				{
+					"backtrace" : 49,
+					"path" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/include"
+				},
+				{
+					"backtrace" : 50,
+					"path" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src"
+				}
+			],
+			"language" : "C",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					52
+				],
+				"standard" : "99"
+			},
+			"precompileHeaders" : 
+			[
+				{
+					"backtrace" : 51,
+					"header" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/SDL_internal.h"
+				}
+			],
+			"sourceIndexes" : 
+			[
+				43
+			]
+		},
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g -std=gnu99 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk -fPIC -fvisibility=hidden"
+				},
+				{
+					"backtrace" : 53,
+					"fragment" : "-Wall"
+				},
+				{
+					"backtrace" : 54,
+					"fragment" : "-Wundef"
+				},
+				{
+					"backtrace" : 55,
+					"fragment" : "-Wfloat-conversion"
+				},
+				{
+					"backtrace" : 56,
+					"fragment" : "-fno-strict-aliasing"
+				},
+				{
+					"backtrace" : 57,
+					"fragment" : "-Wdocumentation"
+				},
+				{
+					"backtrace" : 58,
+					"fragment" : "-Wdocumentation-unknown-command"
+				},
+				{
+					"backtrace" : 59,
+					"fragment" : "-fcomment-block-commands=threadsafety"
+				},
+				{
+					"backtrace" : 60,
+					"fragment" : "-Wshadow"
+				},
+				{
+					"backtrace" : 61,
+					"fragment" : "-Wno-unused-local-typedefs"
+				},
+				{
+					"backtrace" : 62,
+					"fragment" : "-Wimplicit-fallthrough"
+				},
+				{
+					"backtrace" : 63,
+					"fragment" : "-fcolor-diagnostics"
+				},
+				{
+					"backtrace" : 36,
+					"fragment" : "-idirafter/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/khronos"
+				},
+				{
+					"backtrace" : 38,
+					"fragment" : "-Wno-error=deprecated-declarations"
+				},
+				{
+					"backtrace" : 40,
+					"fragment" : "-D_REENTRANT"
+				},
+				{
+					"backtrace" : 42,
+					"fragment" : "-fobjc-arc"
+				},
+				{
+					"fragment" : " -x objective-c"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 43,
+					"define" : "DEBUG"
+				},
+				{
+					"define" : "DLL_EXPORT"
+				},
+				{
+					"backtrace" : 45,
+					"define" : "SDL_BUILD_MAJOR_VERSION=3"
+				},
+				{
+					"backtrace" : 45,
+					"define" : "SDL_BUILD_MICRO_VERSION=0"
+				},
+				{
+					"backtrace" : 45,
+					"define" : "SDL_BUILD_MINOR_VERSION=3"
+				},
+				{
+					"backtrace" : 47,
+					"define" : "USING_GENERATED_CONFIG_H"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 49,
+					"path" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build/libs/sdl/include-config-debug/build_config"
+				},
+				{
+					"backtrace" : 49,
+					"path" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build/libs/sdl/include-revision"
+				},
+				{
+					"backtrace" : 49,
+					"path" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/include"
+				},
+				{
+					"backtrace" : 50,
+					"path" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src"
+				}
+			],
+			"language" : "OBJC",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					52
+				],
+				"standard" : "99"
+			},
+			"sourceIndexes" : 
+			[
+				319,
+				320,
+				322,
+				349,
+				356,
+				359,
+				364,
+				365,
+				366,
+				367,
+				368,
+				369,
+				370,
+				371,
+				372,
+				373,
+				374,
+				375,
+				376,
+				377,
+				378,
+				380,
+				381,
+				390
+			]
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 11,
+			"id" : "SDL_uclibc::@a49eed29bab3302d9c5e"
+		}
+	],
+	"id" : "SDL3-shared::@a49eed29bab3302d9c5e",
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "",
+				"role" : "flags"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "-Wl,-undefined,error",
+				"role" : "flags"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "-lpthread",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "-L/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl",
+				"role" : "libraryPath"
+			},
+			{
+				"backtrace" : 10,
+				"fragment" : "-lm",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 11,
+				"fragment" : "libs/sdl/libSDL_uclibc.a",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-framework CoreMedia",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-framework CoreVideo",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-framework Cocoa",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-Xlinker -weak_framework -Xlinker UniformTypeIdentifiers",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-framework IOKit",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-framework ForceFeedback",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-framework Carbon",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-framework CoreAudio",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-framework AudioToolbox",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-framework AVFoundation",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-framework Foundation",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-framework GameController",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-framework Metal",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-framework QuartzCore",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-Xlinker -weak_framework -Xlinker CoreHaptics",
+				"role" : "libraries"
+			}
+		],
+		"language" : "C"
+	},
+	"name" : "SDL3-shared",
+	"nameOnDisk" : "libSDL3.dylib",
+	"paths" : 
+	{
+		"build" : "libs/sdl",
+		"source" : "libs/sdl"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"name" : "src",
+			"sourceIndexes" : 
+			[
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18,
+				19
+			]
+		},
+		{
+			"name" : "src\\atomic",
+			"sourceIndexes" : 
+			[
+				20,
+				21
+			]
+		},
+		{
+			"name" : "src\\audio",
+			"sourceIndexes" : 
+			[
+				22,
+				23,
+				24,
+				25,
+				26,
+				27,
+				28,
+				29,
+				30,
+				31,
+				32,
+				33,
+				34,
+				35,
+				36
+			]
+		},
+		{
+			"name" : "src\\camera",
+			"sourceIndexes" : 
+			[
+				37,
+				38,
+				39
+			]
+		},
+		{
+			"name" : "src\\core",
+			"sourceIndexes" : 
+			[
+				40
+			]
+		},
+		{
+			"name" : "src\\cpuinfo",
+			"sourceIndexes" : 
+			[
+				41,
+				42
+			]
+		},
+		{
+			"name" : "src\\dynapi",
+			"sourceIndexes" : 
+			[
+				43,
+				44,
+				45,
+				46,
+				47,
+				48
+			]
+		},
+		{
+			"name" : "src\\events",
+			"sourceIndexes" : 
+			[
+				49,
+				50,
+				51,
+				52,
+				53,
+				54,
+				55,
+				56,
+				57,
+				58,
+				59,
+				60,
+				61,
+				62,
+				63,
+				64,
+				65,
+				66,
+				67,
+				68,
+				69,
+				70,
+				71,
+				72,
+				73,
+				74,
+				75,
+				76,
+				77,
+				78,
+				79,
+				80,
+				81,
+				82,
+				83,
+				84,
+				85,
+				86,
+				87
+			]
+		},
+		{
+			"name" : "src\\filesystem",
+			"sourceIndexes" : 
+			[
+				88,
+				89,
+				90
+			]
+		},
+		{
+			"name" : "src\\gpu",
+			"sourceIndexes" : 
+			[
+				91,
+				92
+			]
+		},
+		{
+			"name" : "src\\haptic",
+			"sourceIndexes" : 
+			[
+				93,
+				94,
+				95
+			]
+		},
+		{
+			"name" : "src\\hidapi",
+			"sourceIndexes" : 
+			[
+				96,
+				97,
+				98,
+				99,
+				100,
+				101,
+				102,
+				103,
+				104,
+				105
+			]
+		},
+		{
+			"name" : "src\\io",
+			"sourceIndexes" : 
+			[
+				106,
+				107,
+				108,
+				109,
+				110
+			]
+		},
+		{
+			"name" : "src\\io\\generic",
+			"sourceIndexes" : 
+			[
+				111
+			]
+		},
+		{
+			"name" : "src\\joystick",
+			"sourceIndexes" : 
+			[
+				112,
+				113,
+				114,
+				115,
+				116,
+				117,
+				118,
+				119,
+				120,
+				121,
+				122,
+				123
+			]
+		},
+		{
+			"name" : "src\\locale",
+			"sourceIndexes" : 
+			[
+				124,
+				125
+			]
+		},
+		{
+			"name" : "src\\main",
+			"sourceIndexes" : 
+			[
+				126,
+				127,
+				128
+			]
+		},
+		{
+			"name" : "src\\misc",
+			"sourceIndexes" : 
+			[
+				129,
+				130,
+				131,
+				132
+			]
+		},
+		{
+			"name" : "src\\power",
+			"sourceIndexes" : 
+			[
+				133,
+				134
+			]
+		},
+		{
+			"name" : "src\\render",
+			"sourceIndexes" : 
+			[
+				135,
+				136,
+				137,
+				138,
+				139,
+				140,
+				141,
+				142
+			]
+		},
+		{
+			"name" : "src\\render\\direct3d",
+			"sourceIndexes" : 
+			[
+				143,
+				144,
+				145,
+				146
+			]
+		},
+		{
+			"name" : "src\\render\\direct3d11",
+			"sourceIndexes" : 
+			[
+				147,
+				148,
+				149,
+				150,
+				151,
+				152,
+				153
+			]
+		},
+		{
+			"name" : "src\\render\\direct3d12",
+			"sourceIndexes" : 
+			[
+				154,
+				155,
+				156,
+				157,
+				158,
+				159,
+				160,
+				161,
+				162,
+				163,
+				164,
+				165,
+				166
+			]
+		},
+		{
+			"name" : "src\\render\\gpu",
+			"sourceIndexes" : 
+			[
+				167,
+				168,
+				169,
+				170,
+				171,
+				172
+			]
+		},
+		{
+			"name" : "src\\render\\metal",
+			"sourceIndexes" : 
+			[
+				173,
+				174,
+				175,
+				176,
+				177,
+				378
+			]
+		},
+		{
+			"name" : "src\\render\\ngage",
+			"sourceIndexes" : 
+			[
+				178,
+				179
+			]
+		},
+		{
+			"name" : "src\\render\\opengl",
+			"sourceIndexes" : 
+			[
+				180,
+				181,
+				182,
+				183
+			]
+		},
+		{
+			"name" : "src\\render\\opengles2",
+			"sourceIndexes" : 
+			[
+				184,
+				185,
+				186,
+				187
+			]
+		},
+		{
+			"name" : "src\\render\\ps2",
+			"sourceIndexes" : 
+			[
+				188
+			]
+		},
+		{
+			"name" : "src\\render\\psp",
+			"sourceIndexes" : 
+			[
+				189,
+				190
+			]
+		},
+		{
+			"name" : "src\\render\\software",
+			"sourceIndexes" : 
+			[
+				191,
+				192,
+				193,
+				194,
+				195,
+				196,
+				197,
+				198,
+				199,
+				200,
+				201,
+				202,
+				203,
+				204,
+				205,
+				206,
+				207
+			]
+		},
+		{
+			"name" : "src\\render\\vitagxm",
+			"sourceIndexes" : 
+			[
+				208,
+				209,
+				210,
+				211,
+				212,
+				213,
+				214
+			]
+		},
+		{
+			"name" : "src\\render\\vulkan",
+			"sourceIndexes" : 
+			[
+				215,
+				216,
+				217,
+				218,
+				219,
+				220,
+				221
+			]
+		},
+		{
+			"name" : "src\\sensor",
+			"sourceIndexes" : 
+			[
+				222,
+				223,
+				224
+			]
+		},
+		{
+			"name" : "src\\stdlib",
+			"sourceIndexes" : 
+			[
+				225,
+				226,
+				227,
+				228,
+				229,
+				230,
+				231,
+				232,
+				233,
+				234,
+				235,
+				236,
+				237,
+				238,
+				239,
+				240,
+				241,
+				242,
+				243
+			]
+		},
+		{
+			"name" : "src\\storage",
+			"sourceIndexes" : 
+			[
+				244,
+				245
+			]
+		},
+		{
+			"name" : "src\\thread",
+			"sourceIndexes" : 
+			[
+				246,
+				247,
+				248
+			]
+		},
+		{
+			"name" : "src\\time",
+			"sourceIndexes" : 
+			[
+				249,
+				250
+			]
+		},
+		{
+			"name" : "src\\timer",
+			"sourceIndexes" : 
+			[
+				251,
+				252
+			]
+		},
+		{
+			"name" : "src\\video",
+			"sourceIndexes" : 
+			[
+				253,
+				254,
+				255,
+				256,
+				257,
+				258,
+				259,
+				260,
+				261,
+				262,
+				263,
+				264,
+				265,
+				266,
+				267,
+				268,
+				269,
+				270,
+				271,
+				272,
+				273,
+				274,
+				275,
+				276,
+				277,
+				278,
+				279,
+				280,
+				281,
+				282,
+				283,
+				284,
+				285,
+				286,
+				287,
+				288,
+				289,
+				290,
+				291,
+				292
+			]
+		},
+		{
+			"name" : "src\\video\\yuv2rgb",
+			"sourceIndexes" : 
+			[
+				293,
+				294,
+				295,
+				296,
+				297,
+				298,
+				299,
+				300,
+				301,
+				302,
+				303,
+				304
+			]
+		},
+		{
+			"name" : "src\\audio\\dummy",
+			"sourceIndexes" : 
+			[
+				305,
+				306
+			]
+		},
+		{
+			"name" : "src\\audio\\disk",
+			"sourceIndexes" : 
+			[
+				307,
+				308
+			]
+		},
+		{
+			"name" : "src\\camera\\dummy",
+			"sourceIndexes" : 
+			[
+				309
+			]
+		},
+		{
+			"name" : "src\\loadso\\dlopen",
+			"sourceIndexes" : 
+			[
+				310
+			]
+		},
+		{
+			"name" : "src\\joystick\\virtual",
+			"sourceIndexes" : 
+			[
+				311,
+				312
+			]
+		},
+		{
+			"name" : "src\\video\\dummy",
+			"sourceIndexes" : 
+			[
+				313,
+				314,
+				315,
+				316,
+				317,
+				318
+			]
+		},
+		{
+			"name" : "src\\camera\\coremedia",
+			"sourceIndexes" : 
+			[
+				319
+			]
+		},
+		{
+			"name" : "src\\misc\\macos",
+			"sourceIndexes" : 
+			[
+				320
+			]
+		},
+		{
+			"name" : "src\\audio\\coreaudio",
+			"sourceIndexes" : 
+			[
+				321,
+				322
+			]
+		},
+		{
+			"name" : "src\\joystick\\hidapi",
+			"sourceIndexes" : 
+			[
+				323,
+				324,
+				325,
+				326,
+				327,
+				328,
+				329,
+				330,
+				331,
+				332,
+				333,
+				334,
+				335,
+				336,
+				337,
+				338,
+				339,
+				340,
+				341,
+				342,
+				343,
+				344,
+				345,
+				346
+			]
+		},
+		{
+			"name" : "src\\haptic\\hidapi",
+			"sourceIndexes" : 
+			[
+				347,
+				348
+			]
+		},
+		{
+			"name" : "src\\joystick\\apple",
+			"sourceIndexes" : 
+			[
+				349,
+				350
+			]
+		},
+		{
+			"name" : "src\\joystick\\darwin",
+			"sourceIndexes" : 
+			[
+				351,
+				352
+			]
+		},
+		{
+			"name" : "src\\haptic\\darwin",
+			"sourceIndexes" : 
+			[
+				353,
+				354
+			]
+		},
+		{
+			"name" : "src\\power\\macos",
+			"sourceIndexes" : 
+			[
+				355
+			]
+		},
+		{
+			"name" : "src\\locale\\macos",
+			"sourceIndexes" : 
+			[
+				356
+			]
+		},
+		{
+			"name" : "src\\time\\unix",
+			"sourceIndexes" : 
+			[
+				357
+			]
+		},
+		{
+			"name" : "src\\timer\\unix",
+			"sourceIndexes" : 
+			[
+				358
+			]
+		},
+		{
+			"name" : "src\\filesystem\\cocoa",
+			"sourceIndexes" : 
+			[
+				359
+			]
+		},
+		{
+			"name" : "src\\storage\\generic",
+			"sourceIndexes" : 
+			[
+				360
+			]
+		},
+		{
+			"name" : "src\\storage\\steam",
+			"sourceIndexes" : 
+			[
+				361,
+				362
+			]
+		},
+		{
+			"name" : "src\\filesystem\\posix",
+			"sourceIndexes" : 
+			[
+				363
+			]
+		},
+		{
+			"name" : "src\\video\\cocoa",
+			"sourceIndexes" : 
+			[
+				364,
+				365,
+				366,
+				367,
+				368,
+				369,
+				370,
+				371,
+				372,
+				373,
+				374,
+				375,
+				376,
+				377
+			]
+		},
+		{
+			"name" : "src\\gpu\\metal",
+			"sourceIndexes" : 
+			[
+				379,
+				380
+			]
+		},
+		{
+			"name" : "src\\tray\\cocoa",
+			"sourceIndexes" : 
+			[
+				381
+			]
+		},
+		{
+			"name" : "src\\thread\\pthread",
+			"sourceIndexes" : 
+			[
+				382,
+				383,
+				384,
+				385,
+				386,
+				387
+			]
+		},
+		{
+			"name" : "src\\dialog",
+			"sourceIndexes" : 
+			[
+				388,
+				389
+			]
+		},
+		{
+			"name" : "src\\dialog\\cocoa",
+			"sourceIndexes" : 
+			[
+				390
+			]
+		},
+		{
+			"name" : "src\\process",
+			"sourceIndexes" : 
+			[
+				391
+			]
+		},
+		{
+			"name" : "src\\process\\posix",
+			"sourceIndexes" : 
+			[
+				392
+			]
+		},
+		{
+			"name" : "src\\video\\offscreen",
+			"sourceIndexes" : 
+			[
+				393,
+				394,
+				395,
+				396,
+				397,
+				398,
+				399,
+				400,
+				401,
+				402,
+				403,
+				404
+			]
+		},
+		{
+			"name" : "src\\tray",
+			"sourceIndexes" : 
+			[
+				405
+			]
+		},
+		{
+			"name" : "src\\gpu\\vulkan",
+			"sourceIndexes" : 
+			[
+				406,
+				407
+			]
+		},
+		{
+			"name" : "src\\sensor\\dummy",
+			"sourceIndexes" : 
+			[
+				408,
+				409
+			]
+		},
+		{
+			"name" : "src\\main\\generic",
+			"sourceIndexes" : 
+			[
+				410
+			]
+		},
+		{
+			"name" : "include\\SDL3",
+			"sourceIndexes" : 
+			[
+				411,
+				412,
+				413,
+				414,
+				415,
+				416,
+				417,
+				418,
+				419,
+				420,
+				421,
+				422,
+				423,
+				424,
+				425,
+				426,
+				427,
+				428,
+				429,
+				430,
+				431,
+				432,
+				433,
+				434,
+				435,
+				436,
+				437,
+				438,
+				439,
+				440,
+				441,
+				442,
+				443,
+				444,
+				445,
+				446,
+				447,
+				448,
+				449,
+				450,
+				451,
+				452,
+				453,
+				454,
+				455,
+				456,
+				457,
+				458,
+				459,
+				460,
+				461,
+				462,
+				463,
+				464,
+				465,
+				466,
+				467,
+				468,
+				469,
+				470,
+				471,
+				472,
+				473,
+				474,
+				475,
+				476,
+				477,
+				478,
+				479,
+				480,
+				481,
+				482,
+				483
+			]
+		},
+		{
+			"name" : "Header Files",
+			"sourceIndexes" : 
+			[
+				484
+			]
+		},
+		{
+			"name" : "Precompile Header File",
+			"sourceIndexes" : 
+			[
+				485
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 0,
+			"compileGroupIndex" : 0,
+			"path" : "build/libs/sdl/CMakeFiles/SDL3-shared.dir/cmake_pch.h.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/SDL.c",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/SDL_assert.c",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/SDL_assert_c.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/SDL_error.c",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/SDL_error_c.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/SDL_guid.c",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/SDL_hashtable.c",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/SDL_hashtable.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/SDL_hints.c",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/SDL_hints_c.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/SDL_internal.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/SDL_list.c",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/SDL_list.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/SDL_log.c",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/SDL_log_c.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/SDL_properties.c",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/SDL_properties_c.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/SDL_utils.c",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/SDL_utils_c.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/atomic/SDL_atomic.c",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/atomic/SDL_spinlock.c",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/audio/SDL_audio.c",
+			"sourceGroupIndex" : 3
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/audio/SDL_audio_c.h",
+			"sourceGroupIndex" : 3
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/audio/SDL_audio_channel_converters.h",
+			"sourceGroupIndex" : 3
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/audio/SDL_audiocvt.c",
+			"sourceGroupIndex" : 3
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/audio/SDL_audiodev.c",
+			"sourceGroupIndex" : 3
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/audio/SDL_audiodev_c.h",
+			"sourceGroupIndex" : 3
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/audio/SDL_audioqueue.c",
+			"sourceGroupIndex" : 3
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/audio/SDL_audioqueue.h",
+			"sourceGroupIndex" : 3
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/audio/SDL_audioresample.c",
+			"sourceGroupIndex" : 3
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/audio/SDL_audioresample.h",
+			"sourceGroupIndex" : 3
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/audio/SDL_audiotypecvt.c",
+			"sourceGroupIndex" : 3
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/audio/SDL_mixer.c",
+			"sourceGroupIndex" : 3
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/audio/SDL_sysaudio.h",
+			"sourceGroupIndex" : 3
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/audio/SDL_wave.c",
+			"sourceGroupIndex" : 3
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/audio/SDL_wave.h",
+			"sourceGroupIndex" : 3
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/camera/SDL_camera.c",
+			"sourceGroupIndex" : 4
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/camera/SDL_camera_c.h",
+			"sourceGroupIndex" : 4
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/camera/SDL_syscamera.h",
+			"sourceGroupIndex" : 4
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/core/SDL_core_unsupported.c",
+			"sourceGroupIndex" : 5
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/cpuinfo/SDL_cpuinfo.c",
+			"sourceGroupIndex" : 6
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/cpuinfo/SDL_cpuinfo_c.h",
+			"sourceGroupIndex" : 6
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 2,
+			"path" : "libs/sdl/src/dynapi/SDL_dynapi.c",
+			"sourceGroupIndex" : 7
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/dynapi/SDL_dynapi.h",
+			"sourceGroupIndex" : 7
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/dynapi/SDL_dynapi_dlopennote.h",
+			"sourceGroupIndex" : 7
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/dynapi/SDL_dynapi_overrides.h",
+			"sourceGroupIndex" : 7
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/dynapi/SDL_dynapi_procs.h",
+			"sourceGroupIndex" : 7
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/dynapi/SDL_dynapi_unsupported.h",
+			"sourceGroupIndex" : 7
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/events/SDL_categories.c",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/events/SDL_categories_c.h",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/events/SDL_clipboardevents.c",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/events/SDL_clipboardevents_c.h",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/events/SDL_displayevents.c",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/events/SDL_displayevents_c.h",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/events/SDL_dropevents.c",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/events/SDL_dropevents_c.h",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/events/SDL_events.c",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/events/SDL_events_c.h",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/events/SDL_eventwatch.c",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/events/SDL_eventwatch_c.h",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/events/SDL_keyboard.c",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/events/SDL_keyboard_c.h",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/events/SDL_keymap.c",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/events/SDL_keymap_c.h",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/events/SDL_keysym_to_keycode.c",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/events/SDL_keysym_to_keycode_c.h",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/events/SDL_keysym_to_scancode.c",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/events/SDL_keysym_to_scancode_c.h",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/events/SDL_mouse.c",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/events/SDL_mouse_c.h",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/events/SDL_pen.c",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/events/SDL_pen_c.h",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/events/SDL_quit.c",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/events/SDL_scancode_tables.c",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/events/SDL_scancode_tables_c.h",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/events/SDL_touch.c",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/events/SDL_touch_c.h",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/events/SDL_windowevents.c",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/events/SDL_windowevents_c.h",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/events/blank_cursor.h",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/events/default_cursor.h",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/events/imKStoUCS.c",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/events/imKStoUCS.h",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/events/scancodes_darwin.h",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/events/scancodes_linux.h",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/events/scancodes_windows.h",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/events/scancodes_xfree86.h",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/filesystem/SDL_filesystem.c",
+			"sourceGroupIndex" : 9
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/filesystem/SDL_filesystem_c.h",
+			"sourceGroupIndex" : 9
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/filesystem/SDL_sysfilesystem.h",
+			"sourceGroupIndex" : 9
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/gpu/SDL_gpu.c",
+			"sourceGroupIndex" : 10
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/gpu/SDL_sysgpu.h",
+			"sourceGroupIndex" : 10
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/haptic/SDL_haptic.c",
+			"sourceGroupIndex" : 11
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/haptic/SDL_haptic_c.h",
+			"sourceGroupIndex" : 11
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/haptic/SDL_syshaptic.h",
+			"sourceGroupIndex" : 11
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/hidapi/SDL_hidapi.c",
+			"sourceGroupIndex" : 12
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/hidapi/SDL_hidapi_android.h",
+			"sourceGroupIndex" : 12
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/hidapi/SDL_hidapi_c.h",
+			"sourceGroupIndex" : 12
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/hidapi/SDL_hidapi_ios.h",
+			"sourceGroupIndex" : 12
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/hidapi/SDL_hidapi_libusb.h",
+			"sourceGroupIndex" : 12
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/hidapi/SDL_hidapi_linux.h",
+			"sourceGroupIndex" : 12
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/hidapi/SDL_hidapi_mac.h",
+			"sourceGroupIndex" : 12
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/hidapi/SDL_hidapi_netbsd.h",
+			"sourceGroupIndex" : 12
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/hidapi/SDL_hidapi_steamxbox.h",
+			"sourceGroupIndex" : 12
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/hidapi/SDL_hidapi_windows.h",
+			"sourceGroupIndex" : 12
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/io/SDL_asyncio.c",
+			"sourceGroupIndex" : 13
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/io/SDL_asyncio_c.h",
+			"sourceGroupIndex" : 13
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/io/SDL_iostream.c",
+			"sourceGroupIndex" : 13
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/io/SDL_iostream_c.h",
+			"sourceGroupIndex" : 13
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/io/SDL_sysasyncio.h",
+			"sourceGroupIndex" : 13
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/io/generic/SDL_asyncio_generic.c",
+			"sourceGroupIndex" : 14
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/joystick/SDL_gamepad.c",
+			"sourceGroupIndex" : 15
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/joystick/SDL_gamepad_c.h",
+			"sourceGroupIndex" : 15
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/joystick/SDL_gamepad_db.h",
+			"sourceGroupIndex" : 15
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/joystick/SDL_joystick.c",
+			"sourceGroupIndex" : 15
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/joystick/SDL_joystick_c.h",
+			"sourceGroupIndex" : 15
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/joystick/SDL_steam_virtual_gamepad.c",
+			"sourceGroupIndex" : 15
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/joystick/SDL_steam_virtual_gamepad.h",
+			"sourceGroupIndex" : 15
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/joystick/SDL_sysjoystick.h",
+			"sourceGroupIndex" : 15
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/joystick/controller_list.h",
+			"sourceGroupIndex" : 15
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/joystick/controller_type.c",
+			"sourceGroupIndex" : 15
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/joystick/controller_type.h",
+			"sourceGroupIndex" : 15
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/joystick/usb_ids.h",
+			"sourceGroupIndex" : 15
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/locale/SDL_locale.c",
+			"sourceGroupIndex" : 16
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/locale/SDL_syslocale.h",
+			"sourceGroupIndex" : 16
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/main/SDL_main_callbacks.c",
+			"sourceGroupIndex" : 17
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/main/SDL_main_callbacks.h",
+			"sourceGroupIndex" : 17
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/main/SDL_runapp.c",
+			"sourceGroupIndex" : 17
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/misc/SDL_libusb.c",
+			"sourceGroupIndex" : 18
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/misc/SDL_libusb.h",
+			"sourceGroupIndex" : 18
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/misc/SDL_sysurl.h",
+			"sourceGroupIndex" : 18
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/misc/SDL_url.c",
+			"sourceGroupIndex" : 18
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/power/SDL_power.c",
+			"sourceGroupIndex" : 19
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/power/SDL_syspower.h",
+			"sourceGroupIndex" : 19
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/render/SDL_d3dmath.c",
+			"sourceGroupIndex" : 20
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/SDL_d3dmath.h",
+			"sourceGroupIndex" : 20
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/render/SDL_render.c",
+			"sourceGroupIndex" : 20
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/SDL_render_debug_font.h",
+			"sourceGroupIndex" : 20
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/render/SDL_render_unsupported.c",
+			"sourceGroupIndex" : 20
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/SDL_sysrender.h",
+			"sourceGroupIndex" : 20
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/render/SDL_yuv_sw.c",
+			"sourceGroupIndex" : 20
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/SDL_yuv_sw_c.h",
+			"sourceGroupIndex" : 20
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/direct3d/D3D9_PixelShader_YUV.h",
+			"sourceGroupIndex" : 21
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/render/direct3d/SDL_render_d3d.c",
+			"sourceGroupIndex" : 21
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/render/direct3d/SDL_shaders_d3d.c",
+			"sourceGroupIndex" : 21
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/direct3d/SDL_shaders_d3d.h",
+			"sourceGroupIndex" : 21
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/direct3d11/D3D11_PixelShader_Advanced.h",
+			"sourceGroupIndex" : 22
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/direct3d11/D3D11_PixelShader_Colors.h",
+			"sourceGroupIndex" : 22
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/direct3d11/D3D11_PixelShader_Textures.h",
+			"sourceGroupIndex" : 22
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/direct3d11/D3D11_VertexShader.h",
+			"sourceGroupIndex" : 22
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/render/direct3d11/SDL_render_d3d11.c",
+			"sourceGroupIndex" : 22
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/render/direct3d11/SDL_shaders_d3d11.c",
+			"sourceGroupIndex" : 22
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/direct3d11/SDL_shaders_d3d11.h",
+			"sourceGroupIndex" : 22
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/direct3d12/D3D12_PixelShader_Advanced.h",
+			"sourceGroupIndex" : 23
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/direct3d12/D3D12_PixelShader_Colors.h",
+			"sourceGroupIndex" : 23
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/direct3d12/D3D12_PixelShader_Textures.h",
+			"sourceGroupIndex" : 23
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/direct3d12/D3D12_RootSig_Advanced.h",
+			"sourceGroupIndex" : 23
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/direct3d12/D3D12_RootSig_Color.h",
+			"sourceGroupIndex" : 23
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/direct3d12/D3D12_RootSig_Texture.h",
+			"sourceGroupIndex" : 23
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/direct3d12/D3D12_VertexShader_Advanced.h",
+			"sourceGroupIndex" : 23
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/direct3d12/D3D12_VertexShader_Color.h",
+			"sourceGroupIndex" : 23
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/direct3d12/D3D12_VertexShader_Texture.h",
+			"sourceGroupIndex" : 23
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/render/direct3d12/SDL_render_d3d12.c",
+			"sourceGroupIndex" : 23
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/direct3d12/SDL_render_d3d12_xbox.h",
+			"sourceGroupIndex" : 23
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/render/direct3d12/SDL_shaders_d3d12.c",
+			"sourceGroupIndex" : 23
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/direct3d12/SDL_shaders_d3d12.h",
+			"sourceGroupIndex" : 23
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/gpu/SDL_gpu_util.h",
+			"sourceGroupIndex" : 24
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/render/gpu/SDL_pipeline_gpu.c",
+			"sourceGroupIndex" : 24
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/gpu/SDL_pipeline_gpu.h",
+			"sourceGroupIndex" : 24
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/render/gpu/SDL_render_gpu.c",
+			"sourceGroupIndex" : 24
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/render/gpu/SDL_shaders_gpu.c",
+			"sourceGroupIndex" : 24
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/gpu/SDL_shaders_gpu.h",
+			"sourceGroupIndex" : 24
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/metal/SDL_shaders_metal_ios.h",
+			"sourceGroupIndex" : 25
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/metal/SDL_shaders_metal_iphonesimulator.h",
+			"sourceGroupIndex" : 25
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/metal/SDL_shaders_metal_macos.h",
+			"sourceGroupIndex" : 25
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/metal/SDL_shaders_metal_tvos.h",
+			"sourceGroupIndex" : 25
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/metal/SDL_shaders_metal_tvsimulator.h",
+			"sourceGroupIndex" : 25
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/render/ngage/SDL_render_ngage.c",
+			"sourceGroupIndex" : 26
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/ngage/SDL_render_ngage_c.h",
+			"sourceGroupIndex" : 26
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/opengl/SDL_glfuncs.h",
+			"sourceGroupIndex" : 27
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/render/opengl/SDL_render_gl.c",
+			"sourceGroupIndex" : 27
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/render/opengl/SDL_shaders_gl.c",
+			"sourceGroupIndex" : 27
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/opengl/SDL_shaders_gl.h",
+			"sourceGroupIndex" : 27
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/opengles2/SDL_gles2funcs.h",
+			"sourceGroupIndex" : 28
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/render/opengles2/SDL_render_gles2.c",
+			"sourceGroupIndex" : 28
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/render/opengles2/SDL_shaders_gles2.c",
+			"sourceGroupIndex" : 28
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/opengles2/SDL_shaders_gles2.h",
+			"sourceGroupIndex" : 28
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/render/ps2/SDL_render_ps2.c",
+			"sourceGroupIndex" : 29
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/render/psp/SDL_render_psp.c",
+			"sourceGroupIndex" : 30
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/psp/SDL_render_psp_c.h",
+			"sourceGroupIndex" : 30
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/render/software/SDL_blendfillrect.c",
+			"sourceGroupIndex" : 31
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/software/SDL_blendfillrect.h",
+			"sourceGroupIndex" : 31
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/render/software/SDL_blendline.c",
+			"sourceGroupIndex" : 31
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/software/SDL_blendline.h",
+			"sourceGroupIndex" : 31
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/render/software/SDL_blendpoint.c",
+			"sourceGroupIndex" : 31
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/software/SDL_blendpoint.h",
+			"sourceGroupIndex" : 31
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/software/SDL_draw.h",
+			"sourceGroupIndex" : 31
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/render/software/SDL_drawline.c",
+			"sourceGroupIndex" : 31
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/software/SDL_drawline.h",
+			"sourceGroupIndex" : 31
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/render/software/SDL_drawpoint.c",
+			"sourceGroupIndex" : 31
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/software/SDL_drawpoint.h",
+			"sourceGroupIndex" : 31
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/render/software/SDL_render_sw.c",
+			"sourceGroupIndex" : 31
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/software/SDL_render_sw_c.h",
+			"sourceGroupIndex" : 31
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/render/software/SDL_rotate.c",
+			"sourceGroupIndex" : 31
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/software/SDL_rotate.h",
+			"sourceGroupIndex" : 31
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/render/software/SDL_triangle.c",
+			"sourceGroupIndex" : 31
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/software/SDL_triangle.h",
+			"sourceGroupIndex" : 31
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/render/vitagxm/SDL_render_vita_gxm.c",
+			"sourceGroupIndex" : 32
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/render/vitagxm/SDL_render_vita_gxm_memory.c",
+			"sourceGroupIndex" : 32
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/vitagxm/SDL_render_vita_gxm_memory.h",
+			"sourceGroupIndex" : 32
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/vitagxm/SDL_render_vita_gxm_shaders.h",
+			"sourceGroupIndex" : 32
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/render/vitagxm/SDL_render_vita_gxm_tools.c",
+			"sourceGroupIndex" : 32
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/vitagxm/SDL_render_vita_gxm_tools.h",
+			"sourceGroupIndex" : 32
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/vitagxm/SDL_render_vita_gxm_types.h",
+			"sourceGroupIndex" : 32
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/render/vulkan/SDL_render_vulkan.c",
+			"sourceGroupIndex" : 33
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/render/vulkan/SDL_shaders_vulkan.c",
+			"sourceGroupIndex" : 33
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/vulkan/SDL_shaders_vulkan.h",
+			"sourceGroupIndex" : 33
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/vulkan/VULKAN_PixelShader_Advanced.h",
+			"sourceGroupIndex" : 33
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/vulkan/VULKAN_PixelShader_Colors.h",
+			"sourceGroupIndex" : 33
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/vulkan/VULKAN_PixelShader_Textures.h",
+			"sourceGroupIndex" : 33
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/render/vulkan/VULKAN_VertexShader.h",
+			"sourceGroupIndex" : 33
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/sensor/SDL_sensor.c",
+			"sourceGroupIndex" : 34
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/sensor/SDL_sensor_c.h",
+			"sourceGroupIndex" : 34
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/sensor/SDL_syssensor.h",
+			"sourceGroupIndex" : 34
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/stdlib/SDL_casefolding.h",
+			"sourceGroupIndex" : 35
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/stdlib/SDL_crc16.c",
+			"sourceGroupIndex" : 35
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/stdlib/SDL_crc32.c",
+			"sourceGroupIndex" : 35
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/stdlib/SDL_getenv.c",
+			"sourceGroupIndex" : 35
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/stdlib/SDL_getenv_c.h",
+			"sourceGroupIndex" : 35
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/stdlib/SDL_iconv.c",
+			"sourceGroupIndex" : 35
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/stdlib/SDL_malloc.c",
+			"sourceGroupIndex" : 35
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/stdlib/SDL_memcpy.c",
+			"sourceGroupIndex" : 35
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/stdlib/SDL_memmove.c",
+			"sourceGroupIndex" : 35
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/stdlib/SDL_memset.c",
+			"sourceGroupIndex" : 35
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/stdlib/SDL_mslibc.c",
+			"sourceGroupIndex" : 35
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/stdlib/SDL_murmur3.c",
+			"sourceGroupIndex" : 35
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/stdlib/SDL_qsort.c",
+			"sourceGroupIndex" : 35
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/stdlib/SDL_random.c",
+			"sourceGroupIndex" : 35
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/stdlib/SDL_stdlib.c",
+			"sourceGroupIndex" : 35
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/stdlib/SDL_string.c",
+			"sourceGroupIndex" : 35
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/stdlib/SDL_strtokr.c",
+			"sourceGroupIndex" : 35
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/stdlib/SDL_sysstdlib.h",
+			"sourceGroupIndex" : 35
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/stdlib/SDL_vacopy.h",
+			"sourceGroupIndex" : 35
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/storage/SDL_storage.c",
+			"sourceGroupIndex" : 36
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/storage/SDL_sysstorage.h",
+			"sourceGroupIndex" : 36
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/thread/SDL_systhread.h",
+			"sourceGroupIndex" : 37
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/thread/SDL_thread.c",
+			"sourceGroupIndex" : 37
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/thread/SDL_thread_c.h",
+			"sourceGroupIndex" : 37
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/time/SDL_time.c",
+			"sourceGroupIndex" : 38
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/time/SDL_time_c.h",
+			"sourceGroupIndex" : 38
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/timer/SDL_timer.c",
+			"sourceGroupIndex" : 39
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/timer/SDL_timer_c.h",
+			"sourceGroupIndex" : 39
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/SDL_RLEaccel.c",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/video/SDL_RLEaccel_c.h",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/SDL_blit.c",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/video/SDL_blit.h",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/SDL_blit_0.c",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/SDL_blit_1.c",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/SDL_blit_A.c",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/SDL_blit_N.c",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/SDL_blit_auto.c",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/video/SDL_blit_auto.h",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/SDL_blit_copy.c",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/video/SDL_blit_copy.h",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/SDL_blit_slow.c",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/video/SDL_blit_slow.h",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/SDL_bmp.c",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/SDL_clipboard.c",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/video/SDL_clipboard_c.h",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/SDL_egl.c",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/video/SDL_egl_c.h",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/SDL_fillrect.c",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/SDL_pixels.c",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/video/SDL_pixels_c.h",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/SDL_rect.c",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/video/SDL_rect_c.h",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/video/SDL_rect_impl.h",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/SDL_stb.c",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/video/SDL_stb_c.h",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/SDL_stretch.c",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/SDL_surface.c",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/video/SDL_surface_c.h",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/video/SDL_sysvideo.h",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/SDL_video.c",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/video/SDL_video_c.h",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/SDL_video_unsupported.c",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/video/SDL_vulkan_internal.h",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/SDL_vulkan_utils.c",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/SDL_yuv.c",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/video/SDL_yuv_c.h",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/video/stb_image.h",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/video/stb_image_write.h",
+			"sourceGroupIndex" : 40
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/video/yuv2rgb/yuv_rgb.h",
+			"sourceGroupIndex" : 41
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/video/yuv2rgb/yuv_rgb_common.h",
+			"sourceGroupIndex" : 41
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/video/yuv2rgb/yuv_rgb_internal.h",
+			"sourceGroupIndex" : 41
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/yuv2rgb/yuv_rgb_lsx.c",
+			"sourceGroupIndex" : 41
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/video/yuv2rgb/yuv_rgb_lsx.h",
+			"sourceGroupIndex" : 41
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/video/yuv2rgb/yuv_rgb_lsx_func.h",
+			"sourceGroupIndex" : 41
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/yuv2rgb/yuv_rgb_sse.c",
+			"sourceGroupIndex" : 41
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/video/yuv2rgb/yuv_rgb_sse.h",
+			"sourceGroupIndex" : 41
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/video/yuv2rgb/yuv_rgb_sse_func.h",
+			"sourceGroupIndex" : 41
+		},
+		{
+			"backtrace" : 65,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/yuv2rgb/yuv_rgb_std.c",
+			"sourceGroupIndex" : 41
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/video/yuv2rgb/yuv_rgb_std.h",
+			"sourceGroupIndex" : 41
+		},
+		{
+			"backtrace" : 65,
+			"path" : "libs/sdl/src/video/yuv2rgb/yuv_rgb_std_func.h",
+			"sourceGroupIndex" : 41
+		},
+		{
+			"backtrace" : 67,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/audio/dummy/SDL_dummyaudio.c",
+			"sourceGroupIndex" : 42
+		},
+		{
+			"backtrace" : 67,
+			"path" : "libs/sdl/src/audio/dummy/SDL_dummyaudio.h",
+			"sourceGroupIndex" : 42
+		},
+		{
+			"backtrace" : 69,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/audio/disk/SDL_diskaudio.c",
+			"sourceGroupIndex" : 43
+		},
+		{
+			"backtrace" : 69,
+			"path" : "libs/sdl/src/audio/disk/SDL_diskaudio.h",
+			"sourceGroupIndex" : 43
+		},
+		{
+			"backtrace" : 71,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/camera/dummy/SDL_camera_dummy.c",
+			"sourceGroupIndex" : 44
+		},
+		{
+			"backtrace" : 73,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/loadso/dlopen/SDL_sysloadso.c",
+			"sourceGroupIndex" : 45
+		},
+		{
+			"backtrace" : 75,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/joystick/virtual/SDL_virtualjoystick.c",
+			"sourceGroupIndex" : 46
+		},
+		{
+			"backtrace" : 75,
+			"path" : "libs/sdl/src/joystick/virtual/SDL_virtualjoystick_c.h",
+			"sourceGroupIndex" : 46
+		},
+		{
+			"backtrace" : 77,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/dummy/SDL_nullevents.c",
+			"sourceGroupIndex" : 47
+		},
+		{
+			"backtrace" : 77,
+			"path" : "libs/sdl/src/video/dummy/SDL_nullevents_c.h",
+			"sourceGroupIndex" : 47
+		},
+		{
+			"backtrace" : 77,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/dummy/SDL_nullframebuffer.c",
+			"sourceGroupIndex" : 47
+		},
+		{
+			"backtrace" : 77,
+			"path" : "libs/sdl/src/video/dummy/SDL_nullframebuffer_c.h",
+			"sourceGroupIndex" : 47
+		},
+		{
+			"backtrace" : 77,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/dummy/SDL_nullvideo.c",
+			"sourceGroupIndex" : 47
+		},
+		{
+			"backtrace" : 77,
+			"path" : "libs/sdl/src/video/dummy/SDL_nullvideo.h",
+			"sourceGroupIndex" : 47
+		},
+		{
+			"backtrace" : 79,
+			"compileGroupIndex" : 3,
+			"path" : "libs/sdl/src/camera/coremedia/SDL_camera_coremedia.m",
+			"sourceGroupIndex" : 48
+		},
+		{
+			"backtrace" : 81,
+			"compileGroupIndex" : 3,
+			"path" : "libs/sdl/src/misc/macos/SDL_sysurl.m",
+			"sourceGroupIndex" : 49
+		},
+		{
+			"backtrace" : 83,
+			"path" : "libs/sdl/src/audio/coreaudio/SDL_coreaudio.h",
+			"sourceGroupIndex" : 50
+		},
+		{
+			"backtrace" : 83,
+			"compileGroupIndex" : 3,
+			"path" : "libs/sdl/src/audio/coreaudio/SDL_coreaudio.m",
+			"sourceGroupIndex" : 50
+		},
+		{
+			"backtrace" : 86,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/joystick/hidapi/SDL_hidapi_8bitdo.c",
+			"sourceGroupIndex" : 51
+		},
+		{
+			"backtrace" : 86,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/joystick/hidapi/SDL_hidapi_combined.c",
+			"sourceGroupIndex" : 51
+		},
+		{
+			"backtrace" : 86,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/joystick/hidapi/SDL_hidapi_flydigi.c",
+			"sourceGroupIndex" : 51
+		},
+		{
+			"backtrace" : 86,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/joystick/hidapi/SDL_hidapi_gamecube.c",
+			"sourceGroupIndex" : 51
+		},
+		{
+			"backtrace" : 86,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/joystick/hidapi/SDL_hidapi_gip.c",
+			"sourceGroupIndex" : 51
+		},
+		{
+			"backtrace" : 86,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/joystick/hidapi/SDL_hidapi_lg4ff.c",
+			"sourceGroupIndex" : 51
+		},
+		{
+			"backtrace" : 86,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/joystick/hidapi/SDL_hidapi_luna.c",
+			"sourceGroupIndex" : 51
+		},
+		{
+			"backtrace" : 86,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/joystick/hidapi/SDL_hidapi_ps3.c",
+			"sourceGroupIndex" : 51
+		},
+		{
+			"backtrace" : 86,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/joystick/hidapi/SDL_hidapi_ps4.c",
+			"sourceGroupIndex" : 51
+		},
+		{
+			"backtrace" : 86,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/joystick/hidapi/SDL_hidapi_ps5.c",
+			"sourceGroupIndex" : 51
+		},
+		{
+			"backtrace" : 86,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/joystick/hidapi/SDL_hidapi_rumble.c",
+			"sourceGroupIndex" : 51
+		},
+		{
+			"backtrace" : 86,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/joystick/hidapi/SDL_hidapi_shield.c",
+			"sourceGroupIndex" : 51
+		},
+		{
+			"backtrace" : 86,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/joystick/hidapi/SDL_hidapi_sinput.c",
+			"sourceGroupIndex" : 51
+		},
+		{
+			"backtrace" : 86,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/joystick/hidapi/SDL_hidapi_stadia.c",
+			"sourceGroupIndex" : 51
+		},
+		{
+			"backtrace" : 86,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/joystick/hidapi/SDL_hidapi_steam.c",
+			"sourceGroupIndex" : 51
+		},
+		{
+			"backtrace" : 86,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/joystick/hidapi/SDL_hidapi_steam_hori.c",
+			"sourceGroupIndex" : 51
+		},
+		{
+			"backtrace" : 86,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/joystick/hidapi/SDL_hidapi_steamdeck.c",
+			"sourceGroupIndex" : 51
+		},
+		{
+			"backtrace" : 86,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/joystick/hidapi/SDL_hidapi_switch.c",
+			"sourceGroupIndex" : 51
+		},
+		{
+			"backtrace" : 86,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/joystick/hidapi/SDL_hidapi_switch2.c",
+			"sourceGroupIndex" : 51
+		},
+		{
+			"backtrace" : 86,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/joystick/hidapi/SDL_hidapi_wii.c",
+			"sourceGroupIndex" : 51
+		},
+		{
+			"backtrace" : 86,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/joystick/hidapi/SDL_hidapi_xbox360.c",
+			"sourceGroupIndex" : 51
+		},
+		{
+			"backtrace" : 86,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/joystick/hidapi/SDL_hidapi_xbox360w.c",
+			"sourceGroupIndex" : 51
+		},
+		{
+			"backtrace" : 86,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/joystick/hidapi/SDL_hidapi_xboxone.c",
+			"sourceGroupIndex" : 51
+		},
+		{
+			"backtrace" : 86,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/joystick/hidapi/SDL_hidapijoystick.c",
+			"sourceGroupIndex" : 51
+		},
+		{
+			"backtrace" : 88,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/haptic/hidapi/SDL_hidapihaptic.c",
+			"sourceGroupIndex" : 52
+		},
+		{
+			"backtrace" : 88,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/haptic/hidapi/SDL_hidapihaptic_lg4ff.c",
+			"sourceGroupIndex" : 52
+		},
+		{
+			"backtrace" : 90,
+			"compileGroupIndex" : 3,
+			"path" : "libs/sdl/src/joystick/apple/SDL_mfijoystick.m",
+			"sourceGroupIndex" : 53
+		},
+		{
+			"backtrace" : 90,
+			"path" : "libs/sdl/src/joystick/apple/SDL_mfijoystick_c.h",
+			"sourceGroupIndex" : 53
+		},
+		{
+			"backtrace" : 92,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/joystick/darwin/SDL_iokitjoystick.c",
+			"sourceGroupIndex" : 54
+		},
+		{
+			"backtrace" : 92,
+			"path" : "libs/sdl/src/joystick/darwin/SDL_iokitjoystick_c.h",
+			"sourceGroupIndex" : 54
+		},
+		{
+			"backtrace" : 94,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/haptic/darwin/SDL_syshaptic.c",
+			"sourceGroupIndex" : 55
+		},
+		{
+			"backtrace" : 94,
+			"path" : "libs/sdl/src/haptic/darwin/SDL_syshaptic_c.h",
+			"sourceGroupIndex" : 55
+		},
+		{
+			"backtrace" : 96,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/power/macos/SDL_syspower.c",
+			"sourceGroupIndex" : 56
+		},
+		{
+			"backtrace" : 98,
+			"compileGroupIndex" : 3,
+			"path" : "libs/sdl/src/locale/macos/SDL_syslocale.m",
+			"sourceGroupIndex" : 57
+		},
+		{
+			"backtrace" : 100,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/time/unix/SDL_systime.c",
+			"sourceGroupIndex" : 58
+		},
+		{
+			"backtrace" : 102,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/timer/unix/SDL_systimer.c",
+			"sourceGroupIndex" : 59
+		},
+		{
+			"backtrace" : 104,
+			"compileGroupIndex" : 3,
+			"path" : "libs/sdl/src/filesystem/cocoa/SDL_sysfilesystem.m",
+			"sourceGroupIndex" : 60
+		},
+		{
+			"backtrace" : 106,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/storage/generic/SDL_genericstorage.c",
+			"sourceGroupIndex" : 61
+		},
+		{
+			"backtrace" : 108,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/storage/steam/SDL_steamstorage.c",
+			"sourceGroupIndex" : 62
+		},
+		{
+			"backtrace" : 108,
+			"path" : "libs/sdl/src/storage/steam/SDL_steamstorage_proc.h",
+			"sourceGroupIndex" : 62
+		},
+		{
+			"backtrace" : 110,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/filesystem/posix/SDL_sysfsops.c",
+			"sourceGroupIndex" : 63
+		},
+		{
+			"backtrace" : 113,
+			"compileGroupIndex" : 3,
+			"path" : "libs/sdl/src/video/cocoa/SDL_cocoaclipboard.m",
+			"sourceGroupIndex" : 64
+		},
+		{
+			"backtrace" : 113,
+			"compileGroupIndex" : 3,
+			"path" : "libs/sdl/src/video/cocoa/SDL_cocoaevents.m",
+			"sourceGroupIndex" : 64
+		},
+		{
+			"backtrace" : 113,
+			"compileGroupIndex" : 3,
+			"path" : "libs/sdl/src/video/cocoa/SDL_cocoakeyboard.m",
+			"sourceGroupIndex" : 64
+		},
+		{
+			"backtrace" : 113,
+			"compileGroupIndex" : 3,
+			"path" : "libs/sdl/src/video/cocoa/SDL_cocoamessagebox.m",
+			"sourceGroupIndex" : 64
+		},
+		{
+			"backtrace" : 113,
+			"compileGroupIndex" : 3,
+			"path" : "libs/sdl/src/video/cocoa/SDL_cocoametalview.m",
+			"sourceGroupIndex" : 64
+		},
+		{
+			"backtrace" : 113,
+			"compileGroupIndex" : 3,
+			"path" : "libs/sdl/src/video/cocoa/SDL_cocoamodes.m",
+			"sourceGroupIndex" : 64
+		},
+		{
+			"backtrace" : 113,
+			"compileGroupIndex" : 3,
+			"path" : "libs/sdl/src/video/cocoa/SDL_cocoamouse.m",
+			"sourceGroupIndex" : 64
+		},
+		{
+			"backtrace" : 113,
+			"compileGroupIndex" : 3,
+			"path" : "libs/sdl/src/video/cocoa/SDL_cocoaopengl.m",
+			"sourceGroupIndex" : 64
+		},
+		{
+			"backtrace" : 113,
+			"compileGroupIndex" : 3,
+			"path" : "libs/sdl/src/video/cocoa/SDL_cocoaopengles.m",
+			"sourceGroupIndex" : 64
+		},
+		{
+			"backtrace" : 113,
+			"compileGroupIndex" : 3,
+			"path" : "libs/sdl/src/video/cocoa/SDL_cocoapen.m",
+			"sourceGroupIndex" : 64
+		},
+		{
+			"backtrace" : 113,
+			"compileGroupIndex" : 3,
+			"path" : "libs/sdl/src/video/cocoa/SDL_cocoashape.m",
+			"sourceGroupIndex" : 64
+		},
+		{
+			"backtrace" : 113,
+			"compileGroupIndex" : 3,
+			"path" : "libs/sdl/src/video/cocoa/SDL_cocoavideo.m",
+			"sourceGroupIndex" : 64
+		},
+		{
+			"backtrace" : 113,
+			"compileGroupIndex" : 3,
+			"path" : "libs/sdl/src/video/cocoa/SDL_cocoavulkan.m",
+			"sourceGroupIndex" : 64
+		},
+		{
+			"backtrace" : 113,
+			"compileGroupIndex" : 3,
+			"path" : "libs/sdl/src/video/cocoa/SDL_cocoawindow.m",
+			"sourceGroupIndex" : 64
+		},
+		{
+			"backtrace" : 115,
+			"compileGroupIndex" : 3,
+			"path" : "libs/sdl/src/render/metal/SDL_render_metal.m",
+			"sourceGroupIndex" : 25
+		},
+		{
+			"backtrace" : 117,
+			"path" : "libs/sdl/src/gpu/metal/Metal_Blit.h",
+			"sourceGroupIndex" : 65
+		},
+		{
+			"backtrace" : 117,
+			"compileGroupIndex" : 3,
+			"path" : "libs/sdl/src/gpu/metal/SDL_gpu_metal.m",
+			"sourceGroupIndex" : 65
+		},
+		{
+			"backtrace" : 119,
+			"compileGroupIndex" : 3,
+			"path" : "libs/sdl/src/tray/cocoa/SDL_tray.m",
+			"sourceGroupIndex" : 66
+		},
+		{
+			"backtrace" : 121,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/thread/pthread/SDL_systhread.c",
+			"sourceGroupIndex" : 67
+		},
+		{
+			"backtrace" : 121,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/thread/pthread/SDL_sysmutex.c",
+			"sourceGroupIndex" : 67
+		},
+		{
+			"backtrace" : 121,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/thread/pthread/SDL_syscond.c",
+			"sourceGroupIndex" : 67
+		},
+		{
+			"backtrace" : 121,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/thread/pthread/SDL_sysrwlock.c",
+			"sourceGroupIndex" : 67
+		},
+		{
+			"backtrace" : 121,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/thread/pthread/SDL_systls.c",
+			"sourceGroupIndex" : 67
+		},
+		{
+			"backtrace" : 123,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/thread/pthread/SDL_syssem.c",
+			"sourceGroupIndex" : 67
+		},
+		{
+			"backtrace" : 125,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/dialog/SDL_dialog.c",
+			"sourceGroupIndex" : 68
+		},
+		{
+			"backtrace" : 127,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/dialog/SDL_dialog_utils.c",
+			"sourceGroupIndex" : 68
+		},
+		{
+			"backtrace" : 129,
+			"compileGroupIndex" : 3,
+			"path" : "libs/sdl/src/dialog/cocoa/SDL_cocoadialog.m",
+			"sourceGroupIndex" : 69
+		},
+		{
+			"backtrace" : 131,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/process/SDL_process.c",
+			"sourceGroupIndex" : 70
+		},
+		{
+			"backtrace" : 133,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/process/posix/SDL_posixprocess.c",
+			"sourceGroupIndex" : 71
+		},
+		{
+			"backtrace" : 135,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/offscreen/SDL_offscreenevents.c",
+			"sourceGroupIndex" : 72
+		},
+		{
+			"backtrace" : 135,
+			"path" : "libs/sdl/src/video/offscreen/SDL_offscreenevents_c.h",
+			"sourceGroupIndex" : 72
+		},
+		{
+			"backtrace" : 135,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/offscreen/SDL_offscreenframebuffer.c",
+			"sourceGroupIndex" : 72
+		},
+		{
+			"backtrace" : 135,
+			"path" : "libs/sdl/src/video/offscreen/SDL_offscreenframebuffer_c.h",
+			"sourceGroupIndex" : 72
+		},
+		{
+			"backtrace" : 135,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/offscreen/SDL_offscreenopengles.c",
+			"sourceGroupIndex" : 72
+		},
+		{
+			"backtrace" : 135,
+			"path" : "libs/sdl/src/video/offscreen/SDL_offscreenopengles.h",
+			"sourceGroupIndex" : 72
+		},
+		{
+			"backtrace" : 135,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/offscreen/SDL_offscreenvideo.c",
+			"sourceGroupIndex" : 72
+		},
+		{
+			"backtrace" : 135,
+			"path" : "libs/sdl/src/video/offscreen/SDL_offscreenvideo.h",
+			"sourceGroupIndex" : 72
+		},
+		{
+			"backtrace" : 135,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/offscreen/SDL_offscreenvulkan.c",
+			"sourceGroupIndex" : 72
+		},
+		{
+			"backtrace" : 135,
+			"path" : "libs/sdl/src/video/offscreen/SDL_offscreenvulkan.h",
+			"sourceGroupIndex" : 72
+		},
+		{
+			"backtrace" : 135,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/video/offscreen/SDL_offscreenwindow.c",
+			"sourceGroupIndex" : 72
+		},
+		{
+			"backtrace" : 135,
+			"path" : "libs/sdl/src/video/offscreen/SDL_offscreenwindow.h",
+			"sourceGroupIndex" : 72
+		},
+		{
+			"backtrace" : 137,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/tray/SDL_tray_utils.c",
+			"sourceGroupIndex" : 73
+		},
+		{
+			"backtrace" : 139,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/gpu/vulkan/SDL_gpu_vulkan.c",
+			"sourceGroupIndex" : 74
+		},
+		{
+			"backtrace" : 139,
+			"path" : "libs/sdl/src/gpu/vulkan/SDL_gpu_vulkan_vkfuncs.h",
+			"sourceGroupIndex" : 74
+		},
+		{
+			"backtrace" : 141,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/sensor/dummy/SDL_dummysensor.c",
+			"sourceGroupIndex" : 75
+		},
+		{
+			"backtrace" : 141,
+			"path" : "libs/sdl/src/sensor/dummy/SDL_dummysensor.h",
+			"sourceGroupIndex" : 75
+		},
+		{
+			"backtrace" : 143,
+			"compileGroupIndex" : 1,
+			"path" : "libs/sdl/src/main/generic/SDL_sysmain_callbacks.c",
+			"sourceGroupIndex" : 76
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_assert.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_asyncio.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_atomic.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_audio.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_begin_code.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_bits.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_blendmode.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_camera.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_clipboard.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_close_code.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_copying.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_cpuinfo.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_dialog.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_egl.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_endian.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_error.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_events.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_filesystem.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_gamepad.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_gpu.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_guid.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_haptic.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_hidapi.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_hints.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_init.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_intrin.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_iostream.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_joystick.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_keyboard.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_keycode.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_loadso.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_locale.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_log.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_main.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_main_impl.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_messagebox.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_metal.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_misc.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_mouse.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_mutex.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_oldnames.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_opengl.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_opengl_glext.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_opengles.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_opengles2.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_opengles2_gl2.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_opengles2_gl2ext.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_opengles2_gl2platform.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_opengles2_khrplatform.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_pen.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_pixels.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_platform.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_platform_defines.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_power.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_process.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_properties.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_rect.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_render.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_scancode.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_sensor.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_stdinc.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_storage.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_surface.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_system.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_thread.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_time.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_timer.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_touch.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_tray.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_version.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_video.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "libs/sdl/include/SDL3/SDL_vulkan.h",
+			"sourceGroupIndex" : 77
+		},
+		{
+			"backtrace" : 145,
+			"path" : "build/libs/sdl/include-revision/SDL3/SDL_revision.h",
+			"sourceGroupIndex" : 78
+		},
+		{
+			"backtrace" : 0,
+			"path" : "build/libs/sdl/CMakeFiles/SDL3-shared.dir/cmake_pch.h",
+			"sourceGroupIndex" : 79
+		}
+	],
+	"type" : "SHARED_LIBRARY"
+}

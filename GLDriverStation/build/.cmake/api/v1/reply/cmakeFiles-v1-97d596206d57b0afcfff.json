@@ -1,0 +1,1788 @@
+{
+	"globsDependent" : 
+	[
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/SDL.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/SDL_assert.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/SDL_error.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/SDL_guid.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/SDL_hashtable.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/SDL_hints.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/SDL_list.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/SDL_log.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/SDL_properties.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/SDL_utils.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/SDL_assert_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/SDL_error_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/SDL_hashtable.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/SDL_hints_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/SDL_internal.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/SDL_list.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/SDL_log_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/SDL_properties_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/SDL_utils_c.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/atomic/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/atomic/SDL_atomic.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/atomic/SDL_spinlock.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/atomic/*.h",
+			"listDirectories" : true,
+			"paths" : []
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/audio/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/audio/SDL_audio.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/audio/SDL_audiocvt.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/audio/SDL_audiodev.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/audio/SDL_audioqueue.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/audio/SDL_audioresample.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/audio/SDL_audiotypecvt.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/audio/SDL_mixer.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/audio/SDL_wave.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/audio/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/audio/SDL_audio_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/audio/SDL_audio_channel_converters.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/audio/SDL_audiodev_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/audio/SDL_audioqueue.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/audio/SDL_audioresample.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/audio/SDL_sysaudio.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/audio/SDL_wave.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/audio/coreaudio/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/audio/coreaudio/SDL_coreaudio.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/audio/coreaudio/*.m",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/audio/coreaudio/SDL_coreaudio.m"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/audio/disk/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/audio/disk/SDL_diskaudio.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/audio/disk/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/audio/disk/SDL_diskaudio.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/audio/dummy/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/audio/dummy/SDL_dummyaudio.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/audio/dummy/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/audio/dummy/SDL_dummyaudio.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/camera/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/camera/SDL_camera.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/camera/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/camera/SDL_camera_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/camera/SDL_syscamera.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/camera/coremedia/*.m",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/camera/coremedia/SDL_camera_coremedia.m"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/camera/dummy/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/camera/dummy/SDL_camera_dummy.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/camera/dummy/*.h",
+			"listDirectories" : true,
+			"paths" : []
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/core/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/core/SDL_core_unsupported.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/core/*.h",
+			"listDirectories" : true,
+			"paths" : []
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/cpuinfo/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/cpuinfo/SDL_cpuinfo.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/cpuinfo/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/cpuinfo/SDL_cpuinfo_c.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/dynapi/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/dynapi/SDL_dynapi.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/dynapi/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/dynapi/SDL_dynapi.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/dynapi/SDL_dynapi_dlopennote.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/dynapi/SDL_dynapi_overrides.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/dynapi/SDL_dynapi_procs.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/dynapi/SDL_dynapi_unsupported.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/SDL_categories.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/SDL_clipboardevents.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/SDL_displayevents.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/SDL_dropevents.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/SDL_events.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/SDL_eventwatch.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/SDL_keyboard.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/SDL_keymap.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/SDL_keysym_to_keycode.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/SDL_keysym_to_scancode.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/SDL_mouse.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/SDL_pen.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/SDL_quit.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/SDL_scancode_tables.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/SDL_touch.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/SDL_windowevents.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/imKStoUCS.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/SDL_categories_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/SDL_clipboardevents_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/SDL_displayevents_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/SDL_dropevents_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/SDL_events_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/SDL_eventwatch_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/SDL_keyboard_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/SDL_keymap_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/SDL_keysym_to_keycode_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/SDL_keysym_to_scancode_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/SDL_mouse_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/SDL_pen_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/SDL_scancode_tables_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/SDL_touch_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/SDL_windowevents_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/blank_cursor.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/default_cursor.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/imKStoUCS.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/scancodes_darwin.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/scancodes_linux.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/scancodes_windows.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/events/scancodes_xfree86.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/filesystem/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/filesystem/SDL_filesystem.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/filesystem/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/filesystem/SDL_filesystem_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/filesystem/SDL_sysfilesystem.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/filesystem/cocoa/*.m",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/filesystem/cocoa/SDL_sysfilesystem.m"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/gpu/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/gpu/SDL_gpu.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/gpu/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/gpu/SDL_sysgpu.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/gpu/metal/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/gpu/metal/Metal_Blit.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/gpu/metal/*.m",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/gpu/metal/SDL_gpu_metal.m"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/gpu/vulkan/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/gpu/vulkan/SDL_gpu_vulkan.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/gpu/vulkan/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/gpu/vulkan/SDL_gpu_vulkan_vkfuncs.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/haptic/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/haptic/SDL_haptic.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/haptic/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/haptic/SDL_haptic_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/haptic/SDL_syshaptic.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/haptic/darwin/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/haptic/darwin/SDL_syshaptic.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/haptic/darwin/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/haptic/darwin/SDL_syshaptic_c.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/haptic/hidapi/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/haptic/hidapi/SDL_hidapihaptic.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/haptic/hidapi/SDL_hidapihaptic_lg4ff.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/hidapi/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/hidapi/SDL_hidapi.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/hidapi/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/hidapi/SDL_hidapi_android.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/hidapi/SDL_hidapi_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/hidapi/SDL_hidapi_ios.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/hidapi/SDL_hidapi_libusb.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/hidapi/SDL_hidapi_linux.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/hidapi/SDL_hidapi_mac.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/hidapi/SDL_hidapi_netbsd.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/hidapi/SDL_hidapi_steamxbox.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/hidapi/SDL_hidapi_windows.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/io/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/io/SDL_asyncio.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/io/SDL_iostream.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/io/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/io/SDL_asyncio_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/io/SDL_iostream_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/io/SDL_sysasyncio.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/io/generic/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/io/generic/SDL_asyncio_generic.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/io/generic/*.h",
+			"listDirectories" : true,
+			"paths" : []
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/SDL_gamepad.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/SDL_joystick.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/SDL_steam_virtual_gamepad.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/controller_type.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/SDL_gamepad_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/SDL_gamepad_db.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/SDL_joystick_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/SDL_steam_virtual_gamepad.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/SDL_sysjoystick.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/controller_list.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/controller_type.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/usb_ids.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/apple/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/apple/SDL_mfijoystick_c.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/apple/*.m",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/apple/SDL_mfijoystick.m"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/darwin/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/darwin/SDL_iokitjoystick.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/darwin/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/darwin/SDL_iokitjoystick_c.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/hidapi/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/hidapi/SDL_hidapi_8bitdo.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/hidapi/SDL_hidapi_combined.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/hidapi/SDL_hidapi_flydigi.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/hidapi/SDL_hidapi_gamecube.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/hidapi/SDL_hidapi_gip.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/hidapi/SDL_hidapi_lg4ff.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/hidapi/SDL_hidapi_luna.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/hidapi/SDL_hidapi_ps3.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/hidapi/SDL_hidapi_ps4.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/hidapi/SDL_hidapi_ps5.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/hidapi/SDL_hidapi_rumble.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/hidapi/SDL_hidapi_shield.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/hidapi/SDL_hidapi_sinput.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/hidapi/SDL_hidapi_stadia.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/hidapi/SDL_hidapi_steam.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/hidapi/SDL_hidapi_steam_hori.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/hidapi/SDL_hidapi_steamdeck.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/hidapi/SDL_hidapi_switch.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/hidapi/SDL_hidapi_switch2.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/hidapi/SDL_hidapi_wii.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/hidapi/SDL_hidapi_xbox360.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/hidapi/SDL_hidapi_xbox360w.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/hidapi/SDL_hidapi_xboxone.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/hidapi/SDL_hidapijoystick.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/virtual/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/virtual/SDL_virtualjoystick.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/virtual/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/joystick/virtual/SDL_virtualjoystick_c.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/loadso/dlopen/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/loadso/dlopen/SDL_sysloadso.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/loadso/dlopen/*.h",
+			"listDirectories" : true,
+			"paths" : []
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/locale/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/locale/SDL_locale.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/locale/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/locale/SDL_syslocale.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/locale/macos/*.m",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/locale/macos/SDL_syslocale.m"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/main/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/main/SDL_main_callbacks.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/main/SDL_runapp.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/main/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/main/SDL_main_callbacks.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/main/generic/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/main/generic/SDL_sysmain_callbacks.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/main/generic/*.h",
+			"listDirectories" : true,
+			"paths" : []
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/misc/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/misc/SDL_libusb.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/misc/SDL_url.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/misc/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/misc/SDL_libusb.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/misc/SDL_sysurl.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/misc/macos/*.m",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/misc/macos/SDL_sysurl.m"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/power/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/power/SDL_power.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/power/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/power/SDL_syspower.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/power/macos/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/power/macos/SDL_syspower.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/process/posix/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/process/posix/SDL_posixprocess.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/process/posix/*.h",
+			"listDirectories" : true,
+			"paths" : []
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/SDL_d3dmath.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/SDL_render.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/SDL_render_unsupported.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/SDL_yuv_sw.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/SDL_d3dmath.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/SDL_render_debug_font.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/SDL_sysrender.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/SDL_yuv_sw_c.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/*/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/direct3d/SDL_render_d3d.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/direct3d/SDL_shaders_d3d.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/direct3d11/SDL_render_d3d11.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/direct3d11/SDL_shaders_d3d11.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/direct3d12/SDL_render_d3d12.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/direct3d12/SDL_shaders_d3d12.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/gpu/SDL_pipeline_gpu.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/gpu/SDL_render_gpu.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/gpu/SDL_shaders_gpu.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/ngage/SDL_render_ngage.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/opengl/SDL_render_gl.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/opengl/SDL_shaders_gl.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/opengles2/SDL_render_gles2.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/opengles2/SDL_shaders_gles2.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/ps2/SDL_render_ps2.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/psp/SDL_render_psp.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/software/SDL_blendfillrect.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/software/SDL_blendline.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/software/SDL_blendpoint.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/software/SDL_drawline.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/software/SDL_drawpoint.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/software/SDL_render_sw.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/software/SDL_rotate.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/software/SDL_triangle.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/vitagxm/SDL_render_vita_gxm.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/vitagxm/SDL_render_vita_gxm_memory.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/vitagxm/SDL_render_vita_gxm_tools.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/vulkan/SDL_render_vulkan.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/vulkan/SDL_shaders_vulkan.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/*/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/direct3d/D3D9_PixelShader_YUV.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/direct3d/SDL_shaders_d3d.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/direct3d11/D3D11_PixelShader_Advanced.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/direct3d11/D3D11_PixelShader_Colors.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/direct3d11/D3D11_PixelShader_Textures.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/direct3d11/D3D11_VertexShader.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/direct3d11/SDL_shaders_d3d11.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/direct3d12/D3D12_PixelShader_Advanced.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/direct3d12/D3D12_PixelShader_Colors.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/direct3d12/D3D12_PixelShader_Textures.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/direct3d12/D3D12_RootSig_Advanced.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/direct3d12/D3D12_RootSig_Color.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/direct3d12/D3D12_RootSig_Texture.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/direct3d12/D3D12_VertexShader_Advanced.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/direct3d12/D3D12_VertexShader_Color.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/direct3d12/D3D12_VertexShader_Texture.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/direct3d12/SDL_render_d3d12_xbox.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/direct3d12/SDL_shaders_d3d12.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/gpu/SDL_gpu_util.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/gpu/SDL_pipeline_gpu.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/gpu/SDL_shaders_gpu.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/metal/SDL_shaders_metal_ios.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/metal/SDL_shaders_metal_iphonesimulator.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/metal/SDL_shaders_metal_macos.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/metal/SDL_shaders_metal_tvos.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/metal/SDL_shaders_metal_tvsimulator.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/ngage/SDL_render_ngage_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/opengl/SDL_glfuncs.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/opengl/SDL_shaders_gl.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/opengles2/SDL_gles2funcs.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/opengles2/SDL_shaders_gles2.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/psp/SDL_render_psp_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/software/SDL_blendfillrect.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/software/SDL_blendline.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/software/SDL_blendpoint.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/software/SDL_draw.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/software/SDL_drawline.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/software/SDL_drawpoint.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/software/SDL_render_sw_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/software/SDL_rotate.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/software/SDL_triangle.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/vitagxm/SDL_render_vita_gxm_memory.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/vitagxm/SDL_render_vita_gxm_shaders.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/vitagxm/SDL_render_vita_gxm_tools.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/vitagxm/SDL_render_vita_gxm_types.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/vulkan/SDL_shaders_vulkan.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/vulkan/VULKAN_PixelShader_Advanced.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/vulkan/VULKAN_PixelShader_Colors.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/vulkan/VULKAN_PixelShader_Textures.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/vulkan/VULKAN_VertexShader.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/metal/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/metal/SDL_shaders_metal_ios.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/metal/SDL_shaders_metal_iphonesimulator.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/metal/SDL_shaders_metal_macos.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/metal/SDL_shaders_metal_tvos.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/metal/SDL_shaders_metal_tvsimulator.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/metal/*.m",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/render/metal/SDL_render_metal.m"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/sensor/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/sensor/SDL_sensor.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/sensor/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/sensor/SDL_sensor_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/sensor/SDL_syssensor.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/sensor/dummy/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/sensor/dummy/SDL_dummysensor.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/sensor/dummy/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/sensor/dummy/SDL_dummysensor.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/stdlib/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/stdlib/SDL_crc16.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/stdlib/SDL_crc32.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/stdlib/SDL_getenv.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/stdlib/SDL_iconv.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/stdlib/SDL_malloc.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/stdlib/SDL_memcpy.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/stdlib/SDL_memmove.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/stdlib/SDL_memset.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/stdlib/SDL_mslibc.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/stdlib/SDL_murmur3.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/stdlib/SDL_qsort.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/stdlib/SDL_random.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/stdlib/SDL_stdlib.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/stdlib/SDL_string.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/stdlib/SDL_strtokr.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/stdlib/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/stdlib/SDL_casefolding.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/stdlib/SDL_getenv_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/stdlib/SDL_sysstdlib.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/stdlib/SDL_vacopy.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/storage/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/storage/SDL_storage.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/storage/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/storage/SDL_sysstorage.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/storage/generic/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/storage/generic/SDL_genericstorage.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/storage/steam/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/storage/steam/SDL_steamstorage.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/storage/steam/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/storage/steam/SDL_steamstorage_proc.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/thread/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/thread/SDL_thread.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/thread/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/thread/SDL_systhread.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/thread/SDL_thread_c.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/time/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/time/SDL_time.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/time/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/time/SDL_time_c.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/time/unix/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/time/unix/SDL_systime.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/timer/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/timer/SDL_timer.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/timer/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/timer/SDL_timer_c.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/timer/unix/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/timer/unix/SDL_systimer.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/tray/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/tray/SDL_tray_utils.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/tray/cocoa/*.m",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/tray/cocoa/SDL_tray.m"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_RLEaccel.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_blit.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_blit_0.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_blit_1.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_blit_A.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_blit_N.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_blit_auto.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_blit_copy.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_blit_slow.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_bmp.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_clipboard.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_egl.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_fillrect.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_pixels.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_rect.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_stb.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_stretch.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_surface.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_video.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_video_unsupported.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_vulkan_utils.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_yuv.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_RLEaccel_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_blit.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_blit_auto.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_blit_copy.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_blit_slow.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_clipboard_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_egl_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_pixels_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_rect_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_rect_impl.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_stb_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_surface_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_sysvideo.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_video_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_vulkan_internal.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/SDL_yuv_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/stb_image.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/stb_image_write.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/cocoa/*.m",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/cocoa/SDL_cocoaclipboard.m",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/cocoa/SDL_cocoaevents.m",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/cocoa/SDL_cocoakeyboard.m",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/cocoa/SDL_cocoamessagebox.m",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/cocoa/SDL_cocoametalview.m",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/cocoa/SDL_cocoamodes.m",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/cocoa/SDL_cocoamouse.m",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/cocoa/SDL_cocoaopengl.m",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/cocoa/SDL_cocoaopengles.m",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/cocoa/SDL_cocoapen.m",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/cocoa/SDL_cocoashape.m",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/cocoa/SDL_cocoavideo.m",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/cocoa/SDL_cocoavulkan.m",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/cocoa/SDL_cocoawindow.m"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/dummy/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/dummy/SDL_nullevents.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/dummy/SDL_nullframebuffer.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/dummy/SDL_nullvideo.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/dummy/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/dummy/SDL_nullevents_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/dummy/SDL_nullframebuffer_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/dummy/SDL_nullvideo.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/offscreen/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/offscreen/SDL_offscreenevents.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/offscreen/SDL_offscreenframebuffer.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/offscreen/SDL_offscreenopengles.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/offscreen/SDL_offscreenvideo.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/offscreen/SDL_offscreenvulkan.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/offscreen/SDL_offscreenwindow.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/offscreen/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/offscreen/SDL_offscreenevents_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/offscreen/SDL_offscreenframebuffer_c.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/offscreen/SDL_offscreenopengles.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/offscreen/SDL_offscreenvideo.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/offscreen/SDL_offscreenvulkan.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/offscreen/SDL_offscreenwindow.h"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/yuv2rgb/*.c",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/yuv2rgb/yuv_rgb_lsx.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/yuv2rgb/yuv_rgb_sse.c",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/yuv2rgb/yuv_rgb_std.c"
+			]
+		},
+		{
+			"expression" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/yuv2rgb/*.h",
+			"listDirectories" : true,
+			"paths" : 
+			[
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/yuv2rgb/yuv_rgb.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/yuv2rgb/yuv_rgb_common.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/yuv2rgb/yuv_rgb_internal.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/yuv2rgb/yuv_rgb_lsx.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/yuv2rgb/yuv_rgb_lsx_func.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/yuv2rgb/yuv_rgb_sse.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/yuv2rgb/yuv_rgb_sse_func.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/yuv2rgb/yuv_rgb_std.h",
+				"/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/libs/sdl/src/video/yuv2rgb/yuv_rgb_std_func.h"
+			]
+		}
+	],
+	"inputs" : 
+	[
+		{
+			"path" : "CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/CMakeFiles/3.31.0/CMakeSystem.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CMakeSystemSpecificInitialize.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Platform/Darwin-Initialize.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/CMakeFiles/3.31.0/CMakeCCompiler.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/CMakeFiles/3.31.0/CMakeCXXCompiler.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CMakeSystemSpecificInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CMakeGenericSystem.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CMakeInitializeConfigs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Platform/Darwin.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Platform/UnixPaths.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CMakeCInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CMakeLanguageInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Compiler/AppleClang-C.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Compiler/Clang.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Compiler/GNU.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Platform/Apple-AppleClang-C.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Platform/Apple-Clang-C.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Platform/Apple-Clang.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CMakeCommonLanguageInclude.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Internal/CMakeCLinkerInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Internal/CMakeCommonLinkerInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Linker/AppleClang-C.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Linker/AppleClang.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Platform/Linker/Apple-AppleClang-C.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Platform/Linker/Apple-AppleClang.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CMakeCXXInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CMakeLanguageInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Compiler/AppleClang-CXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Compiler/Clang.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Platform/Apple-AppleClang-CXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Platform/Apple-Clang-CXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Platform/Apple-Clang.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CMakeCommonLanguageInclude.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Internal/CMakeCXXLinkerInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Internal/CMakeCommonLinkerInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Linker/AppleClang-CXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Linker/AppleClang.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Platform/Linker/Apple-AppleClang-CXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Platform/Linker/Apple-AppleClang.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/FindOpenGL.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"path" : "libs/glm/CMakeLists.txt"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/GNUInstallDirs.cmake"
+		},
+		{
+			"path" : "libs/glm/glm/CMakeLists.txt"
+		},
+		{
+			"path" : "libs/sdl/CMakeLists.txt"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CheckLibraryExists.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CheckIncludeFile.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CheckLanguage.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CheckSymbolExists.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CheckCSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Internal/CheckSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CheckCSourceRuns.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Internal/CheckSourceRuns.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CheckCCompilerFlag.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Internal/CheckCompilerFlag.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Internal/CheckFlagCommonConfig.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Internal/CheckSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CheckCSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CheckCXXCompilerFlag.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Internal/CheckCompilerFlag.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CheckCXXSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Internal/CheckSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CheckStructHasMember.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CheckSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Internal/CheckSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CheckCSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CheckCXXSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CMakeDependentOption.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CMakeParseArguments.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CMakePushCheckState.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/GNUInstallDirs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/FindPkgConfig.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"path" : "libs/sdl/cmake/macros.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CheckOBJCSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Internal/CheckSourceCompiles.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/CMakeFiles/3.31.0/CMakeOBJCCompiler.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CMakeOBJCInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CMakeLanguageInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Compiler/AppleClang-OBJC.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Compiler/Clang-OBJC.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Compiler/Clang.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Platform/Apple-AppleClang-OBJC.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Platform/Apple-Clang-OBJC.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Platform/Apple-Clang.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CMakeCommonLanguageInclude.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Internal/CMakeOBJCLinkerInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Internal/CMakeCommonLinkerInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Linker/AppleClang-OBJC.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Linker/AppleClang.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Platform/Linker/Apple-AppleClang-OBJC.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Platform/Linker/Apple-AppleClang.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CheckLinkerFlag.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Internal/CheckLinkerFlag.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Internal/CheckFlagCommonConfig.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/Internal/CheckSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake"
+		},
+		{
+			"path" : "libs/sdl/cmake/sdlchecks.cmake"
+		},
+		{
+			"path" : "libs/sdl/cmake/sdlcommands.cmake"
+		},
+		{
+			"path" : "libs/sdl/cmake/sdlcompilers.cmake"
+		},
+		{
+			"path" : "libs/sdl/cmake/sdlcpu.cmake"
+		},
+		{
+			"path" : "libs/sdl/cmake/sdlmanpages.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CMakeParseArguments.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/GNUInstallDirs.cmake"
+		},
+		{
+			"path" : "libs/sdl/cmake/sdlplatform.cmake"
+		},
+		{
+			"path" : "libs/sdl/cmake/GetGitRevisionDescription.cmake"
+		},
+		{
+			"path" : "libs/sdl/cmake/3rdparty.cmake"
+		},
+		{
+			"path" : "libs/sdl/cmake/PreseedMSVCCache.cmake"
+		},
+		{
+			"path" : "libs/sdl/cmake/PreseedEmscriptenCache.cmake"
+		},
+		{
+			"path" : "libs/sdl/cmake/PreseedNokiaNGageCache.cmake"
+		},
+		{
+			"path" : "libs/sdl/cmake/FindLibUSB.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/FindPkgConfig.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"path" : "libs/sdl/include/build_config/SDL_build_config.h.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/FindGit.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/.git/modules/GLDriverStation/libs/SDL/HEAD"
+		},
+		{
+			"path" : "libs/sdl/cmake/GetGitRevisionDescription.cmake.in"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/libs/sdl/CMakeFiles/git-data/grabRef.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/.git/modules/GLDriverStation/libs/SDL/refs/heads/main"
+		},
+		{
+			"path" : "libs/sdl/include/build_config/SDL_revision.h.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/CMakePackageConfigHelpers.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/WriteBasicConfigVersionFile.cmake"
+		},
+		{
+			"path" : "libs/sdl/cmake/SDL3Config.cmake.in"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/homebrew/share/cmake/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/libs/sdl/CMakeFiles/SDL_build_config.h.intermediate"
+		}
+	],
+	"kind" : "cmakeFiles",
+	"paths" : 
+	{
+		"build" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build",
+		"source" : "/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation"
+	},
+	"version" : 
+	{
+		"major" : 1,
+		"minor" : 1
+	}
+}
