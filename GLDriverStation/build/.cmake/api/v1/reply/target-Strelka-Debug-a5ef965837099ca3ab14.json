@@ -119,12 +119,12 @@
 	"dependencies" : 
 	[
 		{
-			"backtrace" : 3,
-			"id" : "SDL3-shared::@a49eed29bab3302d9c5e"
-		},
-		{
 			"backtrace" : 2,
 			"id" : "glm::@9689ec0f31a21d795b02"
+		},
+		{
+			"backtrace" : 3,
+			"id" : "SDL3-shared::@a49eed29bab3302d9c5e"
 		}
 	],
 	"id" : "Strelka::@6890427a1f51a3e7e1df",

@@ -1,5 +1,5 @@
 # ninja log v7
-3	17	1758331797583814948	/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build/CMakeFiles/cmake.verify_globs	62d07c04f9f0dd73
+8	26	1758430514546380430	/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build/CMakeFiles/cmake.verify_globs	62d07c04f9f0dd73
 16	160	1758331785667530905	libs/sdl/CMakeFiles/SDL_uclibc.dir/src/libm/e_atan2.c.o	4a220fafac1be77b
 16	162	1758331785668315656	libs/sdl/CMakeFiles/SDL_uclibc.dir/src/libm/e_log10.c.o	a805287ee7e78bb5
 16	168	1758331785667651572	libs/sdl/CMakeFiles/SDL_uclibc.dir/src/libm/e_exp.c.o	504c9060f28befe5
@@ -251,11 +251,18 @@
 2105	2530	1758331787757095974	libs/sdl/CMakeFiles/SDL3-shared.dir/src/dialog/cocoa/SDL_cocoadialog.m.o	a5f35a6d66140d62
 2530	2644	1758331788182083161	Debug/libSDL3.0.dylib	61cfc5a5d681238c
 2644	2652	1758331788295642808	Debug/libSDL3.dylib	3bc5b111233f34be
-2181	2664	1758331787833132836	CMakeFiles/Strelka.dir/main.cpp.o	c6b09147e0ff154c
+58	560	1758430514596912311	CMakeFiles/Strelka.dir/main.cpp.o	c6b09147e0ff154c
 2178	3000	1758331787829453541	libs/glm/glm/CMakeFiles/glm.dir/detail/glm.cpp.o	f8cae76bfa9d03b4
 3001	3031	1758331788652441015	libs/glm/glm/libglm.a	60d54eb8128affdf
-3	14	1758331822638926046	/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build/CMakeFiles/cmake.verify_globs	62d07c04f9f0dd73
-27	58	1758331822662801610	Debug/Strelka	8d1813fc8189566
-5	18	1758331836324423485	/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build/CMakeFiles/cmake.verify_globs	62d07c04f9f0dd73
-33	369	1758331836353018553	CMakeFiles/Strelka.dir/main.cpp.o	c6b09147e0ff154c
-370	404	1758331836689458408	Debug/Strelka	8d1813fc8189566
+560	652	1758430515098182148	Debug/Strelka	8d1813fc8189566
+5	28	1758430732634743616	/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build/CMakeFiles/cmake.verify_globs	62d07c04f9f0dd73
+8	32	1758470983489028834	/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build/CMakeFiles/cmake.verify_globs	62d07c04f9f0dd73
+5	25	1758474807518655103	/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build/CMakeFiles/cmake.verify_globs	62d07c04f9f0dd73
+64	609	1758474807578003574	CMakeFiles/Strelka.dir/main.cpp.o	c6b09147e0ff154c
+609	727	1758474808123136861	Debug/Strelka	8d1813fc8189566
+4	17	1758475164280386994	/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build/CMakeFiles/cmake.verify_globs	62d07c04f9f0dd73
+28	403	1758475164304269640	CMakeFiles/Strelka.dir/main.cpp.o	c6b09147e0ff154c
+403	439	1758475164679676981	Debug/Strelka	8d1813fc8189566
+3	14	1758475197458107759	/Users/aryant/Documents/Projects/Rocketry/irec-groundstation_25-26/GLDriverStation/build/CMakeFiles/cmake.verify_globs	62d07c04f9f0dd73
+26	384	1758475197481220738	CMakeFiles/Strelka.dir/main.cpp.o	c6b09147e0ff154c
+384	413	1758475197839394522	Debug/Strelka	8d1813fc8189566
