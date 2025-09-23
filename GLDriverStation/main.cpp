@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 
+
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
@@ -14,13 +15,37 @@ glm::vec3 vertices[3] = {
     { 0.5f, -0.5f,  0.0f}
 };
 
+std::string v_shader_text = R"(
+
+#version 330 core
+layout (location = 0) in vec4 vertex_position;
+
+void main()
+{
+    gl_Position = vertex_position;
+}
+
+)";
+
+std::string f_shader_text = R"(
+
+#version 330 core
+out vec4 FragColor;
+
+void main()
+{
+    FragColor = vec4(1.0f, 1.0f, 1.0f, 1.0f);
+} 
+
+)";
+
 unsigned int createShader(std::string v, std::string f) {
 
     unsigned int vs = glCreateShader(GL_VERTEX_SHADER);
     unsigned int fs = glCreateShader(GL_FRAGMENT_SHADER);
 
     const char* vtx_cstr = v.c_str();
-    const char* frg_cstr = v.c_str();
+    const char* frg_cstr = f.c_str();
 
     glShaderSource(vs, 1, &(vtx_cstr), nullptr);
     glCompileShader(vs);
@@ -34,12 +59,13 @@ unsigned int createShader(std::string v, std::string f) {
         abort();
     }
 
+
     glShaderSource(fs, 1, &(frg_cstr), nullptr);
     glCompileShader(fs);
     int sf = false;
     glGetShaderiv(fs, GL_COMPILE_STATUS, &sf);
     if (sf == false) {
-        std::cout << "Vertex Shader Errors:" << std::endl;
+        std::cout << "Fragment Shader Errors:" << std::endl;
         char errors[512] = "";
         glGetShaderInfoLog(fs, 512, nullptr, errors);
         std::cout << errors << std::endl;
@@ -48,41 +74,29 @@ unsigned int createShader(std::string v, std::string f) {
 
     unsigned int p;
     p = glCreateProgram();
-    glAttachShader(p, sv);
-    glAttachShader(p, sf);
+    glAttachShader(p, vs);
+    glAttachShader(p, fs);
     glLinkProgram(p);
-    glDeleteShader(sv);
-    glDeleteShader(sf);
+    glValidateProgram(p);
+    char info[512] = "";
+    glGetProgramInfoLog(p, 512, nullptr, info);
+    std::cout << info << std::endl;
+    glDeleteShader(vs);
+    glDeleteShader(fs);
     return p;
 
 }
 
-std::string v_shader_text = R"(
+void checkError() {
 
-    #version 330 core
-    layout (location = 1) in vec4 v_pos;
+    unsigned int e = glGetError();
 
-    void main() {
+    std::cout << e << std::endl;
 
-        gl_Position = v_pos;
-
+    if (e!=0) {
+        abort();
     }
-
-)";
-
-std::string f_shader_text = R"(
-
-    #version 330 core
-    
-    out vec4 fragcolor;
-
-    void main() {
-    
-        fragcolor = vec4(1.0f, 1.0f, 1.0f, 1.0f);
-
-    }
-
-)";
+}
 
 int main() {
 
@@ -92,34 +106,33 @@ int main() {
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, GL_CONTEXT_CORE_PROFILE_BIT);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
     SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
+
     SDL_Window* window = SDL_CreateWindow("StrelkaVisualizer", 1280, 720, SDL_WINDOW_OPENGL);
     SDL_GLContext ctx = SDL_GL_CreateContext(window);
     SDL_GL_MakeCurrent(window, ctx);
-    glEnable(GL_DEPTH_TEST);
+    // glEnable(GL_DEPTH_TEST);
     SDL_GL_SetSwapInterval(1);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-
-
     unsigned int vao;
     unsigned int vbo;
     glGenVertexArrays(1, &vao);
     glGenBuffers(1, &vbo);
+    
+    glBindVertexArray(vao);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glEnableClientState(GL_VERTEX_ARRAY);
 
 
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, 3*sizeof(glm::vec3), &vertices, GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), 0);
     glEnableVertexAttribArray(0);
 
 
     unsigned int prog = createShader(v_shader_text, f_shader_text);
-
-
-
-
 
     SDL_Event event;
     bool running = true;
@@ -127,16 +140,19 @@ int main() {
 
         SDL_PollEvent(&event);
         if (event.type == SDL_EVENT_QUIT) {
-            abort();
+            exit(0);
         }
+    
+        glBindVertexArray(vao);
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
         glBindVertexArray(vao);
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glUseProgram(prog);
 
         glClearColor(0.2, 0.2, 0.3, 1.0);
-        glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);  
-        glViewport(0, 0, 640, 480);
+        glClear(GL_COLOR_BUFFER_BIT);  
+        glViewport(0, 0, 1280, 720);
 
         glDrawArrays(GL_TRIANGLES, 0, 3);
         std::cout << glGetError() << std::endl;
