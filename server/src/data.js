@@ -88,13 +88,19 @@ function parseEvent(payload) {
 		);
 		return;
 	}
-	const [c4, c3, c2, c1] = [payload[0], payload[1], payload[2], payload[3]].map(
-		(v) => v.charCodeAt(0) & 0xff,
-	);
+	const [c4, c3, c2, c1] = [
+		payload[0],
+		payload[1],
+		payload[2],
+		payload[3],
+	].map((v) => v.charCodeAt(0) & 0xff);
 	const eventIndex = (c1 << 24) | (c2 << 16) | (c3 << 8) | c4;
-	const [t4, t3, t2, t1] = [payload[4], payload[5], payload[6], payload[7]].map(
-		(v) => v.charCodeAt(0) & 0xff,
-	);
+	const [t4, t3, t2, t1] = [
+		payload[4],
+		payload[5],
+		payload[6],
+		payload[7],
+	].map((v) => v.charCodeAt(0) & 0xff);
 	const timestamp = (t1 << 24) | (t2 << 16) | (t3 << 8) | t4;
 
 	const event = getConfig().get("events")[eventIndex] ?? "NO";
@@ -116,7 +122,9 @@ function parseSchema(payload) {
 	);
 
 	log(
-		Strings.Ok + ": RECEIVED SCHEMA: " + getConfig().get("schema").join(", "),
+		Strings.Ok +
+			": RECEIVED SCHEMA: " +
+			getConfig().get("schema").join(", "),
 	);
 }
 /**

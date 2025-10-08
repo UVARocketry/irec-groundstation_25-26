@@ -457,7 +457,7 @@ function init() {
 	logo = p.loadImage("./ui/assets/logo.webp");
 }
 
-function draw() {
+export function draw() {
 	// light mode/dark mode bg
 	if (light) {
 		// p.background(255);
@@ -663,13 +663,15 @@ function draw() {
 
 	// compass map display thing
 	{
+		const newPos = pos.copy();
+		newPos.z = 0;
 		if (
-			pos.x !== 0 &&
-			pos.y !== 0 &&
+			newPos.x !== 0 &&
+			newPos.y !== 0 &&
 			altBelowForReset === -1 &&
-			pos.mag() < 10000
+			newPos.mag() < 10000
 		) {
-			pastPos.push(pos);
+			pastPos.push(newPos);
 		}
 		const w = 0.2;
 		const x = width / height - 0.7;
@@ -761,7 +763,7 @@ function draw() {
 		x += p.textWidth("GPS:");
 		p.textSize(0.025 * height);
 		p.text(
-			"(" + limDecimal(vnGps.x, 5) + "°, " + limDecimal(vnGps.y, 5) + "°)",
+			"(" + limDecimal(vnGps.x, 3) + "°, " + limDecimal(vnGps.y, 3) + "°)",
 			x,
 			0.1 * height,
 		);
@@ -1105,7 +1107,9 @@ export const s = (/** @type {p5} */ pi) => {
 	pi.setup = init;
 
 	pi.draw = draw;
-	pi.mouseDragged = function () {};
-	pi.mouseClicked = function () {};
-	pi.mouseReleased = function () {};
+	pi.frameRate(45);
+	// pi.mouseDragged = draw;
+	// pi.mousePressed = draw;
+	// pi.mouseReleased = draw;
+	// pi.mouseMoved = draw;
 };

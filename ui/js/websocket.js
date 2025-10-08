@@ -70,6 +70,7 @@ function onWsMessage(event) {
 			messageQueue.push(m);
 		}
 	}
+	// draw();
 	// console.log(currentState);
 }
 

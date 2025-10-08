@@ -8,6 +8,7 @@ import { broadcast, getConfigField } from "./index.js";
 import { FileLogReader } from "./reader2/fileLogReader.js";
 import { Strings } from "./ansi.js";
 import { SerialPortReader } from "./reader2/serialPortReader.js";
+import { StdoutReader } from "./reader2/stdoutReader.js";
 
 const nilFolder = "";
 
@@ -39,6 +40,11 @@ var active = false;
 var readers = [
 	new ReaderMeta("log", new FileLogReader(), false),
 	new ReaderMeta("serial", new SerialPortReader("/dev/ttyACM0"), false),
+	new ReaderMeta(
+		"stdout",
+		new StdoutReader("./run", [], "stderr", "../../irec_25-26/lib"),
+		false,
+	),
 ];
 
 var readerIndex = 0;
@@ -217,7 +223,10 @@ async function saveItem(msg, i) {
 		config().setField("saveFolder", genSaveFolder());
 	}
 	const saveFolder = config().get("saveFolder");
-	await fs.promises.writeFile(ReaderUtils.getSaveItemName(saveFolder, i), msg);
+	await fs.promises.writeFile(
+		ReaderUtils.getSaveItemName(saveFolder, i),
+		msg,
+	);
 }
 
 /**

@@ -103,13 +103,17 @@ export class SerialPortReader {
 			});
 		} catch (_) {
 			this.port = null;
-			log(`${Strings.Error}: Failed to open serial port ${this.getPath()}`);
+			log(
+				`${Strings.Error}: Failed to open serial port ${this.getPath()}`,
+			);
 			return false;
 		}
 		if (!this.port.isOpen) {
 			// this.port.destroy();
 			// this.port = null;
-			log(`${Strings.Error}: Failed to open serial port ${this.getPath()}`);
+			log(
+				`${Strings.Error}: Failed to open serial port ${this.getPath()}`,
+			);
 			// return;
 		}
 		this.parser = this.port.pipe(new ReadlineParser({ delimiter: "\n" }));
