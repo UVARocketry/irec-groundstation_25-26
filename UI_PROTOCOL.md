@@ -340,14 +340,14 @@ This is a possible response to the above `configurationOptions` message
 
 ```json
 {
-  "type": "setConfiguration",
-  "data": {
-      "manager": {
-          "saveFolder": "",
-          "readerConfig": {
-              "dir": "../out"
-          }
-      }
-  }
+    "type": "setConfiguration",
+    "data": {
+        "manager": {
+            "saveFolder": "",
+            "readerConfig": {
+                "dir": "../out"
+            }
+        }
+    }
 }
 ```
