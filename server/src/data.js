@@ -10,34 +10,40 @@ import { Configuration } from "./configuration.js";
 
 /** @import { EventType, RocketMessage } from '../../common/ServerMessage.js' */
 
-export class Config {
-	/** @type {number} */
-	fieldSize = 4;
+var fieldSize = 4;
+var sysTime = 0;
+/** @type {string[]} */
+var schema = [];
+/** @type {string[]} */
+var events = [];
+// export class Config {
+// 	/** @type {number} */
+// 	fieldSize = 4;
+//
+// 	/** @type {number} */
+// 	sysTime = 0;
+//
+// 	/** @type {string[]} */
+// 	schema = [];
+//
+// 	/** @type {string[]} */
+// 	events = [];
+// }
 
-	/** @type {number} */
-	sysTime = 0;
-
-	/** @type {string[]} */
-	schema = [];
-
-	/** @type {string[]} */
-	events = [];
-}
-
-/** @return {Configuration<Config>} */
-function getConfig() {
-	return getConfigField("data");
-}
+// /** @return {Configuration<Config>} */
+// function getConfig() {
+// 	return getConfigField("data");
+// }
 
 // config.setRoot("idk2.json");
 
 export function getSysTime() {
-	return getConfig().get("sysTime");
+	return sysTime;
 }
 
 export function clearSysTime() {
-	getConfig().setField("sysTime", 0);
-	// sysTime = 0;
+	// getConfig().setField("sysTime", 0);
+	sysTime = 0;
 }
 
 /**
@@ -103,29 +109,21 @@ function parseEvent(payload) {
 	].map((v) => v.charCodeAt(0) & 0xff);
 	const timestamp = (t1 << 24) | (t2 << 16) | (t3 << 8) | t4;
 
-	const event = getConfig().get("events")[eventIndex] ?? "NO";
+	const event = events[eventIndex] ?? "NO";
 	if (event === "NO") {
 		log(`${Strings.Warn}: Received invalid event index ${eventIndex}`);
 		return;
 	}
 	state.setEvent(event);
-	var sysTime = getConfig().get("sysTime");
-	getConfig().setField("sysTime", Math.max(timestamp, sysTime));
+	sysTime = Math.max(timestamp, sysTime);
 }
 /**
  * @param payload {string}
  */
 function parseSchema(payload) {
-	getConfig().setField(
-		"schema",
-		payload.split(",").filter((v) => v.length !== 0),
-	);
+	schema = payload.split(",").filter((v) => v.length !== 0);
 
-	log(
-		Strings.Ok +
-			": RECEIVED SCHEMA: " +
-			getConfig().get("schema").join(", "),
-	);
+	log(Strings.Ok + ": RECEIVED SCHEMA: " + schema.join(", "));
 }
 /**
  * @param payload {string}
@@ -151,8 +149,7 @@ function parseMsg(payload) {
 	if (stateSet) {
 		broadcastState();
 	}
-	var sysTime = getConfig().get("sysTime");
-	getConfig().setField("sysTime", Math.max(message.time, sysTime));
+	sysTime = Math.max(message.time, sysTime);
 	const serverMsg = new ServerMessage("message", message);
 	broadcast(serverMsg);
 }
@@ -160,12 +157,8 @@ function parseMsg(payload) {
  * @param payload {string}
  */
 function parseEventSchema(payload) {
-	getConfig().setField(
-		"events",
-		payload.split(",").filter((v) => v.length !== 0),
-	);
+	events = payload.split(",").filter((v) => v.length !== 0);
 
-	var events = getConfig().get("events");
 	log(Strings.Ok + ": RECEIVED EVENT SCHEMA: " + events.join(", "));
 }
 
@@ -175,7 +168,7 @@ function parseEventSchema(payload) {
 function parseMetadata(payload) {
 	var mtype = payload.charCodeAt(0);
 	if (mtype === 0) {
-		var fieldSize = payload.charCodeAt(1);
+		fieldSize = payload.charCodeAt(1);
 		if (fieldSize !== 4 && fieldSize !== 8) {
 			log(
 				Strings.Error +
@@ -187,7 +180,6 @@ function parseMetadata(payload) {
 		} else {
 			log(Strings.Ok + ": sizeof(FLOAT): " + fieldSize);
 		}
-		getConfig().setField("fieldSize", fieldSize);
 	} else {
 		log(Strings.Warn + ": UNKNOWN METADATA TYPE " + mtype);
 	}
@@ -209,14 +201,12 @@ function floatToInt32(float) {
 function parseData(payload) {
 	/** @type{Float32Array|Float64Array} */
 	let array;
-	var fieldSize = getConfig().get("fieldSize");
 	if (fieldSize === 4) {
 		array = new Float32Array(payload.buffer);
 	} else {
 		array = new Float64Array(payload.buffer);
 	}
 
-	var schema = getConfig().get("schema");
 	if (array.length !== schema.length) {
 		log(
 			`${Strings.Warn}: Expected a float ${fieldSize * 8} array of ${schema.length} elements, but got ${array.length}. Ignoring this data point`,
@@ -233,14 +223,12 @@ function parseData(payload) {
 			obj[schema[i]] = floatToInt32(array[i]);
 		}
 	}
-	var sysTime = getConfig().get("sysTime");
-	getConfig().setField("sysTime", Math.max(obj.i_timestamp, sysTime));
+	sysTime = Math.max(obj.i_timestamp, sysTime);
 	state.setState(obj);
 	JSON.stringify(obj);
 }
 
 export default {
-	Config,
 	getSysTime,
 	clearSysTime,
 	parseMessage,

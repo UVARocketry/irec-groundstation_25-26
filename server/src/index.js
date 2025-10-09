@@ -19,15 +19,13 @@ import { log } from "./log.js";
 
 import mgr from "./readerManager.js";
 import state from "./state.js";
-import data from "./data.js";
+// import data from "./data.js";
 import { Configuration } from "./configuration.js";
 
 export const argv = process.argv.slice(2);
 
 class Config {
 	manager = new Configuration(new mgr.Config());
-	state = new Configuration(new state.Config());
-	data = new Configuration(new data.Config());
 }
 
 var config = new Configuration(new Config());
@@ -196,7 +194,9 @@ const server = http.createServer((req, res) => {
 					if (err) {
 						res.statusCode = 500;
 						res.end("Error reading the file");
-						log(`${Strings.Warn}: Request for ${prettyPath} failed`);
+						log(
+							`${Strings.Warn}: Request for ${prettyPath} failed`,
+						);
 					} else {
 						// Guess the content type based on file extension
 						let contentType = "text/plain";
