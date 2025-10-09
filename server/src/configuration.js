@@ -1,4 +1,6 @@
 import fs from "node:fs";
+import { log } from "./log.js";
+import { Strings } from "./ansi.js";
 /**
  * @typedef {"value"|"configuration"} ConfigType
  */
@@ -281,40 +283,35 @@ export class Configuration {
 		/** @type {any} */
 		var ret = {};
 
-		/** @type {Promise<void>[]}*/
-		var promises = [];
-
 		for (const key in this.value) {
 			const val = this.value[key];
 			if (val instanceof Configuration) {
 				if (val.hasConfigOptions()) {
-					const fn = async function () {
-						ret[key] = await val.getConfigOptions();
-					};
-					promises.push(fn());
+					ret[key] = await val.getConfigOptions();
 				}
-			} else if (val.getConfig !== null) {
-				const fn = async function () {
-					// @ts-ignore
-					const v = await val.getConfig();
-					// @ts-ignore
-					if (v.element === "input" && v.default === "") {
+			} else if (val.getConfig != null) {
+				// @ts-ignore
+				const v = await val.getConfig();
+				// @ts-ignore
+				if (v instanceof InputConfigOptions) {
+					if (v.default === "") {
 						// @ts-ignore
 						v.default = val.value;
-					} else {
-						// @ts-ignore
-						const el = v.options.indexOf(val.value);
-						if (el !== -1) {
-							// @ts-ignore
-							v.options.unshift(v.options[el]);
-						}
 					}
-					ret[key] = [v];
-				};
-				promises.push(fn());
+				} else if (v instanceof SelectConfigOptions) {
+					// @ts-ignore
+					const el = v.options.indexOf(val.value);
+					if (el !== -1) {
+						// @ts-ignore
+						v.options.unshift(v.options[el]);
+					}
+				} else {
+					console.log(v);
+					log(`${Strings.Error}: unkown ConfigOptions type`);
+				}
+				ret[key] = [v];
 			}
 		}
-		await Promise.allSettled(promises);
 		return ret;
 	}
 
