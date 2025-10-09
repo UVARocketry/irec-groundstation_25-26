@@ -248,9 +248,10 @@ async function onMessage(buf) {
 
 	const decoder = new TextDecoder("utf-8");
 	const originalString = decoder.decode(buf);
-	console.log("msgI: " + config().get("msgI"));
-	await saveItem(originalString, config().get("msgI"));
+	var msgI = config().get("msgI");
 	config().setField("msgI", config().get("msgI") + 1);
+	console.log("msgI: " + msgI);
+	await saveItem(originalString, msgI);
 }
 
 /** @return {Configuration<Config>} */
