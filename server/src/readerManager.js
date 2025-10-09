@@ -38,13 +38,13 @@ var active = false;
 
 /** @type {ReaderMeta[]} */
 var readers = [
-	new ReaderMeta("log", new FileLogReader(), false),
-	new ReaderMeta("serial", new SerialPortReader("/dev/ttyACM0"), false),
 	new ReaderMeta(
 		"stdout",
 		new StdoutReader("./run", [], "stderr", "../../irec_25-26/lib"),
 		false,
 	),
+	new ReaderMeta("log", new FileLogReader(), false),
+	new ReaderMeta("serial", new SerialPortReader("/dev/ttyACM0"), false),
 ];
 
 var readerIndex = 0;
