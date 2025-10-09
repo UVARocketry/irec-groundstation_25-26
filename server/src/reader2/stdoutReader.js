@@ -49,6 +49,7 @@ export class StdoutReader {
 		this.config.setField("pwd", pwd);
 		this.config.setField("cmd", cmd);
 		this.config.setField("args", args);
+		this.config.setField("validMessageHeader", "ABCD");
 
 		this.config.getConfigurable("stream").setConfigGetter(async () => {
 			return new SelectConfigOptions(["stdout", "stderr"]);
@@ -60,8 +61,13 @@ export class StdoutReader {
 			return new InputConfigOptions("string[]", "[]");
 		});
 		this.config.getConfigurable("pwd").setConfigGetter(async () => {
-			return new InputConfigOptions("string", ".");
+			return new InputConfigOptions("string", "");
 		});
+		this.config
+			.getConfigurable("validMessageHeader")
+			.setConfigGetter(async () => {
+				return new InputConfigOptions("string", "ABCD");
+			});
 	}
 
 	postReconfigure() {
