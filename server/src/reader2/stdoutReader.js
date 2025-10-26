@@ -38,6 +38,8 @@ export class StdoutReader {
 
 	restart = false;
 
+	previousStr = "";
+
 	/**
 	 * @param {"stdout" | "stderr"} stream
 	 * @param {string} cmd
@@ -144,11 +146,26 @@ export class StdoutReader {
 
 		const header = this.config.get("validMessageHeader");
 		stream.on("data", (v) => {
-			const strs = v.toString().split("\n");
-			for (const s of strs) {
+			var strs = v.toString().split("\n");
+			if (strs.length > 0) {
+				strs[0] = this.previousStr + strs[0];
+				this.previousStr = "";
+			}
+
+			if (v.toString().endsWith("\n")) {
+				this.previousStr = strs.at(-1);
+				strs = strs.slice(0, -1);
+			}
+
+			for (var s of strs) {
 				if (!s.startsWith(header)) {
 					continue;
 				}
+				// delete carriage return
+				if (s.endsWith("\r")) {
+					s = s.slice(0, -1);
+				}
+
 				const newV = s.substring(header.length, s.length);
 				this.onData(new Uint8Array(Buffer.from(newV)));
 			}

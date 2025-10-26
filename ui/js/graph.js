@@ -91,6 +91,7 @@ export class Graph {
         this.data.push(d);
         alts = alts ?? [];
         for (var i = 0; i < alts.length; i++) {
+            this.altData[i] = this.altData[i] ?? [];
             this.altData[i].push(alts[i]);
         }
         if (this.maxDatapoints !== 0) {
