@@ -178,7 +178,8 @@ A `command` message is sent by the UI to request a change in the server's intern
     *   **Valid Commands:**
         *   `"restart"`: Restarts the data reader connected to the server.
         *   `"switch"`: Toggles the active data reader between "LIVE" and "DEBUG" modes (or equivalent types).
-        *   `"getRenameData"`: Requests the server to respond with a `renameResponse` message, providing information about valid name changes for the active reader. Name changes typically relate to switching the serial port connected to the ground station PCB or changing the folder path for a file log reader.
+        *   `"getRenameData"`: (***DEPRECATED*** in favor of `getConfigurationOptions`) Requests the server to respond with a `renameResponse` message, providing information about valid name changes for the active reader. Name changes typically relate to switching the serial port connected to the ground station PCB or changing the folder path for a file log reader.
+        * `"getConfigurationOptions"`: Requests the server to respond with a `configurationOptions` message providing information about valid configuration states for the entire server (can include the current reader or other things).
 
 **Example:**
 
@@ -190,6 +191,10 @@ A `command` message is sent by the UI to request a change in the server's intern
 ```
 
 ### 4.4. `renameResponse`
+
+> [!CAUTION]
+> 
+> ***DEPRECATED***: `renameResponse` has been deprecated in favor of `configurationOptions`
 
 **Direction:** Server to UI
 
@@ -228,6 +233,10 @@ This message is sent by the server in response to a `getRenameData` command. It 
 **Note**: Naming the subfields `type` and `data` is confusing. For next year, please consider a new name
 
 ### 4.5. `rename`
+
+> [!CAUTION]
+>
+> ***DEPRECATED*** in favor of `setConfiguration`
 
 **Direction:** UI to Server
 
@@ -271,5 +280,74 @@ These messages originate from the rocket and are forwarded by the server to the 
     "time": 11400,
     "left": 0
   }
+}
+```
+
+### 4.7. `configurationOptions`
+
+**Direction:** Server to UI
+
+This message is sent to the UI from the server in response to a `getConfigurationOptions` `command`. 
+
+It returns an object of the valid configurations of the server. In the future, this might also be updated to include configurations of the rocket or the groundstation PCB. It returns a generic JSON object, however, the root values are not actual values, but instead an array with one `ConfigOptions` object. There are two kinds of `ConfigOptions`: `InputConfigOptions` and `SelectConfigOptions`. Both of them have a field called `element` which clients can use to check if an object is either part of the object tree or a `ConfigOptions` object.
+
+`SelectConfigOptions` refers to when a configuration field has a limited number of options and users must choose one of the valid ones (eg serial ports). It always has the following fields:
+
+- `element` (string): This value will *always* be set to `"select"` for this type of object. 
+- `options` (any[]): This is an array of the possible values that the user must choose one of which to set as the new option. The default option that clients should send back in their `setConfiguration` request is the first element in the array
+
+`InputConfigOptions` refers to when a configuration has any number of possible inputs and the user is expected to come up with one (eg directories to save packets to). It always has the following fields:
+
+- `element` (string): This value will *always* be set to `"input"`
+- `default` (string): The json string representation of the default value
+- `type` (string): This is not expected to be parsed by clients, but should instead be showed to users so that they can type in their responses in the expected json format
+
+**Example:**
+
+```json
+{
+    "type": "configurationOptions",
+    "data": {
+        "manager": {
+            "saveFolder": [
+                { "element": "input", "default": "", "type": "string" }
+            ],
+            "readerConfig": {
+                "dir": [
+                    {
+                        "element": "select",
+                        "options": [
+                            "../out",
+                            "../out_launch",
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+}
+```
+
+### 4.8. `setConfiguration`
+
+**Direction:** UI to Server
+
+This is the expected response message when a user has completely filled out a configuration on the UI. It has the same structure as the `configurationOptions` message, except the arrays of `ConfigOptions` are expected to be replaced with the user selected value.
+
+**Example:**
+
+This is a possible response to the above `configurationOptions` message
+
+```json
+{
+    "type": "setConfiguration",
+    "data": {
+        "manager": {
+            "saveFolder": "",
+            "readerConfig": {
+                "dir": "../out"
+            }
+        }
+    }
 }
 ```

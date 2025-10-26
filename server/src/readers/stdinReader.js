@@ -148,7 +148,9 @@ export class StdinReader extends InputReader {
 				}
 			}, 10);
 		});
-		log(`${Strings.Ok}: Started process ${this.cmd} ${this.args.join(" ")}`);
+		log(
+			`${Strings.Ok}: Started process ${this.cmd} ${this.args.join(" ")}`,
+		);
 	}
 	stop() {
 		this.process?.kill();

@@ -219,3 +219,5 @@ Lowkey, this might actually be a good idea bc it simplifies the ui implementatio
 dont have to force users to edit a json, and instead just provide which fields *can* 
 be edited and possible input values (array means the value must be from that list,
 string means it can be any arbitrary string)
+
+Ok ok ok so... *maybe* when a ui requests the current configuration we send them *only* the options object because those are the only config values they can set, but everything else is still managed under the hood and saved to disk for crash recovery

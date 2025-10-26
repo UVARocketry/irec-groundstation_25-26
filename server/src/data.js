@@ -2,24 +2,47 @@
 import { Message, MessageType } from "./message.js";
 
 import { Strings } from "./ansi.js";
-import { setConnected, setEvent, setState } from "./state.js";
+import state from "./state.js";
 import { log } from "./log.js";
 import { ServerMessage } from "../../common/ServerMessage.js";
-import { broadcast, broadcastState } from "./index.js";
+import { broadcast, broadcastState, getConfigField } from "./index.js";
+import { Configuration } from "./configuration.js";
 
 /** @import { EventType, RocketMessage } from '../../common/ServerMessage.js' */
 
-// some data to store
+var fieldSize = 4;
+var sysTime = 0;
 /** @type {string[]} */
 var schema = [];
-var fieldSize = 4;
-
 /** @type {string[]} */
 var events = [];
+// export class Config {
+// 	/** @type {number} */
+// 	fieldSize = 4;
+//
+// 	/** @type {number} */
+// 	sysTime = 0;
+//
+// 	/** @type {string[]} */
+// 	schema = [];
+//
+// 	/** @type {string[]} */
+// 	events = [];
+// }
 
-export var sysTime = 0;
+// /** @return {Configuration<Config>} */
+// function getConfig() {
+// 	return getConfigField("data");
+// }
+
+// config.setRoot("idk2.json");
+
+export function getSysTime() {
+	return sysTime;
+}
 
 export function clearSysTime() {
+	// getConfig().setField("sysTime", 0);
 	sysTime = 0;
 }
 
@@ -41,7 +64,7 @@ export function parseMessage(msg) {
 	var str = new TextDecoder().decode(msg.data);
 	if (msg.type === MessageType.Schema) {
 		parseSchema(str);
-		setEvent("waiting");
+		state.setEvent("waiting");
 		return "event";
 	} else if (msg.type === MessageType.EventSchema) {
 		parseEventSchema(str);
@@ -71,13 +94,19 @@ function parseEvent(payload) {
 		);
 		return;
 	}
-	const [c4, c3, c2, c1] = [payload[0], payload[1], payload[2], payload[3]].map(
-		(v) => v.charCodeAt(0) & 0xff,
-	);
+	const [c4, c3, c2, c1] = [
+		payload[0],
+		payload[1],
+		payload[2],
+		payload[3],
+	].map((v) => v.charCodeAt(0) & 0xff);
 	const eventIndex = (c1 << 24) | (c2 << 16) | (c3 << 8) | c4;
-	const [t4, t3, t2, t1] = [payload[4], payload[5], payload[6], payload[7]].map(
-		(v) => v.charCodeAt(0) & 0xff,
-	);
+	const [t4, t3, t2, t1] = [
+		payload[4],
+		payload[5],
+		payload[6],
+		payload[7],
+	].map((v) => v.charCodeAt(0) & 0xff);
 	const timestamp = (t1 << 24) | (t2 << 16) | (t3 << 8) | t4;
 
 	const event = events[eventIndex] ?? "NO";
@@ -85,7 +114,7 @@ function parseEvent(payload) {
 		log(`${Strings.Warn}: Received invalid event index ${eventIndex}`);
 		return;
 	}
-	setEvent(event);
+	state.setEvent(event);
 	sysTime = Math.max(timestamp, sysTime);
 }
 /**
@@ -106,15 +135,15 @@ function parseMsg(payload) {
 	if (message.subject === "Init" || message.subject === "Connection") {
 		if (message.verb === "Failed" || message.verb === "Started") {
 			stateSet = true;
-			setConnected(message.device, false);
+			state.setConnected(message.device, false);
 		} else if (message.verb === "Succeeded") {
 			stateSet = true;
-			setConnected(message.device, true);
+			state.setConnected(message.device, true);
 		}
 	} else if (message.subject === "Deactivation") {
 		if (message.verb === "Succeeded") {
 			stateSet = true;
-			setConnected(message.device, false);
+			state.setConnected(message.device, false);
 		}
 	}
 	if (stateSet) {
@@ -195,6 +224,12 @@ function parseData(payload) {
 		}
 	}
 	sysTime = Math.max(obj.i_timestamp, sysTime);
-	setState(obj);
+	state.setState(obj);
 	JSON.stringify(obj);
 }
+
+export default {
+	getSysTime,
+	clearSysTime,
+	parseMessage,
+};

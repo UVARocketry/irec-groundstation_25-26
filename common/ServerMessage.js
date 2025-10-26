@@ -1,30 +1,19 @@
 /**
- * @typedef {"event"|"state"|"command"|"renameResponse"|"rename"|"message"} EventType
+ * @typedef {"event"|"state"|"command"|"setConfiguration"|"configurationOptions"|"configuration"|"message"} EventType
  */
 
 /** @import { LogItem } from "./LogItem" */
-
-export class RenameResponse {
-	/**
-	 * @type {"name"|"choice"}
-	 */
-	type = "name";
-	/**
-	 * @type {string[]}
-	 */
-	data = [];
-}
 
 export class ServerMessage {
 	/** @type EventType */
 	type = "event";
 
-	/** @type (string|LogItem|RenameResponse|RocketMessage) */
+	/** @type (string|LogItem|RocketMessage|any) */
 	data = "";
 
 	/**
 	 * @param {EventType} type
-	 * @param {string|LogItem|RenameResponse|RocketMessage} data
+	 * @param {string|LogItem|RocketMessage} data
 	 */
 	constructor(type, data) {
 		this.type = type;

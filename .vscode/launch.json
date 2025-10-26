@@ -6,10 +6,9 @@
             "program": "${workspaceFolder}/server/src/index.js",
             "request": "launch",
             "cwd": "${workspaceFolder}/server",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
+            "skipFiles": ["<node_internals>/**"],
             "type": "node"
-        },
+        }
     ]
 }
+

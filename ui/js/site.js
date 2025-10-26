@@ -38,7 +38,7 @@ var velocityDial,
 	deploymentDiffDial;
 
 /** @type {Button} */
-var reqButton, switchButton, renameButton;
+var reqButton, switchButton, stopButton;
 
 export function getP5() {
 	return p;
@@ -342,8 +342,8 @@ function init() {
 		0.02,
 		0.015 * height,
 	);
-	btnText = "rename";
-	renameButton = new Button(
+	btnText = "stop";
+	stopButton = new Button(
 		0.01,
 		0.85,
 		p.textWidth(btnText) / height + 0.05,
@@ -385,7 +385,10 @@ function init() {
 		4,
 	);
 	altitudeGraph.withMaxDatapoints(1000);
-	altitudeGraph.withAlternateSeries(1, [p.color(0, 255, 255)]);
+	altitudeGraph.withAlternateSeries(2, [
+		p.color(0, 255, 255),
+		p.color(0, 0, 0),
+	]);
 
 	velocityDial = new Dial(
 		width / height - 0.8,
@@ -454,10 +457,10 @@ function init() {
 			p.textFont("monospace");
 		}
 	});
-	logo = p.loadImage("assets/logo.webp");
+	logo = p.loadImage("./ui/assets/logo.webp");
 }
 
-function draw() {
+export function draw() {
 	// light mode/dark mode bg
 	if (light) {
 		// p.background(255);
@@ -493,51 +496,62 @@ function draw() {
 	var alt = 0;
 	var vel = p.createVector(0, 0, 0);
 	var acc = p.createVector(0, 0, 0);
-	const deplActual = state?.actualDeployment ?? 0;
-	const deplExp = state?.pidDeployment ?? 0;
+	const deplActual = state?.actualDeployment_pct ?? 0;
+	const deplExp = state?.pidDeployment_pct ?? 0;
 	const uptime = state?.i_timestamp ?? 0;
 	const airTime = state?.timeSinceLaunch ?? 0;
 	var pos = p
-		.createVector(state?.vnPosX ?? 0, state?.vnPosY ?? 0, state?.vnPosZ ?? 0)
+		.createVector(
+			state?.vnPos_m_nedX ?? 0,
+			state?.vnPos_m_nedY ?? 0,
+			state?.vnPos_m_nedZ ?? 0,
+		)
 		.mult(mtoft);
-	const vnGps = p.createVector(state?.vnGpsX ?? 0, state?.vnGpsY ?? 0, 0);
+	const vnGps = p.createVector(
+		state?.vnGps_deg_deg_mX ?? 0,
+		state?.vnGps_deg_deg_mY ?? 0,
+		0,
+	);
 	const readerActive = state?.readerConnected ?? false;
 	const rocketActive = state?.rocketConnected ?? false;
 	const environment = state?.readerType ?? "NONE";
 	const connected = state?.connected ?? [];
-	const mainBat = state?.mainBat ?? 0;
-	const servoBat = state?.servoBat ?? 0;
+	const mainBat = state?.mainBat_pct ?? 0;
+	const servoBat = state?.servoBat_pct ?? 0;
 	// var vnGps = p.createVector(0, 0, 0);
-	const rssi = state?.rssi ?? 0;
+	const rssi = state?.rssi_dBm ?? 0;
 
 	if (
 		state !== null &&
 		state.startState !== null &&
 		state.startState !== undefined
 	) {
-		state.startZ = state.startState.kalmanPosZ;
+		state.startZ = state.startState.kalmanPos_m_enuZ;
 		if (state.i_timestamp == 163564) {
 			debugger;
 		}
-		ap = state.apogee - state.startState.kalmanPosZ;
+		ap = state.apogee_m_agl - state.startState.kalmanPos_m_enuZ;
 		ap *= mtoft;
 
-		expAp = state.predictedApogee - state.startState.kalmanPosZ;
+		expAp = state.predictedApogee_m_agl - state.startState.kalmanPos_m_enuZ;
 		expAp *= mtoft;
 
-		alt = state.kalmanPosZ - state.startState.kalmanPosZ;
+		alt = state.kalmanPos_m_enuZ - state.startState.kalmanPos_m_enuZ;
 		alt *= mtoft;
 
-		altitudeGraph.addDatapoint(ap, [expAp]);
+		altitudeGraph.addDatapoint(ap, [
+			expAp,
+			state.controlAuth_m_agl * mtoft,
+		]);
 		acc = p.createVector(
-			state.vnAccX / 9.8,
-			state.vnAccY / 9.8,
-			state.vnAccZ / 9.8,
+			state.vnAcc_mps2_nedX / 9.8,
+			state.vnAcc_mps2_nedY / 9.8,
+			state.vnAcc_mps2_nedZ / 9.8,
 		);
 		vel = p.createVector(
-			state.vnVelX * mtoft,
-			state.vnVelY * mtoft,
-			state.vnVelZ * mtoft,
+			state.vnVel_mps_nedX * mtoft,
+			state.vnVel_mps_nedY * mtoft,
+			state.vnVel_mps_nedZ * mtoft,
 		);
 	}
 
@@ -663,13 +677,15 @@ function draw() {
 
 	// compass map display thing
 	{
+		const newPos = pos.copy();
+		newPos.z = 0;
 		if (
-			pos.x !== 0 &&
-			pos.y !== 0 &&
+			newPos.x !== 0 &&
+			newPos.y !== 0 &&
 			altBelowForReset === -1 &&
-			pos.mag() < 10000
+			newPos.mag() < 10000
 		) {
-			pastPos.push(pos);
+			pastPos.push(newPos);
 		}
 		const w = 0.2;
 		const x = width / height - 0.7;
@@ -719,7 +735,11 @@ function draw() {
 				(y - ((dist / biggestDist) * w) / 2) * height - 1,
 			);
 		}
-		p.text(Math.floor(biggestDist), x * height + 1, (y - w / 2) * height - 1);
+		p.text(
+			Math.floor(biggestDist),
+			x * height + 1,
+			(y - w / 2) * height - 1,
+		);
 		p.textAlign(p.CENTER);
 		p.textSize(0.015 * height);
 		p.text("N", x * height, (y - w / 2) * height - extra - 2);
@@ -761,7 +781,11 @@ function draw() {
 		x += p.textWidth("GPS:");
 		p.textSize(0.025 * height);
 		p.text(
-			"(" + limDecimal(vnGps.x, 5) + "°, " + limDecimal(vnGps.y, 5) + "°)",
+			"(" +
+				limDecimal(vnGps.x, 3) +
+				"°, " +
+				limDecimal(vnGps.y, 3) +
+				"°)",
 			x,
 			0.1 * height,
 		);
@@ -919,7 +943,10 @@ function draw() {
 		0.1 * height,
 	);
 	const airTimeMins = Math.floor(airTime / 1000 / 60) + "";
-	const airTimeSecs = ((Math.floor(airTime / 1000) % 60) + "").padStart(2, "0");
+	const airTimeSecs = ((Math.floor(airTime / 1000) % 60) + "").padStart(
+		2,
+		"0",
+	);
 	multiUnitString(
 		[
 			"Airtime: ",
@@ -955,10 +982,10 @@ function draw() {
 			pastPos = [];
 			sendWsCommand("switch");
 		}
-		renameButton.handlePress();
-		renameButton.draw();
-		if (renameButton.isDone()) {
-			sendWsCommand("getRenameData");
+		stopButton.handlePress();
+		stopButton.draw();
+		if (stopButton.isDone()) {
+			sendWsCommand("stop");
 		}
 	}
 
@@ -973,13 +1000,13 @@ function draw() {
 		accelerationDial.draw();
 		// TODO: CHANGE THIS
 		// actualDeplDial.update(0);
-		actualDeplDial.update(deplActual * 100);
+		actualDeplDial.update(deplActual);
 		actualDeplDial.draw();
 		// expectedDeplDial.update(0);
-		expectedDeplDial.update(deplExp * 100);
+		expectedDeplDial.update(deplExp);
 		expectedDeplDial.draw();
 		// deploymentDiffDial.update(0);
-		deploymentDiffDial.update(deplActual * 100 - deplExp * 100);
+		deploymentDiffDial.update(deplActual - deplExp);
 		deploymentDiffDial.draw();
 
 		// show the raw values for velocity and acceleration
@@ -1105,7 +1132,9 @@ export const s = (/** @type {p5} */ pi) => {
 	pi.setup = init;
 
 	pi.draw = draw;
-	pi.mouseDragged = function () {};
-	pi.mouseClicked = function () {};
-	pi.mouseReleased = function () {};
+	pi.frameRate(45);
+	// pi.mouseDragged = draw;
+	// pi.mousePressed = draw;
+	// pi.mouseReleased = draw;
+	// pi.mouseMoved = draw;
 };

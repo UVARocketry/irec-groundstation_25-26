@@ -3,124 +3,116 @@ import fs from "node:fs";
 import http from "node:http";
 import path from "node:path";
 
-import { Message } from "./message.js";
-import { clearSysTime, parseMessage } from "./data.js";
-
-import {
-	getState,
-	getEvent,
-	setAdd,
-	resetInternalState,
-	setEvent,
-} from "./state.js";
+import { clearSysTime } from "./data.js";
 
 import { WebSocketServer } from "ws";
 import { Strings } from "./ansi.js";
 import { ServerMessage } from "../../common/ServerMessage.js";
-import { handleUiRequest } from "./command.js";
+import command from "./command.js";
 import { port } from "../../common/web.js";
-import { FileLogReader } from "./readers/fileLogReader.js";
-import { InputReader } from "./readers/inputReader.js";
+// import { FileLogReader } from "./readers/fileLogReader.js";
+// import { InputReader } from "./readers/inputReader.js";
 import child_process from "node:child_process";
 import { log } from "./log.js";
-import { SerialPortReader } from "./readers/serialportReader.js";
-import { StdinReader } from "./readers/stdinReader.js";
+// import { SerialPortReader } from "./readers/serialportReader.js";
+// import { StdinReader } from "./readers/stdinReader.js";
 
+import mgr from "./readerManager.js";
+import state from "./state.js";
+// import data from "./data.js";
+import { Configuration } from "./configuration.js";
+
+export const argv = process.argv.slice(2);
+
+class Config {
+	manager = new Configuration(new mgr.Config());
+}
+
+var config = new Configuration(new Config());
+config.setRoot("save.json");
+
+mgr.init();
+
+config.getConfigOptions().then((res) => {
+	console.log(JSON.stringify(res));
+});
+
+/** @template {keyof Config} K
+ * @param key {K}
+ * @return {Config[K]}
+ */
+export function getConfigField(key) {
+	return config.get(key);
+}
+
+export function getRootConfig() {
+	return config;
+}
+
+var wsConnected = false;
 const wss = new WebSocketServer({ port: port });
-/**@type {InputReader}*/
-var reader;
-var useStdin = false;
+// var useStdin = false;
 
 /** @param msg {ServerMessage} */
 export function broadcast(msg) {
-	wss.clients.forEach(function each(client) {
+	if (!wsConnected) {
+		return;
+	}
+	wss.clients.forEach(function (client) {
 		if (client.readyState === WebSocket.OPEN) {
 			client.send(JSON.stringify(msg));
 		}
 	});
 }
 
-/**
- * @param {Uint8Array<ArrayBuffer>} buf
- */
-async function onUpdate(buf) {
-	const msg = new Message(buf);
+export function stopReader() {
+	mgr.stop();
+}
 
-	var command = parseMessage(msg);
-	var send = null;
-	if (command === "event") {
-		send = new ServerMessage("event", getEvent());
-	} else if (command === "state") {
-		send = new ServerMessage("state", getState());
-	}
-	if (send !== null) {
-		broadcast(send);
-	}
+/**
+ * @param {Config} obj
+ */
+export function reconfigure(obj) {
+	mgr.stop();
+	config.useConfigOptions(obj);
+	mgr.postReconfigure();
 }
 
 export function broadcastState() {
-	var send = new ServerMessage("state", getState());
+	var send = new ServerMessage("state", state.getState());
 	broadcast(send);
 }
 export function broadcastEvent() {
-	var send = new ServerMessage("event", getEvent());
+	var send = new ServerMessage("event", state.getEvent());
 	broadcast(send);
 }
 
-const logReader = new FileLogReader(onUpdate, null); //new DemoReader(onUpdate, null);
-
-/**
- * @param {boolean} v
- */
-export function useStdinReader(v) {
-	if (v) {
-		reader = procReader;
-	} else {
-		reader = logReader;
-	}
-}
-
-export function switchReader() {
-	resetInternalState();
-	reader.stop();
-	setEvent("waiting");
-	if (reader == procReader) {
-		reader = logReader;
-		setAdd("readerType", "DEBUG");
-	} else {
-		reader = procReader;
-		setAdd("readerType", "LIVE");
-	}
-	// reader.start();
-}
 export function resetMessageReader() {
-	resetInternalState();
+	state.resetInternalState();
 	clearSysTime();
-	reader.reset();
+	mgr.reset();
+	mgr.start();
+	// reader.reset();
 	// readMessage(0);
-}
-
-export function getReader() {
-	return reader;
 }
 
 // await readMessage(0);
 log(`${Strings.Ok}: Starting websocket server at ws://localhost:${port}`);
 
-var read1 = false;
+// var read1 = false;
 // const procReader = new SerialPortReader(
 // 	onUpdate,
 // 	"/dev/ttyACM0",
 // 	() => "../out_" + new Date().toISOString().slice(0, 19).replace("T", "_"),
 // );
-const procReader = new StdinReader(
-	onUpdate,
-	"stderr",
-	"./run",
-	[],
-	"../../irec_25-26/lib",
-	() => "../out_" + new Date().toISOString().slice(0, 19).replace("T", "_"),
-);
+// const procReader = new StdinReader(
+// 	onUpdate,
+// 	"stderr",
+// 	"./run",
+// 	[],
+// 	"../../irec_25-26/lib",
+// 	() => "../out_" + new Date().toISOString().slice(0, 19).replace("T", "_"),
+// );
 // const procReader = new FileUpdateReader(
 //     onUpdate,
 //     "cat.txt",
@@ -129,10 +121,11 @@ const procReader = new StdinReader(
 // );
 
 wss.on("connection", function (ws) {
-	if (!read1) {
-		useStdinReader(useStdin);
-		read1 = true;
-	}
+	wsConnected = true;
+	// if (!read1) {
+	// useStdinReader(useStdin);
+	// 	read1 = true;
+	// }
 	// setTimeout(function () {
 	//     // reader.start();
 	//     // logReader.start();
@@ -141,17 +134,14 @@ wss.on("connection", function (ws) {
 	// }, 100);
 	// }
 	ws.on("message", function (v) {
-		handleUiRequest(v.toString());
-		// console.log(
-		//     `${Strings.Warn}: Messages from the browser ui are currently not supported`,
-		// );
+		command.handleUiRequest(v.toString());
 	});
 	ws.on("close", function () {
 		log(`${Strings.Warn}: Websocket connection closing`);
 	});
-	var msg = new ServerMessage("event", getEvent());
+	var msg = new ServerMessage("event", state.getEvent());
 	ws.send(JSON.stringify(msg));
-	msg = new ServerMessage("state", getState());
+	msg = new ServerMessage("state", state.getState());
 	ws.send(JSON.stringify(msg));
 	log(`${Strings.Ok}: Websocket connection successful`);
 });
@@ -159,11 +149,11 @@ wss.on("connection", function (ws) {
 // a server to send off the files
 const server = http.createServer((req, res) => {
 	// If the user requests the root '/'
-	const searchDir = process.cwd() + "/../ui/";
+	const searchDir = process.cwd() + "/../";
 	// leave off the common/ because that's in the url
-	const commonDir = process.cwd() + "/../";
+	// const commonDir = process.cwd() + "/../";
 	if (req.url === "/") {
-		const indexPath = path.join(searchDir, "index.html");
+		const indexPath = path.join(searchDir, "ui/index.html");
 
 		// Serve index.html file
 		fs.readFile(indexPath, (err, data) => {
@@ -180,12 +170,21 @@ const server = http.createServer((req, res) => {
 		});
 	} else {
 		// Serve other files from the file system
-		var url = req.url ?? "index.html";
+		var url = req.url ?? "/ui/index.html";
 		let filePath = path.join(searchDir, url);
 
-		if (url.startsWith("/common") || url.startsWith("common")) {
-			filePath = path.join(commonDir, url);
-		}
+		// if (url.startsWith("/common") || url.startsWith("common")) {
+		// 	filePath = path.join(commonDir, url);
+		// }
+
+		try {
+			if (fs.statSync(filePath).isDirectory()) {
+				if (!filePath.endsWith("/")) {
+					filePath += "/";
+				}
+				filePath += "index.html";
+			}
+		} catch (_) {}
 		const prettyPath = filePath.replace(process.cwd(), "");
 
 		// Check if file exists
@@ -195,7 +194,9 @@ const server = http.createServer((req, res) => {
 					if (err) {
 						res.statusCode = 500;
 						res.end("Error reading the file");
-						log(`${Strings.Warn}: Request for ${prettyPath} failed`);
+						log(
+							`${Strings.Warn}: Request for ${prettyPath} failed`,
+						);
 					} else {
 						// Guess the content type based on file extension
 						let contentType = "text/plain";
@@ -222,11 +223,10 @@ const server = http.createServer((req, res) => {
 	}
 });
 
-// Set the server to listen on port 3000
-const PORT = 3000;
-server.listen(PORT, () => {
-	log(`${Strings.Ok}: Server running at http://localhost:${PORT}`);
-	var url = "http://localhost:" + PORT;
+/**
+ * @param {string} url
+ */
+function openUrl(url) {
 	var start =
 		process.platform == "darwin"
 			? "open"
@@ -237,4 +237,15 @@ server.listen(PORT, () => {
 		url = url.replaceAll("&", "^&");
 	}
 	child_process.exec(start + " " + url);
+}
+
+// Set the server to listen on port 3000
+const PORT = 3000;
+server.listen(PORT, () => {
+	log(`${Strings.Ok}: Server running at http://localhost:${PORT}`);
+	var url = "http://localhost:" + PORT;
+	if (argv.indexOf("--nowin") !== 0) {
+		openUrl(url);
+		openUrl(url + "/uiforconfig");
+	}
 });

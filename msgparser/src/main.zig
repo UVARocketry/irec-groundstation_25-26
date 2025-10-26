@@ -50,12 +50,10 @@ const MetadataPacket = packed struct {
     value: MetadataValue,
     pub fn format(
         self: MetadataPacket,
-        comptime fmt: []const u8,
-        options: std.fmt.FormatOptions,
-        writer: anytype,
+        // comptime fmt: []const u8,
+        // options: std.fmt.FormatOptions,
+        writer: *std.Io.Writer,
     ) !void {
-        _ = fmt;
-        _ = options;
         try writer.print("Type: {?}\n", .{self.type});
         try writer.print("Value: {?}\n", .{self.value});
         const info: std.builtin.Type = @typeInfo(MetadataValue);
@@ -123,12 +121,8 @@ const DataUpdate = packed struct {
     rssi: f32,
     pub fn format(
         self: DataUpdate,
-        comptime fmt: []const u8,
-        options: std.fmt.FormatOptions,
-        writer: anytype,
+        writer: *std.Io.Writer,
     ) !void {
-        _ = fmt;
-        _ = options;
         try writer.print("DataUpdate:\n", .{});
         const info: std.builtin.Type = @typeInfo(DataUpdate);
         switch (info) {
@@ -200,14 +194,17 @@ pub fn main() !void {
         .diagnostic = &diag,
         .allocator = gpa.allocator(),
     }) catch |err| {
+        var errBuf: [4096]u8 = undefined;
+        var stdErrWriter = std.fs.File.stderr().writer(&errBuf);
+        const iow = &stdErrWriter.interface;
         // Report useful error and exit.
-        diag.report(std.io.getStdErr().writer(), err) catch {};
+        diag.report(iow, err) catch {};
         return err;
     };
     defer res.deinit();
-    const stdout_file = std.io.getStdOut().writer();
-    var bw = std.io.bufferedWriter(stdout_file);
-    const stdout = bw.writer();
+    var sobuf: [4096]u8 = undefined;
+    var stdout_file = std.fs.File.stdout().writer(&sobuf);
+    const stdout = &stdout_file.interface;
 
     if (res.args.header) |header| {
         const isStar = std.mem.eql(u8, header, "all");
@@ -235,49 +232,53 @@ pub fn main() !void {
             }
         }
         try stdout.print("\n", .{});
-        try bw.flush();
+        try stdout.flush();
         return;
     }
     const isParse = res.args.parse != 0;
-    const reader = std.io.getStdIn().reader();
-    var buf = std.ArrayList(u8).init(allocator);
-    defer buf.deinit();
-    try reader.readAllArrayList(&buf, 3000);
+    var sibuf: [512]u8 = undefined;
+    var reader = std.fs.File.stdin().reader(&sibuf);
+    const ioreader = &reader.interface;
+    const backingBuf = try allocator.alloc(u8, 30000);
+    defer allocator.free(backingBuf);
+    const len = try ioreader.readSliceShort(backingBuf);
+    var buf = backingBuf[0..len];
 
     if (isParse)
-        try stdout.print("{s}\n", .{buf.items});
-    if (buf.items.len == 0) {
+        try stdout.print("{s}\n", .{buf});
+    if (buf.len == 0) {
         if (isParse)
             try stdout.print("AYYO NOTHING THERE\n", .{});
         return;
     }
-    if (buf.items[buf.items.len - 1] == '\n') {
-        _ = buf.pop();
+    if (buf[buf.len - 1] == '\n') {
+        buf = buf[0 .. buf.len - 1];
+        // _ = buf.pop();
     }
-    if (buf.items.len % 2 != 0) {
+    if (buf.len % 2 != 0) {
         if (isParse)
             try stdout.print(
                 "dawg you gotta gimme an even number of chars, i got {}\n",
-                .{buf.items.len},
+                .{buf.len},
             );
         return;
     }
     if (isParse)
-        try stdout.print("Len: {}\n", .{buf.items.len});
+        try stdout.print("Len: {}\n", .{buf.len});
     // for (buf.items) |c| {
     //     try stdout.print("{} ", .{c});
     // }
     if (isParse)
         try stdout.print("\n", .{});
 
-    var actualData = std.ArrayList(u8).init(allocator);
-    defer actualData.deinit();
+    var actualData: std.ArrayList(u8) = .empty;
+    defer actualData.deinit(allocator);
 
     var i: u32 = 0;
-    while (i < buf.items.len) {
+    while (i < buf.len) {
         // The file encoding is a modified hexadecimal but uses a-p instead of 0-9,a-f
-        const lb: u8 = ((buf.items[i] - 'a') << 4) & 0xf0;
-        const rb: u8 = (buf.items[i + 1] - 'a') & 0x0f;
+        const lb: u8 = ((buf[i] - 'a') << 4) & 0xf0;
+        const rb: u8 = (buf[i + 1] - 'a') & 0x0f;
         // if (i == 4 or i == 2) {
         //     try stdout.print("{b:0>4}\n", .{lb});
         //     try stdout.print("{b:0>4}\n", .{rb});
@@ -287,7 +288,7 @@ pub fn main() !void {
         //     (lb >> 4) + (rb << 4)
         // else
         //     lb + rb;
-        try actualData.append(byte);
+        try actualData.append(allocator, byte);
         i += 2;
     }
 
@@ -335,7 +336,7 @@ pub fn main() !void {
                 actualData.items[5..],
             );
             if (isParse)
-                try stdout.print("{?}\n", .{data});
+                try stdout.print("{f}\n", .{data});
             const info = @typeInfo(DataUpdate);
             var headers = std.mem.splitScalar(u8, res.args.csv orelse "", ',');
             var outputComma = false;
@@ -376,14 +377,14 @@ pub fn main() !void {
                 actualData.items[5..],
             );
             if (isParse)
-                try stdout.print("{?}\n", .{data});
+                try stdout.print("{any}\n", .{data});
         },
         .Acknowledgement => {},
     }
     if (res.args.csv != null and needsNewline) {
         try stdout.print("\n", .{});
     }
-    try bw.flush(); // don't forget to flush!
+    try stdout.flush(); // don't forget to flush!
 }
 
 test "simple test" {

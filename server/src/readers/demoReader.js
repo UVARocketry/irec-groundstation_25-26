@@ -7,7 +7,7 @@ import {
 	setEvent,
 	setRocketConnected,
 } from "../state.js";
-import { clearSysTime, sysTime } from "../data.js";
+import { clearSysTime, getSysTime } from "../data.js";
 import { log } from "../log.js";
 import { Strings } from "../ansi.js";
 import { ReadlineParser, SerialPort } from "serialport";
@@ -167,7 +167,7 @@ export class DemoReader extends InputReader {
 
 		this.i++;
 		this.onUpdate(buf);
-		const delta = sysTime - this.currentTime;
+		const delta = getSysTime() - this.currentTime;
 		if (delta > 1000) {
 			log(`${Strings.Info}: Waiting for ${delta}ms`);
 		}
