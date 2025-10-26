@@ -2,11 +2,18 @@
 import { ReadlineParser, SerialPort } from "serialport";
 import { Strings } from "../ansi.js";
 import { log } from "../log.js";
-import { Configuration, SelectConfigOptions } from "../configuration.js";
+import {
+	Configuration,
+	InputConfigOptions,
+	SelectConfigOptions,
+} from "../configuration.js";
 
 class Config {
 	/** @type {string} */
 	portPath = "";
+
+	/** @type {number} */
+	baud = 96000;
 }
 
 /** @implements {Reader} */
@@ -34,6 +41,9 @@ export class SerialPortReader {
 			const ports = portInfo.map((v) => v.path);
 
 			return new SelectConfigOptions(ports);
+		});
+		this.config.getConfigurable("baud").setConfigGetter(async () => {
+			return new InputConfigOptions("number", "96000");
 		});
 		this.config.setField("portPath", path);
 	}
@@ -99,7 +109,8 @@ export class SerialPortReader {
 		try {
 			this.port = new SerialPort({
 				path: this.config.get("portPath"),
-				baudRate: 96000,
+				// baud might be a string, so just convert it just in case
+				baudRate: Number(this.config.get("baud")),
 			});
 		} catch (_) {
 			this.port = null;
