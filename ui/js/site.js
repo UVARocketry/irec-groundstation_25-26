@@ -1,4 +1,4 @@
-﻿import { Button } from "./button.js";
+import { Button } from "./button.js";
 import { Dial } from "./dial.js";
 import { Graph } from "./graph.js";
 /** @import p5 from "p5"; */
@@ -120,10 +120,29 @@ function drawSignalStrength(label, level, x, y, w, h) {
 	const radius = 3;
 	const widthMul = 0.81;
 	const heightMul = 1 / 4;
-	level *= 10;
+
+	// Map LoRa RSSI to 0-4 bars
+	// 4 bars: RSSI >= -60 dBm (excellent) or positive values when very close
+	// 3 bars: -60 > RSSI >= -70 dBm (good)
+	// 2 bars: -70 > RSSI >= -85 dBm (fair)
+	// 1 bar: -85 > RSSI >= -100 dBm (poor)
+	// 0 bars: RSSI < -100 dBm (no signal)
+	let numBars = 0;
+	if (level >= -60) {
+		numBars = 4;
+	} else if (level >= -70) {
+		numBars = 3;
+	} else if (level >= -85) {
+		numBars = 2;
+	} else if (level >= -100) {
+		numBars = 1;
+	} else {
+		numBars = 0;
+	}
+
 	// y += h;
 	for (var i = 0; i < 4; i++) {
-		if (level > i * 25) {
+		if (i < numBars) {
 			p.fill("#7dfa82");
 		} else {
 			p.fill("#a0a0a0");
@@ -381,13 +400,14 @@ function init() {
 		0.2,
 		p.color(255, 0, 0),
 		"Altitude",
-		[10300, 0],
-		4,
+		[11000, 0],
+		11,
 	);
 	altitudeGraph.withMaxDatapoints(1000);
-	altitudeGraph.withAlternateSeries(2, [
+	altitudeGraph.withAlternateSeries(3, [
 		p.color(0, 255, 255),
 		p.color(0, 0, 0),
+		p.color(0, 0, 255),
 	]);
 
 	velocityDial = new Dial(
@@ -491,25 +511,25 @@ export function draw() {
 	// parse data packets
 	// aka state unpacking
 	var state = getCurrentState();
-	var ap = 0;
-	var expAp = 0;
-	var alt = 0;
+	var apogee = 0;
+	var predictedApogee = 0;
+	var altitude = 0;
 	var vel = p.createVector(0, 0, 0);
 	var acc = p.createVector(0, 0, 0);
 	const deplActual = state?.actualDeployment_pct ?? 0;
 	const deplExp = state?.pidDeployment_pct ?? 0;
-	const uptime = state?.i_timestamp ?? 0;
+	const uptime = state?.timestamp_ms ?? 0;
 	const airTime = state?.timeSinceLaunch ?? 0;
 	var pos = p
 		.createVector(
-			state?.vnPos_m_nedX ?? 0,
-			state?.vnPos_m_nedY ?? 0,
-			state?.vnPos_m_nedZ ?? 0,
+			state?.kalmanPos_m_x ?? 0,
+			state?.kalmanPos_m_y ?? 0,
+			state?.kalmanPos_m_z ?? 0,
 		)
 		.mult(mtoft);
 	const vnGps = p.createVector(
-		state?.vnGps_deg_deg_mX ?? 0,
-		state?.vnGps_deg_deg_mY ?? 0,
+		state?.vnLat_deg ?? 0,
+		state?.vnLon_deg ?? 0,
 		0,
 	);
 	const readerActive = state?.readerConnected ?? false;
@@ -526,36 +546,39 @@ export function draw() {
 		state.startState !== null &&
 		state.startState !== undefined
 	) {
-		state.startZ = state.startState.kalmanPos_m_enuZ;
-		if (state.i_timestamp == 163564) {
-			debugger;
-		}
-		ap = state.apogee_m_agl - state.startState.kalmanPos_m_enuZ;
-		ap *= mtoft;
+		state.startZ = state.startState.kalmanPos_m_z;
 
-		expAp = state.predictedApogee_m_agl - state.startState.kalmanPos_m_enuZ;
-		expAp *= mtoft;
+		apogee = state.apogee_m_agl;
+		apogee *= mtoft;
+		// console.log("APOGEE: ", apogee);
 
-		alt = state.kalmanPos_m_enuZ - state.startState.kalmanPos_m_enuZ;
-		alt *= mtoft;
+		predictedApogee = state.predictedApogee_m_agl;
+		predictedApogee *= mtoft;
+		// console.log("Prediction: ", predictedApogee);
+		// console.log("Start: ", state.startState.kalmanPos_m_z);
 
-		altitudeGraph.addDatapoint(ap, [
-			expAp,
-			state.controlAuth_m_agl * mtoft,
+		altitude = state.kalmanPos_m_z - state.startState.kalmanPos_m_z;
+		altitude *= mtoft;
+		// console.log("Altitude: ", altitude);
+
+		altitudeGraph.addDatapoint(apogee, [
+			predictedApogee,
+			state.controlAuth_m * mtoft * 15,
+			(predictedApogee - 10000) * 15,
 		]);
 		acc = p.createVector(
-			state.vnAcc_mps2_nedX / 9.8,
-			state.vnAcc_mps2_nedY / 9.8,
-			state.vnAcc_mps2_nedZ / 9.8,
+			state.obAcc_mps2_x / 9.8,
+			state.obAcc_mps2_y / 9.8,
+			state.obAcc_mps2_z / 9.8,
 		);
 		vel = p.createVector(
-			state.vnVel_mps_nedX * mtoft,
-			state.vnVel_mps_nedY * mtoft,
-			state.vnVel_mps_nedZ * mtoft,
+			state.kalmanVel_mps_x * mtoft,
+			state.kalmanVel_mps_y * mtoft,
+			state.kalmanVel_mps_z * mtoft,
 		);
 	}
 
-	if (alt < altBelowForReset) {
+	if (altitude < altBelowForReset) {
 		altBelowForReset = -1;
 	}
 
@@ -567,35 +590,44 @@ export function draw() {
 		p.noFill();
 		var angle = 0;
 		if (state != null) {
-			/** @type {Quaternion} */
-			var quat = {
-				w: state.orientationW,
-				x: state.orientationX,
-				y: state.orientationY,
-				z: state.orientationZ,
-			};
-			quatnormalize(quat);
-			/** @type {Quaternion} */
-			var dir = {
-				w: 0,
-				x: 0,
-				y: 0,
-				z: 1,
-			};
-
-			const quatPrime = {
-				w: quat.w,
-				x: -quat.x,
-				y: -quat.y,
-				z: -quat.z,
-			};
-
-			const newquat = quatmult(quatmult(quat, dir), quatPrime);
-
-			// the y of the triangle
-			var z = newquat.z;
-			var x = newquat.x;
-			angle = Math.acos(z);
+			// /** @type {Quaternion} */
+			// var quat = {
+			// 	w: state.orientationW,
+			// 	x: state.orientationX,
+			// 	y: state.orientationY,
+			// 	z: state.orientationZ,
+			// };
+			// quatnormalize(quat);
+			// /** @type {Quaternion} */
+			// var dir = {
+			// 	w: 0,
+			// 	x: 0,
+			// 	y: 0,
+			// 	z: 1,
+			// };
+			//
+			// const quatPrime = {
+			// 	w: quat.w,
+			// 	x: -quat.x,
+			// 	y: -quat.y,
+			// 	z: -quat.z,
+			// };
+			//
+			// const newquat = quatmult(quatmult(quat, dir), quatPrime);
+			//
+			// // the y of the triangle
+			// var z = newquat.z;
+			// var x = newquat.x;
+			// angle = Math.acos(z);
+		}
+		if (state != null) {
+			angle = Math.atan2(
+				Math.hypot(
+					state.representativeAxis_x,
+					state.representativeAxis_y,
+				),
+				state.representativeAxis_z,
+			);
 		}
 
 		p.push();
@@ -680,8 +712,8 @@ export function draw() {
 		const newPos = pos.copy();
 		newPos.z = 0;
 		if (
-			newPos.x !== 0 &&
-			newPos.y !== 0 &&
+			// newPos.x !== 0 &&
+			// newPos.y !== 0 &&
 			altBelowForReset === -1 &&
 			newPos.mag() < 10000
 		) {
@@ -710,7 +742,7 @@ export function draw() {
 			p.z = 0;
 			biggestDist = Math.max(biggestDist, p.mag());
 		}
-		if (biggestDist / travelMeterDiv > 8) {
+		while (biggestDist / travelMeterDiv > 8) {
 			travelMeterDiv *= 2;
 		}
 		p.textSize(0.01 * height);
@@ -779,7 +811,7 @@ export function draw() {
 		var x = 0.55 * width;
 		p.text("GPS: ", x, 0.1 * height);
 		x += p.textWidth("GPS:");
-		p.textSize(0.025 * height);
+		p.textSize(0.03 * height);
 		p.text(
 			"(" +
 				limDecimal(vnGps.x, 3) +
@@ -844,21 +876,21 @@ export function draw() {
 		msgCount = errorQueue.length;
 		const errorY = 0;
 		for (var i = 0; i < msgCount && i < errorQueue.length; i++) {
-			// const m = errorQueue[errorQueue.length - 1 - i];
-			// // m.left--;
-			// var type = m.type + ":";
-			// p.fill("#ff0000");
-			// p.text(
-			// 	type,
-			// 	0.55 * height,
-			// 	(errorY + mts * 1.28) * height + i * (mts * 1.01 * height),
-			// );
-			// p.fill(0);
-			// p.text(
-			// 	` ${m.device} ${m.subject} ${m.verb}`,
-			// 	0.55 * height + p.textWidth(type),
-			// 	(errorY + mts * 1.28) * height + i * (mts * 1.01 * height),
-			// );
+			const m = errorQueue[errorQueue.length - 1 - i];
+			// m.left--;
+			var type = m.type + ":";
+			p.fill("#ff0000");
+			p.text(
+				type,
+				0.55 * height,
+				(errorY + mts * 1.28) * height + i * (mts * 1.01 * height),
+			);
+			p.fill(0);
+			p.text(
+				` ${m.device} ${m.subject} ${m.verb}`,
+				0.55 * height + p.textWidth(type),
+				(errorY + mts * 1.28) * height + i * (mts * 1.01 * height),
+			);
 		}
 	}
 
@@ -971,7 +1003,7 @@ export function draw() {
 		reqButton.draw();
 		reqButton.handlePress();
 		if (reqButton.isDone()) {
-			altBelowForReset = alt * 0.95;
+			altBelowForReset = altitude * 0.95;
 			pastPos = [];
 			travelMeterDiv = 1;
 			sendWsCommand("restart");
@@ -1041,9 +1073,9 @@ export function draw() {
 		p.text("Altitude:", width - 0.16 * height, 0.72 * height);
 		p.textSize(height * 0.025);
 		p.textAlign(p.CENTER);
-		const apStr = limDecimal(ap);
-		const expApStr = limDecimal(expAp);
-		const altStr = limDecimal(alt);
+		const apStr = limDecimal(apogee);
+		const expApStr = limDecimal(predictedApogee);
+		const altStr = limDecimal(altitude);
 		centerString(
 			apStr,
 			0.025 * height,

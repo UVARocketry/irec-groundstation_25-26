@@ -184,6 +184,8 @@ export class StdoutReader {
 				if (this.restart) {
 					this.restart = false;
 					this.start();
+				} else {
+					this._onDone();
 				}
 			}, 10);
 		});

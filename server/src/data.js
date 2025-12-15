@@ -51,9 +51,9 @@ export function clearSysTime() {
  * @return {EventType|""} What kind of data was sent
  */
 export function parseMessage(msg) {
-	if (msg.version !== 0) {
+	if (msg.version !== 0 && msg.version !== 1) {
 		log(
-			`${Strings.Error}: received a message that does not have currect version number (0) (got version ${msg.version}). Packet parse skipped`,
+			`${Strings.Error}: received a message that does not have currect version number (0 or 1) (got version ${msg.version}). Packet parse skipped`,
 		);
 		return "";
 	}
@@ -72,7 +72,11 @@ export function parseMessage(msg) {
 		parseMetadata(str);
 		return "";
 	} else if (msg.type === MessageType.DataUpdate) {
-		parseData(msg.data);
+		if (msg.version == 0) {
+			parseData_v0(msg.data);
+		} else if (msg.version == 1) {
+			parseData_v1(msg.data);
+		}
 		return "state";
 	} else if (msg.type === MessageType.Event) {
 		parseEvent(str);
@@ -110,6 +114,9 @@ function parseEvent(payload) {
 	const timestamp = (t1 << 24) | (t2 << 16) | (t3 << 8) | t4;
 
 	const event = events[eventIndex] ?? "NO";
+	if (event == "AirbrakesDeploy") {
+		state.launchNow();
+	}
 	if (event === "NO") {
 		log(`${Strings.Warn}: Received invalid event index ${eventIndex}`);
 		return;
@@ -195,13 +202,138 @@ function floatToInt32(float) {
 	dataView.setFloat32(0, float); // Set the float into the buffer
 	return dataView.getInt32(0); // Read the buffer as an Int32
 }
+
+/**
+ * @param fieldName {string}
+ * @return {{name: string, type: string, base: number, scale: number}}
+ */
+function parseFieldEncoding(fieldName) {
+	const encodingStart = fieldName.indexOf("__");
+	if (encodingStart === -1) {
+		// No encoding specified, assume float32 (v0 compatibility)
+		return { name: fieldName, type: "f32", base: 0, scale: 1 };
+	}
+
+	const baseName = fieldName.substring(0, encodingStart);
+	const encoding = fieldName.substring(encodingStart + 2);
+
+	// Parse type: u8, i16, u32, f32, etc.
+	const typeMatch = encoding.match(/^(u|i|f)(8|16|32)/);
+	if (!typeMatch) {
+		throw new Error(`Invalid field encoding: ${fieldName}`);
+	}
+
+	const signedness = typeMatch[1];
+	const bits = parseInt(typeMatch[2]);
+	const type = `${signedness}${bits}`;
+
+	// Parse base offset (_B[value])
+	const baseMatch = encoding.match(/_B(\d+(?:_\d+)?)/);
+	const base = baseMatch ? parseFloat(baseMatch[1].replace("_", ".")) : 0;
+
+	// Parse scale (_S[value])
+	const scaleMatch = encoding.match(/_S(\d+(?:_\d+)?)/);
+	const scale = scaleMatch ? parseFloat(scaleMatch[1].replace("_", ".")) : 1;
+
+	return { name: baseName, type, base, scale };
+}
+
+/**
+ * @param dataView {DataView}
+ * @param offset {number}
+ * @param type {string}
+ * @return {number}
+ */
+function readBinaryValue(dataView, offset, type) {
+	switch (type) {
+		case "u8":
+			return dataView.getUint8(offset);
+		case "i8":
+			return dataView.getInt8(offset);
+		case "u16":
+			return dataView.getUint16(offset, true); // little-endian
+		case "i16":
+			return dataView.getInt16(offset, true);
+		case "u32":
+			return dataView.getUint32(offset, true);
+		case "i32":
+			return dataView.getInt32(offset, true);
+		case "f32":
+			return dataView.getFloat32(offset, true);
+		default:
+			throw new Error(`Unsupported type: ${type}`);
+	}
+}
+
+/**
+ * @param rawValue {number}
+ * @param base {number}
+ * @param scale {number}
+ * @return {number}
+ */
+function convertFieldValue(rawValue, base, scale) {
+	// Reverse the Zig conversion: scaled = (original - base) * scale
+	// Therefore: original = (scaled / scale) + base
+	return rawValue / scale + base;
+}
+
 /**
  * @param payload {Uint8Array}
  */
-function parseData(payload) {
+function parseData_v1(payload) {
+	const dataView = new DataView(payload.buffer);
+	const obj = {};
+	let currentOffset = 0;
+
+	for (const fieldName of schema) {
+		try {
+			const encoding = parseFieldEncoding(fieldName);
+			const rawValue = readBinaryValue(
+				dataView,
+				currentOffset,
+				encoding.type,
+			);
+			const convertedValue = convertFieldValue(
+				rawValue,
+				encoding.base,
+				encoding.scale,
+			);
+
+			obj[encoding.name] = convertedValue;
+
+			// Advance offset by field size in bytes
+			const bitsMatch = encoding.type.match(/\d+/);
+			if (bitsMatch) {
+				currentOffset += parseInt(bitsMatch[0]) / 8;
+			} else {
+				throw new Error(`Invalid type format: ${encoding.type}`);
+			}
+		} catch (error) {
+			log(
+				`${Strings.Warn}: Failed to parse field ${fieldName}: ${error.message}`,
+			);
+			// Skip this field - advance by 1 byte as fallback
+			currentOffset += 1;
+		}
+	}
+
+	// Update system time and state (same pattern as v0)
+	sysTime = Math.max(obj.timestamp_ms || 0, sysTime);
+	// log(`${Strings.Info}: Updating system time to ${sysTime}`);
+	state.setState(obj);
+
+	return obj;
+}
+/**
+ * @param payload {Uint8Array}
+ */
+function parseData_v0(payload) {
 	/** @type{Float32Array|Float64Array} */
 	let array;
 	if (fieldSize === 4) {
+		log(`${Strings.Info}: Byte length: ${payload.length}`);
+		// uint8_t* buffer;
+		// float* array = (float*) buffe;
 		array = new Float32Array(payload.buffer);
 	} else {
 		array = new Float64Array(payload.buffer);

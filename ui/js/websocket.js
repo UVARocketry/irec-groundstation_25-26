@@ -65,6 +65,7 @@ function onWsMessage(event) {
 		m.left = 100;
 		m.time = Math.floor(m.time / 100) / 10;
 		if (m.type == "Error") {
+			console.log("yo", m);
 			errorQueue.push(m);
 		} else {
 			messageQueue.push(m);

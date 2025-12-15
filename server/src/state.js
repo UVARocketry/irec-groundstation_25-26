@@ -119,7 +119,7 @@ function getState() {
 	ret.readerName = mgr.getCurrentReaderType();
 	// currentState.rocketConnected = rocketConnected;
 	// currentState.readerConnected = readerConnected;
-	ret.timeSinceLaunch = ret.i_timestamp - launchTime;
+	ret.timeSinceLaunch = ret.timestamp_ms - launchTime;
 	return ret;
 }
 
@@ -171,7 +171,7 @@ function setRocketConnected(v) {
 
 function launchNow() {
 	// if (startingState !== null) {
-	launchTime = currentState.i_timestamp ?? 0;
+	launchTime = currentState.timestamp_ms ?? 0;
 	// }
 }
 

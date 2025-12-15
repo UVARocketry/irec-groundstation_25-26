@@ -71,15 +71,19 @@ export class Message {
         }
         // version is first four bits
         this.version = (msg[0] & 0xf0) >> 4;
+        if (this.version > 1) {
+            log(`${Strings.Error}: Version above 1 is not yet supported!`);
+            return;
+        }
         // msg type is second four bits
         this.type = msg[0] & 0x0f;
 
         // get len (second and third bytes)
         var len = (msg[1] << 8) + msg[2];
-        // if the message is too big, then chop of the end. 
-        // we do this rather than discarding the message 
-        // because the end might be a transmission artifact 
-        // like a newline or carriage return character. 
+        // if the message is too big, then chop of the end.
+        // we do this rather than discarding the message
+        // because the end might be a transmission artifact
+        // like a newline or carriage return character.
         if (msg.length - 5 > len) {
             msg = msg.slice(0, len + 5);
         }
@@ -89,7 +93,7 @@ export class Message {
                 `${Strings.Error}: MESSAGE SIZE DOES NOT MATCH: ${len}, ${msg.length - 5}`,
             );
             // dont discard. I'm not sure why i did this
-            // but ig its because there might be a mistake and 
+            // but ig its because there might be a mistake and
             // we will just discard farther up the line if so
 
             // return;

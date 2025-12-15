@@ -90,6 +90,12 @@ if (submitBtn) {
 				data: obj,
 			}),
 		);
+		var root = document.getElementById("configurationplace");
+		if (root) {
+			while (root.firstChild) {
+				root.removeChild(root.firstChild);
+			}
+		}
 	};
 }
 
