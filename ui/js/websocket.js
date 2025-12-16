@@ -3,7 +3,7 @@
 
 import { ServerMessage, RocketMessage } from "../../common/ServerMessage.js";
 import { port } from "../../common/web.js";
-import { altitudeGraph } from "./site.js";
+import { altitudeGraph, draw } from "./site.js";
 
 var host = null;
 

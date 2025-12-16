@@ -538,6 +538,7 @@ export function draw() {
 	const connected = state?.connected ?? [];
 	const mainBat = state?.mainBat_pct ?? 0;
 	const servoBat = state?.servoBat_pct ?? 0;
+	const gsBat = state?.groundstationBat_pct ?? 0;
 	// var vnGps = p.createVector(0, 0, 0);
 	const rssi = state?.rssi_dBm ?? 0;
 
@@ -919,7 +920,19 @@ export function draw() {
 		0.01,
 		3,
 	);
-	drawSignalStrength("", rssi, width / height - 0.07, 0.12, 0.05, 0.035);
+	drawBattery(
+		"GS:",
+		Math.round(gsBat),
+		width / height - 0.07,
+		0.13,
+		0.05,
+		0.02,
+		3,
+		0.005,
+		0.01,
+		3,
+	);
+	// drawSignalStrength("", rssi, width / height - 0.07, 0.12, 0.05, 0.035);
 
 	// subsystem status
 	status(
@@ -1164,7 +1177,7 @@ export const s = (/** @type {p5} */ pi) => {
 	pi.setup = init;
 
 	pi.draw = draw;
-	pi.frameRate(45);
+	pi.frameRate(30);
 	// pi.mouseDragged = draw;
 	// pi.mousePressed = draw;
 	// pi.mouseReleased = draw;

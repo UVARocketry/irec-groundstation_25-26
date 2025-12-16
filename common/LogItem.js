@@ -15,6 +15,8 @@ export class LogItem extends AddedData {
 	/* @type {number} */
 	servoBat_pct = 0;
 	/* @type {number} */
+	groundstationBat_pct = 0;
+	/* @type {number} */
 	pidDeployment_pct = 0;
 	/* @type {number} */
 	actualDeployment_pct = 0;
