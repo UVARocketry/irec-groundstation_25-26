@@ -5,8 +5,7 @@ import { Strings } from "./ansi.js";
 import state from "./state.js";
 import { log } from "./log.js";
 import { ServerMessage } from "../../common/ServerMessage.js";
-import { broadcast, broadcastState, getConfigField } from "./index.js";
-import { Configuration } from "./configuration.js";
+import { broadcast, broadcastState } from "./index.js";
 
 /** @import { EventType, RocketMessage } from '../../common/ServerMessage.js' */
 
@@ -284,6 +283,7 @@ function parseData_v1(payload) {
 	const dataView = new DataView(payload.buffer);
 	const obj = {};
 	let currentOffset = 0;
+	let hasError = false;
 
 	for (const fieldName of schema) {
 		try {
@@ -309,12 +309,25 @@ function parseData_v1(payload) {
 				throw new Error(`Invalid type format: ${encoding.type}`);
 			}
 		} catch (error) {
+			hasError = true;
 			log(
-				`${Strings.Warn}: Failed to parse field ${fieldName}: ${error.message}`,
+				`${Strings.Error}: Failed to parse field ${fieldName}: ${error.message}`,
 			);
 			// Skip this field - advance by 1 byte as fallback
 			currentOffset += 1;
 		}
+	}
+	if (hasError) {
+		const serverMsg = new ServerMessage("message", {
+			type: "Error",
+			device: "Data",
+			subject: "Decode",
+			verb: "Failed",
+			time: sysTime,
+			left: 0,
+		});
+		broadcast(serverMsg);
+		return;
 	}
 
 	// Update system time and state (same pattern as v0)
