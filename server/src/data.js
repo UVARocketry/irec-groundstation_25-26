@@ -227,12 +227,24 @@ function parseFieldEncoding(fieldName) {
 	const type = `${signedness}${bits}`;
 
 	// Parse base offset (_B[value])
-	const baseMatch = encoding.match(/_B(\d+(?:_\d+)?)/);
-	const base = baseMatch ? parseFloat(baseMatch[1].replace("_", ".")) : 0;
+	const baseMatch = encoding.match(/_Bn?(\d+(?:_\d+)?)/);
+	let base = 0;
+	if (baseMatch) {
+		base = parseFloat(baseMatch[1].replace("_", "."));
+		if (baseMatch[0].includes("_Bn")) {
+			base = -base;
+		}
+	}
 
 	// Parse scale (_S[value])
-	const scaleMatch = encoding.match(/_S(\d+(?:_\d+)?)/);
-	const scale = scaleMatch ? parseFloat(scaleMatch[1].replace("_", ".")) : 1;
+	const scaleMatch = encoding.match(/_Sn?(\d+(?:_\d+)?)/);
+	let scale = 1;
+	if (scaleMatch) {
+		scale = parseFloat(scaleMatch[1].replace("_", "."));
+		if (scaleMatch[0].includes("_Sn")) {
+			scale = -scale;
+		}
+	}
 
 	return { name: baseName, type, base, scale };
 }
