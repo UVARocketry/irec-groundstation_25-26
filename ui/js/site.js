@@ -812,7 +812,7 @@ export function draw() {
 		var x = 0.55 * width;
 		p.text("GPS: ", x, 0.1 * height);
 		x += p.textWidth("GPS:");
-		p.textSize(0.03 * height);
+		p.textSize(0.027 * height);
 		p.text(
 			"(" +
 				limDecimal(vnGps.x, 3) +
@@ -820,7 +820,7 @@ export function draw() {
 				limDecimal(vnGps.y, 3) +
 				"°)",
 			x,
-			0.1 * height,
+			0.098 * height,
 		);
 	}
 	// notifications / messages
