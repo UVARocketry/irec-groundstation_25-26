@@ -104,53 +104,34 @@ This message is the primary channel for transmitting all data intended for rende
 
 These fields are transmitted directly from the rocket's onboard systems:
 
-*   `i_timestamp` (number): Milliseconds since the board was powered on.
-*   `baro` (number): Barometric pressure reading in Pascals (Pa).
-*   `baroTemperature` (number): Barometer temperature in degrees Celsius (C).
-*   `predictedApogee` (number): The predicted apogee (highest point) of the rocket. Unit is in meters (m).
-*   `mainBat` (number): Main PCB battery level as a percentage (%).
-*   `servoBat` (number): Servo battery level as a percentage (%).
-*   `vnAccX` (number): VectorNav acceleration along the X-axis in meters per second squared ($m/s^2$).
-*   `vnAccY` (number): VectorNav acceleration along the Y-axis in meters per second squared ($m/s^2$).
-*   `vnAccZ` (number): VectorNav acceleration along the Z-axis in meters per second squared ($m/s^2$).
-*   `vnGyroX` (number): VectorNav gyroscope reading along the X-axis in radians per second ($rad/s$).
-*   `vnGyroY` (number): VectorNav gyroscope reading along the Y-axis in radians per second ($rad/s$).
-*   `vnGyroZ` (number): VectorNav gyroscope reading along the Z-axis in radians per second ($rad/s$).
-*   `vnMagX` (number): VectorNav magnetometer reading along the X-axis Gauss
-*   `vnMagY` (number): VectorNav magnetometer reading along the Y-axis Gauss
-*   `vnMagZ` (number): VectorNav magnetometer reading along the Z-axis Gauss
-*   `obAccX` (number): Onboard IMU acceleration along the X-axis in meters per second squared ($m/s^2$).
-*   `obAccY` (number): Onboard IMU acceleration along the Y-axis in meters per second squared ($m/s^2$).
-*   `obAccZ` (number): Onboard IMU acceleration along the Z-axis in meters per second squared ($m/s^2$).
-*   `obGyroX` (number): Onboard IMU gyroscope reading along the X-axis in radians per second ($rad/s$).
-*   `obGyroY` (number): Onboard IMU gyroscope reading along the Y-axis in radians per second ($rad/s$).
-*   `obGyroZ` (number): Onboard IMU gyroscope reading along the Z-axis in radians per second ($rad/s$).
-*   `kalmanPosX` (number): Kalman filter estimated position along the X-axis in meters (m).
-*   `kalmanPosY` (number): Kalman filter estimated position along the Y-axis in meters (m).
-*   `kalmanPosZ` (number): Kalman filter estimated position along the Z-axis in meters (m).
-*   `kalmanVelX` (number): Kalman filter estimated velocity along the X-axis in meters per second ($m/s$).
-*   `kalmanVelY` (number): Kalman filter estimated velocity along the Y-axis in meters per second ($m/s$).
-*   `kalmanVelZ` (number): Kalman filter estimated velocity along the Z-axis in meters per second ($m/s$).
-*   `vnPosX` (number): VectorNav reported position along the X-axis in meters (m).
-*   `vnPosY` (number): VectorNav reported position along the Y-axis in meters (m).
-*   `vnPosZ` (number): VectorNav reported position along the Z-axis in meters (m).
-*   `vnGpsX` (number): VectorNav GPS latitude in degrees (deg).
-*   `vnGpsY` (number): VectorNav GPS longitude in degrees (deg).
-*   `vnGpsZ` (number): VectorNav GPS altitude in meters (m).
-*   `vnVelX` (number): VectorNav velocity along the X-axis in meters per second ($m/s$).
-*   `vnVelY` (number): VectorNav velocity along the Y-axis in meters per second ($m/s$).
-*   `vnVelZ` (number): VectorNav velocity along the Z-axis in meters per second ($m/s$).
-*   `vnYPRX` (number): VectorNav Yaw angle in degrees (deg).
-*   `vnYPRY` (number): VectorNav Pitch angle in degrees (deg).
-*   `vnYPRZ` (number): VectorNav Roll angle in degrees (deg).
-*   `orientationX` (number): Quaternion X component for rocket orientation.
-*   `orientationY` (number): Quaternion Y component for rocket orientation.
-*   `orientationZ` (number): Quaternion Z component for rocket orientation.
-*   `orientationW` (number): Quaternion W component for rocket orientation.
-*   `apogee` (number): The highest altitude reached by the rocket during its flight, in meters (m).
-*   `pidDeployment` (number): The expected deployment percentage of the airbrakes (%).
-*   `actualDeployment` (number): The actual deployment percentage of the airbrakes (%).
-*   `rssi` (number): Received Signal Strength Indicator (RSSI) of the ground station PCB radio.
+*   `timestamp_ms` (number): Milliseconds since the board was powered on.
+*   `baroTemperature_C` (number): Barometer temperature in degrees Celsius (C).
+*   `predictedApogee_m_agl` (number): The predicted apogee (highest point) of the rocket above ground level. Unit is in meters (m).
+*   `apogee_m_agl` (number): The highest altitude reached by the rocket during its flight above ground level, in meters (m).
+*   `mainBat_pct` (number): Main PCB battery level as a percentage (%).
+*   `servoBat_pct` (number): Servo battery level as a percentage (%).
+*   `groundstationBat_pct` (number): Ground station battery level as a percentage (%).
+*   `pidDeployment_pct` (number): The expected deployment percentage of the airbrakes (%).
+*   `actualDeployment_pct` (number): The actual deployment percentage of the airbrakes (%).
+*   `controlAuth_m` (number): Control authority in meters (m).
+*   `obAcc_mps2_x` (number): Onboard IMU acceleration along the X-axis in meters per second squared ($m/s^2$).
+*   `obAcc_mps2_y` (number): Onboard IMU acceleration along the Y-axis in meters per second squared ($m/s^2$).
+*   `obAcc_mps2_z` (number): Onboard IMU acceleration along the Z-axis in meters per second squared ($m/s^2$).
+*   `kalmanPos_m_x` (number): Kalman filter estimated position along the X-axis in meters (m).
+*   `kalmanPos_m_y` (number): Kalman filter estimated position along the Y-axis in meters (m).
+*   `kalmanPos_m_z` (number): Kalman filter estimated position along the Z-axis in meters (m).
+*   `vnLat_deg` (number): VectorNav GPS latitude in degrees (deg).
+*   `vnLon_deg` (number): VectorNav GPS longitude in degrees (deg).
+*   `kalmanVel_mps_x` (number): Kalman filter estimated velocity along the X-axis in meters per second ($m/s$).
+*   `kalmanVel_mps_y` (number): Kalman filter estimated velocity along the Y-axis in meters per second ($m/s$).
+*   `kalmanVel_mps_z` (number): Kalman filter estimated velocity along the Z-axis in meters per second ($m/s$).
+*   `vnYPR_deg_x` (number): VectorNav Yaw angle in degrees (deg).
+*   `vnYPR_deg_y` (number): VectorNav Pitch angle in degrees (deg).
+*   `vnYPR_deg_z` (number): VectorNav Roll angle in degrees (deg).
+*   `representativeAxis_x` (number): Representative axis X component for rocket orientation.
+*   `representativeAxis_y` (number): Representative axis Y component for rocket orientation.
+*   `representativeAxis_z` (number): Representative axis Z component for rocket orientation.
+*   `rssi_dBm` (number): Received Signal Strength Indicator (RSSI) of the ground station PCB radio in decibel-milliwatts (dBm).
 
 **Note on Future Changes:** The number of fields directly sent by the rocket is expected to significantly decrease in the future due to radio communication bandwidth constraints.
 
@@ -164,7 +145,7 @@ These fields are augmented by the server before being sent to the client:
     *   Currently: `"DEBUG"` (for debug runs) or `"LIVE"` (for live rocket data). These specific values are subject to change in future revisions.
 *   `connected` (`[string, boolean][]`): An array of tuples, where each tuple represents a rocket subsystem (as a string) and its connection status. This is useful for debugging sensor failures or connection issues. The string type can be any arbitrary identifier for a subsystem.
 *   `startState` (`LogItem?`): Represents the initial state of the rocket. This can be used for calculations like total travel distance.
-    *   **Note:** A `LogItem` refers to the collection of rocket-sourced fields found within a `state` message (`i_timestamp` through `rssi`).
+    *   **Note:** A `LogItem` refers to the collection of rocket-sourced fields found within a `state` message (`timestamp_ms` through `rssi_dBm`).
     *   **Known Issue:** Currently, this field contains the state *before* the GPS becomes active, which may lead to inaccuracies in initial position determination.
 *   `timeSinceLaunch` (number): The number of milliseconds elapsed since the rocket launched (used to determine the amount of time the rocket spent in the air). Before launch, this field is equal to `i_timestamp`, and not 0.
 
