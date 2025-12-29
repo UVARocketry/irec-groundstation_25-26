@@ -46,6 +46,8 @@ export class Message {
      * @param {Uint8Array<ArrayBuffer>} msg A 4-bit message string (not a complete binary string)
      */
     constructor(msg) {
+        // const dec = new TextDecoder("ascii");
+        // console.log(dec.decode(msg));
         const aCode = "a".charCodeAt(0);
 
         var newBuf = [];
@@ -66,7 +68,7 @@ export class Message {
         // check if a msg is at least 5 bytes (required by the protocol)
         // idrk why i put the *8 in here originally
         if (msg.length * 8 < 40) {
-            log(`${Strings.Error}: Message is too small!`);
+            log(`${Strings.Error}: Message is too small (${msg.length})!`);
             return;
         }
         // version is first four bits

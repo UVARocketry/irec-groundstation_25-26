@@ -87,7 +87,8 @@ export class StdoutReader {
 		if (this.process === null || this.process.killed) {
 			return;
 		}
-		this.process.kill();
+		log(`${Strings.Info}: Killing Process`);
+		this.process.kill(9);
 	}
 
 	reset() {
@@ -152,7 +153,7 @@ export class StdoutReader {
 				this.previousStr = "";
 			}
 
-			if (v.toString().endsWith("\n")) {
+			if (!v.toString().endsWith("\n")) {
 				this.previousStr = strs.at(-1);
 				strs = strs.slice(0, -1);
 			}

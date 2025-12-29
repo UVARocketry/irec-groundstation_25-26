@@ -40,7 +40,7 @@ var active = false;
 var readers = [
 	new ReaderMeta(
 		"stdout",
-		new StdoutReader("./run", [], "stderr", "../../irec_25-26/lib"),
+		new StdoutReader("make", ["runsim"], "stderr", "../../irec_25-26/lib"),
 		false,
 	),
 	new ReaderMeta("log", new FileLogReader(), false),
@@ -235,7 +235,23 @@ async function saveItem(msg, i) {
 async function onMessage(buf) {
 	state.setRocketConnected(true);
 	const msg = new Message(buf);
-	var command = parseMessage(msg);
+	const decoder = new TextDecoder("utf-8");
+	const originalString = decoder.decode(buf);
+	var msgI = config().get("msgI");
+	config().setField("msgI", config().get("msgI") + 1);
+	var command = parseMessage(msg, async function (str) {
+		if (!getCurrentReader().shouldSave()) {
+			return;
+		}
+		if (config().get("saveFolder") === nilFolder) {
+			config().setField("saveFolder", genSaveFolder());
+		}
+		const saveFolder = config().get("saveFolder");
+		await fs.promises.writeFile(
+			ReaderUtils.getSaveItemName(saveFolder, msgI) + "-dump",
+			str,
+		);
+	});
 	var send = null;
 	if (command === "event") {
 		send = new ServerMessage("event", state.getEvent());
@@ -246,11 +262,7 @@ async function onMessage(buf) {
 		broadcast(send);
 	}
 
-	const decoder = new TextDecoder("utf-8");
-	const originalString = decoder.decode(buf);
-	var msgI = config().get("msgI");
-	config().setField("msgI", config().get("msgI") + 1);
-	console.log("msgI: " + msgI);
+	// console.log("msgI: " + msgI);
 	await saveItem(originalString, msgI);
 }
 

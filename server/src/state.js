@@ -120,6 +120,9 @@ function getState() {
 	// currentState.rocketConnected = rocketConnected;
 	// currentState.readerConnected = readerConnected;
 	ret.timeSinceLaunch = ret.timestamp_ms - launchTime;
+	if (ret.timeSinceLaunch < 0) {
+		ret.timeSinceLaunch = 0;
+	}
 	return ret;
 }
 

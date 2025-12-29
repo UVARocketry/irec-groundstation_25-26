@@ -172,9 +172,9 @@ export class FileLogReader {
 		var currentTime = getSysTime();
 		await this.onData(buf);
 		const delta = getSysTime() - currentTime;
-		// if (delta > 1000) {
-		// log(`${Strings.Info}: Waiting for ${delta}ms`);
-		// }
+		if (delta > 1000) {
+			log(`${Strings.Info}: Waiting for ${delta}ms`);
+		}
 
 		setTimeout(() => {
 			this.readMessage();

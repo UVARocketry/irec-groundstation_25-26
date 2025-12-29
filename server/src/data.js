@@ -47,9 +47,10 @@ export function clearSysTime() {
 
 /**
  * @param msg {Message}
+ * @param cb {(v: string) => Promise<void>}
  * @return {EventType|""} What kind of data was sent
  */
-export function parseMessage(msg) {
+export function parseMessage(msg, cb) {
 	if (msg.version !== 0 && msg.version !== 1) {
 		log(
 			`${Strings.Error}: received a message that does not have currect version number (0 or 1) (got version ${msg.version}). Packet parse skipped`,
@@ -62,26 +63,26 @@ export function parseMessage(msg) {
 	}
 	var str = new TextDecoder().decode(msg.data);
 	if (msg.type === MessageType.Schema) {
-		parseSchema(str);
+		parseSchema(str, cb);
 		state.setEvent("waiting");
 		return "event";
 	} else if (msg.type === MessageType.EventSchema) {
-		parseEventSchema(str);
+		parseEventSchema(str, cb);
 	} else if (msg.type === MessageType.Metadata) {
-		parseMetadata(str);
+		parseMetadata(str, cb);
 		return "";
 	} else if (msg.type === MessageType.DataUpdate) {
 		if (msg.version == 0) {
-			parseData_v0(msg.data);
+			parseData_v0(msg.data, cb);
 		} else if (msg.version == 1) {
-			parseData_v1(msg.data);
+			parseData_v1(msg.data, cb);
 		}
 		return "state";
 	} else if (msg.type === MessageType.Event) {
-		parseEvent(str);
+		parseEvent(str, cb);
 		return "event";
 	} else if (msg.type === MessageType.Message) {
-		parseMsg(str);
+		parseMsg(str, cb);
 	} else {
 		log(`${Strings.Error}: Unknown message type ${msg.type}`);
 	}
@@ -89,8 +90,9 @@ export function parseMessage(msg) {
 }
 /**
  * @param payload {string}
+ * @param cb {(v: string) => Promise<void>}
  */
-function parseEvent(payload) {
+function parseEvent(payload, cb) {
 	if (payload.length < 8) {
 		console.log(
 			`${Strings.Warn}: payload is too small in parseEvent (got length ${payload.length})`,
@@ -113,28 +115,32 @@ function parseEvent(payload) {
 	const timestamp = (t1 << 24) | (t2 << 16) | (t3 << 8) | t4;
 
 	const event = events[eventIndex] ?? "NO";
-	if (event == "AirbrakesDeploy") {
+	if (event == "MotorBurn") {
 		state.launchNow();
 	}
 	if (event === "NO") {
 		log(`${Strings.Warn}: Received invalid event index ${eventIndex}`);
 		return;
 	}
+	cb(`Received event (index ${eventIndex}) (event name '${event}')`);
 	state.setEvent(event);
 	sysTime = Math.max(timestamp, sysTime);
 }
 /**
  * @param payload {string}
+ * @param cb {(v: string) => Promise<void>}
  */
-function parseSchema(payload) {
+function parseSchema(payload, cb) {
 	schema = payload.split(",").filter((v) => v.length !== 0);
 
 	log(Strings.Ok + ": RECEIVED SCHEMA: " + schema.join(", "));
+	cb(`RECEIVED SCHEMA: ${schema.join(", ")}`);
 }
 /**
  * @param payload {string}
+ * @param cb {(v: string) => Promise<void>}
  */
-function parseMsg(payload) {
+function parseMsg(payload, cb) {
 	/** @type {RocketMessage} */
 	var message = JSON.parse(payload);
 	var stateSet = false;
@@ -155,23 +161,27 @@ function parseMsg(payload) {
 	if (stateSet) {
 		broadcastState();
 	}
+	cb(JSON.stringify(message));
 	sysTime = Math.max(message.time, sysTime);
 	const serverMsg = new ServerMessage("message", message);
 	broadcast(serverMsg);
 }
 /**
  * @param payload {string}
+ * @param cb {(v: string) => Promise<void>}
  */
-function parseEventSchema(payload) {
+function parseEventSchema(payload, cb) {
 	events = payload.split(",").filter((v) => v.length !== 0);
 
 	log(Strings.Ok + ": RECEIVED EVENT SCHEMA: " + events.join(", "));
+	cb(`RECEIVED EVENT SCHEMA: ${events.join(", ")}`);
 }
 
 /**
  * @param payload {string}
+ * @param cb {(v: string) => Promise<void>}
  */
-function parseMetadata(payload) {
+function parseMetadata(payload, cb) {
 	var mtype = payload.charCodeAt(0);
 	if (mtype === 0) {
 		fieldSize = payload.charCodeAt(1);
@@ -186,8 +196,12 @@ function parseMetadata(payload) {
 		} else {
 			log(Strings.Ok + ": sizeof(FLOAT): " + fieldSize);
 		}
+		cb(
+			`Received sizeof(FLOAT) ${payload.charAt(1)} (resolves to ${fieldSize})`,
+		);
 	} else {
 		log(Strings.Warn + ": UNKNOWN METADATA TYPE " + mtype);
+		cb(`Unknown metadata type ${mtype}`);
 	}
 }
 
@@ -290,8 +304,9 @@ function convertFieldValue(rawValue, base, scale) {
 
 /**
  * @param payload {Uint8Array}
+ * @param cb {(v: string) => Promise<void>}
  */
-function parseData_v1(payload) {
+function parseData_v1(payload, cb) {
 	const dataView = new DataView(payload.buffer);
 	const obj = {};
 	let currentOffset = 0;
@@ -339,6 +354,7 @@ function parseData_v1(payload) {
 			left: 0,
 		});
 		broadcast(serverMsg);
+		cb(JSON.stringify(serverMsg));
 		return;
 	}
 
@@ -346,13 +362,15 @@ function parseData_v1(payload) {
 	sysTime = Math.max(obj.timestamp_ms || 0, sysTime);
 	// log(`${Strings.Info}: Updating system time to ${sysTime}`);
 	state.setState(obj);
+	cb(JSON.stringify(obj));
 
 	return obj;
 }
 /**
  * @param payload {Uint8Array}
+ * @param cb {(v: string) => Promise<void>}
  */
-function parseData_v0(payload) {
+function parseData_v0(payload, cb) {
 	/** @type{Float32Array|Float64Array} */
 	let array;
 	if (fieldSize === 4) {
@@ -368,6 +386,9 @@ function parseData_v0(payload) {
 		log(
 			`${Strings.Warn}: Expected a float ${fieldSize * 8} array of ${schema.length} elements, but got ${array.length}. Ignoring this data point`,
 		);
+		cb(
+			`Expected a float ${fieldSize * 8} array of ${schema.length} elements, but got ${array.length}. Ignoring this data point`,
+		);
 		return "";
 	}
 
@@ -382,6 +403,7 @@ function parseData_v0(payload) {
 	}
 	sysTime = Math.max(obj.i_timestamp, sysTime);
 	state.setState(obj);
+	cb(JSON.stringify(obj));
 	JSON.stringify(obj);
 }
 

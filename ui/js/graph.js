@@ -18,6 +18,8 @@ export class Graph {
     altColors = [];
     title = "";
     maxDatapoints = 0;
+
+    pointStroke = 2;
     /**
      * @param {number} x
      * @param {number} y
@@ -214,7 +216,7 @@ export class Graph {
                 var pt = this.altData[i][x - startDataX];
                 var newX = xInc * x;
                 var newY = rangeMult * pt * -1 + this.range[1] * rangeMult;
-                p.strokeWeight(4);
+                p.strokeWeight(this.pointStroke);
                 p.stroke(this.altColors[i]);
                 newX += this.x;
                 newY += this.y + this.height;
@@ -226,7 +228,7 @@ export class Graph {
             var pt = this.data[x - startDataX];
             var newX = xInc * x;
             var newY = rangeMult * pt * -1 + this.range[1] * rangeMult;
-            p.strokeWeight(4);
+            p.strokeWeight(this.pointStroke);
             p.stroke(this.col);
             newX += this.x;
             newY += this.y + this.height;
@@ -238,7 +240,7 @@ export class Graph {
             var pt = this.data[this.highlight];
             var newX = xInc * this.highlight;
             var newY = rangeMult * pt * -1 + this.range[1] * rangeMult;
-            p.strokeWeight(4);
+            p.strokeWeight(this.pointStroke);
             p.stroke(
                 255 - p.red(this.col),
                 255 - p.green(this.col),
