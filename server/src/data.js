@@ -123,6 +123,7 @@ function parseEvent(payload, cb) {
 		return;
 	}
 	cb(`Received event (index ${eventIndex}) (event name '${event}')`);
+
 	state.setEvent(event);
 	sysTime = Math.max(timestamp, sysTime);
 }
@@ -142,7 +143,7 @@ function parseSchema(payload, cb) {
  */
 function parseMsg(payload, cb) {
 	/** @type {RocketMessage} */
-	var message = JSON.parse(payload);
+	var message = JSON.parse(payload.trim());
 	var stateSet = false;
 	if (message.subject === "Init" || message.subject === "Connection") {
 		if (message.verb === "Failed" || message.verb === "Started") {
@@ -312,9 +313,20 @@ function parseData_v1(payload, cb) {
 	let currentOffset = 0;
 	let hasError = false;
 
+	// console.log(dataView.buffer.byteLength);
+
 	for (const fieldName of schema) {
+		if (fieldName.trim() == "") {
+			continue;
+		}
 		try {
 			const encoding = parseFieldEncoding(fieldName);
+			// console.log(
+			// 	`PARSING ${encoding.name} with b ${encoding.base} and o ${encoding.scale} type ${encoding.type} @ ${currentOffset}`,
+			// );
+			if (encoding.name.trim() == "" || encoding.name.length < 3) {
+				continue;
+			}
 			const rawValue = readBinaryValue(
 				dataView,
 				currentOffset,
@@ -338,10 +350,11 @@ function parseData_v1(payload, cb) {
 		} catch (error) {
 			hasError = true;
 			log(
-				`${Strings.Error}: Failed to parse field ${fieldName}: ${error.message}`,
+				`${Strings.Error}: Failed to parse field ${fieldName} @ offset ${currentOffset}: ${error.message}`,
 			);
 			// Skip this field - advance by 1 byte as fallback
 			currentOffset += 1;
+			// break;
 		}
 	}
 	if (hasError) {
@@ -362,6 +375,16 @@ function parseData_v1(payload, cb) {
 	sysTime = Math.max(obj.timestamp_ms || 0, sysTime);
 	// log(`${Strings.Info}: Updating system time to ${sysTime}`);
 	state.setState(obj);
+
+	if ((obj.stateId ?? -1) !== -1) {
+		const event = events[obj.stateId] ?? "NO";
+		if (event != "NO") {
+			state.setEvent(event);
+			cb(
+				`Received event (index ${state.stateId}) (event name '${event}')`,
+			);
+		}
+	}
 	cb(JSON.stringify(obj));
 
 	return obj;

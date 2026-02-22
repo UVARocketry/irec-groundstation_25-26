@@ -41,6 +41,8 @@ function onWsMessage(event) {
 	} else if (msg.type == "state") {
 		// @ts-ignore
 		currentState = msg.data;
+		// @ts-ignore
+		currentEvent = currentState.event;
 		// } else if (msg.type === "renameResponse") {
 		// 	/** @type {RenameResponse} */
 		// 	var data = msg.data;

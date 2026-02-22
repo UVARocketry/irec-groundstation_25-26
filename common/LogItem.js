@@ -69,4 +69,7 @@ export class LogItem extends AddedData {
 
 	/**@type {string} */
 	readerName = "";
+
+	/** @type {string} */
+	event = "";
 }

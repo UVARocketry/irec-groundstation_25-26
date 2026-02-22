@@ -100,6 +100,9 @@ function setAdd(k, v) {
  * @param e {string}
  */
 function setEvent(e) {
+	if (currentEvent == e) {
+		return;
+	}
 	currentEvent = e;
 	// currentEvent = e;
 	if (e == "MotorBurn") {
@@ -115,6 +118,7 @@ function getState() {
 		// @ts-ignore
 		ret[k] = addedData[k];
 	}
+	ret.event = currentEvent;
 	ret.startState = startingState;
 	ret.readerName = mgr.getCurrentReaderType();
 	// currentState.rocketConnected = rocketConnected;
