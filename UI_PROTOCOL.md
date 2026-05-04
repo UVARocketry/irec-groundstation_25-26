@@ -76,6 +76,10 @@ This section details the various message types and their specific structures.
 
 ### 4.1. `event`
 
+> [!CAUTION]
+> 
+> ***DEPRECATED***: `event` has been deprecated. The data needed is now in `state`
+
 **Direction:** Server to UI
 
 This message type conveys the current state of the rocket's state machine.
@@ -148,6 +152,7 @@ These fields are augmented by the server before being sent to the client:
     *   **Note:** A `LogItem` refers to the collection of rocket-sourced fields found within a `state` message (`timestamp_ms` through `rssi_dBm`).
     *   **Known Issue:** Currently, this field contains the state *before* the GPS becomes active, which may lead to inaccuracies in initial position determination.
 *   `timeSinceLaunch` (number): The number of milliseconds elapsed since the rocket launched (used to determine the amount of time the rocket spent in the air). Before launch, this field is equal to `i_timestamp`, and not 0.
+*   `event` (string): The current state of the state machine.
 
 ### 4.3. `command`
 
