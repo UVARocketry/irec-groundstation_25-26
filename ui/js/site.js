@@ -622,13 +622,15 @@ export function draw() {
 			// angle = Math.acos(z);
 		}
 		if (state != null) {
-			angle = Math.atan2(
-				Math.hypot(
-					state.representativeAxis_x,
-					state.representativeAxis_y,
-				),
-				state.representativeAxis_z,
-			);
+			angle =
+				Math.atan2(
+					Math.hypot(
+						state.representativeAxis_x,
+						state.representativeAxis_y,
+					),
+					state.representativeAxis_z,
+				) -
+				Math.PI / 2.0;
 		}
 
 		p.push();

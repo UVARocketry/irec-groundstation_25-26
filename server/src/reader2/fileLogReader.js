@@ -14,7 +14,7 @@ import { Strings } from "../ansi.js";
 
 class Config {
 	/** @type {string} */
-	dir = "../out";
+	dir = "../out_testlaunch";
 
 	/** @type {number} */
 	i = 0;
@@ -112,28 +112,22 @@ export class FileLogReader {
 	}
 
 	async determineNewMaxI() {
-		var ceil = 10000;
-		while (await this.saveFileExists(ceil)) {
-			ceil *= 2;
-		}
-		var floor = 1;
+		const dir = this.config.get("dir");
+		const files = await fs.promises.readdir(dir);
 
-		while (ceil - 1 >= floor) {
-			var middle = Math.floor((ceil - 1 + floor) / 2);
-			var exists = await this.saveFileExists(middle);
-			if (exists) {
-				if (floor == middle) {
-					break;
+		let maxI = -1;
+		for (const file of files) {
+			const match = file.match(/^msg-(\d+)$/);
+			if (match) {
+				const i = parseInt(match[1], 10);
+				if (i > maxI) {
+					maxI = i;
 				}
-				floor = middle;
-			} else {
-				if (ceil == middle) {
-					ceil = middle - 1;
-				}
-				ceil = middle;
 			}
 		}
-		this.config.setField("maxI", floor);
+
+		this.config.setField("maxI", maxI);
+		console.log(`maxI: ${maxI}`);
 	}
 
 	async readMessage() {
@@ -152,12 +146,12 @@ export class FileLogReader {
 		}
 		// console.log("maxI: " + this.config.get("maxI"));
 		if (this.config.get("i") > this.config.get("maxI")) {
+			console.log("Done");
 			this.onDone();
 			return;
 		}
 		if (!fs.existsSync(path)) {
 			this.config.setField("i", this.config.get("i") + 1);
-			await this.determineNewMaxI();
 			setTimeout(() => {
 				this.readMessage();
 			}, 1);
@@ -172,13 +166,16 @@ export class FileLogReader {
 		var currentTime = getSysTime();
 		await this.onData(buf);
 		const delta = getSysTime() - currentTime;
-		if (delta > 1000) {
+		if (delta > 1000 && delta < 20000) {
 			log(`${Strings.Info}: Waiting for ${delta}ms`);
 		}
 
-		setTimeout(() => {
-			this.readMessage();
-		}, delta);
+		setTimeout(
+			() => {
+				this.readMessage();
+			},
+			delta > 20000 ? 0 : delta,
+		);
 	}
 
 	async start() {

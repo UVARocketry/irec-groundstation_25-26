@@ -9,6 +9,7 @@ import { FileLogReader } from "./reader2/fileLogReader.js";
 import { Strings } from "./ansi.js";
 import { SerialPortReader } from "./reader2/serialPortReader.js";
 import { StdoutReader } from "./reader2/stdoutReader.js";
+import { FileCleanReader } from "./reader2/logCleanReader.js";
 
 const nilFolder = "";
 
@@ -34,11 +35,12 @@ class ReaderMeta {
 
 var active = false;
 
-/** @typedef {"serial"|"stdout"|"log"|"fileupdate"} ReaderType */
+/** @typedef {"serial"|"stdout"|"log"|"fileupdate"|"clean"} ReaderType */
 
 /** @type {ReaderMeta[]} */
 var readers = [
 	new ReaderMeta("log", new FileLogReader(), false),
+	new ReaderMeta("clean", new FileCleanReader(), false),
 	new ReaderMeta(
 		"stdout",
 		new StdoutReader("make", ["runsim"], "stderr", "../../irec_25-26/lib"),
