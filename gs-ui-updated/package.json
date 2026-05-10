@@ -17,6 +17,7 @@
 		"@eslint/compat": "^2.0.4",
 		"@eslint/js": "^10.0.1",
 		"@fontsource-variable/jetbrains-mono": "^5.2.8",
+		"@internationalized/date": "^3.12.1",
 		"@sveltejs/adapter-auto": "^7.0.1",
 		"@sveltejs/kit": "^2.57.0",
 		"@sveltejs/vite-plugin-svelte": "^7.0.0",
@@ -24,6 +25,7 @@
 		"@tailwindcss/typography": "^0.5.19",
 		"@tailwindcss/vite": "^4.2.2",
 		"@types/node": "^24",
+		"bits-ui": "^2.18.1",
 		"clsx": "^2.1.1",
 		"eslint": "^10.2.0",
 		"eslint-config-prettier": "^10.1.8",
@@ -43,5 +45,10 @@
 		"typescript": "^6.0.2",
 		"typescript-eslint": "^8.58.1",
 		"vite": "^8.0.7"
+	},
+	"dependencies": {
+		"@threlte/core": "^8.5.14",
+		"@threlte/extras": "^9.16.0",
+		"three": "^0.184.0"
 	}
 }
