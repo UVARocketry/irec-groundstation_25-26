@@ -1,26 +1,40 @@
 <script lang="ts">
-  let { currentEvent = "IDLE", scale = 1 } = $props();
-  const phases = ["LIFTOFF", "BOOST", "COAST", "APOGEE", "RECOVERY"];
-  let activeIndex = $derived(phases.indexOf(currentEvent.toUpperCase()));
+  let { currentEvent = "Startup", scale = 1 } = $props();
+
+  const phases = [
+    "AwaitLaunch",
+    "MotorBurn",
+    "AirbrakesDeploy",
+    "Parachute",
+    "Landing",
+    "AwaitRecovery"
+  ];
+
+  let activeIndex = $derived(phases.indexOf(currentEvent));
+  let progressPercentage = $derived(
+    activeIndex === -1 ? 0 : (activeIndex / (phases.length - 1)) * 100
+  );
 </script>
 
-<div class="flex flex-col items-center w-full max-w-2xl transition-transform" style="transform: scale({scale})">
-  <div class="relative w-full h-[4px] bg-slate-200 rounded-full flex justify-between items-center mb-2">
-    <div 
-      class="absolute left-0 top-0 h-full bg-uva-orange transition-all duration-700 shadow-[0_0_15px_rgba(229,114,0,0.6)]"
-      style="width: {activeIndex < 0 ? 0 : (activeIndex / (phases.length - 1)) * 100}%"
+<div class="w-full px-12"> <div class="relative w-full h-3 bg-slate-200 rounded-full"> <div 
+      class="absolute top-0 left-0 h-full bg-uva-orange transition-all duration-1000 ease-in-out rounded-full shadow-[0_0_15px_rgba(229,114,0,0.4)]"
+      style="width: {progressPercentage}%"
     ></div>
 
-    {#each phases as phase, i}
-      <div class="relative">
-        <div class="w-4 h-4 rounded-full border-2 transition-all duration-500
-          {i <= activeIndex ? 'bg-uva-orange border-uva-orange scale-125' : 'bg-white border-slate-300'}">
+    <div class="absolute top-0 left-0 w-full h-full flex justify-between items-center">
+      {#each phases as phase, i}
+        <div class="relative flex flex-col items-center">
+          <div 
+            class="w-5 h-5 rounded-full border-4 transition-all duration-500
+            {i <= activeIndex ? 'bg-uva-orange border-white scale-110' : 'bg-white border-slate-300'}"
+          ></div>
+          
+          <span class="absolute top-8 text-sm font-black uppercase tracking-widest whitespace-nowrap
+            {i === activeIndex ? 'text-uva-blue opacity-100' : 'text-slate-400 opacity-60'}">
+            {phase}
+          </span>
         </div>
-        <span class="absolute top-6 left-1/2 -translate-x-1/2 text-[10px] font-black tracking-widest
-          {i === activeIndex ? 'text-uva-blue' : 'text-slate-400'}">
-          {phase}
-        </span>
-      </div>
-    {/each}
+      {/each}
+    </div>
   </div>
 </div>

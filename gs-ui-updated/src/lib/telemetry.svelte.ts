@@ -1,80 +1,88 @@
 import { browser } from '$app/environment';
-import type { LogItem } from '$lib/types';
 
-export class TelemetryStore {
-    // Reactive state using Svelte 5 Runes
-    data = $state<LogItem | null>(null);
-    connected = $state(false);
-    
-    private ws: WebSocket | null = null;
+const WS_PORT = 42069; 
 
-    connect(url: string = "ws://localhost:42069") {
-        if (!browser || this.ws?.readyState === WebSocket.OPEN) return;
+class TelemetryStore {
+    data = $state<any>(null);
+    currentEvent = $state<string>("disconnected");
+    socket: WebSocket | null = null;
 
-        this.ws = new WebSocket(url);
-        this.ws.onopen = () => { this.connected = true; };
-        this.ws.onclose = () => { 
-            this.connected = false;
-            setTimeout(() => this.connect(url), 2000); 
+    constructor() {
+        if (browser) {
+            this.connect();
+        }
+    }
+
+    connect() {
+        const url = `ws://localhost:${WS_PORT}`;
+        this.socket = new WebSocket(url);
+
+        this.socket.onopen = () => {
+            this.currentEvent = "connected";
+            console.log("🚀 [GS-WS] Connected. Initializing Log Environment...");
+
+            // 1. SET CONFIGURATION (Replacing "env log")
+            // We tell the manager to point its reader to the ssl2 output folder
+            this.sendJson("setConfiguration", {
+                manager: {
+                    readerConfig: {
+                        dir: "../out_ssl2", // Match the path from your server logs
+                        shouldSave: false
+                    }
+                }
+            });
+
+            // 2. RESTART (The actual command string)
+            // Giving it a short delay to ensure the config is processed first
+            setTimeout(() => {
+                this.sendJson("command", "restart");
+            }, 500);
+
+            setTimeout(() => {
+                this.sendJson("command", "restart");
+            }, 1500);
         };
-        this.ws.onmessage = (e) => {
-            const msg = JSON.parse(e.data);
-            if (msg.type === "state") {
-                this.data = msg.data;
+
+        this.socket.onmessage = (event) => {
+            try {
+                const msg = JSON.parse(event.data);
+                if (msg.type === "state") {
+                    this.data = msg.data;
+                    this.currentEvent = msg.data.event;
+                }
+            } catch (e) {
+                console.error("[GS-WS] Parse error", e);
             }
         };
+
+        this.socket.onclose = () => {
+            this.currentEvent = "disconnected";
+            setTimeout(() => this.connect(), 3000);
+        };
     }
 
-    sendCommand(cmd: string) {
-        this.ws?.send(JSON.stringify({ type: "command", data: cmd }));
+    /**
+     * Replicates the ServerMessage constructor from your common/ServerMessage.js
+     */
+    sendJson(type: string, data: any) {
+        if (this.socket?.readyState === WebSocket.OPEN) {
+            const message = { type, data };
+            this.socket.send(JSON.stringify(message));
+            console.log(`🛰️ [GS-WS] Sent ${type}:`, data);
+        }
     }
 
-    startMock() {
-        this.connected = true;
-        let alt = 0;
-        this.startTimer(); // Ensure timer starts with mock
-
-        setInterval(() => {
-            alt += Math.random() * 60;
-            const isBoost = alt < 8000;
-            
-            this.data = {
-                timestamp_ms: Date.now(),
-                event: isBoost ? "BOOST" : "COAST",
-                kalmanPos_m_z: alt / 3.28,
-                kalmanVel_mps_z: isBoost ? (150 + Math.random() * 20) : (80 - Math.random() * 10),
-                obAcc_mps2_z: isBoost ? (45 + Math.random() * 5) : -9.8,
-                // Mock GPS drifting slightly
-                vnLat_deg: 32.9904 + (Math.random() * 0.0001),
-                vnLon_deg: -106.9750 + (Math.random() * 0.0001),
-                // Mock Battery draining 
-                mainBat_pct: Math.max(0, 98 - (alt / 1000)),
-                // Mock RSSI fluctuating
-                rssi_dBm: -65 - Math.floor(Math.random() * 15),
-                predictedApogee_m_agl: 10500 / 3.28,
-                representativeAxis_x: 0,
-                representativeAxis_y: Math.sin(Date.now() / 1000) * 0.1,
-                representativeAxis_z: 1,
-            } as any;
-        }, 100);
-    }
-
-    // Inside TelemetryStore class
-    missionTime = $state("00:00:00");
-    private startTime: number | null = null;
-
-    startTimer() {
-        this.startTime = Date.now();
-        setInterval(() => {
-            if (!this.startTime) return;
-            const diff = Date.now() - this.startTime;
-            const h = Math.floor(diff / 3600000).toString().padStart(2, '0');
-            const m = Math.floor((diff % 3600000) / 60000).toString().padStart(2, '0');
-            const s = Math.floor((diff % 60000) / 1000).toString().padStart(2, '0');
-            this.missionTime = `${m}:${s}`; // Just M:S for layout
-        }, 1000);
+    get missionTime() {
+        // LogItem.js uses 'timeSinceLaunch' for the mission clock
+        const raw = this.data?.timeSinceLaunch ?? 0;
+        
+        // Assuming the server sends this in milliseconds
+        const totalSeconds = Math.floor(raw / 1000);
+        const mins = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
+        const secs = (totalSeconds % 60).toString().padStart(2, '0');
+        
+        return `${mins}:${secs}`;
     }
 }
 
-// Global singleton so all pages share the same stream
 export const telemetry = new TelemetryStore();

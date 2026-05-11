@@ -17,11 +17,20 @@
 
 <div class="relative w-full h-full bg-zinc-900 flex items-center justify-center">
     {#if !hasSignal}
-        <div class="absolute inset-0 opacity-20 bg-[repeating-linear-gradient(90deg,#666,#666_10%,#444_10%,#444_20%)]"></div>
-        <div class="z-10 flex flex-col items-center gap-2">
-            <div class="w-12 h-12 border-4 border-t-red-600 border-zinc-700 rounded-full animate-spin"></div>
-            <p class="text-zinc-500 font-mono text-xs tracking-[0.2em]">NO SIGNAL // VTX_OFFLINE</p>
+        <div class="absolute inset-0 flex flex-col items-center justify-center bg-zinc-900/80">
+            <div class="w-16 h-16 border-4 border-red-600/30 border-t-red-600 rounded-full animate-spin mb-6"></div>
+            
+            <div class="text-center">
+                <p class="text-red-500 font-black text-sm tracking-[0.5em] uppercase">No Signal</p>
+                <p class="text-white/20 font-bold text-[10px] tracking-[0.3em] mt-2 uppercase">vtx offline // awaiting connection</p>
+            </div>
         </div>
     {/if}
-    <video bind:this={video} autoplay muted class="w-full h-full object-cover {hasSignal ? 'opacity-100' : 'opacity-0'}"></video>
+    <video 
+        bind:this={video} 
+        autoplay 
+        muted 
+        playsinline
+        class="w-full h-full object-cover object-top transition-opacity duration-500 {hasSignal ? 'opacity-100' : 'opacity-0'}"
+    ></video>
 </div>
