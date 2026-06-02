@@ -21,7 +21,7 @@
             variant="outline" 
             class="bg-transparent border-2 border-white text-white hover:bg-white hover:text-uva-blue px-8 h-12 font-bold uppercase tracking-widest transition-all"
         >
-            Engineering Dashboard
+            Full Telemetry View
         </Button>
 
         <Button 
@@ -29,7 +29,7 @@
             variant="outline"
             class="bg-uva-orange hover:bg-uva-orange/90 text-white px-8 h-12 font-bold uppercase tracking-widest shadow-xl shadow-black/20"
         >
-            Live Broadcast Overlay
+            Live Broadcast View
         </Button>
     </div>
 

@@ -22,7 +22,7 @@
     const mtoft = 3.28084;
 </script>
 
-<main class="h-screen w-screen bg-white text-uva-blue font-mono grid grid-rows-[90px_1fr_180px] overflow-hidden">
+<main class="h-screen w-screen bg-white text-uva-blue font-mono grid grid-rows-[80px_1fr_120px] overflow-hidden">
   
   <header class="bg-uva-blue text-white flex items-center justify-between px-10 shadow-xl z-30">
     <div class="flex items-center gap-6">
@@ -73,7 +73,7 @@
     </div>
   </header>
 
-  <section class="grid grid-cols-[1fr_320px] bg-black min-h-0 overflow-hidden relative">
+  <section class="grid grid-cols-[1fr_260px] bg-black min-h-0 overflow-hidden relative">
     <div class="relative flex items-center justify-center bg-zinc-950">
         <VideoFeed />
         <div class="absolute bottom-6 left-6 opacity-40">
@@ -102,7 +102,9 @@
     </div>
 
     <div class="flex flex-col items-center justify-center border-x-2 border-slate-100 h-full px-8">
-      <PhaseSlider currentEvent={telemetry.data?.event} scale={1.2} />
+      <div class="w-full scale-90 transform origin-center">
+        <PhaseSlider currentEvent={telemetry.data?.event} />
+      </div>
     </div>
 
     <div class="flex items-center justify-end gap-10">
@@ -113,12 +115,4 @@
       </div>
     </div>
   </footer>
-
-  <div class="absolute top-24 left-10 bg-black/80 p-4 font-mono text-[10px] text-green-400 z-50 border border-green-400/30">
-    <p class="text-white mb-2 underline">TELEMETRY DEBUG</p>
-    <p>RAW_X: {telemetry.data?.representativeAxis_x.toFixed(3)}</p>
-    <p>RAW_Y: {telemetry.data?.representativeAxis_y.toFixed(3)}</p>
-    <p>RAW_Z: {telemetry.data?.representativeAxis_z.toFixed(3)}</p>
-    <p class="mt-2 text-white">PHASE: {telemetry.data?.event}</p>
-  </div>  
 </main>

@@ -73,10 +73,9 @@ class TelemetryStore {
     }
 
     get missionTime() {
-        // LogItem.js uses 'timeSinceLaunch' for the mission clock
-        const raw = this.data?.timeSinceLaunch ?? 0;
+        // Fallback cleanly to timestamp_ms if timeSinceLaunch doesn't exist
+        const raw = this.data?.timeSinceLaunch ?? this.data?.timestamp_ms ?? 0;
         
-        // Assuming the server sends this in milliseconds
         const totalSeconds = Math.floor(raw / 1000);
         const mins = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
         const secs = (totalSeconds % 60).toString().padStart(2, '0');
