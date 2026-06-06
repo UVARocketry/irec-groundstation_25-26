@@ -101,10 +101,10 @@
 			  </p>
           
           <div class="flex items-center justify-between mt-2 font-black tabular-nums text-xs uppercase">
-              <div class="flex items-center gap-2">
-                  <div class="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.8)]"></div>
-                  <span class="text-white">BAT {telemetry.data?.mainBat_pct.toFixed(0) ?? 0}%</span>
-              </div>
+			  <div class="flex items-center gap-2">
+				  <div class="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.8)]"></div>
+				  <span class="text-white">BAT {telemetry.data?.mainBat_pct?.toFixed(0) ?? 0}%</span>
+			  </div>
               
               <div class="bg-white/10 px-2 py-0.5 rounded border border-white/10">
                   <span class="text-uva-orange-light">{telemetry.data?.rssi_dBm ?? 0} DBM</span>
