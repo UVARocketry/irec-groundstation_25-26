@@ -1,18 +1,23 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
+    import { onMount, onDestroy } from 'svelte';
     let video: HTMLVideoElement;
     let hasSignal = $state(false);
+    let stream: MediaStream | null = null;
 
     onMount(async () => {
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-            video.srcObject = stream;
-            hasSignal = true;
-        } catch (e) {
-            console.warn("Hardware capture device not detected. Showing fallback standby view.");
-            hasSignal = false;
-        }
-    });
+ 		try {
+ 			stream = await navigator.mediaDevices.getUserMedia({ video: true });
+ 			video.srcObject = stream;
+ 			hasSignal = true;
+ 		} catch (e) {
+ 			console.warn('Hardware not detected. Using placeholder.');
+ 			hasSignal = false;
+ 		}
+ 	});
+ 	onDestroy(() => {
+ 		stream?.getTracks().forEach((t) => t.stop());
+ 		stream = null;
+ 	});
 </script>
 
 <div class="relative w-full h-full bg-slate-100 flex items-center justify-center">
