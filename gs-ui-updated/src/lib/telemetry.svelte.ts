@@ -18,9 +18,11 @@ class TelemetryStore {
         }
     }
 
-    connect() {
-        const url = `ws://localhost:${WS_PORT}`;
-        this.socket = new WebSocket(url);
+	connect() {
+		const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+		const host = window.location.hostname;
+		const url = `${protocol}://${host}:${WS_PORT}`;
+		this.socket = new WebSocket(url);
 
         this.socket.onopen = () => {
             this.currentEvent = "connected";
