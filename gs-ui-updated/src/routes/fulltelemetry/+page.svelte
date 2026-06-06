@@ -189,11 +189,11 @@
                 Y: {telemetry.data?.kalmanVel_mps_y?.toFixed(1) ?? '0.0'}<br/>
                 Z: {telemetry.data?.kalmanVel_mps_z?.toFixed(1) ?? '0.0'}
             </div>
-            <div class="bg-white p-2 rounded-lg border border-slate-200 shadow-sm">
-                <p class="text-uva-blue font-black mb-1 text-[9px] tracking-wider opacity-60">BARO STATE</p>
-                TEMP: {telemetry.data?.baroTemperature_K ? (telemetry.data.baroTemperature_K - 273.15).toFixed(1) : '0.0'}°C<br/>
-                APOGEE: {((telemetry.data?.apogee_m_agl ?? 0) * mtoft).toFixed(0)} FT
-            </div>
+			<div class="bg-white p-2 rounded-lg border border-slate-200 shadow-sm">
+				<p class="text-uva-blue font-black mb-1 text-[9px] tracking-wider opacity-60">BARO STATE</p>
+				TEMP: {telemetry.data?.baroTemperature_C?.toFixed(1) ?? '0.0'}°C<br/>
+				APOGEE: {((telemetry.data?.apogee_m_agl ?? 0) * mtoft).toFixed(0)} FT
+			</div>
         </div>
     </div>
   </section>
