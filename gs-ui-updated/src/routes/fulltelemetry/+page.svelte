@@ -1,6 +1,5 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import { telemetry } from '$lib/telemetry.svelte';
+	import { telemetry } from '$lib/telemetry.svelte';
     import { Canvas } from '@threlte/core';
 
     import PhaseSlider from '$lib/components/PhaseSlider.svelte';
