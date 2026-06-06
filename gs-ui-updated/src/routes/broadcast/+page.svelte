@@ -94,11 +94,11 @@
       </div>
 
       <div class="flex flex-col justify-center border-l border-white/20 pl-10 pr-4 min-w-[220px]">
-          <p class="text-sm font-black text-white tabular-nums tracking-widest uppercase">
-              {telemetry.data?.vnLat_deg.toFixed(4) ?? '00.0000'}°N 
-              <span class="text-white/40 mx-1">|</span>
-              {telemetry.data?.vnLon_deg.toFixed(4) ?? '00.0000'}°W
-          </p>
+			  <p class="text-sm font-black text-white tabular-nums tracking-widest uppercase">
+				  {telemetry.data?.vnLat_deg?.toFixed(4) ?? '00.0000'}°N 
+				  <span class="text-white/40 mx-1">|</span>
+				  {telemetry.data?.vnLon_deg?.toFixed(4) ?? '00.0000'}°W
+			  </p>
           
           <div class="flex items-center justify-between mt-2 font-black tabular-nums text-xs uppercase">
               <div class="flex items-center gap-2">
