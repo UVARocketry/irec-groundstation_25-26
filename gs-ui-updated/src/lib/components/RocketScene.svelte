@@ -2,6 +2,8 @@
   import { T } from '@threlte/core';
   import { ContactShadows, OrbitControls } from '@threlte/extras';
   import RocketModel from './RocketModel.svelte';
+  
+  let { calculatedLanding = false } = $props();
 </script>
 
 <T.PerspectiveCamera makeDefault position={[15, 8, 15]} fov={35}>
@@ -18,7 +20,7 @@
 <T.DirectionalLight position={[-10, 10, -10]} intensity={0.5} />
 <T.AmbientLight intensity={0.8} />
 
-<RocketModel />
+<RocketModel {calculatedLanding} />
 
 <T.GridHelper 
   args={[30, 10, '#475569', '#94a3b8']} 

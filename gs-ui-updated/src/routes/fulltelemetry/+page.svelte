@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { telemetry } from '$lib/telemetry.svelte';
+    import { telemetry } from '$lib/telemetry.svelte';
     import { Canvas } from '@threlte/core';
 
     import PhaseSlider from '$lib/components/PhaseSlider.svelte';
@@ -12,10 +12,7 @@
     
     const mtoft = 3.28084;
 
-    let nearZeroDuration = 0; 
-    let lastPacketTime: number | null = null;
-    let calculatedLanding = $state(false);
-
+    // STREAMLINED: Keeps chart history running, deletes duplicate noise filtering math
     $effect(() => {
         const currentData = telemetry.data;
         
@@ -39,36 +36,6 @@
             if (history.length === 0 || history[history.length - 1].time !== newPoint.time) {
                 history = [...history, newPoint].slice(-150);
             }
-
-            // --- CALIBRATED CUSTOM LANDING FILTER ---
-            const currentPhase = currentData.event ?? 'Startup';
-            const flightIsDescending = ["Parachute", "Landing", "AwaitRecovery"].includes(currentPhase);
-
-            if (flightIsDescending && !calculatedLanding) {
-                const verticalVelAbs = Math.abs(newPoint.vel);
-                const horizontalVelAbs = Math.abs(newPoint.horizVel);
-
-                // 7.0 FPS threshold to absorb sensor noise & ground wind drift
-                const VELOCITY_THRESHOLD_FPS = 7.0; 
-
-                // Both vertical drop speed and horizontal drift must stay below the threshold
-                if (verticalVelAbs < VELOCITY_THRESHOLD_FPS && horizontalVelAbs < VELOCITY_THRESHOLD_FPS) {
-                    if (lastPacketTime !== null) {
-                        const timeDelta = packetTime - lastPacketTime;
-                        nearZeroDuration += timeDelta;
-                    }
-                } else {
-                    // If a massive telemetry glitch spikes out of the 7 FPS box, reset the timer
-                    nearZeroDuration = 0;
-                }
-
-                // Require 5 consecutive seconds of stability to officially declare touchdown
-                if (nearZeroDuration >= 5.0) {
-                    calculatedLanding = true;
-                }
-            }
-
-            lastPacketTime = packetTime;
         }
     });
 </script>
@@ -95,7 +62,7 @@
       <div class="text-right border-l border-white/20 pl-10">
           <p class="text-[9px] text-uva-blue-light uppercase font-bold tracking-widest">Current Phase</p>
           <p class="text-2xl font-black text-white uppercase tracking-tighter leading-none">
-            {#if calculatedLanding}
+            {#if telemetry.calculatedLanding}
                 LANDING
             {:else if ['Startup', 'AwaitGps'].includes(telemetry.data?.event)}
                 PRE-FLIGHT
@@ -173,7 +140,7 @@
         </header>
         <div class="flex-1 w-full relative bg-gradient-to-b from-slate-50 to-white">
             <Canvas>
-                <RocketScene />
+                <RocketScene calculatedLanding={telemetry.calculatedLanding} />
             </Canvas>
         </div>
         <div class="p-4 bg-slate-50 border-t-2 border-slate-200 grid grid-cols-3 gap-3 font-mono text-[10px] text-slate-600">
@@ -189,11 +156,11 @@
                 Y: {telemetry.data?.kalmanVel_mps_y?.toFixed(1) ?? '0.0'}<br/>
                 Z: {telemetry.data?.kalmanVel_mps_z?.toFixed(1) ?? '0.0'}
             </div>
-			<div class="bg-white p-2 rounded-lg border border-slate-200 shadow-sm">
-				<p class="text-uva-blue font-black mb-1 text-[9px] tracking-wider opacity-60">BARO STATE</p>
-				TEMP: {telemetry.data?.baroTemperature_C?.toFixed(1) ?? '0.0'}°C<br/>
-				APOGEE: {((telemetry.data?.apogee_m_agl ?? 0) * mtoft).toFixed(0)} FT
-			</div>
+            <div class="bg-white p-2 rounded-lg border border-slate-200 shadow-sm">
+                <p class="text-uva-blue font-black mb-1 text-[9px] tracking-wider opacity-60">BARO STATE</p>
+                TEMP: {telemetry.data?.baroTemperature_C?.toFixed(1) ?? '0.0'}°C<br/>
+                APOGEE: {((telemetry.data?.apogee_m_agl ?? 0) * mtoft).toFixed(0)} FT
+            </div>
         </div>
     </div>
   </section>
@@ -201,7 +168,7 @@
   <footer class="bg-white border-t-4 border-slate-200 grid grid-cols-[1fr_800px_1fr] items-center px-12 z-30 shadow-inner h-full">
     <div></div>
     <div class="w-full px-4">
-      <PhaseSlider currentEvent={calculatedLanding ? 'Landing' : telemetry.data?.event} />
+      <PhaseSlider currentEvent={telemetry.calculatedLanding ? 'Landing' : telemetry.data?.event} />
     </div>
     <div class="text-right">
       <p class="text-[10px] text-slate-400 font-black uppercase tracking-[0.2em] mb-1">Station ID</p>

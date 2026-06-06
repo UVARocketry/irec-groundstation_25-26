@@ -15,50 +15,6 @@
     });
 
     const mtoft = 3.28084;
-
-    // --- CUSTOM NOISE-FILTERING LANDING TRACKING ---
-    let nearZeroDuration = 0; 
-    let lastPacketTime: number | null = null;
-    let calculatedLanding = $state(false);
-
-    const VELOCITY_THRESHOLD_FPS = 7.0; 
-    const REQUIRED_STABLE_TIME_SEC = 5.0; 
-
-    $effect(() => {
-        const currentData = telemetry.data;
-        
-        if (currentData) {
-            const packetTime = currentData.timeSinceLaunch !== undefined 
-                ? currentData.timeSinceLaunch / 1000 
-                : (currentData.timestamp_ms / 1000);
-
-            const currentPhase = currentData.event ?? 'Startup';
-            const flightIsDescending = ["Parachute", "Landing", "AwaitRecovery"].includes(currentPhase);
-
-            if (flightIsDescending && !calculatedLanding) {
-                const verticalVelAbs = Math.abs((currentData.kalmanVel_mps_z ?? 0) * mtoft);
-                
-                const vx = currentData.kalmanVel_mps_x ?? 0;
-                const vy = currentData.kalmanVel_mps_y ?? 0;
-                const horizontalVelAbs = Math.sqrt(vx * vx + vy * vy) * mtoft;
-
-                if (verticalVelAbs < VELOCITY_THRESHOLD_FPS && horizontalVelAbs < VELOCITY_THRESHOLD_FPS) {
-                    if (lastPacketTime !== null) {
-                        const timeDelta = packetTime - lastPacketTime;
-                        nearZeroDuration += timeDelta;
-                    }
-                } else {
-                    nearZeroDuration = 0; 
-                }
-
-                if (nearZeroDuration >= REQUIRED_STABLE_TIME_SEC) {
-                    calculatedLanding = true;
-                }
-            }
-
-            lastPacketTime = packetTime;
-        }
-    });
 </script>
 
 <main class="h-screen w-screen bg-zinc-950 text-uva-blue font-mono flex flex-col overflow-hidden">
@@ -83,7 +39,7 @@
       <div class="text-right border-l border-white/20 pl-10">
           <p class="text-[9px] text-uva-blue-light uppercase font-bold tracking-widest">Current Phase</p>
           <p class="text-2xl font-black text-white uppercase tracking-tighter leading-none">
-              {#if calculatedLanding}
+              {#if telemetry.calculatedLanding}
                   LANDING
               {:else if ['Startup', 'AwaitGps', 'AwaitLaunch'].includes(telemetry.data?.event ?? 'Startup')}
                   PRE-FLIGHT
@@ -94,17 +50,17 @@
       </div>
 
       <div class="flex flex-col justify-center border-l border-white/20 pl-10 pr-4 min-w-[220px]">
-			  <p class="text-sm font-black text-white tabular-nums tracking-widest uppercase">
-				  {telemetry.data?.vnLat_deg?.toFixed(4) ?? '00.0000'}°N 
-				  <span class="text-white/40 mx-1">|</span>
-				  {telemetry.data?.vnLon_deg?.toFixed(4) ?? '00.0000'}°W
-			  </p>
+              <p class="text-sm font-black text-white tabular-nums tracking-widest uppercase">
+                  {telemetry.data?.vnLat_deg?.toFixed(4) ?? '00.0000'}°N 
+                  <span class="text-white/40 mx-1">|</span>
+                  {telemetry.data?.vnLon_deg?.toFixed(4) ?? '00.0000'}°W
+              </p>
           
           <div class="flex items-center justify-between mt-2 font-black tabular-nums text-xs uppercase">
-			  <div class="flex items-center gap-2">
-				  <div class="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.8)]"></div>
-				  <span class="text-white">BAT {telemetry.data?.mainBat_pct?.toFixed(0) ?? 0}%</span>
-			  </div>
+              <div class="flex items-center gap-2">
+                  <div class="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.8)]"></div>
+                  <span class="text-white">BAT {telemetry.data?.mainBat_pct?.toFixed(0) ?? 0}%</span>
+              </div>
               
               <div class="bg-white/10 px-2 py-0.5 rounded border border-white/10">
                   <span class="text-uva-orange-light">{telemetry.data?.rssi_dBm ?? 0} DBM</span>
@@ -130,7 +86,7 @@
 
         <div class="flex-1 w-full bg-gradient-to-b from-slate-100 to-white">
             <Canvas>
-                <RocketScene />
+                <RocketScene calculatedLanding={telemetry.calculatedLanding} />
             </Canvas>
         </div>
     </div>
@@ -145,7 +101,7 @@
 
     <div class="flex-1 flex flex-col items-center justify-center border-x-2 border-slate-100 px-8">
       <div class="w-full scale-100 transform origin-center">
-        <PhaseSlider currentEvent={calculatedLanding ? 'Landing' : telemetry.data?.event} />
+        <PhaseSlider currentEvent={telemetry.calculatedLanding ? 'Landing' : telemetry.data?.event} />
       </div>
     </div>
 
