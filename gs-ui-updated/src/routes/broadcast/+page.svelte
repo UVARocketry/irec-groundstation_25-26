@@ -11,20 +11,59 @@
     import uvaLogo from '$lib/assets/rocketry-split-v-logo.png';
 
     onMount(() => {
-        // Use this for testing without the ab board connected
         console.log("📺 Broadcast View Mounted: Awaiting Telemetry...");
-
-        // Use this to connect to a real telemetry server. Make sure to
-        // Update this URL if your server uses a different port
-        // telemetry.connect("ws://localhost:42069"); 
     });
 
     const mtoft = 3.28084;
+
+    // --- CUSTOM NOISE-FILTERING LANDING TRACKING ---
+    let nearZeroDuration = 0; 
+    let lastPacketTime: number | null = null;
+    let calculatedLanding = $state(false);
+
+    const VELOCITY_THRESHOLD_FPS = 7.0; 
+    const REQUIRED_STABLE_TIME_SEC = 5.0; 
+
+    $effect(() => {
+        const currentData = telemetry.data;
+        
+        if (currentData) {
+            const packetTime = currentData.timeSinceLaunch !== undefined 
+                ? currentData.timeSinceLaunch / 1000 
+                : (currentData.timestamp_ms / 1000);
+
+            const currentPhase = currentData.event ?? 'Startup';
+            const flightIsDescending = ["Parachute", "Landing", "AwaitRecovery"].includes(currentPhase);
+
+            if (flightIsDescending && !calculatedLanding) {
+                const verticalVelAbs = Math.abs((currentData.kalmanVel_mps_z ?? 0) * mtoft);
+                
+                const vx = currentData.kalmanVel_mps_x ?? 0;
+                const vy = currentData.kalmanVel_mps_y ?? 0;
+                const horizontalVelAbs = Math.sqrt(vx * vx + vy * vy) * mtoft;
+
+                if (verticalVelAbs < VELOCITY_THRESHOLD_FPS && horizontalVelAbs < VELOCITY_THRESHOLD_FPS) {
+                    if (lastPacketTime !== null) {
+                        const timeDelta = packetTime - lastPacketTime;
+                        nearZeroDuration += timeDelta;
+                    }
+                } else {
+                    nearZeroDuration = 0; 
+                }
+
+                if (nearZeroDuration >= REQUIRED_STABLE_TIME_SEC) {
+                    calculatedLanding = true;
+                }
+            }
+
+            lastPacketTime = packetTime;
+        }
+    });
 </script>
 
-<main class="h-screen w-screen bg-white text-uva-blue font-mono grid grid-rows-[80px_1fr_120px] overflow-hidden">
+<main class="h-screen w-screen bg-zinc-950 text-uva-blue font-mono flex flex-col overflow-hidden">
   
-  <header class="bg-uva-blue text-white flex items-center justify-between px-10 shadow-xl z-30">
+  <header class="h-[80px] shrink-0 bg-uva-blue text-white flex items-center justify-between px-10 shadow-xl z-30">
     <div class="flex items-center gap-6">
       <img src={uvaLogo} alt="UVA" class="h-16 w-auto" />
       <div class="border-l-2 border-uva-orange/40 pl-6">
@@ -44,7 +83,9 @@
       <div class="text-right border-l border-white/20 pl-10">
           <p class="text-[9px] text-uva-blue-light uppercase font-bold tracking-widest">Current Phase</p>
           <p class="text-2xl font-black text-white uppercase tracking-tighter leading-none">
-              {#if ['StartUp', 'AwaitGps'].includes(telemetry.data?.event)}
+              {#if calculatedLanding}
+                  LANDING
+              {:else if ['Startup', 'AwaitGps', 'AwaitLaunch'].includes(telemetry.data?.event ?? 'Startup')}
                   PRE-FLIGHT
               {:else}
                   {telemetry.data?.event ?? 'OFFLINE'}
@@ -73,15 +114,16 @@
     </div>
   </header>
 
-  <section class="grid grid-cols-[1fr_260px] bg-black min-h-0 overflow-hidden relative">
-    <div class="relative flex items-center justify-center bg-zinc-950">
+  <section class="flex-1 flex flex-row min-h-0 relative -mb-[1px] h-[calc(100%+1px)] z-10 bg-zinc-950">
+    
+    <div class="w-[80%] shrink-0 relative flex items-center justify-center bg-zinc-950">
         <VideoFeed />
         <div class="absolute bottom-6 left-6 opacity-40">
             <p class="text-[10px] text-white font-black tracking-[0.4em]">KK7UTE</p>
         </div>
     </div>
 
-    <div class="bg-slate-50 border-l-4 border-uva-blue flex flex-col items-center shadow-[-10px_0_30px_rgba(0,0,0,0.1)] z-10">
+    <div class="flex-1 bg-slate-50 border-l-4 border-uva-blue flex flex-col items-center shadow-[-10px_0_30px_rgba(0,0,0,0.1)] z-10">
         <header class="w-full py-4 border-b border-slate-200 text-center">
             <p class="text-xs font-black text-uva-blue uppercase tracking-[0.4em]">Live Orientation</p>
         </header>
@@ -94,20 +136,20 @@
     </div>
   </section>
 
-  <footer class="bg-white border-t-8 border-uva-blue grid grid-cols-[1fr_2.5fr_1fr] items-center px-12 z-30 shadow-[0_-20px_50px_rgba(0,0,0,0.1)]">
+  <footer class="h-[120px] shrink-0 bg-white border-t-8 border-uva-blue flex items-stretch px-12 z-30 shadow-[0_-20px_50px_rgba(0,0,0,0.1)]">
     
-    <div class="flex gap-6">
-      <TelemetryDial title="Altitude" unit="ft" value={(telemetry.data?.kalmanPos_m_z ?? 0) * 3.28} max={11000} />
-      <TelemetryDial title="Velocity" unit="fps" value={(telemetry.data?.kalmanVel_mps_z ?? 0) * 3.28} max={1000} />
+    <div class="w-[22%] flex items-center justify-start gap-6">
+      <TelemetryDial title="Altitude" unit="ft" value={(telemetry.data?.kalmanPos_m_z ?? 0) * mtoft} max={11000} />
+      <TelemetryDial title="Velocity" unit="fps" value={(telemetry.data?.kalmanVel_mps_z ?? 0) * mtoft} max={1000} />
     </div>
 
-    <div class="flex flex-col items-center justify-center border-x-2 border-slate-100 h-full px-8">
-      <div class="w-full scale-90 transform origin-center">
-        <PhaseSlider currentEvent={telemetry.data?.event} />
+    <div class="flex-1 flex flex-col items-center justify-center border-x-2 border-slate-100 px-8">
+      <div class="w-full scale-100 transform origin-center">
+        <PhaseSlider currentEvent={calculatedLanding ? 'Landing' : telemetry.data?.event} />
       </div>
     </div>
 
-    <div class="flex items-center justify-end gap-10">
+    <div class="w-[22%] flex items-center justify-end gap-10">
       <TelemetryDial title="Accel" unit="G" value={(telemetry.data?.obAcc_mps2_z ?? 0) / 9.81} max={15} />
       <div class="text-right">
         <p class="text-[10px] text-slate-400 font-black uppercase tracking-[0.2em] mb-1">Station ID</p>

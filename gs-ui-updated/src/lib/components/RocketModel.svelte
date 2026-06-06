@@ -15,11 +15,6 @@
   const IS_TEST_LOG = true; 
 
   let currentQuaternion = $state(new Quaternion().setFromUnitVectors(rocketNoseDirection, worldUp));
-  
-  // 1. REACTIVE STATE FOR ENGINE FIRE
-  // Check if the current flight event is exactly 'MotorBurn'
-  let liveEvent = $derived(telemetry.data?.event ?? 'Startup');
-  let showExhaust = $derived(liveEvent === 'MotorBurn');
 
   $effect(() => {
     if (!telemetry.data) return;
@@ -63,26 +58,5 @@
     position.y={5} 
   >
     <GLTF url="/models/sabreiii.glb" {dracoLoader} castShadow />
-
-    {#if showExhaust}
-      <T.Mesh position={[0, 0, -1.8]} rotation.x={Math.PI / 2}>
-        <T.ConeGeometry args={[0.15, 0.02, 1.2, 16]} />
-        <T.MeshBasicMaterial 
-          color="#ff5500" 
-          transparent={true} 
-          opacity={0.85}
-          wireframe={false}
-        />
-      </T.Mesh>
-
-      <T.Mesh position={[0, 0, -1.3]} rotation.x={Math.PI / 2}>
-        <T.ConeGeometry args={[0.08, 0.01, 0.7, 16]} />
-        <T.MeshBasicMaterial 
-          color="#ffcc00" 
-          transparent={true} 
-          opacity={0.95}
-        />
-      </T.Mesh>
-    {/if}
   </T.Group>
 {/if}

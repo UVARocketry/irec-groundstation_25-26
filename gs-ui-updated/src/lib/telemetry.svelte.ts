@@ -2,6 +2,11 @@ import { browser } from '$app/environment';
 
 const WS_PORT = 42069; 
 
+// TOGGLE THIS: 
+// true  -> Automatically forces the server to loop your test files.
+// false -> Listens to raw live radio packets from the transceiver hardware.
+const IS_SIMULATION_MODE = true; 
+
 class TelemetryStore {
     data = $state<any>(null);
     currentEvent = $state<string>("disconnected");
@@ -19,28 +24,32 @@ class TelemetryStore {
 
         this.socket.onopen = () => {
             this.currentEvent = "connected";
-            console.log("🚀 [GS-WS] Connected. Initializing Log Environment...");
+            console.log("🚀 [GS-WS] Connected to Ground Station Hub.");
 
-            // 1. SET CONFIGURATION (Replacing "env log")
-            // We tell the manager to point its reader to the ssl2 output folder
-            this.sendJson("setConfiguration", {
-                manager: {
-                    readerConfig: {
-                        dir: "../out_ssl2", // Match the path from your server logs
-                        shouldSave: false
+            if (IS_SIMULATION_MODE) {
+                console.log("📁 Simulation Mode: Overriding log configurations...");
+                
+                // 1. Point backend file reader to the test folder logs
+                this.sendJson("setConfiguration", {
+                    manager: {
+                        readerConfig: {
+                            dir: "../out_ssl2", 
+                            shouldSave: false
+                        }
                     }
-                }
-            });
+                });
 
-            // 2. RESTART (The actual command string)
-            // Giving it a short delay to ensure the config is processed first
-            setTimeout(() => {
-                this.sendJson("command", "restart");
-            }, 500);
+                // 2. Queue up the playback engine restarts
+                setTimeout(() => {
+                    this.sendJson("command", "restart");
+                }, 500);
 
-            setTimeout(() => {
-                this.sendJson("command", "restart");
-            }, 1500);
+                setTimeout(() => {
+                    this.sendJson("command", "restart");
+                }, 1500);
+            } else {
+                console.log("📡 LIVE FLIGHT MODE ACTIVE: Awaiting hardware telemetry...");
+            }
         };
 
         this.socket.onmessage = (event) => {
@@ -61,9 +70,6 @@ class TelemetryStore {
         };
     }
 
-    /**
-     * Replicates the ServerMessage constructor from your common/ServerMessage.js
-     */
     sendJson(type: string, data: any) {
         if (this.socket?.readyState === WebSocket.OPEN) {
             const message = { type, data };
@@ -73,7 +79,6 @@ class TelemetryStore {
     }
 
     get missionTime() {
-        // Fallback cleanly to timestamp_ms if timeSinceLaunch doesn't exist
         const raw = this.data?.timeSinceLaunch ?? this.data?.timestamp_ms ?? 0;
         
         const totalSeconds = Math.floor(raw / 1000);

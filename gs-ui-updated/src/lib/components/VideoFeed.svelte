@@ -9,28 +9,30 @@
             video.srcObject = stream;
             hasSignal = true;
         } catch (e) {
-            console.warn("Hardware not detected. Using placeholder.");
+            console.warn("Hardware capture device not detected. Showing fallback standby view.");
             hasSignal = false;
         }
     });
 </script>
 
-<div class="relative w-full h-full bg-zinc-900 flex items-center justify-center">
+<div class="relative w-full h-full bg-slate-100 flex items-center justify-center">
     {#if !hasSignal}
-        <div class="absolute inset-0 flex flex-col items-center justify-center bg-zinc-900/80">
-            <div class="w-16 h-16 border-4 border-red-600/30 border-t-red-600 rounded-full animate-spin mb-6"></div>
+        <div class="absolute inset-0 flex flex-col items-center justify-center bg-white/90 backdrop-blur-sm z-10">
+            <div class="w-14 h-14 border-4 border-slate-200 border-t-uva-orange rounded-full animate-spin mb-5"></div>
             
             <div class="text-center">
-                <p class="text-red-500 font-black text-sm tracking-[0.5em] uppercase">No Signal</p>
-                <p class="text-white/20 font-bold text-[10px] tracking-[0.3em] mt-2 uppercase">vtx offline // awaiting connection</p>
+                <p class="text-uva-blue font-black text-xs tracking-[0.5em] uppercase">No Signal</p>
+                <p class="text-slate-400 font-bold text-[9px] tracking-[0.25em] mt-2 uppercase">vtx offline // awaiting connectionk</p>
             </div>
         </div>
     {/if}
+    
     <video 
         bind:this={video} 
         autoplay 
         muted 
         playsinline
-        class="w-full h-full object-cover object-top transition-opacity duration-500 {hasSignal ? 'opacity-100' : 'opacity-0'}"
+        //  object-contain to preserve the native aspect ratio 
+        class="w-full h-full object-cover object-center bg-slate-900 transition-opacity duration-500 {hasSignal ? 'opacity-100' : 'opacity-0'}"
     ></video>
 </div>

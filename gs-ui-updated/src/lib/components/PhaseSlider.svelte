@@ -1,8 +1,9 @@
 <script lang="ts">
-  // 1. Svelte 5 Props Rune
+  // Svelte 5 Props Rune
   let { currentEvent = 'AwaitLaunch' } = $props();
 
-  // 2. Define the targeted visual phases
+  // Define the targeted visual phases
+  // Not including some of the phases since they aren't critical for the slider
   const phases = [
     'AwaitLaunch',
     'MotorBurn',
@@ -11,7 +12,7 @@
     'Landing'
   ];
 
-  // 3. Reactive state tracking for the active index
+  // Reactive state tracking for the active index
   let activeIndex = $state(0);
   
   $effect(() => {
@@ -55,6 +56,5 @@
         </div>
       {/each}
     </div>
-
   </div>
 </div>

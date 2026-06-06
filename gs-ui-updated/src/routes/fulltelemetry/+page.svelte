@@ -49,7 +49,7 @@
                 const verticalVelAbs = Math.abs(newPoint.vel);
                 const horizontalVelAbs = Math.abs(newPoint.horizVel);
 
-                // ADJUSTED: Changed from 3.0 to 7.0 FPS to absorb sensor noise & ground wind drift
+                // 7.0 FPS threshold to absorb sensor noise & ground wind drift
                 const VELOCITY_THRESHOLD_FPS = 7.0; 
 
                 // Both vertical drop speed and horizontal drift must stay below the threshold
