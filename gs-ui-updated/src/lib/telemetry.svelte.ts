@@ -1,6 +1,7 @@
 import { browser } from "$app/environment";
+import { port } from "../../../common/web.js";
 
-const WS_PORT = 42069;
+const WS_PORT = port;
 
 class TelemetryStore {
     data = $state<any>(null);
