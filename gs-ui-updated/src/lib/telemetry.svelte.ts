@@ -1,11 +1,11 @@
-import { browser } from '$app/environment';
+import { browser } from "$app/environment";
 
-const WS_PORT = 42069; 
+const WS_PORT = 42069;
 
-// TOGGLE THIS: 
+// TOGGLE THIS:
 // true  -> Automatically forces the server to loop your test files.
 // false -> Listens to raw live radio packets from the transceiver hardware.
-const IS_SIMULATION_MODE = true; 
+const IS_SIMULATION_MODE = true;
 
 class TelemetryStore {
     data = $state<any>(null);
@@ -14,7 +14,7 @@ class TelemetryStore {
 
     // CENTRALIZED LANDING STATE
     calculatedLanding = $state<boolean>(false);
-    
+
     // Internal state variables for tracking noise stability windows
     #nearZeroDuration = 0;
     #lastPacketTime: number | null = null;
@@ -26,7 +26,7 @@ class TelemetryStore {
     }
 
     connect() {
-        const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+        const protocol = window.location.protocol === "https:" ? "wss" : "ws";
         const host = window.location.hostname;
         const url = `${protocol}://${host}:${WS_PORT}`;
         this.socket = new WebSocket(url);
@@ -36,26 +36,32 @@ class TelemetryStore {
             console.log("🚀 [GS-WS] Connected to Ground Station Hub.");
 
             if (IS_SIMULATION_MODE) {
-                console.log("📁 Simulation Mode: Overriding log configurations...");
-                
+                console.log(
+                    "📁 Simulation Mode: Overriding log configurations...",
+                );
+
+                // 1. Point backend file reader to the test folder logs
                 this.sendJson("setConfiguration", {
                     manager: {
                         readerConfig: {
-                            dir: "../out_ssl2", 
-                            shouldSave: false
-                        }
-                    }
+                            dir: "../out_ssl2",
+                            shouldSave: false,
+                        },
+                    },
                 });
 
-                setTimeout(() => {
-                    this.sendJson("command", "restart");
-                }, 500);
-
-                setTimeout(() => {
-                    this.sendJson("command", "restart");
-                }, 1500);
+                // 2. Queue up the playback engine restarts
+                // setTimeout(() => {
+                //     this.sendJson("command", "restart");
+                // }, 500);
+                //
+                // setTimeout(() => {
+                //     this.sendJson("command", "restart");
+                // }, 1500);
             } else {
-                console.log("📡 LIVE FLIGHT MODE ACTIVE: Awaiting hardware telemetry...");
+                console.log(
+                    "📡 LIVE FLIGHT MODE ACTIVE: Awaiting hardware telemetry...",
+                );
             }
         };
 
@@ -84,32 +90,43 @@ class TelemetryStore {
         if (!this.data) return;
 
         const mtoft = 3.28084;
-        const VELOCITY_THRESHOLD_FPS = 7.0; 
-        const REQUIRED_STABLE_TIME_SEC = 5.0; 
+        const VELOCITY_THRESHOLD_FPS = 7.0;
+        const REQUIRED_STABLE_TIME_SEC = 5.0;
 
-        const packetTime = this.data.timeSinceLaunch !== undefined 
-            ? this.data.timeSinceLaunch / 1000 
-            : (this.data.timestamp_ms / 1000);
+        const packetTime =
+            this.data.timeSinceLaunch !== undefined
+                ? this.data.timeSinceLaunch / 1000
+                : this.data.timestamp_ms / 1000;
 
-        const currentPhase = this.data.event ?? 'Startup';
-        const flightIsDescending = ["Parachute", "Landing", "AwaitRecovery"].includes(currentPhase);
+        const currentPhase = this.data.event ?? "Startup";
+        const flightIsDescending = [
+            "Parachute",
+            "Landing",
+            "AwaitRecovery",
+        ].includes(currentPhase);
 
         // 🔴 FIX 1: Only trigger a state rewrite during a reset if it isn't already false
         if (currentPhase === "Startup" || currentPhase === "AwaitLaunch") {
-            if (this.calculatedLanding !== false) this.calculatedLanding = false;
+            if (this.calculatedLanding !== false)
+                this.calculatedLanding = false;
             this.#nearZeroDuration = 0;
             this.#lastPacketTime = null;
             return;
         }
 
         if (flightIsDescending && !this.calculatedLanding) {
-            const verticalVelAbs = Math.abs((this.data.kalmanVel_mps_z ?? 0) * mtoft);
-            
+            const verticalVelAbs = Math.abs(
+                (this.data.kalmanVel_mps_z ?? 0) * mtoft,
+            );
+
             const vx = this.data.kalmanVel_mps_x ?? 0;
             const vy = this.data.kalmanVel_mps_y ?? 0;
             const horizontalVelAbs = Math.sqrt(vx * vx + vy * vy) * mtoft;
 
-            if (verticalVelAbs < VELOCITY_THRESHOLD_FPS && horizontalVelAbs < VELOCITY_THRESHOLD_FPS) {
+            if (
+                verticalVelAbs < VELOCITY_THRESHOLD_FPS &&
+                horizontalVelAbs < VELOCITY_THRESHOLD_FPS
+            ) {
                 if (this.#lastPacketTime !== null) {
                     const timeDelta = packetTime - this.#lastPacketTime;
                     if (timeDelta > 0) {
@@ -117,12 +134,12 @@ class TelemetryStore {
                     }
                 }
             } else {
-                this.#nearZeroDuration = 0; 
+                this.#nearZeroDuration = 0;
             }
 
             // 🔴 FIX 2: Gatekeeper lock. Only write to the state rune ONCE when threshold passes
             if (this.#nearZeroDuration >= REQUIRED_STABLE_TIME_SEC) {
-               this.calculatedLanding = true;
+                this.calculatedLanding = true;
             }
         }
 
@@ -139,11 +156,13 @@ class TelemetryStore {
 
     get missionTime() {
         const raw = this.data?.timeSinceLaunch ?? this.data?.timestamp_ms ?? 0;
-        
+
         const totalSeconds = Math.floor(raw / 1000);
-        const mins = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
-        const secs = (totalSeconds % 60).toString().padStart(2, '0');
-        
+        const mins = Math.floor(totalSeconds / 60)
+            .toString()
+            .padStart(2, "0");
+        const secs = (totalSeconds % 60).toString().padStart(2, "0");
+
         return `${mins}:${secs}`;
     }
 }
