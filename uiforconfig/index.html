@@ -1,37 +1,163 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>
-            omg configuration
-        </title>
+        <title>UVA Rocketry Server Configuration</title>
+        <style>
+            body {
+                font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+                background-color: #f8fafc; /* slate-50 */
+                color: #0f172a; /* slate-900 */
+                margin: 0;
+                padding: 40px 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
 
-<style> 
-#connection {
-    color: red;
-}
-#connection.connected {
-    color: green;
-}
+            .card {
+                width: 100%;
+                max-width: 550px;
+                background: #ffffff;
+                border: 1px solid #e2e8f0;
+                border-radius: 12px;
+                padding: 32px;
+                box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+            }
 
-#configurationplace div:not(.name) {
-    padding-left: 10px;
-}
-</style>
+            h1 {
+                font-size: 1.5rem;
+                font-weight: 800;
+                letter-spacing: -0.025em;
+                text-transform: uppercase;
+                color: #002f6c; /* UVA Blue */
+                margin: 0 0 20px 0;
+                padding-bottom: 12px;
+                border-bottom: 2px solid #f1f5f9;
+            }
+
+            /* --- Connection Indicator Status Badge --- */
+            .status-container {
+                font-size: 0.75rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                color: #64748b;
+                margin-bottom: 24px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            #connection {
+                background-color: #fee2e2; /* Red badge bg */
+                color: #dc2626;
+                padding: 4px 10px;
+                border-radius: 6px;
+                font-family: monospace;
+                font-size: 0.8rem;
+                transition: all 0.3s ease;
+            }
+
+            #connection.connected {
+                background-color: #dcfce7; /* Green badge bg */
+                color: #16a34a;
+            }
+
+            /* --- Action Button Specifications --- */
+            button {
+                font-family: inherit;
+                font-weight: 700;
+                font-size: 0.75rem;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                padding: 10px 16px;
+                border-radius: 6px;
+                border: 1px solid #cbd5e1;
+                background-color: #ffffff;
+                color: #334155;
+                cursor: pointer;
+                transition: all 0.15s ease;
+            }
+
+            button:hover {
+                background-color: #f1f5f9;
+                border-color: #94a3b8;
+            }
+
+            button:active {
+                transform: scale(0.98);
+            }
+
+            #submit {
+                background-color: #e57200; /* UVA Orange */
+                color: #ffffff;
+                border: none;
+                width: 100%;
+                padding: 12px;
+                margin-bottom: 20px;
+                box-shadow: 0 2px 4px rgb(229 114 0 / 0.2);
+            }
+
+            #submit:hover {
+                background-color: #cc6500;
+            }
+
+            #configurationcont {
+                margin-top: 24px;
+                padding-top: 20px;
+                border-top: 1px dashed #e2e8f0;
+            }
+
+            #configurationplace {
+                font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+                font-size: 0.85rem;
+                color: #334155;
+            }
+
+            #configurationplace div:not(.name) {
+                padding-left: 16px;
+                border-left: 1px dashed #e2e8f0;
+                margin: 6px 0;
+            }
+
+            #configurationplace input, 
+            #configurationplace select {
+                font-family: inherit;
+                font-size: 0.85rem;
+                padding: 6px 10px;
+                border-radius: 6px;
+                border: 1px solid #cbd5e1;
+                background-color: #f8fafc;
+                margin: 4px 0 12px 0;
+                display: block;
+                width: 100%;
+                box-sizing: border-box;
+                color: #0f172a;
+            }
+
+            #configurationplace input:focus,
+            #configurationplace select:focus {
+                outline: 2px solid #e57200;
+                border-color: transparent;
+            }
+        </style>
     </head>
 
     <body>
-        <h1> server configurAtion yay</h1>
-        <div>cOnnection status: <span id="connection">disconnected</span> </div>
-        <br>
-        <button id="get">Get configuration:</button>
-
-        <br>
-        <br>
-        <div id="configurationcont"> 
-            <button id="submit">submit</button>
-            <div id="configurationplace">
+        <main class="card">
+            <h1>UVA Rocketry Server Configuration</h1>
+            
+            <div class="status-container">
+                Connection Status: <span id="connection">disconnected</span>
             </div>
-        </div>
+            
+            <button id="get">Get Configuration</button>
+
+            <div id="configurationcont"> 
+                <button id="submit">Submit Configuration</button>
+                <div id="configurationplace"></div>
+            </div>
+        </main>
 
         <script type="module">
             import idk from "./uiforconfig/site.js";

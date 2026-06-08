@@ -14,8 +14,6 @@
   const rocketNoseDirection = new Vector3(0, 0, 1);
   const worldUp = new Vector3(0, 1, 0);
 
-  const IS_TEST_LOG = true; 
-
   let currentQuaternion = $state(new Quaternion().setFromUnitVectors(rocketNoseDirection, worldUp));
   let targetQuaternion = new Quaternion();
   let elapsedTime = 0;
@@ -57,20 +55,12 @@
       currentQuaternion = currentQuaternion.clone().slerp(targetQuaternion, 0.12);
     } 
     else {
-      // 3. Powered Ascent State: Live gyro tracking
-      let target = new Vector3(
-        raw.representativeAxis_x,
+      // 3. Powered Ascent State: Fixed live gyro tracking axes
+      const target = new Vector3(
+        raw.representativeAxis_x, 
         raw.representativeAxis_z, 
         -raw.representativeAxis_y
       ).normalize();
-
-      if (IS_TEST_LOG) {
-        target = new Vector3(
-          raw.representativeAxis_z, 
-          -raw.representativeAxis_x, 
-          -raw.representativeAxis_y
-        ).normalize();
-      }
 
       targetQuaternion.setFromUnitVectors(rocketNoseDirection, target);
       currentQuaternion = currentQuaternion.clone().slerp(targetQuaternion, 0.12);

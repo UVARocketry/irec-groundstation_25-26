@@ -45,6 +45,21 @@
 			}
 		}
 	});
+	function handleRestart() {
+        history = [];   // Clears out the 150-point telemetry chart history array instantly
+        refTime = null; // Forces the chart time tracking delta axis to start fresh back at zero
+        telemetry.sendJson("command", "restart");
+    }
+
+    function handleSwitch() {
+        history = [];   // Clears old hardware buffer paths
+        refTime = null;
+        telemetry.sendJson("command", "switch");
+    }
+
+    function handleStop() {
+        telemetry.sendJson("command", "stop");
+    }
 </script>
 
 <main
@@ -216,18 +231,47 @@
 	</section>
 
 	<footer
-		class="z-30 grid h-full grid-cols-[1fr_800px_1fr] items-center border-t-4 border-slate-200 bg-white px-12 shadow-inner"
-	>
-		<div></div>
-		<div class="w-full px-4">
-			<PhaseSlider currentEvent={telemetry.calculatedLanding ? 'Landing' : telemetry.data?.event} />
-		</div>
-		<div class="text-right">
-			<p class="mb-1 text-[10px] font-black tracking-[0.2em] text-slate-400 uppercase">
-				Station ID
-			</p>
-			<p class="text-3xl font-black tracking-widest text-uva-blue italic">KK7UTE</p>
-		</div>
-	</footer>
-</main>
+        class="z-30 relative h-full w-full border-t-4 border-slate-200 bg-white px-8 shadow-inner flex items-center justify-center"
+    >
+        <div class="absolute left-8 top-1/2 -translate-y-1/2 w-[400px] flex flex-col gap-3.5 justify-center h-4/5">
+            <div class="text-xs font-black tracking-wider text-slate-400 uppercase">
+                SYSTEM ENV: 
+                <span class="text-sm font-black text-uva-blue ml-1 bg-slate-100 px-2 py-0.5 rounded border border-slate-200/60 tabular-nums">
+                    {telemetry.data?.readerType ?? telemetry.data?.environment ?? telemetry.currentEvent}
+                </span>
+            </div>
+            
+            <div class="flex items-center gap-1">
+                <button 
+                    onclick={handleRestart}
+                    class="bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 font-bold text-[10px] px-2.5 py-1.5 rounded border border-slate-300/70 transition-all tracking-wider shadow-sm"
+                >
+                    RESTART
+                </button>
+                <button 
+                    onclick={handleSwitch}
+                    class="bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 font-bold text-[10px] px-2.5 py-1.5 rounded border border-slate-300/70 transition-all tracking-wider shadow-sm"
+                >
+                    SWITCH MODE
+                </button>
+                <button 
+                    onclick={handleStop}
+                    class="bg-rose-50/50 hover:bg-rose-100 text-rose-700 active:scale-95 font-bold text-[10px] px-2.5 py-1.5 rounded border border-rose-200 transition-all tracking-wider shadow-sm"
+                >
+                    STOP
+                </button>
+            </div>
+        </div>
 
+        <div class="w-full max-w-3xl px-4 mx-auto">
+            <PhaseSlider currentEvent={telemetry.calculatedLanding ? 'Landing' : telemetry.data?.event} />
+        </div>
+
+        <div class="absolute right-8 top-1/2 -translate-y-1/2 w-[220px] text-right h-4/5 flex flex-col justify-center">
+            <p class="mb-0.5 text-[10px] font-black tracking-[0.2em] text-slate-400 uppercase">
+                Station ID
+            </p>
+            <p class="text-3xl font-black tracking-widest text-uva-blue italic">KK7UTE</p>
+        </div>
+    </footer>
+</main>

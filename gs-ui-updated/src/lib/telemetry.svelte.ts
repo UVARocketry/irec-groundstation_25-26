@@ -2,11 +2,6 @@ import { browser } from "$app/environment";
 
 const WS_PORT = 42069;
 
-// TOGGLE THIS:
-// true  -> Automatically forces the server to loop your test files.
-// false -> Listens to raw live radio packets from the transceiver hardware.
-const IS_SIMULATION_MODE = true;
-
 class TelemetryStore {
     data = $state<any>(null);
     currentEvent = $state<string>("disconnected");
@@ -33,36 +28,7 @@ class TelemetryStore {
 
         this.socket.onopen = () => {
             this.currentEvent = "connected";
-            console.log("🚀 [GS-WS] Connected to Ground Station Hub.");
-
-            if (IS_SIMULATION_MODE) {
-                console.log(
-                    "📁 Simulation Mode: Overriding log configurations...",
-                );
-
-                // 1. Point backend file reader to the test folder logs
-                this.sendJson("setConfiguration", {
-                    manager: {
-                        readerConfig: {
-                            dir: "../out_ssl2",
-                            shouldSave: false,
-                        },
-                    },
-                });
-
-                // 2. Queue up the playback engine restarts
-                // setTimeout(() => {
-                //     this.sendJson("command", "restart");
-                // }, 500);
-                //
-                // setTimeout(() => {
-                //     this.sendJson("command", "restart");
-                // }, 1500);
-            } else {
-                console.log(
-                    "📡 LIVE FLIGHT MODE ACTIVE: Awaiting hardware telemetry...",
-                );
-            }
+            console.log("🚀 [GS-WS] Connected to Ground Station.");
         };
 
         this.socket.onmessage = (event) => {
@@ -72,7 +38,7 @@ class TelemetryStore {
                     this.data = msg.data;
                     this.currentEvent = msg.data.event;
 
-                    // 🔴 EXECUTE THE CALCULATED TOUCHDOWN GATING
+                    // EXECUTE THE CALCULATED TOUCHDOWN GATING
                     this.updateLandingFilter();
                 }
             } catch (e) {
@@ -105,7 +71,7 @@ class TelemetryStore {
             "AwaitRecovery",
         ].includes(currentPhase);
 
-        // 🔴 FIX 1: Only trigger a state rewrite during a reset if it isn't already false
+        // Only trigger a state rewrite during a reset if it isn't already false
         if (currentPhase === "Startup" || currentPhase === "AwaitLaunch") {
             if (this.calculatedLanding !== false)
                 this.calculatedLanding = false;
@@ -137,7 +103,7 @@ class TelemetryStore {
                 this.#nearZeroDuration = 0;
             }
 
-            // 🔴 FIX 2: Gatekeeper lock. Only write to the state rune ONCE when threshold passes
+            // Gatekeeper lock. Only write to the state rune ONCE when threshold passes
             if (this.#nearZeroDuration >= REQUIRED_STABLE_TIME_SEC) {
                 this.calculatedLanding = true;
             }
