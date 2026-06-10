@@ -11,6 +11,28 @@ if (host === null) {
 		host = val;
 	}
 }
+var switchBtn = document.getElementById("switchReader");
+if (switchBtn) {
+	switchBtn.onclick = function () {
+		ws.send(
+			JSON.stringify({
+				type: "command",
+				data: "switch",
+			}),
+		);
+	};
+}
+function sendCommand(cmd) {
+	ws.send(JSON.stringify({ type: "command", data: cmd }));
+}
+var startBtn = document.getElementById("startRun");
+if (startBtn) {
+	startBtn.onclick = function () { sendCommand("restart"); };
+}
+var stopBtn = document.getElementById("stopRun");
+if (stopBtn) {
+	stopBtn.onclick = function () { sendCommand("stop"); };
+}
 var getButton = document.getElementById("get");
 if (getButton) {
 	getButton.onclick = function () {
@@ -155,7 +177,12 @@ ws.onmessage = function (event) {
 	var msg = JSON.parse(event.data);
 	console.log(event.data);
 
-	if (msg.type == "configurationOptions") {
+	if (msg.type == "state") {
+		const readerEl = document.getElementById("currentReader");
+		if (readerEl) {
+			readerEl.textContent = msg.data?.readerType ?? "unknown";
+		}
+	} else if (msg.type == "configurationOptions") {
 		var opts = msg.data;
 		var root = document.getElementById("configurationplace");
 		if (root) {

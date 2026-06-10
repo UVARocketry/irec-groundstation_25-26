@@ -249,3 +249,7 @@ server.listen(PORT, () => {
 		openUrl(url + "/uiforconfig");
 	}
 });
+
+log(`${Strings.Ok}: Data pipe active on ws://localhost:${port}`);
+log(`${Strings.Ok}: New Ground Station ready for connection.`);
+
