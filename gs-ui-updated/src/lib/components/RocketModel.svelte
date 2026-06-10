@@ -29,13 +29,11 @@
     const isLanded = calculatedLanding || currentPhase === "Landing" || currentPhase === "AwaitRecovery";
 
     if (isLanded) {
-      // 1. Touchdown State: Snap flat and lock solid
       const flatOnGroundVector = new Vector3(0.95, 0.0, 0.0).normalize();
       targetQuaternion.setFromUnitVectors(rocketNoseDirection, flatOnGroundVector);
       currentQuaternion = currentQuaternion.clone().slerp(targetQuaternion, 0.15);
     } 
     else if (currentPhase === "Parachute") {
-      // 2. Parachute State: Dynamic pendulum sway loop
       const swayX = 0.85 + Math.sin(elapsedTime * 1.2) * 0.08;
       const swayY = 0.25 + Math.cos(elapsedTime * 1.8) * 0.05;
       const swayZ = Math.sin(elapsedTime * 0.9) * 0.06;
@@ -55,11 +53,13 @@
       currentQuaternion = currentQuaternion.clone().slerp(targetQuaternion, 0.12);
     } 
     else {
-      // 3. Powered Ascent State: Fixed live gyro tracking axes
       const target = new Vector3(
         raw.representativeAxis_x, 
         raw.representativeAxis_z, 
         -raw.representativeAxis_y
+        // raw.representativeAxis_z, 
+        // -raw.representativeAxis_x, 
+        // -raw.representativeAxis_y
       ).normalize();
 
       targetQuaternion.setFromUnitVectors(rocketNoseDirection, target);
@@ -71,7 +71,9 @@
 <T.Group 
   quaternion={[currentQuaternion.x, currentQuaternion.y, currentQuaternion.z, currentQuaternion.w]} 
   scale={5.5} 
-  position.y={5} 
+  position.y={3} 
 >
-  <GLTF url="/models/sabreiii.glb" {dracoLoader} castShadow />
+  <T.Group position.z={2.0}>
+    <GLTF url="/models/sabreiii.glb" {dracoLoader} castShadow />
+  </T.Group>
 </T.Group>

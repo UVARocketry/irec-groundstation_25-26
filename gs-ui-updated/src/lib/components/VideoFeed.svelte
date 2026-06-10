@@ -27,7 +27,7 @@
             
             <div class="text-center">
                 <p class="text-uva-blue font-black text-xs tracking-[0.5em] uppercase">No Signal</p>
-                <p class="text-slate-400 font-bold text-[9px] tracking-[0.25em] mt-2 uppercase">vtx offline // awaiting connectionk</p>
+                <p class="text-slate-400 font-bold text-[9px] tracking-[0.25em] mt-2 uppercase">vtx offline // awaiting connection</p>
             </div>
         </div>
     {/if}

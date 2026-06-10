@@ -15,6 +15,11 @@
     });
 
     const mtoft = 3.28084;
+
+    // Temporary mapping for displaying Coast instead of AirbrakesDeploy
+    const phaseDisplayMap: Record<string, string> = {
+        'AirbrakesDeploy': 'Coast'
+    };
 </script>
 
 <main class="h-screen w-screen bg-zinc-950 text-uva-blue font-mono flex flex-col overflow-hidden">
@@ -38,13 +43,13 @@
 
       <div class="text-right border-l border-white/20 pl-10">
           <p class="text-[9px] text-uva-blue-light uppercase font-bold tracking-widest">Current Phase</p>
-          <p class="text-2xl font-black text-white uppercase tracking-tighter leading-none">
+          <p class="text-2xl leading-none font-black tracking-tighter text-white uppercase">
               {#if telemetry.calculatedLanding}
                   LANDING
               {:else if ['Startup', 'AwaitGps', 'AwaitLaunch'].includes(telemetry.data?.event ?? 'Startup')}
                   PRE-FLIGHT
               {:else}
-                  {telemetry.data?.event ?? 'OFFLINE'}
+                  {phaseDisplayMap[telemetry.data?.event] ?? telemetry.data?.event ?? 'OFFLINE'}
               {/if}
           </p>
       </div>
@@ -92,7 +97,7 @@
     </div>
   </section>
 
-  <footer class="h-[120px] shrink-0 bg-white border-t-8 border-uva-blue flex items-stretch px-12 z-30 shadow-[0_-20px_50px_rgba(0,0,0,0.1)]">
+  <footer class="h-[120px] shrink-0 bg-white border-t-4 border-uva-blue flex items-stretch px-12 z-30 shadow-[0_-20px_50px_rgba(0,0,0,0.1)]">
     
     <div class="w-[22%] flex items-center justify-start gap-6">
       <TelemetryDial title="Altitude" unit="ft" value={(telemetry.data?.kalmanPos_m_z ?? 0) * mtoft} max={11000} />
@@ -101,7 +106,7 @@
 
     <div class="flex-1 flex flex-col items-center justify-center border-x-2 border-slate-100 px-8">
       <div class="w-full scale-100 transform origin-center">
-        <PhaseSlider currentEvent={telemetry.calculatedLanding ? 'Landing' : telemetry.data?.event} />
+        <PhaseSlider currentEvent={telemetry.calculatedLanding ? 'Landing' : (phaseDisplayMap[telemetry.data?.event] ?? telemetry.data?.event)} />
       </div>
     </div>
 
