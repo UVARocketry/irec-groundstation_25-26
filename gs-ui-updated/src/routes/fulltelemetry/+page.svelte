@@ -14,9 +14,9 @@
 	const mtoft = 3.28084;
 
 	// Temporary mapping for displaying Coast instead of AirbrakesDeploy
-    const phaseDisplayMap: Record<string, string> = {
-        'AirbrakesDeploy': 'Coast'
-    };
+	const phaseDisplayMap: Record<string, string> = {
+		AirbrakesDeploy: 'Coast'
+	};
 
 	// STREAMLINED: Keeps chart history running, deletes duplicate noise filtering math
 	$effect(() => {
