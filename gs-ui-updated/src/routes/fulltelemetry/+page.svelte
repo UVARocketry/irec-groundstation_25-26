@@ -97,7 +97,7 @@
 				<p class="text-[9px] font-bold tracking-widest text-uva-blue-light uppercase">
 					Current Phase
 				</p>
-			    <p class="text-2xl leading-none font-black tracking-tighter text-white uppercase">
+				<p class="text-2xl leading-none font-black tracking-tighter text-white uppercase">
 					{#if telemetry.calculatedLanding}
 						LANDING
 					{:else if ['Startup', 'AwaitGps', 'AwaitLaunch'].includes(telemetry.data?.event ?? 'Startup')}
