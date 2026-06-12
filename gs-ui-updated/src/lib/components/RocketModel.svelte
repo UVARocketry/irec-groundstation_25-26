@@ -57,9 +57,6 @@
         raw.representativeAxis_x, 
         raw.representativeAxis_z, 
         -raw.representativeAxis_y
-        // raw.representativeAxis_z, 
-        // -raw.representativeAxis_x, 
-        // -raw.representativeAxis_y
       ).normalize();
 
       targetQuaternion.setFromUnitVectors(rocketNoseDirection, target);
@@ -71,9 +68,10 @@
 <T.Group 
   quaternion={[currentQuaternion.x, currentQuaternion.y, currentQuaternion.z, currentQuaternion.w]} 
   scale={5.5} 
-  position.y={3} 
+  position.y={2.1} 
 >
-  <T.Group position.z={2.0}>
+
+  <T.Group position.z={2.45}>
     <GLTF url="/models/sabreiii.glb" {dracoLoader} castShadow />
   </T.Group>
 </T.Group>
