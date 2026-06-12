@@ -105,7 +105,7 @@
 					{:else}
 						{phaseDisplayMap[telemetry.data?.event] ?? telemetry.data?.event ?? 'OFFLINE'}
 					{/if}
-				</p>	
+				</p>
 			</div>
 
 			<div class="flex min-w-[220px] flex-col justify-center border-l border-white/20 pr-4 pl-10">
