@@ -6,10 +6,10 @@
   let { calculatedLanding = false } = $props();
 </script>
 
-<T.PerspectiveCamera makeDefault position={[15, 8, 15]} fov={35}>
+<T.PerspectiveCamera makeDefault position={[22, 4.0, 22]} fov={35}>
   <OrbitControls 
     enableZoom={true} 
-    target={[0, 3, 0]} 
+    target={[0, 3.4, 0]} 
     enableDamping={true} 
     dampingFactor={0.08}
     maxPolarAngle={Math.PI / 2} 

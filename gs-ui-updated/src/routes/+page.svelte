@@ -11,7 +11,7 @@
         <img src={uvaLogo} alt="UVA Rocketry" class="h-32 w-auto drop-shadow-2xl" />
         <div class="text-center">
             <h1 class="text-5xl font-black tracking-tighter uppercase leading-none">Sabre III</h1>
-            <p class="text-uva-orange font-black tracking-[0.3em] text-sm mt-2">Ground Station Control</p>
+            <p class="text-uva-orange font-black tracking-[0.3em] text-sm mt-2">Ground Station</p>
         </div>
     </div>
 

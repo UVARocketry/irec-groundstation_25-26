@@ -170,7 +170,7 @@ async function createSaveFolder() {
 }
 
 function genSaveFolder() {
-	return "../out_" + new Date().toISOString().slice(0, 19).replace("T", "_");
+	return "../out_" + new Date().toISOString().slice(0, 19).replace(/[T:]/g, "_");
 }
 
 function reset() {
@@ -225,6 +225,7 @@ async function saveItem(msg, i) {
 		config().setField("saveFolder", genSaveFolder());
 	}
 	const saveFolder = config().get("saveFolder");
+	await createSaveFolder();
 	await fs.promises.writeFile(
 		ReaderUtils.getSaveItemName(saveFolder, i),
 		msg,
@@ -249,6 +250,7 @@ async function onMessage(buf) {
 			config().setField("saveFolder", genSaveFolder());
 		}
 		const saveFolder = config().get("saveFolder");
+		await createSaveFolder();
 		await fs.promises.writeFile(
 			ReaderUtils.getSaveItemName(saveFolder, msgI) + "-dump",
 			str,

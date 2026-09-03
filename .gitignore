@@ -2,10 +2,9 @@ node_modules/
 .zig-cache/
 zig-out/
 
-server/save.json
-
 out**/**-dump
 
 out**
 
 log
+server/save.json

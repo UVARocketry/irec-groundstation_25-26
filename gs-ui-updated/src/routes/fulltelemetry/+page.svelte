@@ -13,6 +13,11 @@
 
 	const mtoft = 3.28084;
 
+	// Temporary mapping for displaying Coast instead of AirbrakesDeploy
+	const phaseDisplayMap: Record<string, string> = {
+		AirbrakesDeploy: 'Coast'
+	};
+
 	// STREAMLINED: Keeps chart history running, deletes duplicate noise filtering math
 	$effect(() => {
 		const currentData = telemetry.data;
@@ -95,10 +100,10 @@
 				<p class="text-2xl leading-none font-black tracking-tighter text-white uppercase">
 					{#if telemetry.calculatedLanding}
 						LANDING
-					{:else if ['Startup', 'AwaitGps'].includes(telemetry.data?.event)}
+					{:else if ['Startup', 'AwaitGps', 'AwaitLaunch'].includes(telemetry.data?.event ?? 'Startup')}
 						PRE-FLIGHT
 					{:else}
-						{telemetry.data?.event ?? 'OFFLINE'}
+						{phaseDisplayMap[telemetry.data?.event] ?? telemetry.data?.event ?? 'OFFLINE'}
 					{/if}
 				</p>
 			</div>
@@ -264,7 +269,7 @@
         </div>
 
         <div class="w-full max-w-3xl px-4 mx-auto">
-            <PhaseSlider currentEvent={telemetry.calculatedLanding ? 'Landing' : telemetry.data?.event} />
+			<PhaseSlider currentEvent={telemetry.calculatedLanding ? 'Landing' : (phaseDisplayMap[telemetry.data?.event] ?? telemetry.data?.event)} />
         </div>
 
         <div class="absolute right-8 top-1/2 -translate-y-1/2 w-[220px] text-right h-4/5 flex flex-col justify-center">

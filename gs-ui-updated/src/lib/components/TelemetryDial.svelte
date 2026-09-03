@@ -3,7 +3,7 @@
   let { value = 0, min = 0, max = 100, title = "", unit = "" } = $props();
 
   // SVG Math for the circular arc
-  const radius = 40;
+  const radius = 36;
   const circumference = 2 * Math.PI * radius;
   
   // Reactively calculate the progress stroke

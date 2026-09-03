@@ -7,7 +7,7 @@
   const phases = [
     'AwaitLaunch',
     'MotorBurn',
-    'AirbrakesDeploy',
+    'Coast',
     'Parachute',
     'Landing'
   ];
@@ -50,7 +50,7 @@
           
           <span class="absolute top-8 text-sm font-black uppercase tracking-widest whitespace-nowrap
             {i === activeIndex ? 'text-uva-blue opacity-100' : 'text-slate-400 opacity-60'}">
-            {phase === 'AirbrakesDeploy' ? 'Airbrakes' : phase}
+            {phase}
           </span>
 
         </div>
